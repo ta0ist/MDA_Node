@@ -1,0 +1,6 @@
+<div class="color-panel hidden-phone" style="top: 20px;">
+    <div class="color-mode-icons icon-color" style="display:block;" ng-class="{true: 'icon-color', false: 'icon-color-close'}[isActive]" ng-click="togglePlus()"></div>
+    <!--   <div class="color-mode-icons " style="display: none;"></div>-->
+    <div class="color-modes" style="padding:0px;" ng-show="!isActive" ng-transclude>
+    </div>
+</div>

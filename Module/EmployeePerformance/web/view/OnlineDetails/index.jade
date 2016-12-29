@@ -1,0 +1,45 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./EmployeePerformance/web/css/OnlineDetails.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./EmployeePerformance/web/controller/OnlineDetailsController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 绩效分析
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 绩效分析
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 上线明细
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);', ng-controller='OnlineDetailsCtrl')
+        .row-fluid
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 登录开始日期
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 登录结束日期
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='endTime')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    #search.btn.green(style='margin-left: 50px;', ng-click='search()')
+                        | 查询
+                        i.icon-search
+    #grid(style='margin-top:20px;')
+    script#LOGIN_STATE(type='text/x-kendo-template').
+        # if ( data.LOGIN_STATE == 2) { #
+        登录
+        # } else if ( data.LOGIN_STATE == 1) { #
+        登出
+        # } #
+

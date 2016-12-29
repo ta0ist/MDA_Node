@@ -1,0 +1,29 @@
+.inbox-nav li {
+    float: right;
+    top: -53px;
+}
+
+.inbox-nav li a.btn {
+    border-radius: 0px !important;
+}
+
+#sidebar {
+    float: left;
+    width: 300px;
+}
+
+#content {
+    margin-left: 305px;
+}
+
+.members {
+    list-style: none;
+}
+
+.members li {
+    display: inline-block;
+    width: 200px;
+    height: 242px;
+    margin-right:20px;
+    margin-bottom:20px;
+}

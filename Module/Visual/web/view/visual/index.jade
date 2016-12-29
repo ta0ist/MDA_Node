@@ -1,0 +1,29 @@
+doctype html
+head
+    meta(http-equiv='Refresh', content='1800')
+    title
+    link(href='./images/logoico.ico', rel='shortcut icon', type='image/x-icon')
+    link(href='./Visual/web/css/bootstrap.min.css', rel='stylesheet')
+    link(href='./Visual/web/javascripts/media/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='./javascripts/UI/Scripts/alertify/alertify.core.css', rel='stylesheet')
+    link(href='./javascripts/UI/Scripts/alertify/alertify.default.css', rel='stylesheet')
+    link(rel='stylesheet/less', type='text/css', href='./Visual/web/css/WebLed.less')
+body#visual
+  #path(hidden) #{vpath}
+script(src='./Visual/web/javascripts/jquery-1.10.2.js')
+script(src='./Visual/web/javascripts/jquery-ui-1.10.0.custom.js')
+script(src='./Visual/web/javascripts/bootstrap.min.js')
+script(src='./Visual/web/javascripts/jquery.signalR-1.1.4.min.js', type='text/javascript')
+script(src='./Visual/web/javascripts/Less.js')
+script(src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+script(src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/modules/exporting.js')
+script(src='./javascripts/UI/Scripts/alertify/alertify.min.js')
+script(src='./javascripts/UI/Scripts/Bandex.js')
+script(src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+script(src='./javascripts/UI/Scripts/moment.js')
+script(src='../Visual/web/javascripts/Visual7.1.js')
+script(src='../Visual/web/javascripts/FactoryView_gelinanshui.js')
+script(type='text/javascript').
+  $(document).ready(function () {
+    $("#visual").VisualConfig().data("BZ-VisualConfig");
+  });

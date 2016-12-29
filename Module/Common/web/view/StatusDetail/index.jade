@@ -1,0 +1,69 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Common/web/css/StatusDetail.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts-3d.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jcallout.js')
+    script(type='text/javascript',src='./Common/web/controller/StatusDetailController.js')
+
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 运行履历
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 运行履历
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row
+            .pull-left
+                .row-fluid
+                    .span
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD') 选择日期
+                            .BZcontrols
+                                input#startTime.m-wrap(type='text', name='startTime')
+                    .span(style='visibility:hidden;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD') @LanguageService.Translate("MachineStatus.FINISH_DATE")
+                            .BZcontrols
+                                input#endTime.m-wrap(type='text', name='endTime')
+            .pull-left(style='margin-left:33px;')
+                .row-fluid
+                    .span(style='width: 150px !important; display: none; ')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD') 详细
+                            .BZcontrols(style='line-height: 32px;')
+                                label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
+                                    input(type='checkbox', name='detailshow')
+                                |                             @*3D显示
+                                label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
+                                    input(type='checkbox', name='3dshow', checked='')
+                                | *@
+                    .span
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD', style='width: 60px;') 过滤
+                            .BZcontrols(style='line-height: 32px; margin-left: 70px;')
+                                label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
+                                    input#checked(type='checkbox', name='filter')
+                                input#filterLogic.m-wrap(type='text', style='width:100px;')
+                                input#filterValue.m-wrap(type='text', style='width: 50px; margin-top: 1px; margin-right: 5px;')
+                                | 秒
+                    div(style='float: left;margin-left:0px;width:350px;')
+                        .control-group(style='margin-bottom: 5px;')
+                            label.control-label(data-lang='Common.PASSWORD') 设备
+                            .BZcontrols
+                                input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
+                    .span
+                        .control-group(style='margin-bottom: 5px;')
+                            #search.btn.green(style='margin-left: 50px;')
+                                | 查询
+                                i.icon-search
+    div#grid

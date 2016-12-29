@@ -1,0 +1,208 @@
+body, h1, h2, h3, h4, h5, h6, ul, li, p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+li {
+    list-style: none;
+}
+
+.align-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+
+header {
+    background: #2D2D2D;
+    padding: 15px 0;
+    color: #fff;
+}
+
+nav {
+    width: 14%;
+    height: 659px;
+    background: #3D3D3D;
+    float: left;
+}
+
+    nav li {
+        font-size: 20px;
+        color: #fff;
+        line-height: 75px;
+        border-bottom: #fff solid 1px;
+        padding-left: 20px;
+        cursor: pointer;
+    }
+
+        nav li a {
+            color: #ffffff;
+        }
+
+        nav li i {
+            font-style: normal;
+        }
+
+    nav .active_0001 {
+        background: red !important;
+    }
+
+.main_001 {
+    width: 86%;
+    float: left;
+}
+
+#view {
+    height: 629px;
+    background: #fff;
+    border: 5px solid #aaa;
+    border-radius: 5px;
+    margin: 10px;
+    <!-- overflow: scroll; -->
+}
+
+.ding {
+    overflow: hidden;
+}
+
+footer {
+    width: 100%;
+    background: #3D3D3D;
+    color: #fff;
+    line-height: 40px;
+    text-align: right;
+}
+
+#stop {
+    height: 630px;
+}
+
+    #stop form {
+        padding: 0 20px;
+    }
+
+    #stop > form > div:nth-child(1)>input {
+        width: 280px;
+        height:35px;
+    }
+
+    #stop > form > div:nth-child(3) {
+        min-height: 300px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+    }
+
+    #stop form label {
+        font-size: 18px;
+        text-align: center;
+        width: 100px;
+        background: #e6e6e6;
+        line-height: 50px;
+        border-radius: 5px;
+        float: left;
+        margin-right: 30px;
+        cursor: pointer;
+    }
+
+    #stop #setstop {
+        margin: 0 auto;
+        font-size: 36px;
+        width: 980px;
+        height: 60px;
+    }
+
+    #stop h3 {
+        padding: 20px 0 5px 0;
+    }
+
+    #stop h4 {
+        padding: 20px 0 10px 0;
+    }
+
+#updown {
+    margin: 10px;
+    padding-bottom: 20px;
+    height: 608px;
+}
+
+    #updown > h3 {
+        margin-top: 0;
+    }
+
+    #updown form {
+        margin-top: 10px;
+        padding: 0 20px;
+    }
+
+        #updown form button {
+            margin: 10px 0;
+        }
+
+        #updown form h3 {
+            padding-bottom: 5px;
+        }
+
+        #updown form input {
+            width: 280px;
+            height: 35px;
+        }
+
+    #updown > div {
+        padding: 0 20px;
+        margin-top: -20px;
+    }
+
+    #updown div ul {
+        margin: 2px 0 0 0;
+    }
+
+.nav-tabs > li > a {
+    padding: 15px 30px;
+}
+
+#mem_up {
+    height: 380px;
+    border: 1px solid #ddd;
+    border-top: 0;
+}
+
+#mem_down {
+    height: 380px;
+    border: 1px solid #ddd;
+    border-top: 0;
+}
+
+#myTabContent {
+    height: 430px;
+}
+#po tbody td {
+    padding:5px 0;
+}
+#po td label:first-child {
+         width:80px;
+}
+#span {
+    margin-left:26px;
+}
+#order_report_alter td {
+    width:400px;
+}
+#pos tbody tr {
+    height:40px;
+}
+.padding_right {
+   padding:8px 25px 8px 12px;
+
+   
+}

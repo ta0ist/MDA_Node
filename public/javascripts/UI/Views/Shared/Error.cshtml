@@ -1,0 +1,115 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "错误";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+ <!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <title>@ViewBag.Title</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <meta content="" name="description" />
+
+    <meta content="" name="author" />
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+    <link href="~/UI/Scripts/media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/UI/Scripts/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/UI/Scripts/media/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/UI/Scripts/media/css/style-metro.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/UI/Scripts/media/css/style.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/UI/Scripts/media/css/style-responsive.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/UI/Scripts/media/css/default.css" rel="stylesheet" type="text/css" id="style_color" />
+
+    <link href="~/UI/Scripts/media/css/uniform.default.css" rel="stylesheet" type="text/css" />
+
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+    <link href="~/UI/Scripts/media/css/error.css" rel="stylesheet" type="text/css" />
+
+    <!-- END PAGE LEVEL STYLES -->
+
+    <link href="~/UI/Images/logoico.ico" rel="shortcut icon" type="image/x-icon" />
+    <style type="text/css">
+        .details h3 {
+            color:#ff0000;
+        }
+    </style>
+</head>
+
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+
+<body class="page-404-full-page">
+
+    <div class="row-fluid">
+
+        <div class="span12 page-404">
+
+            <div class="number" style="display: block; text-align: center;">
+
+                @ViewBag.ErrorCode
+
+            </div>
+
+            <div class="details">
+
+                <h3>错误信息:@ViewBag.Message</h3>
+                <h3>错误URL:@ViewBag.Url</h3>
+                <p>
+                    
+                    调试信息:
+                    <pre>@ViewBag.RawException
+                    We can not find the page you're looking for.
+                    </pre><br />
+                </p>
+
+                <form action="#">
+
+                    <div class="input-append">
+                        <a class="btn blue" href="@ViewBag.Url">重试</a>
+                        <a class="btn blue" href="/" style="margin-left:10px;">返回主页</a>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+
+
+    <!-- END JAVASCRIPTS -->
+
+    
+</body>
+
+<!-- END BODY -->
+
+</html>

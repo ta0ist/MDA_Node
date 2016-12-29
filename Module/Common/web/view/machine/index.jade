@@ -1,0 +1,197 @@
+﻿extends ../../../../../views/layout
+
+block append headjavascript 
+    script(type='text/javascript',src='./Common/web/controller/machinecontroller.js')
+    script#treeview-template(type='text/kendo-ui-template').
+      <i class="#:item.icon#"></i>
+      <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode">#:item.text#</span>
+    script#popup-add(type='text/x-kendo-template').
+      <form class="form-horizontal" id="machineviewmodel" style="width:750px;">
+          <div class="control-group">
+              <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>设备图片</label>
+              <div class="controls">
+                  <div>
+                      <input id="PHOTO" type="text" data-bind="value:PHOTO" style="display:none;" />
+                      <div id="PHOTO_img" class="photo" style="width: 200px; height: 150px; display: inline-block;"></div>
+                      <div id="Gallery" style="display:none; overflow-y: auto; width: 320px; height: 150px; display: inline-block; border: 1px solid \#ddd;"></div>
+                  </div>
+                  <span class="btn green fileinput-button">
+                      <i class="icon-plus icon-white"></i>
+                      <span>上传</span>
+                      <input id="fileupload" type="file" name="files[]">
+                  </span>
+                  <button class="btn blue fileinput-button" data-bind="click:galleryshow">
+                      <i class="icon-inbox icon-white"></i>
+                      <span>图库</span>
+                  </button>
+              </div>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td width="354">
+                          <label class="control-label" data-lang="Common.MAC_NO"><span class="required">*</span>设备编号</label>
+                          <div class="controls">
+                              <input type="text" id="MAC_NO" name="MAC_NO" data-bind="value:MAC_NO" class="span6 m-wrap" />
+                              <input type="hidden" id="MAC_NBR" name="MAC_NBR" /> 
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.MAC_NAME"><span class="required">*</span>设备名称</label>
+                          <div class="controls">
+                              <input type="text" id="MAC_NAME" name="MAC_NAME" data-bind="value:MAC_NAME" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.RANK_NUM">排序</label>
+                          <div class="controls">
+                              <input type="text" id="RANK_NUM" name="RANK_NUM" data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.CATEGORY">设备类型</label>
+                          <div class="controls">
+                              <input type="text" id="CATEGORY" name="CATEGORY" data-bind="value:CATEGORY" data-required="1" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.ELECTRICAL_SYSTEM">电气系统</label>
+                          <div class="controls">
+                              <input type="text" id="ELECTRICAL_SYSTEM" name="ELECTRICAL_SYSTEM" data-bind="value:ELECTRICAL_SYSTEM" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.BUY_PERSON">采购人员</label>
+                          <div class="controls">
+                              <input type="text" id="BUY_PERSON" name="BUY_PERSON" data-bind="value:BUY_PERSON" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.BORN_DATE">采购日期</label>
+                          <div class="controls">
+                              <input id="BORN_DATE" name="BORN_DATE" type="text" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.PRICE">采购价格</label>
+                          <div class="controls">
+                              <input type="text" id="PRICE" name="PRICE" data-required="1" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.MANUFACTURE">生产商</label>
+                          <div class="controls">
+                              <input type="text" id="MANUFACTURE" name="MANUFACTURE" data-bind="value:MANUFACTURE" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                      <td>
+                          <label class="control-label" data-lang="Common.MEMO">描述</label>
+                          <div class="controls">
+                              <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" />
+                          </div>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="control-group">
+              <table>
+                  <tr>
+                      <td>
+                          <label class="control-label" data-lang="Common.SERIAL_NO">设备序列号</label>
+                          <div class="controls">
+                              <input type="text" id="SERIAL_NO" name="SERIAL_NO" data-bind="value:SERIAL_NO" data-required="1" class="span6 m-wrap" style="width: 555px;" />
+                          </div>
+                      </td>
+                      <td>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+          <div class="form-actions">
+              <div id="Win_Submit" class="btn green">确定<i class="icon-ok"></i></div>
+              <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+          </div>
+      </form>
+
+
+block content
+
+ .row-fluid
+  .span12
+    h3.page-title(data-lang='AccountManage')
+      | 设备管理
+    ul.breadcrumb
+      li
+        i.icon-home
+        a(href='/') 主页
+        i.icon-angle-right
+      li
+        a(href='javascript:;', data-lang='System') 系统
+        i.icon-angle-right
+      li
+        a(href='javascript:;', data-lang='AccountManage') 设备管理
+ .row-fluid
+  table(width='100%', cellpadding='0', cellspacing='0')
+    tr
+      td(style='width: 240px;')
+        .control-group
+          .controls
+            button#tree_add.btn.blue( title='新增组')
+              | 新增
+              i.icon-plus-sign
+            button#tree_edit.btn.purple
+              | 编辑
+              i.icon-edit
+            button#tree_delete.btn.red
+              | 删除
+              i.icon-remove-sign
+        table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+          tr
+            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+              a.k-link(tabindex='-1', href='#') 设备组
+              i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
+          tr
+            td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
+              div(style='height: 424px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                #orgnizetree
+                i#tree_addRootNode.icon-plus-sign(data-bind='click:tree_addRootNode', style='margin-left:20px;font-size:14px;display:none;')
+      td(valign='top', style='padding-left:5px;')
+        .control-group(style='height: 34px;')
+          .controls
+            .input-icon.left(style='width: 250px; display: inline;')
+              i.icon-search
+              input#filter.m-wrap(type='text', placeholder='设备名称')
+            button#add_mac.btn.blue(data-bind='click:grid_add')
+              | 新增
+              i.icon-plus-sign
+            button#del_mac.btn.red(data-bind='click:grid_delete')
+              | 删除
+              i.icon-remove-sign
+            button#move_mac.btn.green(data-bind='click:grid_move')
+              | 移组
+              i.icon-exchange
+        #grid

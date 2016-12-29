@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(href='./images/logoico.ico', rel='shortcut icon', type='image/x-icon')
+    title 数字化工厂管理系统V8.0
+    // Bootstrap core CSS
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/bootstrap.min.css') 
+    link(href='./css/style.css', rel='stylesheet')
+  body.texture
+    #cl-wrapper.error-container
+      .page-error
+        h1.number.text-center(style='margin-bottom: 100px;') 404
+        h2.description.text-center 对不起，这个页面不存在
+        h3.text-center
+          | 是否要返回主页
+          a(href='/') home
+          | ?
+      .text-center.copy
+        | © 2016 
+        a(href='#') www.bandexsoft.com
+    script(type='text/javascript', src='./javascripts/UI/Scripts/jquery-1.10.2.min.js')
+    script(type='text/javascript', src='./javascripts/general.js')

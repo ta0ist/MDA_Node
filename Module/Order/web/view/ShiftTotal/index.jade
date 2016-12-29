@@ -1,0 +1,74 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Order/web/css/ShiftTotal.css',rel='stylesheet')
+    link(type='text/css',href='./Order/web/css/jcallout.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Order/web/controller/ShiftTotalController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 班次统计
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 工单管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') 班次统计
+    div(ng-app='app', ng-controller='appCtrl')
+        form.form-horizontal(style='padding: 5px 2px 0px;height:35px')
+            .span(style='width: 350px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 开始日期
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime', style='width:200px;')
+            .span(style='width: 350px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 结束日期
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='endTime', style='width:200px;')
+            .span(style='width: 130px !important;')
+                .control-group(style='margin-bottom: 5px;')
+                    .btn.green(style='margin-left: 50px;', ng-click='search()')
+                        | 查询
+                        i.icon-search
+        #grid(style='margin-top:10px;')
+        .row-fluid
+            div(style='width: 49%; display: inline-table; ')
+                div
+                    h3(style='width:100%; text-align: center; ') 人员产量
+                table(style='width: 100%; text-align: center; border-bottom:#999 solid 1px;')
+                    tr(ng-repeat='cont in conts')
+                        td(width='60') {{cont.MEN_NAME}}
+                        td(width='30') {{cont.SHIFT_NAME}}
+                        td(style='border-left: #ccc solid 2px;  text-align: left; ')
+                            ul#yanse(style='list-style: none; padding: 0; margin-top: 15px; margin-left: 0px; margin-right: 10px;')
+                                li(style='height: 20px; background: #d0ce19; text-align: center; line-height: 20px; ', ng-style='{width:cont.YIELDB}') {{cont.YIELD}}
+                                li(style='height: 20px; background: #1D943B; text-align: center; line-height: 20px; ', ng-style='{width:cont.RUN_TIMEB}') {{cont.RUN_TIME}}
+                                li(style='height: 20px; background: #BB2413; text-align: center; line-height: 20px; ', ng-style='{width:cont.STOP_TIMEB}') {{cont.STOP_TIME}}
+            div(style='width: 49%; display: inline-table; border-left: #999 solid 1px;')
+                div
+                    h3(style='width: 100%; text-align: center; ') 设备产量
+                table(style='width: 100%; text-align: center; border-bottom: #999 solid 1px; ')
+                    tr(ng-repeat='item in items')
+                        td(width='60') {{item.MAC_NO}}
+                        td(width='30') {{item.SHIFT_NAME}}
+                        td(style='border-left: #999 solid 1px; text-align: left; ')
+                            ul#yanse(style='list-style: none; padding: 0; margin-top: 15px; margin-left: 0px; margin-right: 10px;')
+                                li(style='height: 20px; background: #d0ce19; text-align: center; line-height: 20px; ', ng-style='{width:item.YIELDB}') {{item.YIELD}}
+                                li(style='height: 20px; background: #1D943B; text-align: center; line-height: 20px; ', ng-style='{width:item.RUN_TIMEB}') {{item.RUN_TIME}}
+                                li(style='height: 20px; background: #BB2413; text-align: center; line-height: 20px; ', ng-style='{width:item.STOP_TIMEB}') {{item.STOP_TIME}}
+        ul#flo.block(style='width: 500px; height: 20px; margin: 10px auto; display: none')
+            li
+                span(style='background: #d0ce19; ')
+                |  产量
+            li
+                span(style='background: #1D943B; ')
+                |  运行用时
+            li
+                span(style='background: #BB2413; ')
+                |  停机用时

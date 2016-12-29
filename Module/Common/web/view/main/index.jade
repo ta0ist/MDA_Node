@@ -1,0 +1,133 @@
+﻿extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Common/web/css/mian.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts-3d.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexWidget.js')
+    script(type='text/javascript',src='./Common/web/controller/mainController.js')
+block content
+    div(ng-controller='commonPlusController')
+        .row-fluid
+            .span12
+                // BEGIN STYLE CUSTOMIZER
+                div
+                    common-plus
+                        expander.expander(ng-repeat='expander in expanders', expander-title='expander.title')
+                // END BEGIN STYLE CUSTOMIZER
+                // BEGIN PAGE TITLE & BREADCRUMB
+                h3.page-title(data-lang='AccountManage')
+                    | 主面板
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') 主页
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='System') 主面板
+                // END PAGE TITLE & BREADCRUMB
+        #dashboard
+            .row-fluid
+                table.table(ng-show='status.length > 0')
+                    tr
+                        th(style='text-align: left; font-size: 15px; border:1px solid #CDCDCD;')
+                            | 设备即时状态数量
+                    tr
+                        td
+                            .span25.responsive(ng-repeat='item in status')
+                                .dashboard-stat.black(ng-style="{'background-color':item.color}")
+                                    .visual
+                                        i(ng-class='item.Icon')
+                                    .details
+                                        .number
+                                            | {{item.MacCount}}
+                                        .desc {{item.name}}
+                                    a#move-handle.more(href='/statusrate', style='height: 13px; background-color: rgb(33, 33, 33);')
+                                        i.m-icon-swapright.m-icon-white(style='margin-top: 0px;')
+                                    .statusDetial(style='height: 50px; position: absolute; ')
+            .row-fluid
+                table.table(ng-show='ShortcutMenu')
+                    tr
+                        th(style='text-align: left; font-size: 15px; border:1px solid #CDCDCD;')
+                            | 我的导航
+                            i.icon-cog.menubtn(ng-show='!editEnabled', ng-click='editMenu()') 编辑
+                            i.icon-plus.menubtn(ng-show='!editEnabled', ng-click='addMenu()') 新增
+                            i.icon-reply.menubtn(ng-show='editEnabled', ng-click='returnMenu()') 返回
+                    tr
+                        td
+                            .tiles(ng-repeat='menu in menus')
+                                .tile(ng-click='go($index)', ng-class="{'bg-blue':menu.bgblue,'bg-green':menu.bggreen,'bg-red':menu.bgred,'bg-purple':menu.bgpurple,'bg-yellow':menu.bgyellow,'bg-grey':menu.bggrey,'double':menu.double,'doubledown':menu.doubledown}")
+                                    .tile-body
+                                        i(ng-class='menu.ICON')
+                                    .tile-object
+                                        .name {{menu.MENU}}
+                                        .number(ng-show='editEnabled')
+                                            i.icon-remove(style='margin-left:3px;cursor:pointer;', title='1', ng-click='del($index)')
+            .row-fluid
+                .span6(ng-show='showActive')
+                    table.table
+                        tr
+                            th(style='text-align: left; font-size: 15px; border:1px solid #CDCDCD;')
+                                | 设备组当日班次稼动率
+                                i.table-icon.icon.icon-refresh.menubtn(ng-click='getActive()')
+                                i#active_memo.table-icon.icon.icon-question-sign.menubtn
+
+                        tr
+                            td
+                                #chart_active
+                                    #loading(style='font-size:18px;text-align:center;margin-top:10px;')
+                                        i.icon-spinner.icon-spin
+                                        |  正在努力加载数据......
+                .span6(style='padding-right:2px;', ng-show='showRate')
+                    table.table
+                        tr
+                            th(style='text-align: left; font-size: 15px; border:1px solid #CDCDCD;')
+                                | 设备组当日班次用时比例
+                                i.table-icon.icon.icon-refresh.menubtn(ng-click='getRate()')
+                                i#rate_memo.table-icon.icon.icon-question-sign.menubtn
+                        tr
+                            td
+                                #chart_statusRate
+                                    #loading(style='font-size:18px;text-align:center;margin-top:10px;')
+                                        i.icon-spinner.icon-spin
+                                        |  正在努力加载数据......
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" url="#:item.urls#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#popup-add(type='text/x-kendo-template').
+        <form id="addMenu" class="form-horizontal">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">菜单名称</label>
+        <div class="controls">
+        <input type="text" id="MENU" name="MENU" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">样式</label>
+        <div class="controls">
+        <input type="text" id="MENU_TYPE" name="MENU_TYPE" class="span6 m-wrap" style="width: 214px; margin-left: 0px; left: -1px;" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label">菜单名称</label>
+        <div class="controls">
+        <ul style="list-style: outside none none; margin-bottom: 0px; margin-left: 0px; margin-top: 3px;" class="menustyle">
+        <li class="bg-blue selected" bgcolor="bg-blue" style="margin-left: 0px;" data-bind=""></li>
+        <li class="bg-green" bgcolor="bg-green"></li>
+        <li class="bg-red" bgcolor="bg-red"></li>
+        <li class="bg-purple" bgcolor="bg-purple"></li>
+        <li class="bg-yellow" bgcolor="bg-yellow"></li>
+        <li class="bg-grey" bgcolor="bg-grey"></li>
+        </ul>
+        </div>
+        </div>
+        <div class="form-actions">
+        <div id="Win_Submit" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+
+
+
+

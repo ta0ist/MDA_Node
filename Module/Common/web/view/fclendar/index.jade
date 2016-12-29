@@ -1,0 +1,46 @@
+extends ../../../../../views/layout
+append headcss 
+  link(href='./Common/web/css/factorycalendar/Calendar.css', rel='stylesheet', type='text/css')
+append headjavascript
+  script(type='text/javascript',src='./Common/web/controller/fclendarController.js')
+block content
+    .row-fluid
+      .span12
+        h3.page-title()
+          | 工厂日历
+        ul.breadcrumb
+          li
+            i.icon-home
+            a(href='/') 主页
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='System') 系统
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='AccountManage') 工厂日历
+     .row-fluid
+       .aboluo-w-700
+        .aboluo-leftdiv
+         .aboluo-tools
+          .aboluo-calendar-select-year
+          .aboluo-calendar-month
+           a.aboluo-month-a-perv(href='javascript:;') < 
+           a.aboluo-month-a-next(href='javascript:;') >
+          input.aboluo-toToday(type='button', value='返回今天')
+         .aboluo-rilidiv 
+          table.aboluo-rilitable(cellspacing='0', cellpadding='0')
+           thead.aboluo-rilithead
+            tr
+              th 一
+              th 二
+              th 三
+              th 四
+              th 五
+              th(style='color: red;') 六
+              th(style='color: red;') 日
+        .aboluo-rightdiv
+          p.aboluo-xssj
+          p
+          p.aboluo-currday
+          p.aboluo-ssjjr
+          p.aboluo-xsmx      

@@ -1,0 +1,125 @@
+ul{
+    margin:0;
+}
+li{
+    list-style:none;
+}
+.centent{
+    margin-bottom:20px;
+}
+.parent_img_menu {
+    width: 20%;
+    position:relative;
+}
+.parent_img_content_a {
+    width:79%;
+}
+.parent_img_content_b {
+    width: 96%;
+
+}
+.img_menu {
+    height: 680px;
+    border: 1px solid #aaa;
+    overflow:auto;
+    background:#e8f5fe;
+}
+.img_menu>ul{
+    background:#ddd;
+    padding:5px 0;
+}
+.img_content {
+    height: 680px !important;
+    border: 1px solid #aaa;
+    position: relative;
+    background: #e8f5fe;
+}
+.location_hamburger {
+    padding: 5px;
+    background: #3D3D3D;
+    /*position: absolute;
+left: -1px;
+top: -37px;*/
+    cursor: pointer;
+}
+.hamburger{
+    color:#fff;
+    font-size:15px;
+    cursor:pointer;
+
+}
+a, img {
+    border: 0;
+}
+.modules {
+    padding:15px 15px 0 15px;
+}
+.m_title {
+    /*height: 24px;
+    line-height: 24px;*/
+    /*background: #afc6e9;*/
+}
+#loader {
+    height: 24px;
+    text-align: center;
+}
+.modules > img {
+    border: 2px solid #cee3e9;
+    background:#f0fbeb;
+}
+.modules > img:hover {
+    border: 2px solid #E79768;
+}
+.img_border_active {
+    border: 2px solid #D35A12 !important;
+}
+.font_style {
+    font-family: SimSun;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #d3d3d3;
+    border-bottom: 0;
+    width: 100%;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 5px 0;
+    cursor: move;
+}
+.Hidden_bread {
+    display:none;
+    /*height: 670px;*/
+    background: #e8f5fe;
+    border:1px solid;
+    width:40px;
+    text-align:center;
+    padding:5px 0;
+}
+.Hamburger{
+    font-size:20px
+}
+.Menu_font{
+    line-height:30px;
+    font-weight:bold;
+    font-size:20px;
+}
+.hidden_hamburger{
+    width:80%;
+    margin:0 auto;
+    padding:5px 0;
+}
+.a{
+    width:calc(99% - 40px);
+}
+.big_img_conter_loc{
+    width:200px;
+    border:1px solid #aaa;
+    min-height:300px;
+    padding:20px;
+    margin:40px 30px 0 0;
+    box-shadow:0 0 10px;
+
+}
+.big_img_loc{
+    margin-right:280px;
+}

@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Bande帮助文档</title>
+    <meta name="keywords" content="documentation,dox" />
+    <meta name="description" content="Generate your documentation." />
+    <script src="assets/prettify.js"></script>
+    <script src="assets/jquery-1.8.2.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/base.css" />
+</head>
+<body>
+
+
+
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="nav nav-list bs-docs-sidenav affix">
+
+                    <li class="level_2">
+                        <a href="#index_设备参数" title="设备参数">
+                            <i class="icon-chevron-right"></i>设备参数
+                        </a>
+                    </li>
+
+                    <li class="level_2">
+                        <a href="#index_状态分析" title="状态分析">
+                            <i class="icon-chevron-right"></i>状态分析
+                        </a>
+                    </li>
+
+                    <li class="level_2">
+                        <a href="#index_产量分析" title="产量分析">
+                            <i class="icon-chevron-right"></i>产量分析
+                        </a>
+                    </li>
+
+                    <li class="level_2">
+                        <a href="#index_报表" title="报表">
+                            <i class="icon-chevron-right"></i>报表
+                        </a>
+                    </li>
+
+                    <li class="level_2">
+                        <a href="#index_系统" title="系统">
+                            <i class="icon-chevron-right"></i>系统
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="col-md-9">
+                <section>
+                    <h1>Bandex帮助文档</h1>
+                    <h2>设备参数</h2>
+                    <p>AAADFDSF过去通常要自己维护API文档，这会是一件比较蛋疼的事情。所幸我们有<a href="https://github.com/visionmedia/dox">dox</a>，dox可以帮我们解析注解。但是dox不能帮我们任意生成文档。于是就有了doxmate，doxmate基于dox的注解对象，加入模板。在遵循Github和CommonJS的约定后，doxmate可以帮你的模块包快速生成文档。</p><h3>协助诊断</h3>
+                    <h3>过程参数</h3>
+                    <h3>零件追溯</h3>
+                    <h2>状态分析</h2>
+                    <h3>稼动率</h3>
+                    <p>定义<br />是指相对于生产时间（负荷时间），实际生产物品的时间（稼动时间）所占的比率。是以机器设备的稼动时间除以最大负荷时间而得。而稼动时间是指负荷时间减掉换模、换刀具、故障、调整等的时间。因此要提高稼动率，就必须要减少换模具、换刀具、故障、调整的损失时间。如果能将这些损失时间减为零，那么稼动率就可以达到百分之百。</p><p>参数<br />最大负荷时间：设备可用的最大负荷时间：最大操作时间扣除停机（Shutdown, SD） 损失；<br />停机（Shutdown, SD）损失：计划上的休止时间，如休假、教育训练、保养等<br />稼动时间：负荷时间扣除停止时间<br />停止时间：包括批次转换及制程异常、设备异常停止及修复时间。</p><p>公式<br />由以上的定义，即可算出最常用的稼动率定义－设备稼动率（也称为时间稼动率），其公式为：<br />时间稼动率= 稼动时间 / 负荷时间</p><p>目的<br />减少停机时间，通过资源整合，管理优化，进行资源充分利用，降低成本，提高效率。</p><h3>历史状态</h3>
+                    <h3>用时分析</h3>
+                    <h2>产量分析</h2>
+                    <h3>任务计划</h3>
+                    <h3>设备产量</h3>
+                    <h3>良品率</h3>
+                    <h3>质量反馈(抽检)</h3>
+                    <h3>质量反馈(终检)</h3>
+                    <h2>报表</h2>
+                    <h3>报表导出</h3>
+                    <h2>系统</h2>
+                    <h3>账号管理</h3>
+                    <h3>权限管理</h3>
+                    <h3>数据导入</h3>
+                    <h3>设备管理</h3>
+                    <h3>人员管理</h3>
+                    <h3>班次管理</h3>
+                    <h3>状态数据</h3>
+
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="pull-right">
+                <a href="#">Back to top</a>
+            </p>
+            <!--          <p>此文档通过doxmate生成。主题借鉴Bootstrap API文档风格，注解基于<a href="https://github.com/visionmedia/dox">Dox</a>。欢迎关注doxmate作者<a href="http://weibo.com/shyvo" target="_blank">@朴灵</a></p>
+                      <ul class="footer-links">
+                        <li><a href="https://github.com/visionmedia/dox">Dox主页</a></li>
+                        <li><a href="http://html5ify.com/doxmate">Doxmate主页</a></li>
+                        <li><a href="https://github.com/JacksonTian/doxmate">Doxmate源码</a></li>
+                        <li><a href="https://github.com/JacksonTian/doxmate/issues?state=open">提交bug</a></li>
+                      </ul>-->
+        </div>
+    </footer>
+    <script>
+        $(function () {
+            $('pre').addClass('prettyprint');
+            $('td pre').removeClass('prettyprint');
+            prettyPrint();
+            var $window = $(window);
+            $('.bs-docs-sidenav').affix({
+                offset: {
+                    top: function () {
+                        return $window.width() <= 980 ? 290 : 210
+                    },
+                    bottom: 270
+                }
+            });
+            $(".content").find('h1, h2, h3, h4, h5, h6').each(function () {
+                var node = $(this);
+                // 总是设置id
+                node.attr("id", node.data('id') || "index_" + node.text());
+                node.css("paddingTop", 50);
+            });
+        });
+    </script>
+
+</body>
+</html>

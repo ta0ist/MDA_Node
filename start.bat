@@ -1,0 +1,1 @@
+pm2 start %~dp0/bin/www -i 1

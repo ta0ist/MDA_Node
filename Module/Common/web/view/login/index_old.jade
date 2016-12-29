@@ -1,0 +1,58 @@
+﻿doctype html
+html
+  meta(charset='utf-8')
+  title.lang(data-lang='Common.Version') 上海斑彰
+  meta(content='width=device-width, initial-scale=1.0', name='viewport')
+  meta(content='', name='description')
+  meta(content='', name='author')
+  link(href='/images/logoico.ico', rel='shortcut icon', type='image/x-icon')
+  link(href='./javascripts/media/css/bootstrap.min.css',rel='stylesheet',type='text/css')
+  link(href='./javascripts/media/css/bootstrap-responsive.min.css',rel='stylesheet',type='text/css')
+  link(href='./javascripts/media/css/font-awesome.min.css',rel='stylesheet',type='text/css')
+  link(href='./javascripts/media/css/style-metro.css',rel='stylesheet',type='text/css')
+  link(href='./javascripts/media/css/style.css',rel='stylesheet',type='text/css')
+  link(href='./javascripts/media/css/default.css',rel='stylesheet',type='text/css')
+  link(href='./javascripts/media/css/uniform.default.css',rel='stylesheet',type='text/css')
+  link(href='./javascripts/media/css/login.css',rel='stylesheet',type='text/css')
+
+  style(type='text/css').
+      body {
+      font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
+      }
+  script(src='./javascripts/jquery-1.10.2.js')
+  script(src='./javascripts/Angular/angular.min.js')
+  script(src='./javascripts/bootstrap.js')
+  script(src='./javascripts/media/js/jquery-migrate-1.2.1.min.js')
+  script(src='./javascripts/media/js/jquery-ui-1.10.1.custom.min.js')
+  script(src='./Common/web/controller/logincontroller.js')
+body.login(ng-app='login',ng-controller='loginctrl',ng-submit='Login()',novalidate)
+  .content(style='border-radius: 5px; padding: 0px; width: 500px;margin-top:10%;')
+      form.form-vertical.login-form(style='position:relative;')
+        h3.form-title.lang(style='padding-top: 10px; padding-bottom: 10px; padding-left: 10px; font-weight: bold; font-size: 16px; background-color: rgb(75, 141, 248); color: rgb(255, 255, 255);') 欢迎使用数字化工厂管理系统
+        .control-group(style='margin-left: 210px; width: 300px;')
+          label.control-label.visible-ie8.visible-ie9 Username
+          .controls
+            .input-icon.left
+              i.icon-user
+              input.m-wrap.placeholder-no-fix(type='text', placeholder='Username', name='username', style='width: 200px;',required)
+        .control-group(style='margin-left: 210px; width: 300px;')
+          label.control-label.visible-ie8.visible-ie9 Password
+          .controls
+            .input-icon.left
+              i.icon-lock
+              input.m-wrap.placeholder-no-fix(type='password', placeholder='Password', name='password', style='width: 200px;',required)
+        img(src='./Common/web/images/bandexlogo.png', style='position: absolute; top: 86px; left: 12px;')
+        .form-actions(style='margin: 0px; padding-bottom: 10px;')
+          label.checkbox(style='margin-left: 200px;')
+            input#chkremember(type='checkbox', name='remember')
+            span.lang(data-lang='Common.RemeberPassword') 记住密码
+          button#BtLogin.btn.green.pull-right(type='button', data-bind='click:login')
+            span.lang(type='submit') 登陆
+            i.m-icon-swapright.m-icon-white
+        div(style='height: 25px; padding-left: 20px; color: #FF0000; width: 300px;')
+          label#message(data-bind='text:LOGIN_INFO', style='height: 20px; margin-bottom: 0px; margin-top: 5px;')
+   .copyright(style='font-size:12px;width:300px;')
+      | © 
+      span.lang(data-lang='Common.Company') 上海斑彰数字化工厂管理系统
+      br
+      a(style='font-size:14px;cursor:pointer;color:rgb(0, 255, 255)') http://www.sh-lingxiu.com

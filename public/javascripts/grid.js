@@ -1,0 +1,5 @@
+﻿$.widget('bz.grid', {
+    options: {
+        
+    }
+})

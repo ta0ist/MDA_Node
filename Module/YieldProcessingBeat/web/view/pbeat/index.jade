@@ -1,0 +1,91 @@
+extends ../../../../../views/layout
+append headjavascript
+    script(type='text/javascript',src='./YieldProcessingBeat/web/controller/pbeatController.js')
+append headcss
+    style(type='text/css').
+        .span {
+            float: left !important;
+            margin-left: 0px !important;
+            width: 300px !important;
+        }
+        .BZcontrols {
+            margin-left: 130px;
+        }
+        .BZcontrols > .radio, .BZcontrols > .checkbox {
+            display: inline-block;
+            margin: 8px 15px 0 0 !important;
+            padding: 0 !important;
+        }
+        #ss {
+            position: relative;
+            top: 30px;
+            z-index: 99999;
+        }
+        #Div0 {
+            /*float: left;*/
+            background-color: Blue;
+            width: 100%;
+            height:100%;
+        }
+        #Div1 {
+            /*float: left;*/
+            background-color: Blue;
+            width: 100%;
+            height:100%;
+        }
+
+block content
+
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 加工节拍
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 加工节拍
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 加工节拍
+
+
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 开始时间
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 结束时间
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='endTime')
+        .row-fluid
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 是否工作日
+                    .BZcontrols
+                        input#totalType.m-wrap(type='text', name='totalType')
+            div(style='float:left;margin-left:0px;width:350px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') 设备
+                    .BZcontrols
+                        input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
+            .span(style='width: 128px !important; float:left; text-align:center;')
+                .control-group(style='margin-bottom: 5px;')
+                    #search.btn.green(style='margin-left: 50px;')
+                        | 查询
+                        i.icon-search
+        #Div0(style='margin-top: 5px; background-color: black; overflow-y: auto; overflow-x: hidden; ')
+            center
+                #nodata(style='position: absolute; left: 50%; top: 50%; width: 200px; height: 100px; margin-left: -100px; margin-top: -50px;')
+            #Div1
+append headjavascript 
+    script(src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js', type='text/javascript')
+    script(src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts-3d.js', type='text/javascript')
+    script(src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/modules/exporting.js', type='text/javascript')
+    script(src='./javascripts/UI/Scripts/BandexHighCharts.js', type='text/javascript')

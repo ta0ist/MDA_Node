@@ -1,0 +1,26 @@
+﻿p{
+	line-height: 12pt;
+	word-spacing: 1pt;
+	font-family: Tahoma;
+	font-size: 9pt;
+}
+a:visited {
+	text-decoration: none;
+	color: #414141;
+}
+a:link {
+	text-decoration: none;
+	color: #414141;
+}
+a:active {
+	text-decoration: none;
+	color: #000080;
+}
+a:hover {
+	text-decoration: none;
+	color: #cc3300;
+}
+.input {
+	border: 1px solid #c0c0c
+}
+

@@ -1,0 +1,144 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Order/web/css/ProductMaintenance.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/UI/Scripts/media/css/inbox.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Order/web/javascripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./Order/web/controller/ProductMaintenanceController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 产品维护
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 工单管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 产品维护
+    .row-fluid
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(style='width: 240px;')
+                    .control-group
+                        .controls
+                            button#tree_add.btn.blue(data-bind='click:tree_add', title='')
+                                | 新增
+                                i.icon-plus-sign
+                            button#tree_edit.btn.purple(style='outline: medium', data-bind='click:tree_edit', title='')
+                                | 编辑
+                                i.icon-edit
+                            button#tree_delete.btn.red(style='outline: medium', data-bind='click:tree_delete', title='')
+                                | 删除
+                                i.icon-remove-sign
+                    table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                        tr
+                            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                                a.k-link(tabindex='-1', href='#') 产品组
+                                i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
+                        tr
+                            td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
+                                div(style='height: 424px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                                    #orgnizetree
+                                    i#tree_addRootNode.icon-plus-sign(data-bind='click:tree_addRootNode', style='margin-left:20px;font-size:14px;display:none;')
+                td(valign='top', style='padding-left:5px;')
+                    .control-group(style='height: 34px;')
+                        .controls(style='position:relative;')
+                            button#slide.btn.purple(title='', style='position: absolute; top: 0px; right: 114px; outline: medium') 折叠
+                            button.btn.blue(data-bind='click:grid_add', title='', style='position:absolute;top:0px;right:10px;')
+                                | 新增产品
+                                i.icon-plus-sign
+                    #grid
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" attr="treenode">#:item.text#</span>
+    script#popup-add(type='text/x-kendo-template').
+        <form class="form-horizontal" id="memberviewmodel" style="width:1000px;">
+        <div class="row-fluid">
+        <div style="float: left;margin-left:0px;width:350px;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Order.ProductNumber" id="PROD_NO_text">产品编号</label>
+        <div class="BZcontrols">
+        <input type="text" id="PROD_NO" name="PROD_NO" data-bind='value: PROD_NO,attr: { disabled: CMD() != 0 && CMD() != 1}' class="m-wrap" value="" />
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="row-fluid" style="margin:10px auto 20px">
+        <div style="float: left;margin-left:0px;width:350px;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Order.ProductName" id="PROD_NAME_text">产品名称</label>
+        <div class="BZcontrols">
+        <input type="text" id="PROD_NAME" name="PROD_NAME" data-bind='value: PROD_NAME,attr: { disabled: CMD() != 0 && CMD() != 1}' class="m-wrap" value="" />
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="control-group">
+        <div id='productList' style="width:960px;margin:10px 0px 0px 20px;">
+        <table class='contactsEditor' style="margin:auto;">
+        <tr>
+        <th style="width: 85px;">工艺编号</th>
+        <th style="width: 85px;">工艺名称</th>
+        <th style="width: 85px;">工序编号</th>
+        <th style="width: 85px;">工序名称</th>
+        <th style="width: 85px;">工序顺序</th>
+        <th style="width: 85px;">最后工序</th>
+        <th style="width: 85px;">标准用时</th>
+        <th style="width: 85px;">循环倍率</th>
+        <th style="width: 85px;">备注</th>
+        <th style="width: 85px;"></th>
+        </tr>
+        <tbody data-bind="foreach: CRAFT_LIST">
+        <tr>
+        <td valign="top">
+        <input class="filed-input" data-bind='value: CRAFT_NO,attr: { disabled: FLAG() == 1 && $root.CMD() != 3}' />
+        <div><a href='\\#' data-bind='click: $root.removeCraft,visible: FLAG() == 0'>删除工艺</a></div>
+        </td>
+        <td style="display:inline-block">
+        <input class="filed-input" data-bind='value: CRAFT_NAME,attr: { disabled: FLAG() == 1 && $root.CMD() != 3}' />
+        </td>
+        <td colspan="8">
+        <table>
+        <tbody data-bind="foreach: PROC_LIST">
+        <tr>
+        <td><input class="filed-input" data-bind='value: PROC_NO,attr: { disabled: FLAG() == 1 }' /></td>
+        <td><input class="filed-input" data-bind='value: PROC_NAME,attr: { disabled: FLAG() == 1 }' /></td>
+        <td><input class="filed-input" data-bind='value: RANK_NUM,attr: { disabled: FLAG() == 1 }' /></td>
+        <td style="width: 80px; text-align: center;">
+        <input type="checkbox" data-bind='event:{change:$root.onchange},checked: PROC_TYPE,attr: { disabled: FLAG() == 1,index:$parentContext.$index  }' />
+        </td>
+        <td><input class="filed-input" data-bind='value: STD_TIME,attr: { disabled: FLAG() == 1 }' /></td>
+        <td><input class="filed-input" data-bind='value: CYCLE_RATE,attr: { disabled: FLAG() == 1 }' /></td>
+        <td><input class="filed-input" data-bind='value: MEMO,attr: { disabled: FLAG() == 1 }' /></td>
+        <td>
+        <a href='\\#' data-bind='click: $root.removeProcess,visible: FLAG() == 0 && $root.CMD() != 5'>删除工序</a>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <a href='\\#' data-bind='click: $root.addProcess,visible: $root.CMD() != 1 && FLAG() == 0 || $root.CMD() == 4'>新增工序</a>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        <p>
+        <button data-bind='click: addCraft,visible: CMD() == 0 || CMD() == 2' style="margin-left:65px;">新增工艺</button>
+        </p>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#PROC_TYPE_TEMPLATE(type='x-kendo-template').
+        # if ( data.PROC_TYPE ==0) { #
+        否
+        # } else if(data.PROC_TYPE == 1) { #
+        是
+        # } #

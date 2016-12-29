@@ -1,0 +1,96 @@
+html {
+  height: 100%;
+  width: 99.9%;
+  border: 0px solid yellow;
+  overflow: hidden;
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+}
+body {
+  height: 100%;
+  width: 100%;
+  border: 0px solid yellow;
+  overflow: hidden;
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+}
+body {
+  background-color: #13364B;
+}
+#head {
+  height: 50px;
+  border: 0px solid red;
+  /*background-color: #13364B;*/
+  font-size: 39.2px;
+  color: #FFFFFF;
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+}
+#foot {
+  height: 40px ;
+  border: 0px solid red;
+  /*background-color: #13364B;*/
+  font-size: 35px;
+  color: #FFFFFF;
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+}
+.td1 {
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+  font-size: 22.4px;
+  color: #FFFFFF;
+}
+.visaltablehead {
+  height: 42px;
+}
+.visaltablehead table {
+  border-spacing: 7px;
+  border-collapse: separate;
+}
+#tabledataTable {
+  border-spacing: 7px;
+  border-collapse: separate;
+}
+.datatd td {
+  background-color: #ffffff;
+  height: 42px;
+  padding-left: 2.8px;
+  font-size: 22.4px;
+}
+#pagenum {
+  padding-right: 5px;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16.8px;
+}
+.TableStatus1 {
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #236375 !important;
+}
+.TableStatus2 {
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #323232 !important;
+}
+.OK {
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #236375 !important;
+}
+.ALARM {
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #F4B522 !important;
+}
+.FAULT {
+  font-family: "Microsoft YaHei", "微软雅黑", "Arial", "Verdana", "黑体";
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #D61B1B !important;
+}
+#statusDetail {
+  position: fixed;
+  right: 50px;
+  top: 120px;
+}

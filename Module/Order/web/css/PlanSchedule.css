@@ -1,0 +1,52 @@
+.span {
+    float: left !important;
+    margin-left: 0px !important;
+    width: 300px !important;
+}
+
+.BZcontrols {
+    margin-left: 130px;
+}
+
+.BZcontrols > .radio, .BZcontrols > .checkbox {
+    display: inline-block;
+    margin: 8px 15px 0 0 !important;
+    padding: 0 !important;
+}
+
+.pie {
+    width: 450px !important;
+    height: 400px;
+    float: left;
+    border-top: 1px dashed #cecece;
+}
+
+.hischart {
+    width: 650px !important;
+    height: 500px;
+    border-top: 1px dashed #cecece;
+}
+
+.statusdetail {
+    margin-right: 2px !important;
+    margin-top: -3px !important;
+    display: inline;
+}
+
+#statusdetail > div {
+    display: inline;
+    margin-left: 20px;
+}
+
+.k-widget.k-combobox.k-header.span6.m-wrap {
+    margin-left: 0px !important;
+}
+
+.k-widget.k-dropdown.k-header.span6.m-wrap {
+    margin-left: 0px !important;
+    width: 213px;
+}
+
+.k-widget.k-datetimepicker.k-header.span6.m-wrap {
+    margin-left: 0px !important;
+}

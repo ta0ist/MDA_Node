@@ -1,0 +1,120 @@
+doctype html
+head
+  meta(name='viewport', content='width=device-width')
+  title #{lang.Common.Version}
+  link(href='./images/logoico.ico', rel='shortcut icon', type='image/x-icon')
+  block headcss 
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/bootstrap.min.css')  
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/bootstrap-responsive.min.css')  
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/font-awesome.min.css')  
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/style-metro.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/style.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/style-responsive.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/default.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/jquery.gritter.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/daterangepicker.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/fullcalendar.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/jqvmap.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/uniform.default.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/jquery.gritter.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/jquery.easy-pie-chart.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/jquery.fileupload-ui.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/timepicker.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/media/css/timeline.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/alertify/alertify.core.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/alertify/alertify.default.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/Content/kendo/2014.1.318/kendo.common.min.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/Content/kendo/2014.1.318/kendo.default.min.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/UI/Scripts/bootstrap-editable/css/bootstrap-editable.css')
+    link(rel='stylesheet', type='text/css', href='./javascripts/Content/Bandex.css')
+
+
+
+  style(type='text/css').
+    body {
+      font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
+    }
+    .ui-resizable-helper {
+      border: 1px dotted gray;
+    }
+body.page-header-fixed(lang='en',ng-app='layout',ng-controller='layoutctrl')
+  .header.navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container-fluid
+        span.brand(data-lang='Main.Title', style='color: rgb(255, 255, 255); font-size: 18px; margin-left: 0px;')
+          | #{lang.Common.Version}
+        a.btn-navbar.collapsed(href='javascript:;', data-toggle='collapse', data-target='.nav-collapse')
+          img(src='./javascripts/UI/Scripts/media/image/menu-toggler.png', alt='')
+        ul.nav.pull-right
+          // BEGIN INBOX DROPDOWN
+          li#header_inbox_bar.dropdown
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              i.icon-envelope
+              span#notification_icon.badge 0
+            ul#inbox-dropdown-menu.dropdown-menu.extended.inbox
+              li
+                p 所有信息
+              li.external
+                a(href='#', onclick='return false;')
+                  | 查看消息
+                  i#message_swapright.m-icon-swapright
+                  i#message_swapleft.m-icon-swapleft(style='margin-right: 20px;display:none;')
+          li.dropdown.user
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              img#user_img(alt='', src='./javascripts/UI/Scripts/media/image/avatar1_small.jpg')
+              span.username #{user.Account}
+              i.icon-angle-down
+            ul.dropdown-menu
+              li
+                a(href='/logout')
+                  i.icon-key
+                  span(href='/logout') 登  出
+.page-container
+  .page-sidebar.nav-collapse.collapse
+    ul.page-sidebar-menu
+      li
+        .sidebar-toggler.hidden-phone(onclick='toggleSideMenu(this)', style='margin-top: 5px; margin-bottom: 5px;')
+      -  for(var i=0;i<menulist.length;i++){
+      -    if(menulist[i].submenu==0){
+            li
+              a(href=menulist[i].url,id=menulist[i].nbr,ng-click='getID('+menulist[i].nbr+')')
+                i(class=menulist[i].ico)
+                span.title #{menulist[i].pagename}
+      -    }else{
+                  li(id=menulist[i].pagename)
+                      a(href='javascript')
+                        i(class=menulist[i].ico)
+                        span.title #{menulist[i].pagename}
+                        span.arrow.open
+                      ul.sub-menu
+                        - for(var j=0;j<menulist[i].submenu.length;j++){
+                                li(id=menulist[i].submenu[j].pagename)
+                                  a(id=menulist[i].submenu[j].nbr,href=menulist[i].submenu[j].url,pid=menulist[i].nbr,ng-click='getSon('+menulist[i].submenu[j].nbr+')')
+                                    span.title #{menulist[i].submenu[j].pagename}
+                        -}
+      -}
+      -}
+  .page-content
+    #portlet-config.modal.hide
+      .modal-header
+        button.close(data-dismiss='modal', type='button')
+        h3 Widget Settings
+      .modal-body
+        | Widget settings form goes here
+    #contextPage.container-fluid
+      block content
+.footer
+  .footer-inner
+    | 2016 © Bandex Shanghai Information Technology Co.,Ltd
+  .footer-tools
+    span.go-top
+      i.icon-angle-up
+block headjavascript
+  script(type='text/javascript', src='./javascripts/UI/Scripts/jquery-1.10.2.min.js')
+  script(type='text/javascript', src='./dist/all.min.js')
+  script(type='text/javascript',src='./start.js')
+  script(type='text/javascript', src='./javascripts/UI/Scripts/media/js/app.js')
+  script(type='text/javascript', src='./javascripts/UI/Scripts/Bandex.js')
+  script(type='text/javascript').
+    var lang = !{JSON.stringify(lang)};
+

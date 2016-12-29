@@ -1,0 +1,78 @@
+.dashboard-stat .visual i {
+    color: #fff;
+    font-size: 50px;
+}
+.row-fluid .span25 {
+    width: 17.9%;
+}
+
+.expander {
+    border: 1px solid black;
+    width: 250px;
+}
+
+.expander > .title {
+    background-color: black;
+    color: white;
+    padding: .1em .3em;
+    cursor: pointer;
+}
+
+.expander > .body {
+    padding: .1em .3em;
+}
+
+.color-modes {
+    background: none repeat scroll 0 0 #3d3d3d;
+    padding: 10px 0;
+    position: absolute;
+    right: 40px;
+    top: 4px;
+}
+
+.shortCutMenu {
+    background-color: black;
+    cursor: pointer;
+    display: block;
+    font-size: 22px;
+    padding: 4px 3px;
+}
+
+.expander {
+    width: 30px !important;
+}
+
+.select-color-default {
+    color: #444444;
+}
+
+.select-color {
+    color: #FFFFFF;
+}
+.menubtn {
+    float: right;
+    margin: 4px 10px 0px 0px;
+    color: #9B9B9B;
+    cursor: pointer;
+}
+
+.menustyle {
+    list-style: outside none none;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.menustyle li {
+    border: 2px solid transparent;
+    display: inline-block;
+    height: 20px;
+    margin: 5px;
+    width: 40px;
+}
+
+.menustyle .selected {
+    border-color: #000;
+}
+.tile{
+    cursor:default !important;
+}

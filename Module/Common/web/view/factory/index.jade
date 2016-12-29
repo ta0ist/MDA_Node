@@ -1,0 +1,57 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Common/web/css/factory.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Common/web/controller/factoryController.js')
+block content
+    div
+        .row-fluid
+            .span12
+                h3.page-title(data-lang='AccountManage')
+                    | 工厂布局
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') 主页
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='System') 工厂布局
+    .clearfix.centent(ng-controller='myCtrl')
+        .pull-left.parent_img_menu
+            .img_menu
+                div
+                    ul.clearfix
+                        li.pull-left.Menu_font 选择项
+                        li.pull-right(ng-click='change_page()')
+                            .location_hamburger
+                                span.icon-align-justify.hamburger
+                #module_list
+                    .modules(ng-repeat='li in global_data', ng-model='global_data')
+                        p.font_style(ng-bind='li.WORKSHOP_CODE')
+                        img.m_title(src='{{li.ICON_IMG}}', alt='Alternate Text', ng-click='showBigImg(li.PIC_IMG,$index)', ng-class='{img_border_active:isSelect==$index}')
+                        input.id(type='hidden', name='name', value='{{li.MAP_NBR}}')
+
+                        input.big_pic(type='hidden', value='{{li.PIC_IMG}}', name='PIC_IMG')
+                        b(type='hidden', value='{{li.GP_NBR}}')
+
+        // 隐藏的面包
+        #Hidden_bread.Hidden_bread.pull-left
+            .location_hamburger.hidden_hamburger(ng-click='change_page()')
+                span.icon-align-justify.hamburger
+        #img_content.pull-right.parent_img_content_a
+            .img_content.clearfix
+                .pull-right.big_img_conter_loc.hide
+                    table.table
+                        thead
+                            tr
+                                th 机床状态
+                                th 数量
+                        tbody
+                            tr(ng-repeat='x in data_status')
+                                td
+                                    span(ng-style='background:{{x.color}}') {{x.status}}
+                                td
+                                    span {{x.number}}台
+                #big_img
+                    img#bigIMG(src='', alt='Alternate Text')
+

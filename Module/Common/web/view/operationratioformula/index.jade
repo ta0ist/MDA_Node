@@ -1,0 +1,32 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Common/web/css/OperationRatioFormula.css',rel='stylesheet')
+    link(type='text/css',href='./Common/web/css/mui.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Common/web/javascripts/mui.js')
+    script(type='text/javascript',src='./Common/web/controller/OperationRatioFormulaController.js')
+
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 公式集合
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') 公式集合
+    .clearfix
+        .mui-textfield.mui-textfield--float-label.caretParent.pull-left(style='width:280px')
+            input#NAME(type='email', required='', style='width: 280px')
+            label 请填写公式名称
+            span#caret.mui-caret.caret
+            ul.ComboBox
+        button#btn.btn.blue.pull-left.add
+            | 新增
+            i.icon-plus-sign
+    #formula(width='100%')
+    .Doraemon
+        canvas#Doraemon(width='400', height='600')

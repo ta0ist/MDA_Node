@@ -1,0 +1,29 @@
+.span {
+    float: left !important;
+    margin-left: 0px !important;
+    width: 300px !important;
+}
+
+.BZcontrols {
+    margin-left: 130px;
+}
+
+.BZcontrols > .radio, .BZcontrols > .checkbox {
+    display: inline-block;
+    margin: 8px 15px 0 0 !important;
+    padding: 0 !important;
+}
+
+.inbox-nav li {
+    float: right;
+}
+
+.inbox-nav li a.btn {
+    border-radius: 0px !important;
+}
+
+.filed-input {
+    width: 80px;
+    border: 1px solid #cdcdcd;
+    padding: 2px;
+}

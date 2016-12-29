@@ -1,0 +1,43 @@
+.span {
+    float: left !important;
+    margin-left: 0px !important;
+    width: 300px !important;
+}
+
+.BZcontrols {
+    margin-left: 130px;
+}
+
+.BZcontrols > .radio, .BZcontrols > .checkbox {
+    display: inline-block;
+    margin: 8px 15px 0 0 !important;
+    padding: 0 !important;
+}
+
+.statustable {
+    border-color: #000 !important;
+}
+
+.statustable th, .statustable td {
+    border-left: 1px solid #000 !important;
+}
+
+.statustable td {
+    border-top: 1px solid #000 !important;
+    width: 35px;
+}
+
+.callout-control-label {
+    margin-bottom: 2px !important;
+    padding-top: 0 !important;
+    width: 80px !important;
+}
+
+.controls-control-label {
+    margin-left: 100px !important;
+}
+
+.badge {
+    padding: 5px;
+    border-radius: 3px !important;
+}

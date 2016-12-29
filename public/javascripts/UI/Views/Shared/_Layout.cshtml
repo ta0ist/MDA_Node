@@ -1,0 +1,285 @@
+﻿@using X1.Core.WebResource
+@using X1.Core.Language
+@using X1.Framework.UIWidget.MainMenu
+
+<!DOCTYPE html>
+<html class="no-js" lang="@LanguageService.CurrentLanguageCode.ToLower()">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@LanguageService.Translate("Common.Version")</title>
+    <link href="/logoico.ico" rel="shortcut icon" type="image/x-icon" />
+    @ResourceManager.Current.Render(this, "Style")
+    @*@ResourceManager.Current.Render(this, "Javascript")*@
+    @*<link href="~/X1System/WebResourceOptimization/Get?type=Style" type="text/css" rel="stylesheet" />*@
+    @*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">*@
+    @*<script type="text/javascript" src="~/X1System/WebResourceOptimization/Get?type=Javascript"></script>*@
+    <script src="~/UI/Scripts/Bandex.js" type="text/javascript"></script>
+    <style type="text/css">
+        body {
+            font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
+        }
+
+        .ui-resizable-helper {
+            border: 1px dotted gray;
+        }
+    </style>
+</head>
+<script src="~/UI/Scripts/BandexNotice.js"></script>
+<body class="page-header-fixed" lang="en">
+    <div class="header navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <span data-lang="Main.Title" class="brand" style="width: 600px; color: rgb(255, 255, 255); font-size: 18px; margin-left: 0px;">
+                    @LanguageService.Translate("Main.Title")
+                </span>
+                <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                    <img src="~/UI/Scripts/media/image/menu-toggler.png" alt="" />
+                </a>
+                <ul class="nav pull-right">
+                    <!-- BEGIN INBOX DROPDOWN -->
+
+                    <li class="dropdown" id="header_inbox_bar">
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                            <i class="icon-envelope"></i>
+
+                            <span id="notification_icon" class="badge">0</span>
+
+                        </a>
+
+                        <ul id="inbox-dropdown-menu" class="dropdown-menu extended inbox">
+
+                            <li>
+
+                                <p>所有信息</p>
+
+                            </li>
+
+
+                            <li class="external">
+
+                                <a href="#" onclick="return false;">
+                                    查看消息
+                                    <i id="message_swapright" class="m-icon-swapright"></i>
+                                    <i id="message_swapleft" class="m-icon-swapleft" style="margin-right: 20px;display:none;"></i>
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+
+                    <li class="dropdown user">
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                            <img alt="" src="~/UI/Scripts/media/image/avatar1_small.jpg" />
+
+                            <span class="username">
+                                @{
+                                    X1.Core.Authentication.X1Principal principal = HttpContext.Current.User as X1.Core.Authentication.X1Principal;
+                                    @principal.UserData.Account
+                                }
+                            </span>
+
+                            <i class="icon-angle-down"></i>
+
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            @*<li><a href="~/UI/Help/Help.html" target="_balnk" id="helpDocument"><i class="icon-book"></i> 帮助文档</a></li>*@
+                            @*<li><a href="javascript:void(0)" id="dataInput"><i class="icon-briefcase"></i> 数据导入</a></li>*@
+
+                            @*<li><a href="page_calendar.html"><i class="icon-calendar"></i> My Calendar</a></li>
+
+                                <li><a href="inbox.html"><i class="icon-envelope"></i> My Inbox(3)</a></li>
+
+                                <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
+
+                                <li class="divider"></li>
+
+                                <li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a></li>*@
+
+                            <li><a href="/Common/UserAuthorize/logout"><i class="icon-key"></i> <span data-lang="Main.Logout">@LanguageService.Translate("Main.Logout")</span></a></li>
+
+                        </ul>
+
+                    </li>
+
+                    <!-- END USER LOGIN DROPDOWN -->
+
+                </ul>
+
+                <!-- END TOP NAVIGATION MENU -->
+
+            </div>
+
+        </div>
+
+        <!-- END TOP NAVIGATION BAR -->
+
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN CONTAINER -->
+
+    <div class="page-container">
+        @*@Html.MainMenuWidget()*@
+
+        <!-- END SIDEBAR -->
+        <!-- BEGIN PAGE -->
+
+        <div class="page-content">
+
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+            <div id="portlet-config" class="modal hide">
+
+                <div class="modal-header">
+
+                    <button data-dismiss="modal" class="close" type="button"></button>
+
+                    <h3>Widget Settings</h3>
+
+                </div>
+
+                <div class="modal-body">
+
+                    Widget settings form goes here
+
+                </div>
+
+            </div>
+            <div class="container-fluid" id="contextPage">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+
+    <div class="footer">
+
+        <div class="footer-inner">
+
+            2014 &copy; Bandex Shanghai Information Technology Co.,Ltd
+
+        </div>
+
+        <div class="footer-tools">
+
+            <span class="go-top">
+
+                <i class="icon-angle-up"></i>
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $.post("/Common/Main/GetMenu", null, function (data) {
+                if (data.Status == 0) {
+                    var html = "<div class=\"page-sidebar nav-collapse collapse\">";
+                    html += "<ul class=\"page-sidebar-menu\"><li><div class=\"sidebar-toggler hidden-phone\" onclick=\"toggleSideMenu(this);\" style=\"margin-top: 5px; margin-bottom: 5px;\"></div></li>";
+                    if (data.Data.length > 0) {
+                        html = GetSubMenu(data.Data, 0, html);
+                    }
+                    html += "</ul>";
+                    html += "</div>";
+                    $(".page-content").before(html);
+                    App.init();
+                    if ($.cookie("MENU_ID") == "Home" || $.cookie("MENU_ID") == "") {
+                        $("#Home").parent().addClass("active");
+                    }
+                    else {
+                        $("#" + $.cookie("MENU_ID")).parent().addClass("active");
+                        SelectMenu($("#" + $.cookie("MENU_ID")).parent().parent());
+
+                    }
+                    if ($.cookie("SIDEBAR") == "0" || $.cookie("SIDEBAR") == "") {
+                        $("body").addClass("page-sidebar-closed");
+                    }
+                    else {
+                        $("body").removeClass("page-sidebar-closed");
+                    }
+                    $("#header_inbox_bar").Notice(
+                    {
+                        DataUrl: "/Common/Notice/GetAllNotification"
+                    });
+                }
+            })
+        });
+        //递归处理菜单
+        function SelectMenu(ele) {
+            if (ele.hasClass("sub-menu")) {  //子菜单
+                $(ele).show();
+                $(ele).parent().addClass("open");
+                $(ele).parent().children().eq(0).children().last().addClass("open");//菜单打开箭头
+                SelectMenu($(ele).parent().parent());
+            }
+            else {//根菜单
+                $(ele).children().filter(".open").addClass("active");
+            }
+        }
+        function SaveToCookie(e) {
+            //存入cookie
+            $.cookie("MENU_ID", "", $(e).attr("id"));
+        }
+        function toggleSideMenu(e) {
+            if ($("body").hasClass("page-sidebar-closed")) {
+                $.cookie("SIDEBAR", "", 1);//显示
+            }
+            else {
+                $.cookie("SIDEBAR", "", 0);//隐藏
+            }
+
+        }
+        function GetSubMenu(data, pid, html) {
+            if (pid != 0) {
+                html += "<ul class=\"sub-menu\">";
+            }
+            var SubMenu = _.where(data, { "MENU_PID": pid });
+            var OrderSubMenu = _.sortBy(SubMenu, "MENU_ORDER");
+            if (OrderSubMenu.length > 0) {
+                for (var i = 0; i < OrderSubMenu.length; i++) {
+                    var SubMenuChild = _.where(data, { "MENU_PID": OrderSubMenu[i].MENU_NBR });
+                    if (SubMenuChild.length > 0) {
+                        html += "<li id=\"{0}\">\r\n";
+                        html += "<a href=\"javascript:;\">";
+                        html += "<i class=\"" + OrderSubMenu[i].MENU_ICO + "\"></i>";
+                        html += "<span class=\"title\">" + OrderSubMenu[i].MENU_NAME + "</span>";
+                        html += "<span class=\"selected\"></span>";
+                        html += "<span class=\"arrow\"></span>";
+                        html += "</a>";
+                        html = GetSubMenu(data, OrderSubMenu[i].MENU_NBR, html);
+                    }
+                    else {
+                        html += "<li>";
+                        html += "<a href=\"" + OrderSubMenu[i].MENU_URL + "\" onclick=\"SaveToCookie(this);\" id=\"" + OrderSubMenu[i].MENU_NAME + "\">";
+                        html += "<i class=\"" + OrderSubMenu[i].MENU_ICO + "\"></i>";
+                        html += "<span class=\"title\">" + OrderSubMenu[i].MENU_NAME + "</span>";
+                        html += "</a>";
+                        html += "</li>";
+                    }
+                }
+
+            }
+            if (pid != 0) {
+                html += "</ul>";
+            }
+            return html;
+        }
+        //$("body").Translate();
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,201 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Order/web/css/OrderLogin.css',rel='stylesheet')
+    link(type='text/css',href='./Order/web/css/jcallout.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/UI/Scripts/media/css/inbox.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    script(type='text/javascript',src='./Order/web/controller/OrderLoginController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 工单登录
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 工单管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') 工单登录
+    .row-fluid
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(valign='top', style='padding-left:5px;')
+                    .control-group(style='height: 34px;')
+                        .controls
+                            .input-icon.left(style='width: 250px; display: inline;')
+                                i.icon-search
+                                input#filter.m-wrap(type='text', placeholder='订单或生产计划')
+                            button#output.btn.green
+                                | 查询
+                                i.icon-search
+        .row-fluid(style='margin-top:5px;')
+            #grid
+        .row-fluid(style='margin-top: 11px; height: 125px; border: 1px solid #cdcdcd;')
+            ul.order-detail(style='padding:10px 0px;')
+                li.item(style='border: 1px solid #cdcdcd;background-color: #D2EAC2;min-width: 200px;height:90px;')
+                    .order-barcode(style='margin: auto;')
+                li.item(style='width:200px;')
+                    ul.order-detail-ui
+                        li
+                            label.order-detail-li-group 生产计划：
+                            .order-detail-li-group
+                                label#item_PLAN_NO -- --
+                        li
+                            label.order-detail-li-group 产品名称：
+                            .order-detail-li-group
+                                label#item_PROD_NAME -- --
+                        li
+                            label.order-detail-li-group 工艺名称：
+                            .order-detail-li-group
+                                label#item_CRAFT_NAME(style=' margin: -5px -5px -6px 0px;') -- --
+                        li
+                            label.order-detail-li-group 工序名称：
+                            .order-detail-li-group
+                                label#item_PROC_NAME -- --
+                li.item(style='width:320px;')
+                    ul.order-detail-ui
+                        li
+                            label.order-detail-li-group 投料量：
+                            .order-detail-li-group
+                                label#item_INPUT_NUM -- --
+                        li
+                            label.order-detail-li-group 产出：
+                            .order-detail-li-group
+                                label#item_YIELD -- --
+                        li
+                            label.order-detail-li-group 目标量：
+                            .order-detail-li-group
+                                label#item_TARGET_NUM -- --
+                        li
+                            label.order-detail-li-group 完成率：
+                            .order-detail-li-group
+                                div(style='width: 200px; border: 1px solid #cdcdcd; height: 14px; position: relative; top: 3px; display: inline-block;')
+                                    #item_COMP_RATE_bar(style='height: 14px; background-color: rgb(54, 148, 1); width: 0%; ')
+                                span#item_COMP_RATE 0%
+                li.item(style='border-left:0px;')
+                    #search.btn.green 工单报工
+        form.form-horizontal
+            .row-fluid(style='position: relative;left: -50px;')
+                .span(style='float: left;margin-left:0px;width:300px !important;')
+                    .control-group(style='margin-bottom: 5px;')
+                        label.control-label(data-lang='Common.PASSWORD') 设备
+                        .BZcontrols
+                            input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
+                .span
+                    .control-group(style='margin-bottom: 5px;')
+                        #login.btn.green(style='margin-left: 50px;') 工单登录
+        .row-fluid(style='margin-top:5px;margin-bottom:20px;min-height:300px;')
+            #gridreport
+
+    script#over(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:800px;">
+        <table class="control-group" style="margin-left:-10px;">
+        <tr>
+        <td class="">
+        <label class="control-label" data-lang="Common.MEMO">投入量</label>
+        <div class="controls">
+        <input type="number" id="INPUT_NUM" min="0" name="INPUT_NUM" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td class="">
+        <label class="control-label" data-lang="Common.PROG_TYPE">目标量</label>
+        <div class="controls" id="span">
+        <input type="number" id="TARGET_NUM" min="0" name="TARGET_NUM" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#complate(type='text/x-kendo-template', style='margin-top: -200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:600px;">
+        <table class="control-group" style="margin-left:40px;" id="po">
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEMO">生产计划</label>
+        <label class="control-label" data-lang="Common.MEMO" id="pno" style="margin-left:65px;text-align:left !important"></label>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEMO">机床名称</label>
+        <label class="control-label" data-lang="Common.MEMO" id="machine" style="margin-left: 65px; text-align: left !important"></label>
+        </td>
+        </tr>
+        <tr>
+        <td class="">
+        <label class="control-label" data-lang="Common.MEMO">正品数</label>
+        <div class="controls" id="span">
+        <input type="number" id="QUALIFIED_NUM" min="0" name="QUALIFIED_NUM" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="">
+        <label class="control-label" data-lang="Common.PROG_TYPE">次品数</label>
+        <label class="control-label" data-lang="Common.MEMO" id="INFERIOR_NUM" style="margin-left:12px"></label>
+        </td>
+        </tr>
+        </table>
+        <hr />
+        <table class="control-group" style="margin-left:-20px;" id="pos"></table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#order(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:800px;">
+        <table class="control-group" style="margin-left:-10px;">
+        <tr>
+        <td class="">
+        <label class="control-label" data-lang="Common.MEMO">正品</label>
+        <div class="controls">
+        <input type="number" id="QUALIFIED_NUM" min="0" name="QUALIFIED_NUM" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td class="">
+        <label class="control-label" data-lang="Common.PROG_TYPE">次品</label>
+        <div class="controls" id="span">
+        <input type="number" id="INFERIOR_NUM" min="0" name="INFERIOR_NUM" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#PLAN_STATE(type='x-kendo-template').
+        # if ( data.PLAN_STATE ==0) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
+        <div style="float: left;margin-left:4px">准备</div>
+        </div>
+        # } else if(data.PLAN_STATE == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: greenyellow; float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">进行中</div>
+        </div>
+        # } else if(data.PLAN_STATE == 2) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: blue; float: left; margin-top: 2px"></div>
+        <div style="float: left;margin-left:4px">完成</div>
+        </div>
+        # } else if(data.PLAN_STATE==3){ #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: grey; float: left; margin-top: 2px"></div>
+        <div style="float: left;margin-left:4px">未知</div>
+        </div>
+        # } #

@@ -1,0 +1,118 @@
+li,ul{
+    list-style:none;
+    margin:0;
+}
+.dropdown input {
+    margin-top: -3px;
+}
+.caretParent{
+    position:relative;
+}
+.caret {
+    position:absolute;
+    right:5px;
+    top:27px;
+    width:20px;
+    cursor:pointer;
+}
+.mui-caret {
+    border-top: 10px solid #F44336 !important;
+    border-right: 8px solid  transparent !important;
+    border-left: 8px solid  transparent !important;
+}
+.add{
+    margin-top:12px;
+    margin-left:30px;
+}
+.ComboBox {
+    width: 280px;
+    position: absolute;
+    left: 0px;
+    top: 47px;
+    background: #fff;
+    z-index: 1;
+    display: none;
+    border: 1px solid #DADADA;
+    border-top: 0px;
+}
+.ComboBox > li {
+    width: 280px;
+    padding:5px 10px;
+    cursor:pointer;
+}
+.ComboBox > li:hover {
+    background: #EEEEEE;
+}
+.boxParent {
+    position: relative;
+    border: 2px solid #6495ED;
+    border-radius: 100px !important;
+    margin-bottom: 20px;
+    /*background: #303030;*/
+    /*background: url(../../../Modules/MachineStatus/Images/bg/111.jpg);*/
+}
+
+
+.box {
+    /*position: absolute;
+    left: 10%;
+    top: 40%;
+    margin-left: -50px;
+    margin-top: -40px;*/
+    margin-left:100px;
+}
+.Doraemon{
+    /*position:fixed;
+    left:50%;
+    top:50%;
+    margin-left:-150px;
+    margin-top:-300px;
+    opacity:0.3;
+    z-index:-1;*/
+    display:none;
+}
+#formula {
+    /*background: url(../../../Modules/MachineStatus/Images/1.png);*/
+}
+.dropdown-menu li > a:hover,
+.dropdown-menu .active > a,
+.dropdown-menu .active > a:hover {
+    text-decoration: none;
+    background-image: none;
+    background-color: rgba(255,255,255,0);
+    filter: none;
+}
+
+#mui-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99999999;
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    overflow: auto;
+}
+.font {
+    font-family: Microsoft YaHei;
+}
+.btn_001 {
+    margin-right: 5px !important;
+    border-radius: 20px !important;
+    height: 58px !important;
+    width: 180px !important;
+    font-size: 22px !important;
+    margin-left: 25px;
+}
+.space{
+    margin-left:20px;
+}
+#formula ul li span{
+    font-size:20px;
+}
+/*.font_color {
+    color: #fff;
+}*/
+
+
+

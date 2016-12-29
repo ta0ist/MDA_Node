@@ -1,0 +1,51 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Order/web/css/Defective.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts-3d.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./Order/web/controller/DefectiveController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 次品统计
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 工单管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') 次品统计
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD', style='width:60px') 产品：
+                    .BZcontrols(style='margin-left:70px')
+                        input#PROD_NO.m-wrap(type='text', name='PROD_NO')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 开始日期
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 结束日期
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='endTime')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    #search.btn.green(style='margin-left: 60px;')
+                        | 查询
+                        i.icon-search
+    #grid
+    #gridr
+    #gridm
+    #gridp
+    script#QUALITY_RATE(type='x-kendo-template').
+        #= (kendo.toString(QUALITY_RATE)*100).toFixed(1)+"%"#

@@ -1,0 +1,91 @@
+extends ../../../../../views/layout
+block append headcss
+    style(type='text/css').
+        .controls .checkbox {
+            min-width: 35px;
+        }
+
+        div.error {
+            border: 1px dashed red !important;
+        }
+
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./Common/web/controller/ArrangeIndexController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 班次方案
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 系统
+                    i.icon-angle-right
+                li
+                    a(href='/Common/Shift', data-lang='MachineScheduling') 班次管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 班次方案
+    .row-fluid
+        .control-group(style='height: 34px;')
+            .controls
+                button.btn.blue(data-bind='click:grid_add')
+                    | 新增
+                    i.icon-plus-sign
+        #grid
+    script#popup-add(type='text/x-kendo-template').
+        <form class="form-horizontal" id="viewmodel" style="width:750px;">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.SOLUTION_NAME">方案名称<span class="required">*</span></label>
+        <div class="controls">
+        <input type="text" id="SOLUTION_NAME" name="SOLUTION_NAME" data-bind="value:SOLUTION_NAME" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">班次信息<span class="required">*</span></label>
+        <div class="controls">
+        <table>
+        <tr>
+        <th></th>
+        <th>班次信息</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>有效时间</th>
+        <th></th>
+        </tr>
+        <tbody data-bind="foreach: SHIFTS" id="SHIFTS_LIST">
+        <tr>
+        <td><label data-bind="text:NO" style="margin-bottom: 0px; width: 15px;"></label></td>
+        <td><input type="text" id="SHIFT_NAME" name="SHIFT_NAME" data-bind="value:SHIFT_NAME" class="span6 m-wrap" style="width:100px;" /></td>
+        <td>
+        <div class="input-append bootstrap-timepicker-component">
+        <input class="starttime m-wrap m-ctrl-small timepicker-24" type="text" data-bind="value:START_DATE,event:{change:$root.timechage}" style="width:100px;" />
+        <span class="add-on"><i class="icon-time" style="margin-top: 8px;"></i></span>
+        </div>
+        </td>
+        <td>
+        <div class="input-append bootstrap-timepicker-component">
+        <input class="endtime m-wrap m-ctrl-small timepicker-24" type="text" data-bind="value:END_DATE,event:{change:$root.timechage}" style="width:100px;" />
+        <span class="add-on"><i class="icon-time" style="margin-top: 8px;"></i></span>
+        </div>
+        </td>
+        <td>
+        <input type="text" class="span6 m-wrap VALID_TIME" id="VALID_TIME" name="VALID_TIME" data-bind="value:VALID_TIME" style="width: 141px; margin-left: 0px;" />
+        </td>
+        <td width="100"><a href='\\#' data-bind='click: $root.removeShift' style="margin-left:5px;">删除</a></td>
+        </tr>
+        </tbody>
+        </table>
+        <a data-bind='click:addShift' style="margin-top: 2px; padding-top: 5px; margin-bottom: 5px;">新增班次</a>
+        <label class="error" id="SHIFT_ERROR"></label>
+        </div>
+        </div>
+        <div class="form-actions">
+        <button data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></button>
+        <button id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></button>
+        </div>
+        </form>

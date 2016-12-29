@@ -1,0 +1,19 @@
+﻿var Order={}
+Order.oderLogin=require('./routes/oderLogin.js');
+Order.planSchedule=require('./routes/planSchedule.js');
+Order.planSurvey=require('./routes/planSurvey.js');
+Order.shiftTotal=require('./routes/shiftTotal.js');
+Order.defective=require('./routes/defective.js');
+Order.defectiveReason=require('./routes/defectiveReason.js');
+Order.productionPlan=require('./routes/productionPlan.js');
+Order.productMaintenance=require('./routes/productMaintenance.js');
+module.exports=function(app){
+    Order.oderLogin(app);
+    Order.planSchedule(app);
+    Order.planSurvey(app);
+    Order.shiftTotal(app);
+    Order.defective(app);
+    Order.defectiveReason(app);
+    Order.productionPlan(app);
+    Order.productMaintenance(app);
+}
