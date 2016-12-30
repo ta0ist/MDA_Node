@@ -137,7 +137,7 @@ app.directive('plusArea', function () {
 });
 app.controller("commonPlusController", function ($scope, $http) {
     $scope.expanders = [{
-        title: '状态',
+        title: lang.EmployeePerformance.State,
         style: "status",
         icon: "icon-pause",
         type: "MachineParameters.MachineStatus1",
@@ -147,7 +147,7 @@ app.controller("commonPlusController", function ($scope, $http) {
         isSelect: false
     },
         {
-            title: '稼动率',
+            title: lang.Efficiencystatistics.RateOGrainOrMove,
             type: "Activation",
             icon: "icon-bar-chart",
             type: "MachineStatus.MachineActivationPlus",
@@ -156,7 +156,7 @@ app.controller("commonPlusController", function ($scope, $http) {
             rank: 2,
             isSelect: false
         }, {
-            title: '占有率',
+            title: lang.Common.Share,
             type: "Rate",
             icon: "icon-bar-chart",
             type: "MachineStatus.MachineStatusRatePlus",
@@ -165,7 +165,7 @@ app.controller("commonPlusController", function ($scope, $http) {
             rank: 3,
             isSelect: false
         }, {
-            title: '快捷菜单',
+            title: lang.Common.ShortcutMenu,
             type: 'Menu',
             icon: "icon-align-justify",
             type: "Common.ShortcutMenu",
@@ -192,7 +192,7 @@ app.controller("commonPlusController", function ($scope, $http) {
                         $scope.GetAllMachineGroupActivation();
                         $("#active_memo").myeditable({
                             title: '',
-                            content: "稼动率=计划内状态/(计划内状态+计划外状态)",
+                            content: lang.Common.Content_1,
                             placement: "top"
                         });
                         $(".popover").hide();
@@ -202,7 +202,7 @@ app.controller("commonPlusController", function ($scope, $http) {
                         $scope.GetTodayAllMachineStatusPie();
                         $("#rate_memo").myeditable({
                             title: '',
-                            content: "单状态用时比例=设备状态用时之和/(24小时*设备数量)",
+                            content: lang.Common.Content_2,
                             placement: "left"
                         });
                         $(".popover").hide();
@@ -215,7 +215,7 @@ app.controller("commonPlusController", function ($scope, $http) {
             if (data.Data[i].NAME == 'stop') {
                 data.Data[i]['StatusID'] = 1;
                 data.Data[i]['Icon'] = 'icon-pause';
-                data.Data[i]['name'] = '停机';
+                data.Data[i]['name'] = lang.Common.Downtime;
                 data.Data[i]['color'] = "#000";
                 data.Data[i]['MacCount'] = 0;
                 $scope.status.push(data.Data[i]);
@@ -223,7 +223,7 @@ app.controller("commonPlusController", function ($scope, $http) {
             else if (data.Data[i].NAME == 'run') {
                 data.Data[i]['StatusID'] = 2;
                 data.Data[i]['Icon'] = 'icon-play';
-                data.Data[i]['name'] = '运行';
+                data.Data[i]['name'] = lang.Common.Run;
                 data.Data[i]['color'] = "#000";
                 data.Data[i]['MacCount'] = 0;
                 $scope.status.push(data.Data[i]);
@@ -231,7 +231,7 @@ app.controller("commonPlusController", function ($scope, $http) {
             else if (data.Data[i].NAME == 'free') {
                 data.Data[i]['StatusID'] = 3;
                 data.Data[i]['Icon'] = 'icon-circle-blank';
-                data.Data[i]['name'] = '空闲';
+                data.Data[i]['name'] = lang.Common.Free;
                 data.Data[i]['color'] = "#000";
                 data.Data[i]['MacCount'] = 0;
                 $scope.status.push(data.Data[i]);
@@ -239,7 +239,7 @@ app.controller("commonPlusController", function ($scope, $http) {
             else if (data.Data[i].NAME == 'shurtdown') {
                 data.Data[i]['StatusID'] = 4;
                 data.Data[i]['Icon'] = 'icon-stop';
-                data.Data[i]['name'] = '关机';
+                data.Data[i]['name'] = lang.Common.Shutdown;
                 data.Data[i]['color'] = "#000";
                 data.Data[i]['MacCount'] = 0;
                 $scope.status.push(data.Data[i]);
@@ -247,7 +247,7 @@ app.controller("commonPlusController", function ($scope, $http) {
             else if (data.Data[i].NAME == 'debug') {
                 data.Data[i]['StatusID'] = 5;
                 data.Data[i]['Icon'] = 'icon-wrench';
-                data.Data[i]['name'] = '调试';
+                data.Data[i]['name'] = lang.Common.Debug;
                 data.Data[i]['color'] = "#000";
                 data.Data[i]['MacCount'] = 0;
                 $scope.status.push(data.Data[i]);
@@ -485,9 +485,9 @@ app.controller("commonPlusController", function ($scope, $http) {
             dataTextField: "text",
             dataValueField: "value",
             dataSource: [
-                { text: '样式一', value: 0 },
-                { text: '样式二', value: 1 },//double
-                { text: '样式三', value: 2 }//double-down
+                { text: lang.Common.Style_1, value: 0 },
+                { text: lang.Common.Style_2, value: 1 },//double
+                { text: lang.Common.Style_3, value: 2 }//double-down
             ],
             value: "DEFAULT"
         }).data("kendoComboBox").value(0);

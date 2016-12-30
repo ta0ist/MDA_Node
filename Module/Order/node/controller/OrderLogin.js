@@ -9,7 +9,11 @@ exports.OrderLogin=function(req,res){
     if (!req.session.user)
         res.redirect('/');
     else {
-        res.render(path.resolve(__dirname, '../../web/view/OrderLogin/index'), { menulist: req.session.menu,user:req.session.user });
+        res.render(path.resolve(__dirname, '../../web/view/OrderLogin/index'), {
+            menulist: req.session.menu,
+            user:req.session.user ,
+            lang: post_argu.getLanguage()
+        });
     }
     //res.render(path.resolve(__dirname,'../../web/view/MachineWorkingState/index'),{ menulist: req.session.menu });
 }
