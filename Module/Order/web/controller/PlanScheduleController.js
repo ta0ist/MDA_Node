@@ -125,7 +125,6 @@ $(function (data) {
                 fields: fieldsOrder,
                 cols: colsOrder
             },
-        
             filter: function () {
                 return [
                     { field: "PLAN_NO", operator: "eq", value: e.data.PLAN_NO }
