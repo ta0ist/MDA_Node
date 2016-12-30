@@ -3,7 +3,7 @@
  */
 var baseUrl = '/PlanSurvey/';
 var ordersurvery;
-$(function () {
+$(function() {
 
     var fields = {
         PLAN_STATE: { type: "number" },
@@ -30,30 +30,30 @@ $(function () {
         DEFECTIVE: { type: "string" }
     };
     var cols = [];
-    cols.push({ field: "PLAN_STATE", title: "计划状态", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PLAN_STATE_TEMPLATE").html()) });
-    cols.push({ field: "ORDER_NO", title: "订单", width: 120, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "PLAN_NBR", title: "订单", width: 120, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "PLAN_NO", title: "生产计划", width: 120, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "PROD_NO", title: "产品编号", width: 120, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "PROD_NAME", title: "产品名称", width: 120, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "CRAFT_NO", title: "工艺编号", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "CRAFT_NAME", title: "工艺名称", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "INPUT_NUM", title: "投料量", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "TARGET_NUM", title: "目标量", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "YIELD", title: "产出", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "COMP_RATE", title: "完成率", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "QUALIFIED_NUM", title: "正品", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "INFERIOR_NUM", title: "次品", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "QUALITY_RATE", title: "质量率", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "UNIT", title: "单位", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "PLAN_START", title: "预计开始日期", width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    cols.push({ field: "PLAN_END", title: "预计结束日期", width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    cols.push({ field: "REAL_START", title: "实际开始日期", width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    cols.push({ field: "REAL_END", title: "实际结束日期", width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    cols.push({ field: "PLAN_STATE", title: lang.Order.StatePlan, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PLAN_STATE_TEMPLATE").html()) });
+    cols.push({ field: "ORDER_NO", title: lang.Order.Order, width: 120, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PLAN_NBR", title: lang.Order.Order, width: 120, sortable: true, filterable: false, hidden: true });
+    cols.push({ field: "PLAN_NO", title: lang.Order.ProductionPlan, width: 120, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PROD_NO", title: lang.Order.ProductNumber, width: 120, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PROD_NAME", title: lang.Order.ProductName, width: 120, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "CRAFT_NO", title: lang.Order.CraftId, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "CRAFT_NAME", title: lang.Order.CraftName, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "INPUT_NUM", title: lang.Order.Inventory, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "TARGET_NUM", title: lang.Order.TargetQuantity, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "YIELD", title: lang.Order.Output, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "COMP_RATE", title: lang.Order.Completion, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "QUALIFIED_NUM", title: lang.Order.QualityGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "INFERIOR_NUM", title: lang.Order.DefectiveGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "QUALITY_RATE", title: lang.Order.QualityRate, width: 80, sortable: true, filterable: false, hidden: true });
+    cols.push({ field: "UNIT", title: lang.Order.Unit, width: 80, sortable: true, filterable: false, hidden: true });
+    cols.push({ field: "PLAN_START", title: lang.Order.IsExpectedToStartDate, width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    cols.push({ field: "PLAN_END", title: lang.Order.IsExpectedToEndDate, width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    cols.push({ field: "REAL_START", title: lang.Order.TheActualStartDate, width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    cols.push({ field: "REAL_END", title: lang.Order.TheActualEndDate, width: 120, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
     //cols.push({ field: "READY_TIME", title: "准备用时", width: 80, sortable: true, filterable: false, hidden: false });
     //cols.push({ field: "WAIT_TIME", title: "等待用时", width: 80, sortable: true, filterable: false, hidden: false });
     //cols.push({ field: "CAPACITY_RATE", title: "产能利用率", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "MEMO", title: "备注", width: 80, sortable: true, filterable: false, hidden: true });
+    cols.push({ field: "MEMO", title: lang.Order.Note, width: 80, sortable: true, filterable: false, hidden: true });
     //Grid
     grid = $("#grid").grid({
         baseUrl: baseUrl, //调用的URL
@@ -74,25 +74,24 @@ $(function () {
             fields: fields,
             cols: cols
         },
-        rowClick: function (data) {
+        rowClick: function(data) {
             //
             if (ordersurvery != undefined) {
                 ordersurvery.destroy();
             }
             $("#chart").empty();
-            $.post(baseUrl + 'getDetailByPlan', { plan_nbr: data[0].PLAN_NBR }, function (data) {
+            $.post(baseUrl + 'getDetailByPlan', { plan_nbr: data[0].PLAN_NBR }, function(data) {
                 if (data.Status == 0) {
                     ordersurvery = $("#chart").orderSurvey({
                         width: $("#chart").width() <= 720 ? 720 : $("#chart").width(),
                         dataSource: data.Data,
                         startdate_plan: data.Data.PLAN_START,
                         enddate_plan: data.Data.PLAN_END,
-                        select: function (data) {
+                        select: function(data) {
 
                         }
                     }).data("BZ-orderSurvey");
-                }
-                else {
+                } else {
 
                 }
             })
@@ -264,16 +263,16 @@ $(function () {
     }
 
 
-    $("#filter").keydown(function (e) {
+    $("#filter").keydown(function(e) {
         if (e.keyCode == 13) {
             $("#output").trigger("click");
         }
     })
 
     //--------------------------------------------------------------------------查询
-    $("#output").click(function (data) {
+    $("#output").click(function(data) {
         dataItem = null;
-        grid.grid("refresh", function () {
+        grid.grid("refresh", function() {
             return [
                 { field: "ORDER_NO", operator: "contains", value: $("#filter").val() },
                 { field: "PLAN_NO", operator: "contains", value: $("#filter").val() }
