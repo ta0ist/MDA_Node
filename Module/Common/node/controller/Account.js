@@ -8,7 +8,10 @@ exports.accountpage = function(req, res) {
     if (!req.session.user)
         res.redirect('/');
     else {
-        res.render(path.resolve(__dirname, '../../web/view/account/index'), { menulist: req.session.menu, user: req.session.user });
+        res.render(path.resolve(__dirname, '../../web/view/account/index'), {
+            menulist: req.session.menu,
+            user: req.session.user
+        });
     }
 }
 
