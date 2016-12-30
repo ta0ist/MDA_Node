@@ -17,7 +17,6 @@ exports.getuser = function(req, res) {
     para.pinfo = { "PageSize": req.body.PageSize, "PageIndex": req.body.PageIndex };
     para.keyword = req.body.keyword;
     para.userType = req.body.userType;
-
     request.post({
         url: post_argu.getpath(__filename, 'GetUserPage'),
         json: true,
