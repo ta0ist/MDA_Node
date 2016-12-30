@@ -91,7 +91,10 @@ function GetSubMenu(data, pid, menu) {
             var son = {};
             menu.push(son);
             son.nbr = OrderSubMenu[i].MENU_NBR;
-            son.pagename = OrderSubMenu[i].MENU_NAME;
+            if (session.language == 'cn.js')
+                son.pagename = OrderSubMenu[i].MENU_NAME;
+            else
+                son.pagename = OrderSubMenu[i].MENU_NAME_EN;
             son.ico = OrderSubMenu[i].MENU_ICO;
             if (SubMenuChild.length > 0) {
                 son.submenu = [];
