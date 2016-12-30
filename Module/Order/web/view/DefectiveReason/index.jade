@@ -8,34 +8,34 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 次品原因
+                | #{lang.Order.DefectReasons}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 工单管理
+                    a(href='javascript:;', data-lang='System') #{lang.Order.WorkOrderManagement}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='AccountManage') 次品原因
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.Order.DefectReasons}
     #grid
     script#template(type='text/x-kendo-template').
         <div class="toolbar">
-        <button id="error_a" class="btn btn-sm blue">新增<i class="icon-plus-sign"></i></button>
+        <button id="error_a" class="btn btn-sm blue">#{lang.Order.Add}<i class="icon-plus-sign"></i></button>
         </div>
     script#add(type='text/x-kendo-template', style='margin-top:-200px;').
         <form class="form-horizontal" id="machineviewmodel" style="width:800px;">
         <table class="control-group" style="margin-left:-20px;">
         <tr style="height:60px">
         <td class="">
-        <label class="control-label" data-lang="Common.MEMO">原因编号</label>
+        <label class="control-label" data-lang="Common.MEMO">#{lang.Order.ReasonNumber}</label>
         <div class="controls">
         <input type="text" id="INFERIOR_NO" min="0" name="INFERIOR_NO" class="span6 m-wrap" />
         </div>
         </td>
         <td class="">
-        <label class="control-label" data-lang="Common.PROG_TYPE">原因名称</label>
+        <label class="control-label" data-lang="Common.PROG_TYPE">#{lang.Order.BecauseName}</label>
         <div class="controls" id="span">
         <input type="text" id="INFERIOR_NAME" min="0" name="INFERIOR_NAME" class="span6 m-wrap" style="width:214px;" />
         </div>
@@ -43,7 +43,7 @@ block content
         </tr>
         <tr style="margin-top:10px">
         <td class="" colspan="2">
-        <label class="control-label" data-lang="Common.PROG_TYPE">备注</label>
+        <label class="control-label" data-lang="Common.PROG_TYPE">#{lang.Order.Note}</label>
         <div class="controls" id="span">
         <textarea cols="2" id="MEMO" style="width:570px"></textarea>
         </div>
@@ -51,7 +51,7 @@ block content
         </tr>
         </table>
         <div class="form-actions" style="border:0;">
-        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
-        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        <div id="Save" class="btn green">#{lang.Order.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.Order.Cancel}<i class="icon-remove"></i></div>
         </div>
         </form>
