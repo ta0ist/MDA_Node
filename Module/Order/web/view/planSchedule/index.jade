@@ -28,7 +28,7 @@ block content
                                 i.icon-search
                                 input#filter.m-wrap(type='text', placeholder='#{lang.Order.ProductionPlan}')
                             button#output.btn.green
-                                | 查询
+                                | #{lang.EmployeePerformance.Search}
                                 i.icon-search
         .row-fluid(style='margin-top:5px;')
             #grid
@@ -38,44 +38,44 @@ block content
         # if ( data.PLAN_STATE ==0) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
-        <div style="float: left;margin-left:4px">准备</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Prepare}</div>
         </div>
         # } else if(data.PLAN_STATE == 1) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: greenyellow; float: left; margin-top: 2px; "></div>
-        <div style="float: left;margin-left:4px">进行中</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Ongoing}</div>
         </div>
         # } else if(data.PLAN_STATE == 2) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: blue; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">完成</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Complete}</div>
         </div>
         # } else if(data.PLAN_STATE==3){ #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: grey; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">未知</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Unknown}</div>
         </div>
         # } #
     script#PROCESS_STATUS(type='x-kendo-template').
         # if ( data.PROCESS_STATUS ==0) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
-        <div style="float: left;margin-left:4px">准备</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Prepare}</div>
         </div>
         # } else if(data.PROCESS_STATUS == 1) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: greenyellow; float: left; margin-top: 2px; "></div>
-        <div style="float: left;margin-left:4px">进行中</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Ongoing}</div>
         </div>
         # } else if(data.PROCESS_STATUS == 2) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: blue; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">完成</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Complete}</div>
         </div>
         # } else if(data.PROCESS_STATUS==3){ #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: grey; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">未知</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Unknown}</div>
         </div>
         # } #
     script#QUALITY_RATE(type='x-kendo-template').
