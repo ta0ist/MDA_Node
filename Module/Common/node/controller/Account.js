@@ -33,7 +33,6 @@ exports.getuser = function(req, res) {
             Message: "成功"
         });
     });
-
 }
 
 //处理事件
