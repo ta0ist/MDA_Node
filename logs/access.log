@@ -1,0 +1,9 @@
+[2016-12-30 14:26:41.582] [INFO] normal - 路由Common加载成功！
+[2016-12-30 14:26:41.587] [INFO] normal - 路由Efficiencystatistics加载成功！
+[2016-12-30 14:26:41.597] [INFO] normal - 路由EmployeePerformance加载成功！
+[2016-12-30 14:26:41.601] [INFO] normal - 路由MachineParameters加载成功！
+[2016-12-30 14:26:41.605] [INFO] normal - 路由MachineStatus加载成功！
+[2016-12-30 14:26:41.624] [INFO] normal - 路由Order加载成功！
+[2016-12-30 14:26:41.763] [INFO] normal - 路由Report加载成功！
+[2016-12-30 14:26:41.768] [INFO] normal - 路由Visual加载成功！
+[2016-12-30 14:26:41.772] [INFO] normal - 路由YieldProcessingBeat加载成功！
