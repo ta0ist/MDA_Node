@@ -28,26 +28,26 @@ $(function (data) {
     }
 
     var cols = [];
-    cols.push({ field: "PRO_PLAN_STATUS", title: "计划状态", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PLAN_STATE").html()) });
-    cols.push({ field: "ORDER_NO", title: "订单", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "PLAN_NO", title: "生产计划", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "ORDER_TYPE", title: "工单类型", width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PRO_PLAN_STATUS", title: lang.Order.StatePlan, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PLAN_STATE").html()) });
+    cols.push({ field: "ORDER_NO", title: lang.Order.Order, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PLAN_NO", title: lang.Order.ProductionPlan, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "ORDER_TYPE", title: lang.Order.WorkOrderType, width: 80, sortable: true, filterable: false, hidden: false });
     cols.push({ field: "PROD_NBR", title: "产品nbr", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "PROD_NAME", title: "产品名称", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "CRAFT_NO", title: "工艺编号", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "CRAFT_NAME", title: "工艺名称",width: 200,sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "FINISH_PROCESS_NUM", title: "完成工序数", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "INPUT_NUM", title: "投入量", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "TARGET_NUM", title: "目标量", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "YIELD", title: "产出量", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "COMP_RATE", title: "完成率", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#COMP_RATE").html()) });
-    cols.push({ field: "QUALIFIED_NUM", title: "正品", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "INFERIOR_NUM", title: "次品", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "QUALITY_RATE", title: "质量率", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#QUALITY_RATE").html()) });
-    cols.push({ field: "UNIT", title: "单位", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "PLAN_START", title: "实际开始时间", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    cols.push({ field: "PLAN_END", title: "实际结束时间", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    cols.push({ field: "MEMO", title: "备注", width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PROD_NAME", title: lang.Order.ProductName, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "CRAFT_NO", title: lang.Order.CraftId, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "CRAFT_NAME", title: lang.Order.CraftName,width: 200,sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "FINISH_PROCESS_NUM", title: lang.Order.CompleteProcessNumber, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "INPUT_NUM", title: lang.Order.InputAmount, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "TARGET_NUM", title: lang.Order.TargetQuantity, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "YIELD", title: lang.Order.Output_1, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "COMP_RATE", title: lang.Order.Completion, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#COMP_RATE").html()) });
+    cols.push({ field: "QUALIFIED_NUM", title: lang.Order.QualityGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "INFERIOR_NUM", title: lang.Order.DefectiveGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "QUALITY_RATE", title: lang.Order.QualityRate, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#QUALITY_RATE").html()) });
+    cols.push({ field: "UNIT", title: lang.Order.Unit, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PLAN_START", title: lang.Order.TheActualStartTime, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    cols.push({ field: "PLAN_END", title: lang.Order.TheActualEndTime, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    cols.push({ field: "MEMO", title: lang.Order.Note, width: 80, sortable: true, filterable: false, hidden: false });
 
     grid = $("#grid").grid({
         //checkBoxColumn: true,
@@ -97,19 +97,19 @@ $(function (data) {
 
     var colsOrder = [];
 
-    colsOrder.push({ field: "PROCESS_STATUS", title: "工单状态", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PROCESS_STATUS").html()) });
-    colsOrder.push({ field: "PLAN_NO", title: "生产计划", width: 80, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "PROC_NO", title: "工序编号", width: 80, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "PROC_NAME", title: "工序名称", width: 200, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "INPUT_NUM", title: "投料量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "TARGET_NUM", title: "目标量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "YIELD", title: "产出量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "COMP_RATE", title: "完成率", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#COMP_RATE").html()) });
-    colsOrder.push({ field: "QUALIFIED_NUM", title: "正品", width: 80, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "INFERIOR_NUM", title: "次品", width: 80, sortable: true, filterable: false, hidden: false });
-    colsOrder.push({ field: "QUALITY_RATE", title: "质量率", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#QUALITY_RATE").html()) });
-    colsOrder.push({ field: "START_DATE", title: "起始日期", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    colsOrder.push({ field: "END_DATE", title: "结束日期", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    colsOrder.push({ field: "PROCESS_STATUS", title: lang.Order.WorkOrderStatus, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PROCESS_STATUS").html()) });
+    colsOrder.push({ field: "PLAN_NO", title: lang.Order.ProductionPlan, width: 80, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "PROC_NO", title: lang.Order.ProcessId, width: 80, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "PROC_NAME", title:lang.Order.ProcessName, width: 200, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "INPUT_NUM", title:lang.Order.Inventory, width: 80, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "TARGET_NUM", title:lang.Order.TargetQuantity, width: 80, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "YIELD", title: lang.Order.Output_1, width: 80, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "COMP_RATE", title: lang.Order.Completion, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#COMP_RATE").html()) });
+    colsOrder.push({ field: "QUALIFIED_NUM", title: lang.Order.QualityGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "INFERIOR_NUM", title: lang.Order.DefectiveGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    colsOrder.push({ field: "QUALITY_RATE", title: lang.Order.QualityRate, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#QUALITY_RATE").html()) });
+    colsOrder.push({ field: "START_DATE", title: lang.Order.StartDate, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    colsOrder.push({ field: "END_DATE", title: lang.Order.EndDate, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
 
     function detailInit(e) {
         $("<div/>").appendTo(e.detailCell).grid({
@@ -164,20 +164,20 @@ $(function (data) {
 
     var colsProcess = [];
 
-    colsProcess.push({ field: "PLAN_NO", title: "生产计划", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "PROC_NO", title: "工序编号", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "PROC_NAME", title: "工序名称", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "MAC_NO", title: "机床编号", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "MAC_NAME", title: "机床名称", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "INPUT_NUM", title: "投料量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "TARGET_NUM", title: "目标量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "YIELD", title: "产出量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "COMP_RATE", title: "完成率", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#COMP_RATE").html()) });
-    colsProcess.push({ field: "QUALIFIED_NUM", title: "正品", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "INFERIOR_NUM", title: "次品", width: 80, sortable: true, filterable: false, hidden: false });
-    colsProcess.push({ field: "QUALITY_RATE", title: "质量率", width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#QUALITY_RATE").html()) });
-    colsProcess.push({ field: "START_DATE", title: "起始日期", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    colsProcess.push({ field: "END_DATE", title: "结束日期", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    colsProcess.push({ field: "PLAN_NO", title: lang.Order.ProductionPlan, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "PROC_NO", title:lang.Order.ProcessId, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "PROC_NAME", title:lang.Order.ProcessName, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "MAC_NO", title: lang.Order.MachineNumber, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "MAC_NAME", title: lang.Order.MachineName, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "INPUT_NUM", title: lang.Order.Inventory, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "TARGET_NUM", title: lang.Order.TargetQuantity, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "YIELD", title:lang.Order.Output_1, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "COMP_RATE", title:  lang.Order.Completion, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#COMP_RATE").html()) });
+    colsProcess.push({ field: "QUALIFIED_NUM", title: lang.Order.QualityGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "INFERIOR_NUM", title: lang.Order.DefectiveGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    colsProcess.push({ field: "QUALITY_RATE", title: lang.Order.QualityRate, width: 80, sortable: true, filterable: false, hidden: false, template: kendo.template($("#QUALITY_RATE").html()) });
+    colsProcess.push({ field: "START_DATE", title: lang.Order.StartDate, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    colsProcess.push({ field: "END_DATE", title: lang.Order.EndDate, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
 
     gridProcess = $("#gridProcess").grid({
         //checkBoxColumn: true,
