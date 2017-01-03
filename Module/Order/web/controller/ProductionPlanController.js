@@ -5,7 +5,7 @@ var baseUrl = "/ProductionPlan/";
 var gird, girdproc;
 var dataItem, dataproc;
 var plannbr;
-app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
 
 
     bindType("#PLAN_TYPE_S");
@@ -35,24 +35,24 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
 
     var col = [];
     col.push({ field: "PLAN_NBR", title: "生产nbr", width: 80, sortable: true, filterable: false, hidden: true });
-    col.push({ field: "PLAN_NO", title: "生产计划", width: 80, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "ORDER_NO", title: "订单号", width: 80, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "PLAN_TYPE", title: "计划类型", width: 40, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "PROD_NO", title: "产品编号", width: 80, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "PLAN_NO", title: lang.Order.ProductionPlan, width: 80, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "ORDER_NO", title: lang.Order.OrderNumber, width: 80, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "PLAN_TYPE", title: lang.Order.ProjectType, width: 40, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "PROD_NO", title: lang.Order.ProductNumber, width: 80, sortable: true, filterable: false, hidden: false });
     col.push({ field: "PROD_NBR", title: "产品nbr", width: 80, sortable: true, filterable: false, hidden: true });
-    col.push({ field: "PROD_NAME", title: "产品名称", width: 80, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "PROD_NAME", title: lang.Order.ProductName, width: 80, sortable: true, filterable: false, hidden: false });
     col.push({ field: "CRAFT_NBR", title: "工艺nbr", width: 80, sortable: true, filterable: false, hidden: true });
-    col.push({ field: "CRAFT_NO", title: "工艺编号", width: 80, sortable: true, filterable: false, hidden: true });
-    col.push({ field: "CRAFT_NAME", title: "工艺名称", width: 80, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "INPUT_NUM", title: "投料量", width: 40, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "TARGET_NUM", title: "目标量", width: 40, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "UNIT", title: "单位", width: 30, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "PLAN_START", title: "预计开始时间", width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm}" });
-    col.push({ field: "PLAN_END", title: "预计结束时间", width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm} " });
-    col.push({ field: "REAL_START", title: "实际开始时间", width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    col.push({ field: "REAL_END", title: "实际结束时间", width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    col.push({ field: "CUSTOMER", title: "客户", width: 100, sortable: true, filterable: false, hidden: false });
-    col.push({ field: "MEMO", title: "备注", width: 80, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "CRAFT_NO", title: lang.Order.CraftId, width: 80, sortable: true, filterable: false, hidden: true });
+    col.push({ field: "CRAFT_NAME", title: lang.Order.CraftName, width: 80, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "INPUT_NUM", title: lang.Order.Inventory, width: 40, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "TARGET_NUM", title: lang.Order.TargetQuantity, width: 40, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "UNIT", title: lang.Order.Unit, width: 30, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "PLAN_START", title: lang.Order.IsExpectedToStartDate, width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm}" });
+    col.push({ field: "PLAN_END", title: lang.Order.IsExpectedToEndDate, width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm} " });
+    col.push({ field: "REAL_START", title: lang.Order.TheActualStartDate, width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    col.push({ field: "REAL_END", title: lang.Order.TheActualEndDate, width: 100, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    col.push({ field: "CUSTOMER", title: lang.Order.CustomerName, width: 100, sortable: true, filterable: false, hidden: false });
+    col.push({ field: "MEMO", title: lang.Order.Note, width: 80, sortable: true, filterable: false, hidden: false });
 
     grid = $("#grid").grid({
         //checkBoxColumn: true,
@@ -75,10 +75,10 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
             fields: fields,
             cols: col
         },
-        rowClick: function (data) {
+        rowClick: function(data) {
             dataItem = data[0];
             dataproc = null;
-            gridsproc.grid("refresh", function () {
+            gridsproc.grid("refresh", function() {
                 return [
                     //{
                     //    filters: [
@@ -96,8 +96,8 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
 
     });
 
-    $("#search").click(function () {
-        grid.grid("refresh", function () {
+    $("#search").click(function() {
+        grid.grid("refresh", function() {
             return [
                 { field: "PLAN_NO", Operator: "contains", value: $("#PLAN_NO_S").val() },
                 { field: "ORDER_NO", Operator: "contains", value: $("#ORDER_NO_S").val() },
@@ -108,27 +108,27 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
         });
     })
 
-    $("#PLAN_NO_S").keydown(function (e) {
+    $("#PLAN_NO_S").keydown(function(e) {
         if (e.keyCode == 13) {
             $("#search").trigger("click");
         }
     })
-    $("#ORDER_NO_S").keydown(function (e) {
+    $("#ORDER_NO_S").keydown(function(e) {
         if (e.keyCode == 13) {
             $("#search").trigger("click");
         }
     })
-    $("#PROD_NO_S").keydown(function (e) {
+    $("#PROD_NO_S").keydown(function(e) {
         if (e.keyCode == 13) {
             $("#search").trigger("click");
         }
     })
-    $("#PROD_NAME_S").keydown(function (e) {
+    $("#PROD_NAME_S").keydown(function(e) {
         if (e.keyCode == 13) {
             $("#search").trigger("click");
         }
     })
-    $("#PLAN_TYPE_S").keydown(function (e) {
+    $("#PLAN_TYPE_S").keydown(function(e) {
         if (e.keyCode == 13) {
             $("#search").trigger("click");
         }
@@ -156,16 +156,16 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
     colproc.push({ field: "TASK_NBR", title: "工序nbr", width: 80, sortable: true, filterable: false, hidden: true });
     colproc.push({ field: "PLAN_NBR", title: "计划nbr", width: 80, sortable: true, filterable: false, hidden: true });
     colproc.push({ field: "CRAFR_NBR", title: "计划nbr", width: 80, sortable: true, filterable: false, hidden: true });
-    colproc.push({ field: "TASK_NO", title: "工单", width: 80, sortable: true, filterable: false, hidden: false, editable: true });
-    colproc.push({ field: "INPUT_NUM", title: "投料量", width: 40, sortable: true, filterable: false, hidden: false });
-    colproc.push({ field: "TARGET_NUM", title: "目标量", width: 40, sortable: true, filterable: false, hidden: false });
-    colproc.push({ field: "RANK_NUM", title: "工序顺序", width: 80, sortable: true, filterable: false, hidden: false });
-    colproc.push({ field: "PROC_TYPE", title: "最后工序", width: 40, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PROC_TYPE").html()) });
-    colproc.push({ field: "PROC_NO", title: "工序编号", width: 40, sortable: true, filterable: false, hidden: false });
-    colproc.push({ field: "PROC_NAME", title: "工序名称", width: 80, sortable: true, filterable: false, hidden: false });
-    colproc.push({ field: "STD_TIME", title: "标准用时", width: 80, sortable: true, filterable: false, hidden: true });
-    colproc.push({ field: "CYCLE_RATE", title: "循环倍数", width: 80, sortable: true, filterable: false, hidden: true });
-    colproc.push({ field: "MEMO", title: "备注", width: 80, sortable: true, filterable: false, hidden: false });
+    colproc.push({ field: "TASK_NO", title: lang.Order.RepairOrder, width: 80, sortable: true, filterable: false, hidden: false, editable: true });
+    colproc.push({ field: "INPUT_NUM", title: lang.Order.Inventory, width: 40, sortable: true, filterable: false, hidden: false });
+    colproc.push({ field: "TARGET_NUM", title: lang.Order.TargetQuantity, width: 40, sortable: true, filterable: false, hidden: false });
+    colproc.push({ field: "RANK_NUM", title: lang.Order.OperationSequence, width: 80, sortable: true, filterable: false, hidden: false });
+    colproc.push({ field: "PROC_TYPE", title: lang.Order.LastProcess, width: 40, sortable: true, filterable: false, hidden: false, template: kendo.template($("#PROC_TYPE").html()) });
+    colproc.push({ field: "PROC_NO", title: lang.Order.ProcessId, width: 40, sortable: true, filterable: false, hidden: false });
+    colproc.push({ field: "PROC_NAME", title: lang.Order.ProcessName, width: 80, sortable: true, filterable: false, hidden: false });
+    colproc.push({ field: "STD_TIME", title: lang.Order.StandardTime, width: 80, sortable: true, filterable: false, hidden: true });
+    colproc.push({ field: "CYCLE_RATE", title: lang.Order.CirculationRatio, width: 80, sortable: true, filterable: false, hidden: true });
+    colproc.push({ field: "MEMO", title: lang.Order.Note, width: 80, sortable: true, filterable: false, hidden: false });
 
     gridsproc = $("#girdproc").grid({
         //checkBoxColumn: true,
@@ -189,28 +189,28 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
             fields: fieldsproc,
             cols: colproc
         },
-        rowClick: function (data) {
+        rowClick: function(data) {
             dataproc = data[0];
         }
     });
 
-    $("#task_e").click(function (data) {
+    $("#task_e").click(function(data) {
         if (dataproc != null) {
-            $.x5window("修改工单名称", kendo.template($("#task_no").html()));
+            $.x5window(lang.Order.ModifyTheRepairOrderName, kendo.template($("#task_no").html()));
             $("#TASK_NO").val(dataproc.TASK_NO);
             $("#INPUT_NUMS").val(dataproc.INPUT_NUM);
             $("#TARGET_NUMS").val(dataproc.TARGET_NUM);
 
-            $("#Save").click(function (data) {
+            $("#Save").click(function(data) {
                 var task_no = $("#TASK_NO").val();
                 if (task_no == "") {
-                    BzAlert("工单名称不能为空！");
+                    BzAlert(lang.Order.SheetNameCannotBeEmpty);
                     return;
                 }
                 dataproc.TASK_NO = task_no;
                 dataproc.INPUT_NUM = $("#INPUT_NUMS").val();
                 dataproc.TARGET_NUM = $("#TARGET_NUMS").val();
-                var data={
+                var data = {
                     CRAFR_NBR: dataproc.CRAFR_NBR,
                     CRAFT_NAME: dataproc.CRAFT_NAME,
                     CRAFT_NBR: dataproc.CRAFT_NBR,
@@ -244,10 +244,10 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
                     id: dataproc.id,
                     uid: dataproc.uid
                 }
-                $.post(baseUrl + "changeTask_No", data , function (data) {
+                $.post(baseUrl + "changeTask_No", data, function(data) {
                     if (data.Status == 0) {
                         $("#x5window").data("kendoWindow").close();
-                        BzSuccess("操作成功！");
+                        BzSuccess(lang.Order.OperationIsSuccessful);
                         //gridsproc.grid("refresh", function () {
                         //    return [
                         //        { field: "CRAFT_NBR", Operator: "eq", value: dataItem.PLAN_NBR },
@@ -255,7 +255,7 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
                         //});
 
 
-                        gridsproc.grid("refresh", function () {
+                        gridsproc.grid("refresh", function() {
                             return [
                                 //{
                                 //    filters: [
@@ -276,9 +276,9 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
         }
     })
 
-    $scope.addplan = function () {
+    $scope.addplan = function() {
         plannbr = 0;
-        $.x5window("新增生产计划", kendo.template($("#proplan").html()));
+        $.x5window(lang.Order.NewProductionPlan, kendo.template($("#proplan").html()));
 
         $("#PLAN_START").kendoDateTimePicker({ format: "yyyy/MM/dd HH:mm:ss", value: new Date() });
         $("#PLAN_END").kendoDateTimePicker({ format: "yyyy/MM/dd HH:mm:ss", value: new Date() });
@@ -292,7 +292,7 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
             },
             inputheight: 20,
             checkbox: false,
-            select: function (data) {
+            select: function(data) {
                 $("#PROD_NAME").val(data.prod_name);
                 bindArt("#CRAFT_NO", data.prod_no, data.prod_name);
 
@@ -300,10 +300,10 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
         }).data("BZ-multipleComboxTree");
         bindType("#PLAN_TYPE");
         //----------------------------------------------------------------点击模板按钮
-        $("#Save").click(function (data) {
+        $("#Save").click(function(data) {
             var url;
             if ($("#PLAN_NO").val() == "" || $("#ORDER_NO").val() == "" || $("#PROD_NOk").val() == "" || $("#UNIT").val() == "") {
-                BzAlert("相关选项不能为空！");
+                BzAlert(lang.Order.OptionsCanNotBeEmpty);
                 return;
             }
             url = "AddProductionPlan";
@@ -323,13 +323,12 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
                 CUSTOMER: $("#CUSTOMER").val(),
                 MEMO: $("#MEMO").val()
             }
-            $.post(baseUrl + url, model, function (data) {
+            $.post(baseUrl + url, model, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
                     BzSuccess(data.Message);
                     grid.grid("refresh", []);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
 
@@ -337,9 +336,8 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
         })
     }
 
-    $scope.modifyplan = function (data) {
-        if (dataItem == null)
-        { return; }
+    $scope.modifyplan = function(data) {
+        if (dataItem == null) { return; }
         $.x5window("修改生产计划", kendo.template($("#proplan").html()));
         $("#PLAN_START").kendoDateTimePicker({ format: "yyyy/MM/dd HH:mm:ss", value: new Date(dataItem.PLAN_START) });
         $("#PLAN_END").kendoDateTimePicker({ format: "yyyy/MM/dd HH:mm:ss", value: new Date(dataItem.PLAN_END) });
@@ -362,10 +360,10 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
 
         bindType("#PLAN_TYPE");
 
-        $("#Save").click(function (data) {
+        $("#Save").click(function(data) {
             var url;
             if ($("#PLAN_NO").val() == "" || $("#ORDER_NO").val() == "" || $("#PROD_NOk").val() == "" || $("#UNIT").val() == "") {
-                BzAlert("相关选项不能为空！");
+                BzAlert(lang.Order.OptionsCanNotBeEmpty);
                 return;
             }
             var model = {
@@ -385,13 +383,12 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
                 REAL_END: dataItem.REAL_END,
                 MEMO: $("#MEMO").val()
             }
-            $.post(baseUrl + "ModifyProductionPlan", model, function (data) {
+            $.post(baseUrl + "ModifyProductionPlan", model, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
-                    BzSuccess("操作成功！");
+                    BzSuccess(lang.Order.OperationIsSuccessful);
                     grid.grid("refresh", []);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             })
@@ -399,25 +396,23 @@ app.controller('appCtrl', ['$scope', '$http', function ($scope, $http) {
 
     }
 
-    $scope.deleteplan = function (data) {
-        $.post(baseUrl + "DeleteProductionPlan", { plan_nbr: dataItem.PLAN_NBR }, function (data) {
+    $scope.deleteplan = function(data) {
+        $.post(baseUrl + "DeleteProductionPlan", { plan_nbr: dataItem.PLAN_NBR }, function(data) {
             if (data.Status == 0) {
                 dataItem = null;
-                BzSuccess("删除成功！");
+                BzSuccess(lang.Order.DeletedSuccessfully);
                 grid.grid("refresh", []);
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         })
     }
-}
-])
+}])
 
 //绑定计划类型  PLAN_END: {
 function bindType(ele) {
     var listType = [];
-    $.get(baseUrl + "getProductionPlanType", function (data) {
+    $.get(baseUrl + "getProductionPlanType", function(data) {
         if (data.Data.length > 0) {
             for (var i = 0; i < data.Data.length; i++) {
                 var ss = {
@@ -440,7 +435,7 @@ function bindType(ele) {
 
 function bindArt(ele, planno, planname) {
     var listType = [];
-    $.post("Defective/GetProductListByKey", { ProNo: planno }, function (data) {
+    $.post("Defective/GetProductListByKey", { ProNo: planno }, function(data) {
         if (data.Data.length > 0) {
             for (var i = 0; i < data.Data.length; i++) {
                 var ss = {
@@ -457,7 +452,7 @@ function bindArt(ele, planno, planname) {
                 width: 213,
                 readonly: true,
                 value: listType[0].text,
-                change: function (data) {
+                change: function(data) {
                     var ss = $(ele).val();
                     var da = $(ele).data("kendoDropDownList").dataSource.data();
                     var dt = _.where(da, { value: parseInt(ss) });

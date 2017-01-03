@@ -8,59 +8,59 @@ block content
         .row-fluid
             .span12
                 h3.page-title(data-lang='AccountManage')
-                    | 生产计划
+                    | #{lang.Order.ProductionPlan}
                 ul.breadcrumb
                     li
                         i.icon-home
-                        a(href='/') 主页
+                        a(href='/') #{lang.EmployeePerformance.Home}
                         i.icon-angle-right
                     li
-                        a(href='javascript:;', data-lang='System') 工单管理
+                        a(href='javascript:;', data-lang='System') #{lang.Order.WorkOrderManagement}    
                         i.icon-angle-right
                     li
-                        a(href='javascript:;', data-lang='MachineScheduling') 生产计划
+                        a(href='javascript:;', data-lang='MachineScheduling') #{lang.Order.ProductionPlan}
         form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
             .row-fluid
                 .span
                     .control-group(style='margin-bottom: 5px;')
-                        label.control-label(data-lang='Common.PASSWORD') 生产计划：
+                        label.control-label(data-lang='Common.PASSWORD') #{lang.Order.ProductionPlan}:
                         .BZcontrols
                             input#PLAN_NO_S.m-wrap(type='text', name='PLAN_NO_S')
                 .span
                     .control-group(style='margin-bottom: 5px;')
-                        label.control-label(data-lang='Common.PASSWORD') 订单号：
+                        label.control-label(data-lang='Common.PASSWORD') #{lang.Order.OrderNumber}:
                         .BZcontrols
                             input#ORDER_NO_S.m-wrap(type='text', name='ORDER_NO_S')
             .row-fluid
                 .span
                     .control-group(style='margin-bottom: 5px;')
-                        label.control-label(data-lang='Common.PASSWORD') 产品编号：
+                        label.control-label(data-lang='Common.PASSWORD') #{lang.Order.ProductNumber}:
                         .BZcontrols
                             input#PROD_NO_S.m-wrap(type='text', name='PROD_NO_S')
                 .span
                     .control-group(style='margin-bottom: 5px;')
-                        label.control-label(data-lang='Common.PASSWORD') 产品名称：
+                        label.control-label(data-lang='Common.PASSWORD') #{lang.Order.ProductName}:
                         .BZcontrols
                             input#PROD_NAME_S.m-wrap(type='text', name='PROD_NAME_S')
                 div(style='float: left;margin-left:0px;width:350px;')
                     .control-group(style='margin-bottom: 5px;')
-                        label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') 计划类型
+                        label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') #{lang.Order.ProjectType}
                         .BZcontrols
                             input#PLAN_TYPE_S.m-wrap(type='text', name='PLAN_TYPE_S')
                 .span
                     .control-group(style='margin-bottom: 5px;')
                         #search.btn.green(style='margin-left: 50px;')
-                            | 查询
+                            | #{lang.EmployeePerformance.Search}
                             i.icon-search
         div
             .btn.btn-sm.blue(ng-click='addplan()')
-                | 新增
+                | #{lang.Order.Add}
                 i.icon-plus-sign
             .btn.btn-sm.purple(ng-click='modifyplan()')
-                | 修改
+                | #{lang.Order.Modify}
                 i.icon-edit
             .btn.btn-sm.red(ng-click='deleteplan()')
-                | 删除
+                | #{lang.Order.Delete}
                 i.icon-remove-sign
         #grid(style='margin-top:10px')
         #girdproc
@@ -70,13 +70,13 @@ block content
             <table class="control-group" style="margin-left: -40px;">
             <tr>
             <td class="PROG">
-            <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>生产计划</label>
+            <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>#{lang.Order.ProductionPlan}</label>
             <div class="controls">
             <input type="text" id="PLAN_NO" name="PLAN_NO" class="span6 m-wrap" style="width:200px; margin-left: 0px;" />
             </div>
             </td>
             <td class="">
-            <label class="control-label" data-lang="Common.DURATION"><span class="required">*</span>订单号</label>
+            <label class="control-label" data-lang="Common.DURATION"><span class="required">*</span>#{lang.Order.OrderNumber}</label>
             <div class="controls">
             <input type="text" id="ORDER_NO" name="ORDER_NO" data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
             </div>
@@ -87,7 +87,7 @@ block content
             <tr>
             <td class="">
             <label class=" control-label" data-lang="Common.PLAN_CNT">
-            计划类型
+            #{lang.Order.ProjectType}
             </label>
             <div class="controls">
             <input type="text" id="PLAN_TYPE" name="PLAN_TYPE" class="span6 m-wrap" style="width:213px" />
@@ -98,13 +98,13 @@ block content
             <table class="control-group" style="margin-left:-40px;">
             <tr>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO">产品编号</label>
+            <label class="control-label" data-lang="Common.MEMO">#{lang.Order.ProductNumber}</label>
             <div class="controls">
             <input type="text" id="PROD_NO" name="PROD_NO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" />
             </div>
             </td>
             <td class="">
-            <label class="control-label" data-lang="Common.PROG_TYPE">产品名称</label>
+            <label class="control-label" data-lang="Common.PROG_TYPE">#{lang.Order.ProductName}</label>
             <div class="controls" id="span">
             <input type="text" id="PROD_NAME" name="PROD_NAME" disabled="disabled" class="span6 m-wrap" style="width:214px; margin-left: 0px;line-height:34px;" />
             </div>
@@ -114,13 +114,13 @@ block content
             <table class="control-group" style="margin-left:-40px;">
             <tr>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO">工艺编号</label>
+            <label class="control-label" data-lang="Common.MEMO">#{lang.Order.CraftId}</label>
             <div class="controls">
             <input type="text" id="CRAFT_NO" name="CRAFT_NO" class="span6 m-wrap" />
             </div>
             </td>
             <td class="">
-            <label class="control-label" data-lang="Common.PROG_TYPE">工艺路线</label>
+            <label class="control-label" data-lang="Common.PROG_TYPE">#{lang.Order.ProcessRoute}</label>
             <div class="controls" id="span">
             <input type="text" id="CRAFT_NAME" name="CRAFT_NAME" disabled="disabled" class="span6 m-wrap" style="width:214px; margin-left: 0px;line-height:34px;" />
             </div>
@@ -130,13 +130,13 @@ block content
             <table class="control-group" style="margin-left:-40px;">
             <tr>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO">投料量</label>
+            <label class="control-label" data-lang="Common.MEMO">#{lang.Order.Inventory}</label>
             <div class="controls">
             <input type="number" id="INPUT_NUM" name="INPUT_NUM" value="0" min="0" class="span6 m-wrap" />
             </div>
             </td>
             <td class="">
-            <label class="control-label" data-lang="Common.PROG_TYPE">目标量</label>
+            <label class="control-label" data-lang="Common.PROG_TYPE">#{lang.Order.TargetQuantity}</label>
             <div class="controls" id="span">
             <input type="number" id="TARGET_NUM" name="TARGET_NUM" value="0" min="0" class="span6 m-wrap" style="width:214px;" />
             </div>
@@ -146,7 +146,7 @@ block content
             <table class="control-group" style="margin-left:-40px;">
             <tr>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO"><span class="required">*</span>单位</label>
+            <label class="control-label" data-lang="Common.MEMO"><span class="required">*</span>#{lang.Order.Unit}</label>
             <div class="controls">
             <input type="text" id="UNIT" name="UNIT" class="span6 m-wrap" />
             </div>
@@ -156,13 +156,13 @@ block content
             <table class="control-group" style="margin-left:-40px;">
             <tr>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO">开始时间</label>
+            <label class="control-label" data-lang="Common.MEMO">#{lang.Order.StartDate}</label>
             <div class="controls">
             <input type="text" id="PLAN_START" name="PLAN_START" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" style="width:213px" />
             </div>
             </td>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO">结束时间</label>
+            <label class="control-label" data-lang="Common.MEMO">#{lang.Order.EndDate}</label>
             <div class="controls">
             <input type="text" id="PLAN_END" name="PLAN_END" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" style="width:213px" />
             </div>
@@ -172,7 +172,7 @@ block content
             <table class="control-group" style="margin-left:-40px;">
             <tr>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO">客户名称</label>
+            <label class="control-label" data-lang="Common.MEMO">#{lang.Order.CustomerName}</label>
             <div class="controls">
             <input type="text" id="CUSTOMER" name="CUSTOMER" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" />
             </div>
@@ -182,7 +182,7 @@ block content
             <table class="control-group" style="margin-left:-40px;">
             <tr>
             <td class="">
-            <label class="control-label" data-lang="Common.MEMO">备注</label>
+            <label class="control-label" data-lang="Common.MEMO">#{lang.Order.Note}</label>
             <div class="controls">
             <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" />
             </div>
@@ -190,13 +190,13 @@ block content
             </tr>
             </table>
             <div class="form-actions" style="border:0;">
-            <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
-            <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+            <div id="Save" class="btn green">#{lang.Order.OK}<i class="icon-ok"></i></div>
+            <div id="Win_Cancel" class="btn">#{lang.Order.Cancel}<i class="icon-remove"></i></div>
             </div>
             </form>
     script#template(type='text/x-kendo-template').
         <div class="toolbar">
-        <button id="task_e" class="btn btn-sm purple">编辑工单<i class="icon-edit"></i></button>
+        <button id="task_e" class="btn btn-sm purple">#{lang.Order.EditTheTRepairOrder}<i class="icon-edit"></i></button>
         </div>
     script#task_no(type='text/x-kendo-template', style='margin-top:-200px;').
         <form class="form-horizontal" id="machineviewmodel" style="width:400px;">
@@ -204,7 +204,7 @@ block content
         <table class="control-group" style="margin-left: -40px;">
         <tr>
         <td class="PROG">
-        <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>工单名称</label>
+        <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>#{lang.Order.RepairOrderName}</label>
         <div class="controls">
         <input type="text" id="TASK_NO" name="TASK_NO" class="span6 m-wrap" style="width:300px; margin-left: 0px;" />
         </div>
@@ -212,7 +212,7 @@ block content
         </tr>
         <tr>
         <td class="PROG">
-        <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>投料量</label>
+        <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>#{lang.Order.Inventory}</label>
         <div class="controls">
         <input type="number" min="0" id="INPUT_NUMS" name="INPUT_NUMS" class="span6 m-wrap" style="width:150px; margin-left: 0px;" />
         </div>
@@ -220,7 +220,7 @@ block content
         </tr>
         <tr>
         <td class="PROG">
-        <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>目标量</label>
+        <label class=" control-label" data-lang="Common.PROG_NAME"><span class="required">*</span>#{lang.Order.TargetQuantity}</label>
         <div class="controls">
         <input type="number" id="TARGET_NUMS" min="0" name="TARGET_NUMS" class="span6 m-wrap" style="width: 150px; margin-left: 0px;" />
         </div>
@@ -228,16 +228,16 @@ block content
         </tr>
         </table>
         <div class="form-actions" style="border:0;">
-        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Save" class="btn green">#{lang.Order.OK}<i class="icon-ok"></i></div>
         </div>
         </form>
     script#PROC_TYPE(type='text/x-kendo-template').
         # if ( data.PROC_TYPE ==0) { #
         <div>
-        <div style="float: left;margin-left:4px">否</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.No}</div>
         </div>
         # } else if(data.PROC_TYPE == 1) { #
         <div>
-        <div style="float: left;margin-left:4px">是</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Yes}</div>
         </div>
         # } #
