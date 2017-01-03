@@ -39,46 +39,46 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 加工节拍
+                | #{lang.YieldProcessingBeat.MachiningTime}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 加工节拍
+                    a(href='javascript:;', data-lang='System') #{lang.YieldProcessingBeat.MachiningTime}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='AccountManage') 加工节拍
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.YieldProcessingBeat.MachiningTime}
 
 
     form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
         .row-fluid
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 开始时间
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.StartTime}
                     .BZcontrols
                         input#startTime.m-wrap(type='text', name='startTime')
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 结束时间
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
                     .BZcontrols
                         input#endTime.m-wrap(type='text', name='endTime')
         .row-fluid
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 是否工作日
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.YieldProcessingBeat.WhetherWorkingDays}
                     .BZcontrols
                         input#totalType.m-wrap(type='text', name='totalType')
             div(style='float:left;margin-left:0px;width:350px;')
                 .control-group(style='margin-bottom: 5px;')
-                    label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') 设备
+                    label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.Equipment}
                     .BZcontrols
                         input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
             .span(style='width: 128px !important; float:left; text-align:center;')
                 .control-group(style='margin-bottom: 5px;')
                     #search.btn.green(style='margin-left: 50px;')
-                        | 查询
+                        | #{lang.EmployeePerformance.Search}
                         i.icon-search
         #Div0(style='margin-top: 5px; background-color: black; overflow-y: auto; overflow-x: hidden; ')
             center

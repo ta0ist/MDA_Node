@@ -1,5 +1,4 @@
-﻿
-var path = require('path');
+﻿var path = require('path');
 var logger = require('../../../../routes/logger.js');
 var config = require('../../../../routes/config.js')
 var request = require('request');
@@ -16,15 +15,20 @@ var post_argu = require('../../../../routes/post_argu.js');
 
 // var report = edge.func(path.join(__dirname, 'ReportServer.cs'));
 
-exports.page = function (req, res) {
+exports.page = function(req, res) {
     if (!req.session.menu) {
         res.redirect('/');
     }
-    res.render(path.resolve(__dirname, '../../web/view/report/index'), { menulist: req.session.menu, report: path.resolve('./ReportTemplate'),user:req.session.user });
+    res.render(path.resolve(__dirname, '../../web/view/report/index'), {
+        menulist: req.session.menu,
+        report: path.resolve('./ReportTemplate'),
+        user: req.session.user,
+        lang: post_argu.getLanguage()
+    });
 }
 
 //处理事件
-exports.fun = function (req, res) {
+exports.fun = function(req, res) {
     var args = [];
     args.push(res);
     method = post_argu.getpath(__filename, req.params.method);
@@ -38,8 +42,9 @@ function doCallback(fn, args, res) {
 }
 
 function GetRepostName(res, method, args) {
-    var body = {}, data = [];
-    fs.readdirSync('./ReportTemplate').forEach(function (file) {
+    var body = {},
+        data = [];
+    fs.readdirSync('./ReportTemplate').forEach(function(file) {
         data.push(file.split('.')[0]);
     });
     body.Data = data;
@@ -53,7 +58,7 @@ function GetRepostType(res, method, args) {
     post_argu.post_argu(res, method);
 }
 
-exports.GetRepost = function (req, res) {
+exports.GetRepost = function(req, res) {
     var templateName = path.resolve('ReportTemplate/' + req.query.filename);
     var para = {
         filename: req.query.filename,
@@ -64,19 +69,18 @@ exports.GetRepost = function (req, res) {
 
 
     // request(config.report + '/GetRepost?filename='+para.filename+'&filetype='+para.filetype+'&parameters='+para.parameters+'&templateName='+templateName).pipe('para.filename.xlsx');
-    request.post({ url: post_argu.getpath(__filename, 'GetRepost'), form: para }, function (error, response, body) {
-        if (error) {
-            throw error;
-        }
-        else {
-            // var rs = fs.createReadStream(body);
-            // res.pipe(rs);
-            // request(…..).pipe(fs.createWriteStream('xxx.xls'))
-            res.pipe(body);
-        }
-    })
-    // request.post({ url: config.report + '/GetRepost', form: para}).pipe().on('error',function(err){
-    //     console.log(err);
-    // });
+    request.post({ url: post_argu.getpath(__filename, 'GetRepost'), form: para }, function(error, response, body) {
+            if (error) {
+                throw error;
+            } else {
+                // var rs = fs.createReadStream(body);
+                // res.pipe(rs);
+                // request(…..).pipe(fs.createWriteStream('xxx.xls'))
+                res.pipe(body);
+            }
+        })
+        // request.post({ url: config.report + '/GetRepost', form: para}).pipe().on('error',function(err){
+        //     console.log(err);
+        // });
 
 }
