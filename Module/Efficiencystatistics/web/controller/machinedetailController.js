@@ -1,5 +1,5 @@
 angular.module('app', [])
-    .controller('appCtrl', function ($scope) {
+    .controller('appCtrl', function($scope) {
         var baseUrl = $.getparam("url"),
             par = $.getparam("par"),
             groupOrMac = $.getparam("groupOrMac"); //1 设备   2 设备组
@@ -18,9 +18,13 @@ angular.module('app', [])
         if (groupOrMac == 1) {
             //cols.push({ field: "MAC_NO", title: "设备编号", width: 80, sortable: true, filterable: false, hidden: false });
             cols.push({
-                field: "MAC_NAME", title: "设备名称", width: 80, sortable: true, filterable: {
+                field: "MAC_NAME",
+                title: lang.EmployeePerformance.DeviceName,
+                width: 80,
+                sortable: true,
+                filterable: {
                     cell: {
-                        template: function (args) {
+                        template: function(args) {
                             args.element.kendoDropDownList({
                                 dataSource: args.dataSource,
                                 dataTextField: "MAC_NAME",
@@ -30,14 +34,18 @@ angular.module('app', [])
                         },
                         showOperators: false
                     }
-                }, hidden: false
+                },
+                hidden: false
             });
-        }
-        else {
+        } else {
             cols.push({
-                field: "MAC_NAME", title: "设备组", width: 80, sortable: true, filterable: {
+                field: "MAC_NAME",
+                title: lang.Efficiencystatistics.EquipmentGroup,
+                width: 80,
+                sortable: true,
+                filterable: {
                     cell: {
-                        template: function (args) {
+                        template: function(args) {
                             args.element.kendoDropDownList({
                                 dataSource: args.dataSource,
                                 dataTextField: "MAC_NAME",
@@ -47,13 +55,18 @@ angular.module('app', [])
                         },
                         showOperators: false
                     }
-                }, hidden: false
+                },
+                hidden: false
             });
         }
         cols.push({
-            field: "DATE", title: "日期", width: 80, sortable: true, filterable: {
+            field: "DATE",
+            title: lang.EmployeePerformance.Date,
+            width: 80,
+            sortable: true,
+            filterable: {
                 cell: {
-                    template: function (args) {
+                    template: function(args) {
                         args.element.kendoDropDownList({
                             dataSource: args.dataSource,
                             dataTextField: "DATE",
@@ -63,20 +76,27 @@ angular.module('app', [])
                     },
                     showOperators: false
                 }
-            }, hidden: false
+            },
+            hidden: false
         });
-        cols.push({ field: "TYPE", title: "统计方式", width: 80, sortable: true, filterable: false, hidden: false });
-        cols.push({ field: "SHIFT", title: "班次", width: 80, sortable: true, filterable: false });
-        cols.push({ field: "VALUE", title: "稼动率", width: 120, sortable: true, filterable: false, template: kendo.template($("#VALUE-template").html()) });
+        cols.push({ field: "TYPE", title: lang.EmployeePerformance.StatisticalMethods, width: 80, sortable: true, filterable: false, hidden: false });
+        cols.push({ field: "SHIFT", title: lang.EmployeePerformance.Shift, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "VALUE", title: lang.EmployeePerformance.RateOGrainOrMove, width: 120, sortable: true, filterable: false, template: kendo.template($("#VALUE-template").html()) });
         cols.push({
-            field: "VALUE", title: "稼动率", width: 50, sortable: true, filterable: false, attributes: {
+            field: "VALUE",
+            title: lang.EmployeePerformance.RateOGrainOrMove,
+            width: 50,
+            sortable: true,
+            filterable: false,
+            attributes: {
                 "class": "table-cell",
                 style: "text-align: right;"
-            }, template: kendo.template($("#VALUE-template1").html())
+            },
+            template: kendo.template($("#VALUE-template1").html())
         });
 
 
-        $.post(baseUrl, par, function (rdata) {
+        $.post(baseUrl, par, function(rdata) {
             if (rdata.Status == 0) {
                 var tdata = rdata.Data;
                 var data = [];
@@ -170,9 +190,9 @@ angular.module('app', [])
                             data[i]["SHIFT"] = data[i].SHIFT;
                             data[i]["VALUE"] = parseFloat(data[i].VALUE.toFixed(1));
 
-                        // }
+                            // }
 
-                        //break;
+                            //break;
                         case 2:
                             data[i]["NO"] = i + 1;
                             data[i]["MAC_NAME"] = data[i].NAME;
@@ -229,8 +249,7 @@ angular.module('app', [])
                 var grid = $("#grid").data("kendoGrid");
                 //grid.saveAsExcel();
                 // grid.data("kendoGrid").dataSource.data($scope.resultData);
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         })

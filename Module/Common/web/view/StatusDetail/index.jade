@@ -13,26 +13,26 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 运行履历
+                | #{lang.Common.RunResume}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 运行履历
+                    a(href='javascript:;', data-lang='System') #{lang.Common.RunResume}
     form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
         .row
             .pull-left
                 .row-fluid
                     .span
                         .control-group(style='margin-bottom: 5px;')
-                            label.control-label(data-lang='Common.PASSWORD') 选择日期
+                            label.control-label(data-lang='Common.PASSWORD') #{lang.Common.SelectDate}
                             .BZcontrols
                                 input#startTime.m-wrap(type='text', name='startTime')
                     .span(style='visibility:hidden;')
                         .control-group(style='margin-bottom: 5px;')
-                            label.control-label(data-lang='Common.PASSWORD') @LanguageService.Translate("MachineStatus.FINISH_DATE")
+                            label.control-label(data-lang='Common.PASSWORD') 
                             .BZcontrols
                                 input#endTime.m-wrap(type='text', name='endTime')
             .pull-left(style='margin-left:33px;')
@@ -49,21 +49,21 @@ block content
                                 | *@
                     .span
                         .control-group(style='margin-bottom: 5px;')
-                            label.control-label(data-lang='Common.PASSWORD', style='width: 60px;') 过滤
+                            label.control-label(data-lang='Common.PASSWORD', style='width: 60px;') #{lang.MachineStatus.Filter}
                             .BZcontrols(style='line-height: 32px; margin-left: 70px;')
                                 label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
                                     input#checked(type='checkbox', name='filter')
                                 input#filterLogic.m-wrap(type='text', style='width:100px;')
                                 input#filterValue.m-wrap(type='text', style='width: 50px; margin-top: 1px; margin-right: 5px;')
-                                | 秒
+                                | #{lang.EmployeePerformance.Seconds}
                     div(style='float: left;margin-left:0px;width:350px;')
                         .control-group(style='margin-bottom: 5px;')
-                            label.control-label(data-lang='Common.PASSWORD') 设备
+                            label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.Equipment}
                             .BZcontrols
                                 input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
                     .span
                         .control-group(style='margin-bottom: 5px;')
                             #search.btn.green(style='margin-left: 50px;')
-                                | 查询
+                                | #{lang.EmployeePerformance.Search}
                                 i.icon-search
     div#grid

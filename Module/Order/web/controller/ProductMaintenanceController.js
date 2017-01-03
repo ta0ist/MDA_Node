@@ -16,25 +16,25 @@ var validator;
 var addviewModel;
 //*工单模块-获取产品组
 function GetProductionGroup(id, chtml) {
-    $.post("/ProductMaintenance/getProductGroup", { gp_nbr: id }, function (data) {
+    $.post("/ProductMaintenance/getProductGroup", { gp_nbr: id }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: fomattree(gettree(data.Data, "icon-group"))
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    grid.grid("refresh", function () {
+                select: function(e) {
+                    grid.grid("refresh", function() {
                         return [
                             { field: "keyword", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) }
                         ];
                     });
-                    $("#slide").text("折叠");
-                    $("#slide").toggle(function () {
-                        $("#slide").text("展开");
+                    $("#slide").text(lang.Order.Folding);
+                    $("#slide").toggle(function() {
+                        $("#slide").text(lang.Order.Unfold);
                         $("#grid").data("kendoGrid").collapseRow(".k-grouping-row");
-                    }, function () {
-                        $("#slide").text("折叠");
+                    }, function() {
+                        $("#slide").text(lang.Order.Folding);
                         $("#grid").data("kendoGrid").expandRow(".k-grouping-row");
                     });
 
@@ -48,13 +48,12 @@ function GetProductionGroup(id, chtml) {
             }
             $("#tree_addRootNode").show();
 
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
 }
-$(function () {
+$(function() {
     var fields = {
         // PROD_NBR: { type: "string" },
         PROD_NBR: { type: "number" },
@@ -74,40 +73,52 @@ $(function () {
     var cols = [];
     //cols.push({ field: "PROD_NBR", title: $.Translate("Order.ProductNumber"), width: 60, sortable: true, filterable: { extra: false } });
     cols.push({
-        field: "PROD_NO", title: '产品编号',
-        groupHeaderTemplate: '产品编号: #= value #' +
-        '<div class="btn purple" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 10px; padding: 0px 6px;" onclick="return toolbar_editproduct(this)">编辑产品</div>' +
-        '<div class="btn red" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return toolbar_deleteproduct(this)" >删除产品</div>' +
-        '<div class="btn blue" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return toolbar_addart(this)" >新增工艺</div>',
-        width: 60, sortable: true, filterable: false, hidden: true
+        field: "PROD_NO",
+        title: lang.Order.ProductNumber,
+        groupHeaderTemplate: lang.Order.ProductNumber + ': #= value #' +
+            '<div class="btn purple" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 10px; padding: 0px 6px;" onclick="return toolbar_editproduct(this)">' + lang.Order.EditProduct + '</div>' +
+            '<div class="btn red" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return toolbar_deleteproduct(this)" >' + lang.Order.RemoveProduct + '</div>' +
+            '<div class="btn blue" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return toolbar_addart(this)" >' + lang.Order.NewCraft + '</div>',
+        width: 60,
+        sortable: true,
+        filterable: false,
+        hidden: true
     });
-    cols.push({ field: "PROD_NAME", title: '产品名称', width: 60, sortable: true, filterable: false });
+    cols.push({ field: "PROD_NAME", title: lang.Order.ProductName, width: 60, sortable: true, filterable: false });
     cols.push({
-        field: "CRAFT_NAME", title: '工艺名称',
+        field: "CRAFT_NAME",
+        title: lang.Order.CraftName,
 
-        width: 60, sortable: true, filterable: false
+        width: 60,
+        sortable: true,
+        filterable: false
     });
     cols.push({
-        field: "CRAFT_NO", title: '工艺编号',
-        groupHeaderTemplate: '工艺编号: #= value #' +
-        '<div class="btn purple" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 10px; padding: 0px 6px;" onclick="return craft_editproduct(this)">编辑工艺</div>' +
-        '<div class="btn red" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return delete_craft(this)" >删除工艺</div>' +
-        '<div class="btn blue" value="#=data.value#"style=" height:20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return craft_proc(this)" >新增工序</div>',
-        width: 60, sortable: true, filterable: false, hidden: true
+        field: "CRAFT_NO",
+        title: lang.Order.CraftId,
+        groupHeaderTemplate: lang.Order.CraftId + ': #= value #' +
+            '<div class="btn purple" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 10px; padding: 0px 6px;" onclick="return craft_editproduct(this)">' + lang.Order.EditCraft + '</div>' +
+            '<div class="btn red" value="#=data.value#"style="height: 20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return delete_craft(this)" >' + lang.Order.DeleteCraft + '</div>' +
+            '<div class="btn blue" value="#=data.value#"style=" height:20px; width: 60px; margin: 0px 2px 0px 2px; padding: 0px 6px;" onclick="return craft_proc(this)" >' + lang.Order.NewProcess + '</div>',
+        width: 60,
+        sortable: true,
+        filterable: false,
+        hidden: true
     });
-    cols.push({ field: "RANK_NUM", title: '工序顺序', width: 40, sortable: true, filterable: false });
-    cols.push({ field: "PROC_TYPE", title: "最后工序", width: 40, sortable: true, filterable: false, template: kendo.template($("#PROC_TYPE_TEMPLATE").html()) });
-    cols.push({ field: "PROC_NAME", title: '工序名称', width: 60, sortable: true, filterable: false });
-    cols.push({ field: "PROC_NO", title: '工序编号', width: 60, sortable: true, filterable: false });
-    cols.push({ field: "STD_TIME", title: '标准用时', width: 60, sortable: true, filterable: false });
-    cols.push({ field: "CYCLE_RATE", title: '循环倍数', width: 40, sortable: true, filterable: false });
-    cols.push({ field: "MEMO", title: '描述', width: 60, sortable: true, filterable: false });
+    cols.push({ field: "RANK_NUM", title: lang.Order.OperationSequence, width: 40, sortable: true, filterable: false });
+    cols.push({ field: "PROC_TYPE", title: lang.Order.LastProcess, width: 40, sortable: true, filterable: false, template: kendo.template($("#PROC_TYPE_TEMPLATE").html()) });
+    cols.push({ field: "PROC_NAME", title: lang.Order.ProcessName, width: 60, sortable: true, filterable: false });
+    cols.push({ field: "PROC_NO", title: lang.Order.ProcessId, width: 60, sortable: true, filterable: false });
+    cols.push({ field: "STD_TIME", title: lang.Order.StandardTime, width: 60, sortable: true, filterable: false });
+    cols.push({ field: "CYCLE_RATE", title: lang.Order.CirculationRatio, width: 40, sortable: true, filterable: false });
+    cols.push({ field: "MEMO", title: lang.Order.Describe, width: 60, sortable: true, filterable: false });
     cols.push({
         command: [
-            { name: "aa", text: '编辑' + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
-            { name: "bb", text: '删除' + '<i class="icon-remove-sign"></i>', className: "btn red ", click: f_delete }
+            { name: "aa", text: lang.Order.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
+            { name: "bb", text: lang.Order.Delete + '<i class="icon-remove-sign"></i>', className: "btn red ", click: f_delete }
         ],
-        title: '操作', width: 90
+        title: lang.Order.Operation,
+        width: 90
     });
     //Grid
 
@@ -119,7 +130,7 @@ $(function () {
         scrollable: true,
         editable: false, //是否可编辑
         autoBind: false,
-        resizeGridWidth: true,//列宽度可调
+        resizeGridWidth: true, //列宽度可调
         isPage: true,
         group: true,
         groupfield: [
@@ -138,11 +149,11 @@ $(function () {
 
     });
 
-    $("#slide").toggle(function () {
-        $("#slide").text("展开");
+    $("#slide").toggle(function() {
+        $("#slide").text(lang.Order.Unfold);
         $("#grid").data("kendoGrid").collapseRow(".k-grouping-row");
-    }, function () {
-        $("#slide").text("折叠");
+    }, function() {
+        $("#slide").text(lang.Order.Folding);
         $("#grid").data("kendoGrid").expandRow(".k-grouping-row");
     });
 
@@ -156,7 +167,7 @@ $(function () {
     //});
 
 
-    $("#contextPage").resize(function () {
+    $("#contextPage").resize(function() {
         grid.data("bz-grid").resizeGridWidth();
     });
 
@@ -166,14 +177,14 @@ $(function () {
     function koModel() {
         var self = this;
 
-        self.tree_addRootNode = function () { //添加根节点
+        self.tree_addRootNode = function() { //添加根节点
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var GroupInfo = {
                 pid: 0,
-                gp_name: '新节点',
+                gp_name: lang.Order.NewNode,
                 rank_num: 0
             }
-            $.post("/ProductMaintenance/addProductGroup", GroupInfo, function (data) {
+            $.post("/ProductMaintenance/addProductGroup", GroupInfo, function(data) {
                 if (data.Status == 0) {
                     var obj = treeobj.append({
                         text: GroupInfo.gp_name,
@@ -185,22 +196,21 @@ $(function () {
                     //进入编辑
                     treeobj.select(obj);
                     $("#tree_edit").trigger('click');
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
         };
-        self.tree_add = function () {//新增产品组
+        self.tree_add = function() { //新增产品组
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var selectedNode = treeobj.select();
             if (selectedNode.length > 0) {
                 var GroupInfo = {
                     pid: parseInt($(treeobj.select()).find('.k-state-selected span').attr("nodeid")),
-                    gp_name: '新节点',
+                    gp_name: lang.Order.NewNode,
                     rank_num: 0
                 }
-                $.post("/ProductMaintenance/addProductGroup", GroupInfo, function (data) {
+                $.post("/ProductMaintenance/addProductGroup", GroupInfo, function(data) {
                     if (data.Status == 0) {
                         var obj = treeobj.append({
                             text: GroupInfo.gp_name,
@@ -213,17 +223,15 @@ $(function () {
                         //进入编辑
                         treeobj.select(obj);
                         $("#tree_edit").trigger('click');
-                    }
-                    else {
+                    } else {
                         BzAlert(data.Message);
                     }
                 });
-            }
-            else {
-                BzAlert('请选中节点');
+            } else {
+                BzAlert(lang.Order.PleaseSelectANode);
             }
         };
-        self.tree_edit = function () {//编辑产品组
+        self.tree_edit = function() { //编辑产品组
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var selectedNode = treeobj.select();
             if (selectedNode.length > 0) {
@@ -231,8 +239,8 @@ $(function () {
                 if (obj == undefined) {
                     selectedNode.find('.k-state-selected span').editer({
                         url: "/ProductMaintenance/modifyProductGroup",
-                        title: '请输入名称',
-                        Ok: function (name) {
+                        title: lang.Order.PleaseEnterAName,
+                        Ok: function(name) {
                             this.close();
                             var treeobj = $("#orgnizetree").data("kendoTreeView");
                             var GroupInfo = {
@@ -241,36 +249,33 @@ $(function () {
                                 rank_num: 0,
                                 pid: parseInt($(treeobj.select()).find('.k-state-selected span').attr("pid"))
                             }
-                            $.post("/ProductMaintenance/modifyProductGroup", GroupInfo, function (data) {
+                            $.post("/ProductMaintenance/modifyProductGroup", GroupInfo, function(data) {
                                 if (data.Status == 0) {
                                     var treeobj = $("#orgnizetree").data("kendoTreeView");
                                     $(treeobj.select()).find('.k-state-selected span').html(name);
                                     BzSuccess(data.Message);
-                                }
-                                else {
+                                } else {
                                     BzAlert(data.Message);
                                 }
                             });
                         }
                     });
-                }
-                else {
+                } else {
                     obj.show();
                 }
             }
         };
-        self.tree_delete = function () { //删除产品组
-            BzConfirm('请确认是否要删除数据', function (e) {
+        self.tree_delete = function() { //删除产品组
+            BzConfirm(lang.Order.DeleteData, function(e) {
                 if (e) {
                     var treeobj = $("#orgnizetree").data("kendoTreeView");
-                    var data= $(treeobj.select()).find('.k-state-selected span').attr("nodeid")
-                    $.post("/ProductMaintenance/deleteProductGroup", {gp_nbr:data}, function (data) {
+                    var data = $(treeobj.select()).find('.k-state-selected span').attr("nodeid")
+                    $.post("/ProductMaintenance/deleteProductGroup", { gp_nbr: data }, function(data) {
                         if (data.Status == 0) {
                             var selectedNode = treeobj.select();
                             treeobj.remove(selectedNode);
                             BzSuccess(data.Message);
-                        }
-                        else {
+                        } else {
                             BzAlert(data.Message);
                         }
                     });
@@ -279,16 +284,15 @@ $(function () {
         };
 
 
-        self.grid_add = function (e) {//新增产品
+        self.grid_add = function(e) { //新增产品
             newCmd = cmd.addProduct;
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var selectedNode = treeobj.select();
-            if (selectedNode.length > 0) {//判断是否有选中的节点
-                $.x5window("新增产品", kendo.template($("#popup-add").html()));
-                addOrEdit();//新增
-            }
-            else {
-                BzAlert('请选中节点');
+            if (selectedNode.length > 0) { //判断是否有选中的节点
+                $.x5window(lang.Order.NewProduct, kendo.template($("#popup-add").html()));
+                addOrEdit(); //新增
+            } else {
+                BzAlert(lang.Order.PleaseSelectANode);
             }
         };
     }
@@ -298,17 +302,17 @@ $(function () {
 
 
 
-    $("#tree_expand").toggle(function () {
+    $("#tree_expand").toggle(function() {
         $("#orgnizetree").data("kendoTreeView").collapse(".k-item");
 
-    }, function () {
+    }, function() {
         $("#orgnizetree").data("kendoTreeView").expand(".k-item");
     });
 });
 
-function refreshGrid() {//刷新grid
+function refreshGrid() { //刷新grid
     // if ($("#filter").val() == "") {
-    grid.grid("refresh", function () {
+    grid.grid("refresh", function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
         return [
@@ -317,9 +321,9 @@ function refreshGrid() {//刷新grid
     });
 }
 
-function f_edit(e) {//编辑工序
+function f_edit(e) { //编辑工序
     newCmd = cmd.editProcess;
-    $.x5window("编辑工序", kendo.template($("#popup-add").html()));
+    $.x5window(lang.Order.EditProcess, kendo.template($("#popup-add").html()));
     var obj = this.dataItem($(e.currentTarget).closest("tr"));
     var ProductNO = obj.PROC_NO;
     var objs = grid.data('bz-grid').ds.data();
@@ -352,16 +356,16 @@ function f_edit(e) {//编辑工序
 
     addOrEdit(dataItems);
 }
-function f_delete(e) {//删除工序
+
+function f_delete(e) { //删除工序
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-    BzConfirm('请确认是否要删除数据', function (e) {
+    BzConfirm(lang.Order.DeleteData, function(e) {
         if (e) {
-            $.post("/Order/ProductMaintenance/deleteProcess", JSON.stringify({ craft_nbr: dataItem.CRAFT_NBR, proc_nbr: dataItem.PROC_NBR }), function (data) {
+            $.post("/Order/ProductMaintenance/deleteProcess", JSON.stringify({ craft_nbr: dataItem.CRAFT_NBR, proc_nbr: dataItem.PROC_NBR }), function(data) {
                 if (data.Status == 0) {
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
@@ -371,10 +375,10 @@ function f_delete(e) {//删除工序
 
 
 
-function toolbar_deleteproduct(e) {//删除产品
+function toolbar_deleteproduct(e) { //删除产品
     var ProductNO = $(e).attr("value");
     var dataItem = grid.data('bz-grid').ds.data();
-    BzConfirm('请确认是否要删除数据', function (e) {
+    BzConfirm(lang.Order.DeleteData, function(e) {
         //遍历寻找对应的PRODUCT_AUTO_ID
         if (e) {
             var prod_nbr;
@@ -383,12 +387,11 @@ function toolbar_deleteproduct(e) {//删除产品
                     prod_nbr = dataItem[i].PROD_NBR;
                 }
             }
-            $.post("/Order/ProductMaintenance/deleteProduct", JSON.stringify({ prod_nbr: prod_nbr }), function (data) {
+            $.post("/Order/ProductMaintenance/deleteProduct", JSON.stringify({ prod_nbr: prod_nbr }), function(data) {
                 if (data.Status == 0) {
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
@@ -398,20 +401,20 @@ function toolbar_deleteproduct(e) {//删除产品
 
     })
 }
-function delete_craft(e) {//删除工艺
+
+function delete_craft(e) { //删除工艺
     var ProductNO = $(e).attr("value");
     var dataItem = grid.data('bz-grid').ds.data();
-    BzConfirm('请确认是否要删除数据', function (e) {
+    BzConfirm(lang.Order.DeleteData, function(e) {
         if (e) {
             for (var i = 0; i < dataItem.length; i++) {
                 var craft_nbr = dataItem[i].CRAFT_NBR;
                 if (ProductNO == dataItem[i].CRAFT_NO) {
-                    $.post("/Order/ProductMaintenance/deleteCraft", JSON.stringify({ craft_nbr: craft_nbr }), function (data) {
+                    $.post("/Order/ProductMaintenance/deleteCraft", JSON.stringify({ craft_nbr: craft_nbr }), function(data) {
                         if (data.Status == 0) {
                             refreshGrid();
                             BzSuccess(data.Message);
-                        }
-                        else {
+                        } else {
                             BzAlert(data.Message);
                         }
                     });
@@ -426,9 +429,10 @@ function delete_craft(e) {//删除工艺
 
 }
 var dataItems;
-function toolbar_editproduct(e) {//编辑产品
+
+function toolbar_editproduct(e) { //编辑产品
     newCmd = cmd.editProduct;
-    $.x5window("编辑产品", kendo.template($("#popup-add").html()));
+    $.x5window(lang.Order.EditProduct, kendo.template($("#popup-add").html()));
     var ProductNO = $(e).attr("value");
     var objs = grid.data('bz-grid').ds.data();
     var temp = _.where(objs, { "PROD_NO": ProductNO });
@@ -444,7 +448,7 @@ function toolbar_editproduct(e) {//编辑产品
 
     dataItems.CRAFT_LIST = [];
     var craftlist = _.groupBy(temp, "CRAFT_NBR");
-    $.each(craftlist, function (a, b) {
+    $.each(craftlist, function(a, b) {
         var tjson = {};
         tjson.PROC_LIST = [];
         for (var j = 0; j < b.length; j++) {
@@ -471,9 +475,9 @@ function toolbar_editproduct(e) {//编辑产品
     addOrEdit(dataItems);
 }
 
-function craft_editproduct(e) {//编辑工艺
+function craft_editproduct(e) { //编辑工艺
     newCmd = cmd.editCraft;
-    $.x5window("编辑工艺", kendo.template($("#popup-add").html()));
+    $.x5window(lang.Order.EditCraft, kendo.template($("#popup-add").html()));
     var ProductNO = $(e).attr("value");
     var objs = grid.data('bz-grid').ds.data();
     var temp = _.where(objs, { "CRAFT_NO": ProductNO });
@@ -489,7 +493,7 @@ function craft_editproduct(e) {//编辑工艺
 
     dataItems.CRAFT_LIST = [];
     var craftlist = _.groupBy(temp, "CRAFT_NBR");
-    $.each(craftlist, function (a, b) {
+    $.each(craftlist, function(a, b) {
         FLAG = 1; //old
         var tjson = {};
         tjson.PROC_LIST = [];
@@ -518,9 +522,9 @@ function craft_editproduct(e) {//编辑工艺
 }
 
 
-function craft_proc(e) {//新增工序
+function craft_proc(e) { //新增工序
     newCmd = cmd.addProcess;
-    $.x5window("新增工序", kendo.template($("#popup-add").html()));
+    $.x5window(lang.Order.NewProcess, kendo.template($("#popup-add").html()));
     var ProductNO = $(e).attr("value");
     var objs = grid.data('bz-grid').ds.data();
     var temp = _.where(objs, { "CRAFT_NO": ProductNO });
@@ -536,7 +540,7 @@ function craft_proc(e) {//新增工序
 
     dataItems.CRAFT_LIST = [];
     var craftlist = _.groupBy(temp, "CRAFT_NBR");
-    $.each(craftlist, function (a, b) {
+    $.each(craftlist, function(a, b) {
         FLAG = 1; //old
         var tjson = {};
         tjson.PROC_LIST = [];
@@ -564,9 +568,10 @@ function craft_proc(e) {//新增工序
     addOrEdit(dataItems);
 }
 var FLAG;
-function toolbar_addart(e) {//新增工艺
+
+function toolbar_addart(e) { //新增工艺
     newCmd = cmd.addCraft;
-    $.x5window("新增工艺", kendo.template($("#popup-add").html()));
+    $.x5window(lang.Order.NewCraft, kendo.template($("#popup-add").html()));
     var ProductNO = $(e).attr("value");
     var objs = grid.data('bz-grid').ds.data();
     var temp = _.where(objs, { "PROD_NO": ProductNO });
@@ -582,7 +587,7 @@ function toolbar_addart(e) {//新增工艺
 
     dataItems.CRAFT_LIST = [];
     var craftlist = _.groupBy(temp, "CRAFT_NBR");
-    $.each(craftlist, function (a, b) {
+    $.each(craftlist, function(a, b) {
         FLAG = 1; //old
         var tjson = {};
         tjson.PROC_LIST = [];
@@ -623,15 +628,15 @@ function addOrEdit(dataItems) {
 
         },
         messages: {
-            PROD_NO: { required: '内容不能为空'},
-            PROD_NAME: { required: '内容不能为空' },
-            CRAFT_NO: { required: '内容不能为空' },
-            CRAFT_NAME: { required: '内容不能为空'}
+            PROD_NO: { required: lang.Order.ContentCannotBeEmpty },
+            PROD_NAME: { required: lang.Order.ContentCannotBeEmpty },
+            CRAFT_NO: { required: lang.Order.ContentCannotBeEmpty },
+            CRAFT_NAME: { required: lang.Order.ContentCannotBeEmpty }
         }
     });
 
     addviewModel = ko.mapping.fromJS({
-        CMD:ko.observable(newCmd),
+        CMD: ko.observable(newCmd),
         PROD_NO: ko.observable(dataItems == undefined ? "" : dataItems.PROD_NO),
         PROD_NAME: ko.observable(dataItems == undefined ? "" : dataItems.PROD_NAME),
         MEMO: ko.observable(dataItems == undefined ? "" : dataItems.MEMO),
@@ -639,7 +644,7 @@ function addOrEdit(dataItems) {
         //CRAFT_LIST: ko.observableArray(ko.utils.arrayMap(dataItems.CRAFT_LIST, function (craft_list) {
         //    return { FLAG: 0, CRAFT_NO: craft_list.CRAFT_NO, CRAFT_NAME: craft_list.CRAFT_NAME, PROC_LIST: ko.observableArray(craft_list.PROC_LIST) };
         //})),
-        addCraft: function (e) {
+        addCraft: function(e) {
             addviewModel.CRAFT_LIST.push({
                 FLAG: ko.observable(0), //new
                 CRAFT_NO: ko.observable(""),
@@ -649,10 +654,10 @@ function addOrEdit(dataItems) {
 
             })
         },
-        removeCraft: function (craft) {
+        removeCraft: function(craft) {
             addviewModel.CRAFT_LIST.remove(craft);
         },
-        addProcess: function (data, event) {
+        addProcess: function(data, event) {
             data.PROC_LIST.push({
                 FLAG: ko.observable(0), //new
                 PROC_NO: ko.observable(""),
@@ -664,19 +669,19 @@ function addOrEdit(dataItems) {
                 MEMO: ko.observable("")
             })
         },
-        removeProcess: function (process) {
+        removeProcess: function(process) {
             $.each(addviewModel.CRAFT_LIST(),
-                function () {
+                function() {
                     this.PROC_LIST.remove(process)
                 })
         },
-        onchange: function (data, event) {
-            $.each(addviewModel.CRAFT_LIST()[parseInt($(event.target).attr("index"))].PROC_LIST(), function (a, b) {
+        onchange: function(data, event) {
+            $.each(addviewModel.CRAFT_LIST()[parseInt($(event.target).attr("index"))].PROC_LIST(), function(a, b) {
                 b.PROC_TYPE(0);
             });
             data.PROC_TYPE(1);
         },
-        save: function (e) {
+        save: function(e) {
             if (validator.form()) {
                 var treeobj = $("#orgnizetree").data("kendoTreeView");
                 var selectedNode = treeobj.select();
@@ -705,34 +710,30 @@ function addOrEdit(dataItems) {
                         tt.STD_TIME = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].STD_TIME();
                         tjson.Bllprocess.push(tt);
                         if (tjson.Bllprocess[j].PROC_NO == '' || tjson.Bllprocess[j].PROC_NAME == '') {
-                            BzAlert("请输入工序编号和工序名称");
+                            BzAlert(lang.Order.PleaseEnterTheProcessNumberAndProcessName);
                             return;
                         }
 
                     }
                     model.BllCrafts.push(tjson);
                     if (model.BllCrafts[i].CRAFT_NO == '' || model.BllCrafts[i].CRAFT_NAME == '') {
-                        BzAlert("请输入工艺编号和工艺名称");
+                        BzAlert(lang.Order.PleaseEnterTheProcessNumberAndProcessName);
                         return;
                     }
                 }
                 var CRAFT_NBR, CRAFT_NO, len;
                 //model.BllCrafts.push(tjson);=
-                if (newCmd == cmd.addProduct) {//新增产品
-                    $.post("/ProductMaintenance/addProduct", model, function (data) {
+                if (newCmd == cmd.addProduct) { //新增产品
+                    $.post("/ProductMaintenance/addProduct", model, function(data) {
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
                             BzSuccess(data.Message);
-                        }
-                        else {
+                        } else {
                             BzAlert(data.Message);
                         }
                     });
-                }
-
-
-                else if (newCmd == cmd.editProduct) { //编辑产品
+                } else if (newCmd == cmd.editProduct) { //编辑产品
                     prodmodel = {
                         GP_NBR: dataItems.GP_NBR,
                         MEMO: dataItems.MEMO,
@@ -740,19 +741,19 @@ function addOrEdit(dataItems) {
                         PROD_NO: $('#PROD_NO').val(),
                         PROD_NBR: dataItems.PROD_NBR,
                     }
-                    $.post("/Order/ProductMaintenance/modifyProduct", JSON.stringify({ prodmodel: prodmodel }), function (data) {
+                    $.post("/Order/ProductMaintenance/modifyProduct", JSON.stringify({ prodmodel: prodmodel }), function(data) {
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
                             BzSuccess(data.Message);
-                        }
-                        else {
+                        } else {
                             BzAlert(data.Message);
                         }
                     });
                 }
 
-                var bllcrafts = [], craftmodel = {};
+                var bllcrafts = [],
+                    craftmodel = {};
                 for (var i = 0; i < model.BllCrafts.length; i++) {
                     CRAFT_NAME = model.BllCrafts[i].CRAFT_NAME;
                     CRAFT_NO = model.BllCrafts[i].CRAFT_NO;
@@ -769,12 +770,12 @@ function addOrEdit(dataItems) {
                     PROD_NBR: PROD_NBR,
                     CRAFT_NBR: CRAFT_NBR
                 };
-                if (model.BllCrafts.length != dataItems.CRAFT_LIST.length && newCmd == cmd.addCraft) {//新增工艺
+                if (model.BllCrafts.length != dataItems.CRAFT_LIST.length && newCmd == cmd.addCraft) { //新增工艺
                     for (var i = 0; i < model.BllCrafts.length; i++) {
                         var bllcrafts = [];
                         if (model.BllCrafts[i].FLAG == 0) {
                             bllcrafts.push(model.BllCrafts[i])
-                            $.post("/Order/ProductMaintenance/addCradt", JSON.stringify({ prod_nbr: dataItems.PROD_NBR, bllcrafts: bllcrafts }), function (data) {
+                            $.post("/Order/ProductMaintenance/addCradt", JSON.stringify({ prod_nbr: dataItems.PROD_NBR, bllcrafts: bllcrafts }), function(data) {
                                 if (data.Status == 0) {
                                     refreshGrid();
                                     $("#x5window").data("kendoWindow").close();
@@ -789,9 +790,8 @@ function addOrEdit(dataItems) {
                     }
 
 
-                }
-                else if (model.BllCrafts.length == dataItems.CRAFT_LIST.length && newCmd == cmd.editCraft) {//编辑工艺
-                    $.post("/Order/ProductMaintenance/ModiftCraft", JSON.stringify({ craftmodel: craftmodel }), function (data) {
+                } else if (model.BllCrafts.length == dataItems.CRAFT_LIST.length && newCmd == cmd.editCraft) { //编辑工艺
+                    $.post("/Order/ProductMaintenance/ModiftCraft", JSON.stringify({ craftmodel: craftmodel }), function(data) {
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
@@ -802,7 +802,8 @@ function addOrEdit(dataItems) {
                         }
                     })
                 }
-                var array = [], arr = {};
+                var array = [],
+                    arr = {};
                 var c_name, c_no, PROC_NBR, TASK_NBR, FLAG, len2;
                 for (var kk = 0; kk < dataItems.CRAFT_LIST.length; kk++) {
                     c_name = dataItems.CRAFT_LIST[kk].CRAFT_NAME;
@@ -824,7 +825,7 @@ function addOrEdit(dataItems) {
                                 PROD_NO: dataItems.PROD_NO,
                                 CRAFT_NBR: CRAFT_NBR,
                                 GP_NBR: dataItems.GP_NBR,
-                                MEMO:  model.BllCrafts[i].Bllprocess[j].MEMO,
+                                MEMO: model.BllCrafts[i].Bllprocess[j].MEMO,
                                 CRAFT_NAME: c_name,
                                 CRAFT_NO: c_no,
                                 CYCLE_RATE: model.BllCrafts[i].Bllprocess[j].CYCLE_RATE,
@@ -870,7 +871,7 @@ function addOrEdit(dataItems) {
                 }
 
                 if (newCmd == cmd.addProcess && len != len2) {
-                    $.post("/Order/ProductMaintenance/addprocess", JSON.stringify({ craft_nbr: CRAFT_NBR, proc_list: array }), function (data) {//新增工序
+                    $.post("/Order/ProductMaintenance/addprocess", JSON.stringify({ craft_nbr: CRAFT_NBR, proc_list: array }), function(data) { //新增工序
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
@@ -880,7 +881,7 @@ function addOrEdit(dataItems) {
                         }
                     });
                 } else if (newCmd == cmd.editProcess && len == len2) {
-                    $.post("/Order/ProductMaintenance/ModiftProcess", JSON.stringify({ procmodel: arr }), function (data) {//编辑工序
+                    $.post("/Order/ProductMaintenance/ModiftProcess", JSON.stringify({ procmodel: arr }), function(data) { //编辑工序
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
@@ -897,5 +898,3 @@ function addOrEdit(dataItems) {
     });
     ko.applyBindings(addviewModel, document.getElementById("memberviewmodel"));
 }
-
-

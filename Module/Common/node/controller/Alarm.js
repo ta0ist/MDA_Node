@@ -4,29 +4,37 @@
 var path = require('path');
 var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
-exports.Alarm = function (req, res) {
+exports.Alarm = function(req, res) {
     if (!req.session.user)
         res.redirect('/');
-    res.render(path.resolve(__dirname, '../../web/view/Alarm/index'), { menulist: req.session.menu ,user:req.session.user});
+    res.render(path.resolve(__dirname, '../../web/view/Alarm/index'), {
+        menulist: req.session.menu,
+        user: req.session.user,
+        lang: post_argu.getLanguage()
+    });
 }
-exports.fun = function (req, res) {
+exports.fun = function(req, res) {
     var args = [];
     args.push(res);
-    method = post_argu.getpath(__filename,req.params.method);
+    method = post_argu.getpath(__filename, req.params.method);
     args.push(method);
     args.push(req.body);
     doCallback(eval(req.params.method), args, res);
 }
+
 function doCallback(fn, args, res) {
     fn.apply(this, args);
 }
+
 function GetAllMachineAndMachineGroup(res, method, args) {
     var groupID = { groupID: 0 }
     post_argu.post_argu(res, method, groupID);
 }
+
 function GetKeywordMachinelist(res, method, args) {
     post_argu.post_argu(res, method, args);
 }
+
 function GetMachineByAlarmInfo(res, method, data) {
     console.log(data)
     var re = {
@@ -37,6 +45,7 @@ function GetMachineByAlarmInfo(res, method, data) {
     }
     post_argu.post_argu(res, method, re);
 }
+
 function GetLookupAlarmInfo(res, method, args) {
     post_argu.post_argu(res, method, { pagermodel: args });
 }

@@ -2,15 +2,19 @@ var path = require('path');
 var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
-exports.activationpage = function (req, res) {
+exports.activationpage = function(req, res) {
     if (!req.session.user)
         res.redirect('/');
     else
-        res.render(path.resolve(__dirname, '../../web/view/machineactivation/index'), { menulist: req.session.menu, user: req.session.user });
+        res.render(path.resolve(__dirname, '../../web/view/machineactivation/index'), {
+            menulist: req.session.menu,
+            user: req.session.user,
+            lang: post_common.getLanguage()
+        });
 }
 
 
-exports.fun = function (req, res) {
+exports.fun = function(req, res) {
     var args = [];
     args.push(res);
     args.push(method = post_common.getpath(__filename, req.params.method));
@@ -45,11 +49,15 @@ function GetMachineActivation(res, method, args) {
     post_common.post_argu(res, method, data);
 }
 
-exports.OutPutIndex = function (req, res) {
-    res.render(path.resolve(__dirname, '../../web/view/machineactivation/index_detail'));
+exports.OutPutIndex = function(req, res) {
+    res.render(path.resolve(__dirname, '../../web/view/machineactivation/index_detail'), {
+        menulist: req.session.menu,
+        user: req.session.user,
+        lang: post_common.getLanguage()
+    });
 }
 
-exports.MachineActivationDetail = function (req, res) {
+exports.MachineActivationDetail = function(req, res) {
     var data;
     for (var temp in req.body) {
         data = JSON.parse(temp);
@@ -59,7 +67,7 @@ exports.MachineActivationDetail = function (req, res) {
     post_common.post_argu(res, method, data);
 }
 
-exports.GroupActivationDetail = function (req, res) {
+exports.GroupActivationDetail = function(req, res) {
     var data;
     for (var temp in req.body) {
         data = JSON.parse(temp);

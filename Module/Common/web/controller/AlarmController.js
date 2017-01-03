@@ -6,18 +6,18 @@ var Chart;
 var group;
 var baseUrl = "/Alarm";
 var globalData;
-$(function () {
+$(function() {
     $("#startTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
     $("#endTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
     $("#totalType").kendoComboBox({
         dataTextField: "text",
         dataValueField: "value",
         dataSource: [
-            { text: '班次', value: 1 },
-            { text: '日', value: 2 },
-            { text: '周', value: 3 },
-            { text: '月', value: 4 },
-            { text: '年', value: 5 }
+            { text: lang.EmployeePerformance.Shift, value: 1 },
+            { text: lang.EmployeePerformance.Day, value: 2 },
+            { text: lang.EmployeePerformance.Weeks, value: 3 },
+            { text: lang.EmployeePerformance.Month, value: 4 },
+            { text: lang.EmployeePerformance.Years, value: 5 }
         ],
         value: 2
     });
@@ -30,7 +30,7 @@ $(function () {
         },
         checkbox: true
     }).data("BZ-multipleComboxTree");
-    $("#search").click(function () {
+    $("#search").click(function() {
         var machines = [];
         for (var m in groupOrMachine.dataAarry) {
             machines.push(parseInt(m));
@@ -46,14 +46,13 @@ $(function () {
             EndTime: $("#endTime").val()
         };
         var url;
-        if ($('input[name="searchType"]:checked').val() == 1) {//设备
+        if ($('input[name="searchType"]:checked').val() == 1) { //设备
             url = "/Alarm/GetMachineByAlarmInfo";
-        }
-        else {//设备组
+        } else { //设备组
             url = "/Alarm/GetMachineByAlarmInfo";
         }
 
-        $.post(url, data, function (data) {
+        $.post(url, data, function(data) {
             globalData = data;
             console.log(data.Data)
             categories = [];
@@ -63,23 +62,22 @@ $(function () {
             if (data.Data.length > 0) {
                 try {
                     Chart.destroy();
-                }
-                catch (e) { }
+                } catch (e) {}
                 switch ($("#totalType").data("kendoComboBox").value()) {
-                    case "1"://班次
+                    case "1": //班次
                         DrawHisChart(data, startDate, endDate, categories, 1);
                         break;
-                    case "2"://日
+                    case "2": //日
                         DrawHisChart(data, startDate, endDate, categories, 2);
                         break;
-                    case "3"://周
+                    case "3": //周
                         DrawHisChart(data, startDate, endDate, categories, 3);
                         console.log(data)
                         break;
-                    case "4"://月
+                    case "4": //月
                         DrawHisChart(data, startDate, endDate, categories, 4);
                         break;
-                    case "5"://年
+                    case "5": //年
                         DrawHisChart(data, startDate, endDate, categories, 5);
                         break;
                 }
@@ -105,22 +103,23 @@ function BindCol() {
     };
     var cols = [];
     cols.push({ field: "ALARM_NBR", title: 'id', width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "ALARM_DATE", title: '报警日期', width: 80, sortable: true, format: "{0: yyyy/MM/dd HH:mm:ss}", filterable: false });
+    cols.push({ field: "ALARM_DATE", title: lang.Common.AlarmReason, width: 80, sortable: true, format: "{0: yyyy/MM/dd HH:mm:ss}", filterable: false });
 
-    cols.push({ field: "STATUS_NAME", title: '状态名称', width: 80, sortable: true, filterable: false });
-    cols.push({ field: "BEGIN_DAY", title: '报警开始时间', width: 80, sortable: true, format: "{0: yyyy/MM/dd HH:mm:ss}", filterable: false });
-    cols.push({ field: "END_DAY", title: '报警结束时间', width: 80, sortable: true, format: "{0: yyyy/MM/dd HH:mm:ss}", filterable: false });
-    cols.push({ field: "DURITION", title: '报警持续时间(分钟)', width: 80, sortable: true, filterable: false });
+    cols.push({ field: "STATUS_NAME", title: lang.MachineStatus.StateName, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "BEGIN_DAY", title: lang.Common.AlarmStartTime, width: 80, sortable: true, format: "{0: yyyy/MM/dd HH:mm:ss}", filterable: false });
+    cols.push({ field: "END_DAY", title: lang.Common.AlarmOverTime, width: 80, sortable: true, format: "{0: yyyy/MM/dd HH:mm:ss}", filterable: false });
+    cols.push({ field: "DURITION", title: lang.Common.AlarmDuration, width: 80, sortable: true, filterable: false });
 
-    cols.push({ field: "MAC_NBR", title: '设备编号', width: 80, sortable: true, filterable: false });
-    cols.push({ field: "MAC_NAME", title: '设备名称', width: 80, sortable: true, filterable: false });
-    cols.push({ field: "ALARM_NO", title: '报警号', width: 80, sortable: true, filterable: false });
-    cols.push({ field: "ALARM_MESSAGE", title: '报警内容', width: 80, sortable: true, filterable: false });
+    cols.push({ field: "MAC_NBR", title: lang.Order.EquipmentSerialNumber, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "MAC_NAME", title: lang.Order.DeviceName, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "ALARM_NO", title: lang.Common.AlarmNo, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "ALARM_MESSAGE", title: lang.Common.AlarmContent, width: 80, sortable: true, filterable: false });
     //cols.push({ field: "ALARM_NAME", title: "备注", width: 80, sortable: true, filterable: false });
-    cols.push({ field: "ALARM_REASON", title: '报警原因',className:"table-fonts", width: 80, sortable: true, filterable: false });
+    cols.push({ field: "ALARM_REASON", title: lang.Common.AlarmReason, className: "table-fonts", width: 80, sortable: true, filterable: false });
     cols.push({
-        command: [{ name: "aa", text: '编辑' + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit }],
-        title: '操作', width: 80
+        command: [{ name: "aa", text: lang.Order.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit }],
+        title: lang.Order.Operation,
+        width: 80
     });
     grid = $("#hisTable").grid({
         checkBoxColumn: false,
@@ -131,7 +130,7 @@ function BindCol() {
         editable: false, //是否可编辑
         autoBind: false,
         height: 300,
-        resizeGridWidth: true,//列宽度可调
+        resizeGridWidth: true, //列宽度可调
         isPage: true,
         customsearch: true,
         server: true, //服务器端刷新，包括排序，筛选等
@@ -150,7 +149,7 @@ function f_edit(e) {
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
     var fonts = dataItem.ALARM_REASON;
     $("#MEMO").val(fonts);
-    $("#Win_Submit").bind("click", function (e) {
+    $("#Win_Submit").bind("click", function(e) {
         var json = {
             ALARM_NBR: dataItem.ALARM_NBR,
             ALARM_DATE: dataItem.ALARM_DATE,
@@ -160,13 +159,12 @@ function f_edit(e) {
             ALARM_MESSAGE: dataItem.ALARM_MESSAGE,
             ALARM_REASON: $("#MEMO").val()
         };
-        $.post(baseUrl + "/UpdAlarm", json, function (data) {
+        $.post(baseUrl + "/UpdAlarm", json, function(data) {
             if (data.Status == 0) {
                 $("#x5window").data("kendoWindow").close();
                 $("#hisTable").grid("refresh");
                 BzSuccess(data.Message);
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         });
@@ -174,16 +172,14 @@ function f_edit(e) {
 }
 //根据数据绘表
 function DrawTable(machines, strdate, enddate) {
-    $("#hisTable").grid("refresh", function () {
-        return [
-            {
-                filters: [
-                    { field: "ALARM_DATE", Operator: "gte", value: strdate },
-                    { field: "ALARM_DATE", Operator: "lte", value: enddate }
-                ],
-                logic: "and"
-            }
-        ];
+    $("#hisTable").grid("refresh", function() {
+        return [{
+            filters: [
+                { field: "ALARM_DATE", Operator: "gte", value: strdate },
+                { field: "ALARM_DATE", Operator: "lte", value: enddate }
+            ],
+            logic: "and"
+        }];
     });
 }
 
@@ -197,8 +193,7 @@ function DrawHisChart(data, strdate, enddate, categories, type) {
         }
         if (type == 1) {
             data.Data[i].Day = moment(data.Data[i].Day).format("YYYY-MM-DD") + data.Data[i].ShifName;
-        }
-        else if (type == 2)
+        } else if (type == 2)
             data.Data[i].Day = moment(data.Data[i].Day).format("YYYY-MM-DD");
         else if (type == 3)
             data.Data[i].Day = moment(data.Data[i].Day).format("YYYY") + "-" + moment(data.Data[i].Day).week() + "周";
@@ -213,27 +208,23 @@ function DrawHisChart(data, strdate, enddate, categories, type) {
             if (data.Data[i].ShifName != null)
                 categories.push(data.Data[i].Day);
         }
-    }
-    else if (type == 2) {
-        var diff = moment(enddate).diff(strdate, "days");//横坐标是天
+    } else if (type == 2) {
+        var diff = moment(enddate).diff(strdate, "days"); //横坐标是天
         for (var k = 0; k <= diff; k++) {
             categories.push(moment(strdate).add("days", k).format("YYYY-MM-DD"));
         }
-    }
-    else if (type == 3) {
-        var diff = moment(enddate).diff(strdate, "weeks");//横坐标是周
+    } else if (type == 3) {
+        var diff = moment(enddate).diff(strdate, "weeks"); //横坐标是周
         for (var k = 0; k <= diff; k++) {
             var ndate = moment(strdate).add("weeks", k);
             categories.push(ndate.format("YYYY") + "-" + ndate.week() + "周");
         }
-    }
-    else if (type == 4) {
+    } else if (type == 4) {
         var diff = moment(enddate).diff(strdate, "months");
         for (var k = 0; k <= diff; k++) {
             categories.push(moment(strdate).add("months", k).format("YYYY-MM")); //(横坐标为月)
         }
-    }
-    else {
+    } else {
         var diff = moment(enddate).diff(strdate, "years");
         for (var k = 0; k <= diff; k++) {
             categories.push(moment(strdate).add("years", k).format("YYYY")); //(横坐标为年)
@@ -243,15 +234,14 @@ function DrawHisChart(data, strdate, enddate, categories, type) {
         var tjson = {};
         tjson.name = machines[m].NAME;
         tjson.data = [];
-        for (var i = 0; i < categories.length; i++) {//日期
+        for (var i = 0; i < categories.length; i++) { //日期
             var rdata = _.where(data.Data, { Day: categories[i] });
             if (rdata.length > 0) {
                 var rdata1;
                 rdata1 = _.where(rdata[0].Alarmcount, { MachineName: machines[m].NAME });
                 if (rdata1.length > 0) {
                     tjson.data.push(rdata1[0].Count);
-                }
-                else {
+                } else {
                     tjson.data.push(null);
                 }
             }
@@ -263,7 +253,7 @@ function DrawHisChart(data, strdate, enddate, categories, type) {
         xdata: categories,
         ydata: ydata
     }
-    drawHisChart(par, '报警分析');
+    drawHisChart(par, lang.Common.AlarmAnalysis);
     // DrawTable(strdate, enddate);
 }
 
@@ -277,7 +267,7 @@ function drawHisChart(data, p) {
         stacking: data.stacking == true ? "normal" : null,
         yAxistitle: "用时",
         eventclick: true,
-        click: function (e, d) {
+        click: function(e, d) {
             var startDate, endDate;
             for (var i = 0; i < globalData.Data.length; i++) {
                 if (globalData.Data[i].Day == d.category) {
@@ -289,9 +279,8 @@ function drawHisChart(data, p) {
                     }
                 }
             }
-            $("#hisTable").grid("refresh", function () {
-                return [
-                    {
+            $("#hisTable").grid("refresh", function() {
+                return [{
                         filters: [
                             { field: "ALARM_DATE", Operator: "gte", value: startDate },
                             { field: "ALARM_DATE", Operator: "lt", value: endDate }
