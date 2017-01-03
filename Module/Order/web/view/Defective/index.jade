@@ -10,38 +10,38 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 次品统计
+                | #{lang.Order.DefectiveGoodsStatistics}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 工单管理
+                    a(href='javascript:;', data-lang='System') #{lang.Order.WorkOrderManagement}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='MachineScheduling') 次品统计
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.Order.DefectiveGoodsStatistics}
     form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
         .row-fluid
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD', style='width:60px') 产品：
+                    label.control-label(data-lang='Common.PASSWORD', style='width:60px') #{lang.Order.Product}：
                     .BZcontrols(style='margin-left:70px')
                         input#PROD_NO.m-wrap(type='text', name='PROD_NO')
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 开始日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.StartTime}
                     .BZcontrols
                         input#startTime.m-wrap(type='text', name='startTime')
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 结束日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
                     .BZcontrols
                         input#endTime.m-wrap(type='text', name='endTime')
             .span
                 .control-group(style='margin-bottom: 5px;')
                     #search.btn.green(style='margin-left: 60px;')
-                        | 查询
+                        | #{lang.EmployeePerformance.Search}
                         i.icon-search
     #grid
     #gridr
