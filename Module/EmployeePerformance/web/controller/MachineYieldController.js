@@ -5,8 +5,8 @@ var groupOrMachine,
     groupOrMember,
     resultData,
     baseUrl = "/MachineYield/",
-    groupType = 1;//默认设备方式
-$(function () {
+    groupType = 1; //默认设备方式
+$(function() {
     $("#startTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
     $("#endTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
     groupOrMember = $("#groupOrMember").multipleComboxTree({
@@ -17,7 +17,7 @@ $(function () {
             GroupId: 0
         },
         checkbox: true
-    }).data("BZ-multipleComboxTree");//员工
+    }).data("BZ-multipleComboxTree"); //员工
 
     groupOrMachine = $("#groupOrMachine").multipleComboxTree({
         url: "/Alarm/GetAllMachineAndMachineGroup",
@@ -27,23 +27,23 @@ $(function () {
             GroupId: 0
         },
         checkbox: true
-    }).data("BZ-multipleComboxTree");//设备
+    }).data("BZ-multipleComboxTree"); //设备
 
 
-    $("#totalType").kendoDropDownList({//统计方式
+    $("#totalType").kendoDropDownList({ //统计方式
         dataTextField: "text",
         dataValueField: "value",
         dataSource: [
-            { text: '班次', value: 1 },
-            { text: '日', value: 2 },
-            { text: '周', value: 3 },
-            { text: '月', value: 4 },
-            { text: '年', value: 5 }
+            { text: lang.EmployeePerformance.Shift, value: 1 },
+            { text: lang.EmployeePerformance.Day, value: 2 },
+            { text: lang.EmployeePerformance.Weeks, value: 3 },
+            { text: lang.EmployeePerformance.Month, value: 4 },
+            { text: lang.EmployeePerformance.Years, value: 5 }
         ],
         value: 2
     });
 
-    $("#search").on("click", function () {//查询
+    $("#search").on("click", function() { //查询
         var menList = [];
         var machineList = [];
         for (var m in groupOrMember.dataAarry) {
@@ -59,14 +59,14 @@ $(function () {
             EndDate: $("#endTime").val() + ' 23:59:59',
             searchtype: parseInt($("#totalType").data("kendoDropDownList").value()),
         }
-        if ($("#startTime").data("kendoDatePicker").value() == null&&$("#endTime").data("kendoDatePicker").value() == null) {
-            BzAlert("请输入正确的日期");
+        if ($("#startTime").data("kendoDatePicker").value() == null && $("#endTime").data("kendoDatePicker").value() == null) {
+            BzAlert(lang.EmployeePerformance.PleaseInputTheCorrectDate);
             return;
         }
         if (menList.length == 0 || machineList == 0) {
             return;
         }
-        $.post(baseUrl + 'GetMachineYieldList', data, function (data) {
+        $.post(baseUrl + 'GetMachineYieldList', data, function(data) {
             if (data.Status == 0) {
                 //     var data = [
                 //{ MEM_NAME: "小A", MAC_NAME: "B001", RATIO: [{ NAME: "状态1", VALUE: 0.8, FLAG: 0 }, { NAME: "状态2", VALUE: 0.1, FLAG: 0 }, { NAME: "状态3", VALUE: 0.1, FLAG: 1 }, { NAME: "状态4", VALUE: 0.2, FLAG: 1 }] },
@@ -80,8 +80,7 @@ $(function () {
                 if (resultData.length > 0) {
                     getData(resultData);
                 }
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         })
@@ -89,19 +88,18 @@ $(function () {
 
 
     });
-    $(".grouptype li").on('click', function () {
+    $(".grouptype li").on('click', function() {
         $('.grouptype li').removeClass('active');
         $(this).addClass('active');
         if ($(this).find('a').attr("data-title") == "1") {
             groupType = 1; //工单
-        }
-        else {
+        } else {
             groupType = 2; //员工
         }
         getData(resultData);
     });
 
-    $("#output").on('click', function () {
+    $("#output").on('click', function() {
         var machineList = [];
         for (var m in groupOrMachine.dataAarry) {
             machineList.push(parseInt(m));
@@ -129,14 +127,13 @@ function getData(data) {
     var chartData;
     if (groupType == 1) {
         chartData = _.groupBy(data, 'MAC_NAME');
-    }
-    else {
+    } else {
         chartData = _.groupBy(data, 'MEM_NAME');
     }
 
     var kk = 0;
-    $.each(chartData, function (p1, p2) {
-        var group = p1.replace(/\s/g, "");  //分组
+    $.each(chartData, function(p1, p2) {
+        var group = p1.replace(/\s/g, ""); //分组
         var group = p1;
         $(".charts").append('<div id="hisChart_' + kk + '" style="min-width:700px;height:500px"></div>');
 
@@ -147,11 +144,11 @@ function getData(data) {
         var categories = [],
             ydata = [{
                 type: 'column',
-                name: "产量",
+                name: lang.EmployeePerformance.Production,
                 data: []
             }, {
                 type: 'line',
-                name: "平均产量",
+                name: lang.EmployeePerformance.AverageYield,
                 data: []
             }];
 
@@ -161,7 +158,7 @@ function getData(data) {
             total = total + p2[i].PROD_COUNT;
         }
         average = parseInt((total / p2.length).toFixed(0));
-        $.each(p2, function (t1, t2) {
+        $.each(p2, function(t1, t2) {
             var typeTitle = "";
 
             switch (parseInt($("#totalType").data("kendoDropDownList").value())) {
@@ -172,7 +169,7 @@ function getData(data) {
                     typeTitle = moment(t2.SHIFT_DAY).format("M/D");
                     break;
                 case 3:
-                    typeTitle = moment(t2.SHIFT_DAY).format("YYYY-") + moment(t2.DAYS).week() + "周";
+                    typeTitle = moment(t2.SHIFT_DAY).format("YYYY-") + moment(t2.DAYS).week() + lang.EmployeePerformance.Weeks;
                     break;
                 case 4:
                     typeTitle = moment(t2.SHIFT_DAY).format("YYYY/M");
@@ -184,8 +181,7 @@ function getData(data) {
             if (groupType == 1) {
                 categories.push(t2.MEM_NAME + "(" + typeTitle + ")"); //横坐标人员
 
-            }
-            else {
+            } else {
                 categories.push(t2.MAC_NAME + "(" + typeTitle + ")"); //横坐标设备
 
             }
@@ -206,10 +202,11 @@ function getData(data) {
 
         kk++;
     })
+
     function drawHisChart(data) {
         Chart = $(data.ele).hisChartOrderYield({
             type: data.type == undefined ? "column" : data.type,
-            title: data.ytitle + "产量分布图",
+            title: data.ytitle + lang.EmployeePerformance.ProductionDistribution,
             //ytitle: data.ytitle,
             subtitle: data.subtitle == undefined ? "" : data.subtitle,
             categories: data.xdata == undefined ? [] : data.xdata,
