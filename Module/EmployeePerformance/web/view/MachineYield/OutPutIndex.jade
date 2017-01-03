@@ -17,7 +17,8 @@ block headjavascript
     script(src='./EmployeePerformance/web/javascripts/jquery-ui-1.10.1.custom.min.js')
     script(src='./EmployeePerformance/web/javascripts/kendo.web.min.js')
     script(src='./EmployeePerformance/web/javascripts/kendo.culture.zh-CN.min.js')
-    script(src='./EmployeePerformance/web/javascripts/LanguageService.js')
+    script(type='text/javascript').
+        var lang = !{JSON.stringify(lang)};
     script(src='./EmployeePerformance/web/javascripts/Bandex.js')
     script(src='./EmployeePerformance/web/javascripts/angular.min.js')
     script(src='./EmployeePerformance/web/javascripts/moment.js')
