@@ -9,7 +9,11 @@ exports.PlanSchedule=function(req,res){
     if (!req.session.user)
         res.redirect('/');
     else {
-        res.render(path.resolve(__dirname, '../../web/view/planSchedule/index'), { menulist: req.session.menu,user:req.session.user });
+        res.render(path.resolve(__dirname, '../../web/view/planSchedule/index'), {
+            menulist: req.session.menu,
+            user:req.session.user ,
+            lang: post_argu.getLanguage()
+        });
     }
 }
 exports.fun=function(req,res){

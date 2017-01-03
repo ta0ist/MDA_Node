@@ -7,17 +7,17 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 计划进度
+                | #{lang.Order.Schedule}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 工单管理
+                    a(href='javascript:;', data-lang='System') #{lang.Order.WorkOrderManagement}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='MachineScheduling') 计划进度
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.Order.Schedule}
     .row-fluid
         table(width='100%', cellpadding='0', cellspacing='0')
             tr
@@ -26,9 +26,9 @@ block content
                         .controls
                             .input-icon.left(style='width: 250px; display: inline;')
                                 i.icon-search
-                                input#filter.m-wrap(type='text', placeholder='生产计划')
+                                input#filter.m-wrap(type='text', placeholder='#{lang.Order.ProductionPlan}')
                             button#output.btn.green
-                                | 查询
+                                | #{lang.EmployeePerformance.Search}
                                 i.icon-search
         .row-fluid(style='margin-top:5px;')
             #grid
@@ -38,44 +38,44 @@ block content
         # if ( data.PLAN_STATE ==0) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
-        <div style="float: left;margin-left:4px">准备</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Prepare}</div>
         </div>
         # } else if(data.PLAN_STATE == 1) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: greenyellow; float: left; margin-top: 2px; "></div>
-        <div style="float: left;margin-left:4px">进行中</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Ongoing}</div>
         </div>
         # } else if(data.PLAN_STATE == 2) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: blue; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">完成</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Complete}</div>
         </div>
         # } else if(data.PLAN_STATE==3){ #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: grey; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">未知</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Unknown}</div>
         </div>
         # } #
     script#PROCESS_STATUS(type='x-kendo-template').
         # if ( data.PROCESS_STATUS ==0) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
-        <div style="float: left;margin-left:4px">准备</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Prepare}</div>
         </div>
         # } else if(data.PROCESS_STATUS == 1) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: greenyellow; float: left; margin-top: 2px; "></div>
-        <div style="float: left;margin-left:4px">进行中</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Ongoing}</div>
         </div>
         # } else if(data.PROCESS_STATUS == 2) { #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: blue; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">完成</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Complete}</div>
         </div>
         # } else if(data.PROCESS_STATUS==3){ #
         <div>
         <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: grey; float: left; margin-top: 2px"></div>
-        <div style="float: left;margin-left:4px">未知</div>
+        <div style="float: left;margin-left:4px">#{lang.Order.Unknown}</div>
         </div>
         # } #
     script#QUALITY_RATE(type='x-kendo-template').

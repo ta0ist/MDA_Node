@@ -37,27 +37,27 @@ $(function () {
         TASK_NBR: { type: "string" }
     };
     var cols = [];
-    cols.push({ field: "PLAN_STATE", title: "工单状态", width: 120, sortable: false, filterable: false, hidden: false, template: kendo.template($("#PLAN_STATE").html()) });
+    cols.push({ field: "PLAN_STATE", title: lang.Order.WorkOrderStatus, width: 120, sortable: false, filterable: false, hidden: false, template: kendo.template($("#PLAN_STATE").html()) });
     cols.push({ field: "PRO_PLAN_STATUS", title: "工单", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "TASK_NBR", title: "工单nbr", width: 120, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "TASK_NO", title: "工单", width: 120, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "ORDER_NO", title: "订单", width: 120, sortable: true, filterable: true, hidden: false });
-    cols.push({ field: "PLAN_NO", title: "生产计划", width: 120, sortable: true, filterable: true, hidden: false });
+    cols.push({ field: "TASK_NO", title: lang.Order.RepairOrder, width: 120, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "ORDER_NO", title: lang.Order.Order, width: 120, sortable: true, filterable: true, hidden: false });
+    cols.push({ field: "PLAN_NO", title: lang.Order.ProductionPlan, width: 120, sortable: true, filterable: true, hidden: false });
     cols.push({ field: "PLAN_NBR", title: "生产计划nbr", width: 120, sortable: true, filterable: true, hidden: true });
-    cols.push({ field: "PROD_NO", title: "产品编号", width: 120, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "PROD_NAME", title: "产品名称", width: 120, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "CRAFT_NO", title: "工艺编号", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "CRAFT_NAME", title: "工艺名称", width: 160, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PROD_NO", title: lang.Order.ProductNumber, width: 120, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PROD_NAME", title: lang.Order.ProductName, width: 120, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "CRAFT_NO", title: lang.Order.CraftId, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "CRAFT_NAME", title:lang.Order.CraftName, width: 160, sortable: true, filterable: false, hidden: false });
     cols.push({ field: "PROC_NBR", title: "工序nbr", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "PROC_NO", title: "工序编号", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "PROC_NAME", title: "工序名称", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "INPUT_NUM", title: "投料量", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "TARGET_NUM", title: "目标量", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "YIELD", title: "产出", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "QUALIFIED_NUM", title: "正品", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "INFERIOR_NUM", title: "次品", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "STD_TIME", title: "标准用时", width: 80, sortable: true, filterable: false, hidden: false });
-    cols.push({ field: "CYCLE_RATE", title: "循环倍率", width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PROC_NO", title: lang.Order.ProcessId, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "PROC_NAME", title:lang.Order.ProcessName, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "INPUT_NUM", title:lang.Order.Inventory, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "TARGET_NUM", title: lang.Order.TargetQuantity, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "YIELD", title:lang.Order.Output, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "QUALIFIED_NUM", title: lang.Order.QualityGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "INFERIOR_NUM", title: lang.Order.DefectiveGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "STD_TIME", title: lang.Order.StandardTime, width: 80, sortable: true, filterable: false, hidden: false });
+    cols.push({ field: "CYCLE_RATE", title: lang.Order.CirculationRatio, width: 80, sortable: true, filterable: false, hidden: false });
 
     //Grid
     grid = $("#grid").grid({
@@ -144,26 +144,26 @@ $(function () {
     var colsre = [];
     colsre.push({ field: "LOGIN_NBR", title: "工单编号", width: 80, sortable: true, filterable: false, hidden: true });
     colsre.push({ field: "TASK_NBR", title: "设备编号", width: 80, sortable: true, filterable: false, hidden: true });
-    colsre.push({ field: "MAC_NO", title: "设备编号", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "MAC_NAME", title: "设备名称", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "INPUT_NUM", title: "投入量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "TARGET_NUM", title: "目标量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "YIELD", title: "产出量", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "QUALIFIED_NUM", title: "正品", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "INFERIOR_NUM", title: "次品", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "START_DATE", title: "起始日期", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
-    colsre.push({ field: "END_DATE", title: "结束日期", width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    colsre.push({ field: "MAC_NO", title: lang.Order.EquipmentSerialNumber, width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "MAC_NAME", title: lang.Order.DeviceName, width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "INPUT_NUM", title:lang.Order.InputAmount, width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "TARGET_NUM", title:lang.Order.TargetQuantity, width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "YIELD", title: lang.Order.Output_1, width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "QUALIFIED_NUM", title: lang.Order.QualityGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "INFERIOR_NUM", title: lang.Order.DefectiveGoods, width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "START_DATE", title:lang.Order.StartDate, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
+    colsre.push({ field: "END_DATE", title: lang.Order.EndDate, width: 80, sortable: true, filterable: false, hidden: false, format: "{0: yyyy/MM/dd HH:mm:ss}" });
     //colsre.push({ field: "MEN_NO", title: "员工编号", width: 80, sortable: true, filterable: false, hidden: false });
-    colsre.push({ field: "MEM_NAME", title: "员工名称", width: 80, sortable: true, filterable: false, hidden: false });
+    colsre.push({ field: "MEM_NAME", title: lang.Order.StaffName, width: 80, sortable: true, filterable: false, hidden: false });
     colsre.push({
         command: [
-            { name: "aa", text: '编辑' + '<i class="icon-edit"></i>', className: "btn green", click: f_edit },
-            { name: "bb", text: "设备报工" + '<i class="icon-ok"></i>', className: "btn purple", click: f_over }
-        ], title:'操作', width: 200
+            { name: "aa", text:  lang.Order.Edit + '<i class="icon-edit"></i>', className: "btn green", click: f_edit },
+            { name: "bb", text: lang.Order.EquipmentWork + '<i class="icon-ok"></i>', className: "btn purple", click: f_over }
+        ], title:lang.Order.Operation, width: 200
     });
 
     function f_edit(e) {
-        $.x5window('编辑', kendo.template($("#over").html()));
+        $.x5window( lang.Order.Edit, kendo.template($("#over").html()));
 
 
         var dataItems = this.dataItem($(e.currentTarget).closest("tr"));
@@ -210,7 +210,7 @@ $(function () {
     }
 
     function f_over(e) {
-        $.x5window('编辑', kendo.template($("#complate").html()));
+        $.x5window( lang.Order.Edit, kendo.template($("#complate").html()));
 
         setTimeout(function () {
             $("body").scrollTop($("body").height());
@@ -312,7 +312,7 @@ $(function () {
     })
 
     $("#search").click(function () {
-        $.x5window("工单报工----" + dataItem.TASK_NO, kendo.template($("#order").html()));
+        $.x5window(lang.Order.Edit+'----' + dataItem.TASK_NO, kendo.template($("#order").html()));
 
         $.post(baseUrl + "getSumQualifiedInferioriYByTaskNbr", { task_nbr: dataItem.TASK_NBR }, function (data) {
             if (data.Data.length > 0) {
@@ -388,7 +388,7 @@ $(function () {
     $("#login").click(function (data) {
         var mac_nbrs = groupOrMachine.dataAarry;
         if (dataItem == null) {
-            BzAlert("请选择工单！");
+            BzAlert(lang.Order.PleaseSelectTheRepairOrder);
             return;
         }
         var task_nbr = dataItem.TASK_NBR;
@@ -397,12 +397,12 @@ $(function () {
             listmac.push(parseInt(ite));
         }
         if (listmac.length == 0) {
-            BzAlert("请选择设备！");
+            BzAlert(lang.Order.PleaseSelectADevice);
             return;
         }
         $.post(baseUrl + "addTaskRecord", { task_nbr: task_nbr, mac_nbrs: listmac }, function (data) {
             if (data.Status == 0) {
-                BzSuccess("操作成功！");
+                BzSuccess(lang.Order.OperationIsSuccessful);
                 gridreport.grid("refresh", function () {
                     var dataItem = data[0];
                     return [
