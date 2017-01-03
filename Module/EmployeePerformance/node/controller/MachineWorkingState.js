@@ -17,8 +17,12 @@ exports.MachineWorkingState = function(req, res) {
     //res.render(path.resolve(__dirname,'../../web/view/MachineWorkingState/index'),{ menulist: req.session.menu });
 }
 exports.OutPutIndex = function(req, res) {
-
-    res.render(path.resolve(__dirname, '../../web/view/MachineWorkingState/OutPutIndex'));
+    res.render(path.resolve(__dirname, '../../web/view/MachineWorkingState/OutPutIndex'), {
+        menulist: req.session.menu,
+        user: req.session.user,
+        lang: post_argu.getLanguage()
+    });
+    //res.send('hello world');
 }
 exports.fun = function(req, res) {
     var args = [];

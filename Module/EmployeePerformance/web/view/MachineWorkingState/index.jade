@@ -15,10 +15,10 @@ block content
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 绩效分析
+                    a(href='javascript:;', data-lang='System') #{lang.EmployeePerformance.PerformanceAnalysis}
                     i.icon-angle-right
                 li
                     a(href='javascript:;', data-lang='AccountManage') #{lang.EmployeePerformance.RunningStateAnalysis}
@@ -26,48 +26,48 @@ block content
         .row-fluid
             div(style='float: left;margin-left:0px;width:350px;')
                 .control-group(style='margin-bottom: 5px;')
-                    label#groupOrMember_text.control-label(data-lang='Common.PASSWORD') 员工
+                    label#groupOrMember_text.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.Staff}
                     .BZcontrols
                         input#groupOrMember.m-wrap(type='text', name='groupOrMember')
             div(style='float: left;margin-left:0px;width:350px;')
                 .control-group(style='margin-bottom: 5px;')
-                    label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') 设备
+                    label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.Equipment}
                     .BZcontrols
                         input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
         .row-fluid
             .span(style='width: 350px !important;')
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 统计方式
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.StatisticalMethods}
                     .BZcontrols
                         input#totalType.m-wrap(type='text', name='totalType', style='width:200px;')
             .span(style='width: 350px !important;')
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 开始日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.StartTime}
                     .BZcontrols
                         input#startTime.m-wrap(type='text', name='startTime', style='width:200px;')
             .span(style='width: 350px !important;')
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 结束日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
                     .BZcontrols
                         input#endTime.m-wrap(type='text', name='endTime', style='width:200px;')
             .span(style='width: 130px !important;')
                 .control-group(style='margin-bottom: 5px;')
                     #search.btn.green(style='margin-left: 50px;')
-                        | 查询
+                        | #{lang.EmployeePerformance.Search}
                         i.icon-search
             .span
                 .control-group(style='margin-bottom: 5px;')
                     #output.btn.green(style='margin-left: 20px;')
-                        | 导出html
+                        | #{lang.EmployeePerformance.ExportHTML}
                         i.icon-share-alt
     .row-fluid1.inbox
         div
             ul.grouptype.inbox-nav.margin-bottom-10(style='position: absolute;right: 20px;margin-top: 20px;')
                 li.active
-                    a.btn(data-title='1', href='javascript:;') 设备
+                    a.btn(data-title='1', href='javascript:;') #{lang.EmployeePerformance.Equipment}
                     b
                 li
-                    a.btn(data-title='2', href='javascript:;') 员工
+                    a.btn(data-title='2', href='javascript:;') #{lang.EmployeePerformance.Staff}
                     b
         div
     .charts(style='margin-top:50px;')

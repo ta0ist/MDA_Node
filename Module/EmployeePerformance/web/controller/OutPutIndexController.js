@@ -2,7 +2,7 @@
  * Created by qb on 2016/11/30.
  */
 angular.module('app', [])
-    .controller('appCtrl', function ($scope) {
+    .controller('appCtrl', function($scope) {
 
         var baseUrl = $.getparam("url"),
             par = $.getparam("par"),
@@ -22,9 +22,13 @@ angular.module('app', [])
         };
         var cols = [];
         cols.push({
-            field: "MEM_NAME", title: "人员", width: 100, sortable: true, filterable: {
+            field: "MEM_NAME",
+            title: lang.EmployeePerformance.Personnel,
+            width: 100,
+            sortable: true,
+            filterable: {
                 cell: {
-                    template: function (args) {
+                    template: function(args) {
                         args.element.kendoDropDownList({
                             dataSource: args.dataSource,
                             dataTextField: "MEM_NAME",
@@ -34,12 +38,17 @@ angular.module('app', [])
                     },
                     showOperators: false
                 }
-            }, hidden: false
+            },
+            hidden: false
         });
         cols.push({
-            field: "DAYS", title: "日期", width: 100, sortable: true, filterable: {
+            field: "DAYS",
+            title: lang.EmployeePerformance.Date,
+            width: 100,
+            sortable: true,
+            filterable: {
                 cell: {
-                    template: function (args) {
+                    template: function(args) {
                         args.element.kendoDropDownList({
                             dataSource: args.dataSource,
                             dataTextField: "DAYS",
@@ -49,14 +58,19 @@ angular.module('app', [])
                     },
                     showOperators: false
                 }
-            }, hidden: false
+            },
+            hidden: false
         });
-        cols.push({ field: "TYPE", title: "统计方式", width: 80, sortable: true, filterable: false });
-        cols.push({ field: "SHIFT_NAME", title: "班次", width: 80, sortable: true, filterable: false });
+        cols.push({ field: "TYPE", title: lang.EmployeePerformance.StatisticalMethods, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "SHIFT_NAME", title: lang.EmployeePerformance.Shift, width: 80, sortable: true, filterable: false });
         cols.push({
-            field: "MAC_NAME", title: "设备名称", width: 100, sortable: true, filterable: {
+            field: "MAC_NAME",
+            title: lang.EmployeePerformance.DeviceName,
+            width: 100,
+            sortable: true,
+            filterable: {
                 cell: {
-                    template: function (args) {
+                    template: function(args) {
                         args.element.kendoDropDownList({
                             dataSource: args.dataSource,
                             dataTextField: "MAC_NAME",
@@ -68,18 +82,24 @@ angular.module('app', [])
                 }
             }
         });
-        cols.push({ field: "STATU_NAME", title: "状态", width: 80, sortable: true, filterable: false });
-        cols.push({ field: "DURATION", title: "持续时间", width: 80, sortable: true, filterable: false });
-        cols.push({ field: "RATE", title: "比例", width: 120, sortable: true, filterable: false, template: kendo.template($("#RATE-template").html()) });
+        cols.push({ field: "STATU_NAME", title: lang.EmployeePerformance.State, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "DURATION", title: lang.EmployeePerformance.DurationTime, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "RATE", title: lang.EmployeePerformance.Proportion, width: 120, sortable: true, filterable: false, template: kendo.template($("#RATE-template").html()) });
         cols.push({
-            field: "RATE", title: "比例", width: 50, sortable: true, filterable: false, attributes: {
+            field: "RATE",
+            title: lang.EmployeePerformance.Proportion,
+            width: 50,
+            sortable: true,
+            filterable: false,
+            attributes: {
                 "class": "table-cell",
                 style: "text-align: right;"
-            }, template: kendo.template($("#RATE-template1").html())
+            },
+            template: kendo.template($("#RATE-template1").html())
         });
 
 
-        $.post(baseUrl,JSON.parse(par), function (rdata) {
+        $.post(baseUrl, JSON.parse(par), function(rdata) {
             if (rdata.Status == 0) {
                 var tdata = rdata.Data;
                 var data = [];
@@ -92,7 +112,7 @@ angular.module('app', [])
                                 var tjson = {};
                                 tjson["MEM_NAME"] = tdata[i].MEM_NAME;
                                 tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY-MM-DD');
-                                tjson["TYPE"] = "班次";
+                                tjson["TYPE"] = lang.EmployeePerformance.Shift;
                                 tjson["SHIFT_NAME"] = tdata[i].SHIFT_NAME;
                                 tjson["MAC_NAME"] = tdata[i].MAC_NAME;
                                 tjson["STATU_NAME"] = tdata[i].StatuRates[pp].STATU_NAME;
@@ -106,7 +126,7 @@ angular.module('app', [])
                                 var tjson = {};
                                 tjson["MEM_NAME"] = tdata[i].MEM_NAME;
                                 tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY-MM-DD');
-                                tjson["TYPE"] = "日";
+                                tjson["TYPE"] = lang.EmployeePerformance.Day;
                                 tjson["SHIFT_NAME"] = "";
                                 tjson["MAC_NAME"] = tdata[i].MAC_NAME;
                                 tjson["STATU_NAME"] = tdata[i].StatuRates[pp].STATU_NAME;
@@ -119,8 +139,8 @@ angular.module('app', [])
                             for (var pp = 0; pp < tdata[i].StatuRates.length; pp++) {
                                 var tjson = {};
                                 tjson["MEM_NAME"] = tdata[i].MEM_NAME;
-                                tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY-') + "第" + tdata[i].WEEK + "周";
-                                tjson["TYPE"] = "周";
+                                tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY-') + lang.EmployeePerformance.The + tdata[i].WEEK + lang.EmployeePerformance.TempWeek;
+                                tjson["TYPE"] = lang.EmployeePerformance.Weeks;
                                 tjson["SHIFT_NAME"] = "";
                                 tjson["MAC_NAME"] = tdata[i].MAC_NAME;
                                 tjson["STATU_NAME"] = tdata[i].StatuRates[pp].STATU_NAME;
@@ -133,8 +153,8 @@ angular.module('app', [])
                             for (var pp = 0; pp < tdata[i].StatuRates.length; pp++) {
                                 var tjson = {};
                                 tjson["MEM_NAME"] = tdata[i].MEM_NAME;
-                                tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY-MM') + "月";
-                                tjson["TYPE"] = "月";
+                                tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY-MM') + lang.EmployeePerformance.Month;
+                                tjson["TYPE"] = lang.EmployeePerformance.Month;
                                 tjson["SHIFT_NAME"] = "";
                                 tjson["MAC_NAME"] = tdata[i].MAC_NAME;
                                 tjson["STATU_NAME"] = tdata[i].StatuRates[pp].STATU_NAME;
@@ -147,8 +167,8 @@ angular.module('app', [])
                             for (var pp = 0; pp < tdata[i].StatuRates.length; pp++) {
                                 var tjson = {};
                                 tjson["MEM_NAME"] = tdata[i].MEM_NAME;
-                                tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY') + "年";
-                                tjson["TYPE"] = "年";
+                                tjson["DAYS"] = moment(tdata[i].DAYS).format('YYYY') + lang.EmployeePerformance.Years;
+                                tjson["TYPE"] = lang.EmployeePerformance.Years;
                                 tjson["SHIFT_NAME"] = "";
                                 tjson["MAC_NAME"] = tdata[i].MAC_NAME;
                                 tjson["STATU_NAME"] = tdata[i].StatuRates[pp].STATU_NAME;
@@ -167,7 +187,7 @@ angular.module('app', [])
                     columns: cols,
                     filterable: { mode: "row" },
                     dataSource: data,
-                    height: window.innerHeight-80,
+                    height: window.innerHeight - 80,
                     selectable: "row",
                     sortable: true,
                     resizable: true,
@@ -185,17 +205,16 @@ angular.module('app', [])
                 var grid = $("#grid").data("kendoGrid");
                 //grid.saveAsExcel();
                 // grid.data("kendoGrid").dataSource.data($scope.resultData);
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         })
     });
 
 function formatSeconds(value) {
-    var theTime = parseInt(value);// 秒
-    var theTime1 = 0;// 分
-    var theTime2 = 0;// 小时
+    var theTime = parseInt(value); // 秒
+    var theTime1 = 0; // 分
+    var theTime2 = 0; // 小时
     if (theTime > 60) {
         theTime1 = parseInt(theTime / 60);
         theTime = parseInt(theTime % 60);
@@ -204,12 +223,12 @@ function formatSeconds(value) {
             theTime1 = parseInt(theTime1 % 60);
         }
     }
-    var result = "" + parseInt(theTime) + "秒";
+    var result = "" + parseInt(theTime) + lang.EmployeePerformance.Seconds;
     if (theTime1 > 0) {
-        result = "" + parseInt(theTime1) + "分" + result;
+        result = "" + parseInt(theTime1) + lang.EmployeePerformance.Minutes + result;
     }
     if (theTime2 > 0) {
-        result = "" + parseInt(theTime2) + "小时" + result;
+        result = "" + parseInt(theTime2) + lang.EmployeePerformance.Hours + result;
     }
     return result;
 }

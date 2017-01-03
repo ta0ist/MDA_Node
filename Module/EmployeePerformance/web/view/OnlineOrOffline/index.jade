@@ -8,17 +8,17 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 绩效分析
+                | #{lang.EmployeePerformance.PerformanceAnalysis}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 绩效分析
+                    a(href='javascript:;', data-lang='System') #{lang.EmployeePerformance.PerformanceAnalysis}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='AccountManage') 员工上/下线
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.EmployeePerformance.TopAndBottomLine}
     .row-fluid
         #wrap
             #sidebar
@@ -28,21 +28,21 @@ block content
                     .controls
                         .input-icon.left(style='width: 250px; display: inline;')
                             i.icon-search
-                            input#filter.m-wrap(type='text', placeholder='设备名称或人员名称')
+                            input#filter.m-wrap(type='text', placeholder='#{lang.EmployeePerformance.EquipmentNameOrTheName}')
                 .row-fluid1.inbox
                     div
                         ul.inbox-nav.margin-bottom-10(style='position: absolute;right: 20px;margin-top: 10px;')
                             li.all.active
-                                a.btn(data-title='3', href='javascript:;') 所有
+                                a.btn(data-title='3', href='javascript:;') #{lang.EmployeePerformance.All}
                                 b
                             li.ending
-                                a.btn(data-title='0', href='javascript:;') 我的
+                                a.btn(data-title='0', href='javascript:;') #{lang.EmployeePerformance.My}
                                 b
                             li.working
-                                a.btn(data-title='1', href='javascript:;') 离线
+                                a.btn(data-title='1', href='javascript:;') #{lang.EmployeePerformance.Offline}
                                 b
                             li.nostart
-                                a.btn(data-title='2', href='javascript:;') 在线
+                                a.btn(data-title='2', href='javascript:;') #{lang.EmployeePerformance.Online}
                                 b
                     div
                 ul.members(style='margin-left:0px;')
@@ -57,9 +57,9 @@ block content
                                     div(style='position: relative; top: 16px;')
                                         div(style='font-weight: bold; font-size: 16px;') {{item.MEM_NAME}}
                                         div {{item.START_DATE | format}}
-                                div(style='position: relative; top: -50px; float: right; padding: 1px 5px; background-color: #00ff00; right: 5px; cursor: pointer;', ng-click='downLine($index)') 下线
+                                div(style='position: relative; top: -50px; float: right; padding: 1px 5px; background-color: #00ff00; right: 5px; cursor: pointer;', ng-click='downLine($index)') #{lang.EmployeePerformance.DownLine}
                             div(style=' line-height: 60px; text-align: center;', ng-show='item.LOGIN_STATE == 1 || item.LOGIN_STATE == 0')
-                                .btn.green(style='width: 80px;', ng-click='upLine($index)') 上线
+                                .btn.green(style='width: 80px;', ng-click='upLine($index)') #{lang.EmployeePerformance.UpLine}
     script#treeview-template(type='text/kendo-ui-template').
         <i class="#:item.icon#"></i>
         <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode">#:item.text#</span>
@@ -69,13 +69,13 @@ block content
     script#popup-add(type='text/x-kendo-template').
         <form id="signupForm" class="form-horizontal">
         <div class="control-group">
-        <label class="control-label"><span class="required">*</span>选择人员</label>
+        <label class="control-label"><span class="required">*</span>#{lang.EmployeePerformance.SelectPersonnel}</label>
         <div class="controls">
         <input type="text" id="MEM_NBR" name="MEM_NBR" data-required="1" class="span6 m-wrap" />
         </div>
         </div>
         <div class="form-actions">
-        <div id="Win_Submit" class="btn green">确定<i class="icon-ok"></i></div>
-        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        <div id="Win_Submit" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
         </div>
         </form>

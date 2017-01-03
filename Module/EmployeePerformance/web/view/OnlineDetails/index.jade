@@ -7,39 +7,39 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 绩效分析
+                | #{lang.EmployeePerformance.PerformanceAnalysis}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 绩效分析
+                    a(href='javascript:;', data-lang='System') #{lang.EmployeePerformance.PerformanceAnalysis}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='AccountManage') 上线明细
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.EmployeePerformance.OnlineSubsidiary}
     form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);', ng-controller='OnlineDetailsCtrl')
         .row-fluid
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 登录开始日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.LogOnToStartDate}
                     .BZcontrols
                         input#startTime.m-wrap(type='text', name='startTime')
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 登录结束日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.LogOnToEndDate}
                     .BZcontrols
                         input#endTime.m-wrap(type='text', name='endTime')
             .span
                 .control-group(style='margin-bottom: 5px;')
                     #search.btn.green(style='margin-left: 50px;', ng-click='search()')
-                        | 查询
+                        | #{lang.EmployeePerformance.Search}
                         i.icon-search
     #grid(style='margin-top:20px;')
     script#LOGIN_STATE(type='text/x-kendo-template').
         # if ( data.LOGIN_STATE == 2) { #
-        登录
+        #{lang.EmployeePerformance.Login}
         # } else if ( data.LOGIN_STATE == 1) { #
-        登出
+        #{lang.EmployeePerformance.Logout}
         # } #
 
