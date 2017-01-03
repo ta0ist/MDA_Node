@@ -5,8 +5,8 @@ var groupOrMachine,
     groupOrMember,
     resultData,
     baseUrl = "/MachineWorkingState/",
-    groupType = 1;//默认设备方式
-$(function () {
+    groupType = 1; //默认设备方式
+$(function() {
     $("#startTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
     $("#endTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
 
@@ -14,11 +14,11 @@ $(function () {
         dataTextField: "text",
         dataValueField: "value",
         dataSource: [
-            { text: '班次', value: 1 },
-            { text: '日', value: 2 },
-            { text: '周', value: 3 },
-            { text: '月', value: 4 },
-            { text: '年', value: 5 }
+            { text: lang.EmployeePerformance.Shift, value: 1 },
+            { text: lang.EmployeePerformance.Day, value: 2 },
+            { text: lang.EmployeePerformance.Weeks, value: 3 },
+            { text: lang.EmployeePerformance.Month, value: 4 },
+            { text: lang.EmployeePerformance.Years, value: 5 }
         ],
         value: 2
     });
@@ -43,7 +43,7 @@ $(function () {
     }).data("BZ-multipleComboxTree");
 
 
-    $("#search").on("click", function () {
+    $("#search").on("click", function() {
         var machines = [];
         for (var m in groupOrMachine.dataAarry) {
             machines.push(parseInt(m));
@@ -60,10 +60,10 @@ $(function () {
             posttype: parseInt($("#totalType").data("kendoComboBox").value()),
         }
         if ($("#startTime").data("kendoDatePicker").value() == null && $("#endTime").data("kendoDatePicker").value() == null) {
-            BzAlert("请输入正确的日期");
+            BzAlert(lang.EmployeePerformance.PleaseInputTheCorrectDate);
             return;
         }
-        $.post(baseUrl + 'GetEmployeeStatuRate', data, function (data) {
+        $.post(baseUrl + 'GetEmployeeStatuRate', data, function(data) {
             if (data.Status == 0) {
                 //     var data = [
                 //{ MEM_NAME: "小A", MAC_NAME: "B001", RATIO: [{ NAME: "状态1", VALUE: 0.8, FLAG: 0 }, { NAME: "状态2", VALUE: 0.1, FLAG: 0 }, { NAME: "状态3", VALUE: 0.1, FLAG: 1 }, { NAME: "状态4", VALUE: 0.2, FLAG: 1 }] },
@@ -77,8 +77,7 @@ $(function () {
                 if (resultData.length > 0) {
                     getData(resultData);
                 }
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         })
@@ -86,18 +85,17 @@ $(function () {
 
 
     });
-    $(".grouptype li").on('click', function () {
+    $(".grouptype li").on('click', function() {
         $('.grouptype li').removeClass('active');
         $(this).addClass('active');
         if ($(this).find('a').attr("data-title") == "1") {
             groupType = 1;
-        }
-        else {
+        } else {
             groupType = 2;
         }
         getData(resultData);
     });
-    $("#output").on('click', function () {
+    $("#output").on('click', function() {
         var machines = [];
         for (var m in groupOrMachine.dataAarry) {
             machines.push(parseInt(m));
@@ -113,9 +111,9 @@ $(function () {
             endtime: $("#endTime").val() + ' 23:59:59',
             posttype: parseInt($("#totalType").data("kendoComboBox").value()),
         }
-        var re=JSON.stringify(data);
+        var re = JSON.stringify(data);
         var url = "/MachineWorkingState/GetEmployeeStatuRate";
-        window.open( "/OutPutIndex?par=" + re + "&url=" + url);
+        window.open("/OutPutIndex?par=" + re + "&url=" + url);
         //window.open("/OutPutIndex")
 
 
@@ -128,13 +126,12 @@ function getData(data) {
     var chartData;
     if (groupType == 1) {
         chartData = _.groupBy(data, 'MAC_NAME');
-    }
-    else {
+    } else {
         chartData = _.groupBy(data, 'MEM_NAME');
     }
     var kk = 0;
-    $.each(chartData, function (p1, p2) {
-        var group = p1.replace(/\s/g, "");  //分组
+    $.each(chartData, function(p1, p2) {
+        var group = p1.replace(/\s/g, ""); //分组
         $(".charts").append('<div id="hisChart_' + kk + '" style="min-width:700px;height:500px"></div>');
 
         //查询状态数量
@@ -145,7 +142,7 @@ function getData(data) {
         var categories = [],
             ydata = [];
 
-        $.each(p2, function (t1, t2) {
+        $.each(p2, function(t1, t2) {
             //        SHIFT = 1,
             //DAY = 2,
             //WEEK = 3,
@@ -163,7 +160,7 @@ function getData(data) {
                     typeTitle = moment(t2.DAYS).format("M/D");
                     break;
                 case 3:
-                    typeTitle = moment(t2.DAYS).format("YYYY-") + moment(t2.DAYS).week() + "周";
+                    typeTitle = moment(t2.DAYS).format("YYYY-") + moment(t2.DAYS).week() + lang.EmployeePerformance.TempWeek;
                     break;
                 case 4:
                     typeTitle = moment(t2.DAYS).format("YYYY/M");
@@ -174,8 +171,7 @@ function getData(data) {
             }
             if (groupType == 1) {
                 categories.push(t2.MEM_NAME + "(" + typeTitle + ")"); //横坐标人员
-            }
-            else {
+            } else {
                 categories.push(t2.MAC_NAME + "(" + typeTitle + ")"); //横坐标设备
             }
         })
@@ -186,7 +182,7 @@ function getData(data) {
                 data: [],
                 stack: status[j].FLAG
             }
-            $.each(p2, function (t1, t2) {
+            $.each(p2, function(t1, t2) {
                 tjson.data.push(t2.StatuRates[j].Rate * 100);
             });
             ydata.push(tjson);
@@ -204,10 +200,11 @@ function getData(data) {
         kk++;
     });
 }
+
 function drawHisChart(data) {
     Chart = $(data.ele).hisChartMemberRatio({
         type: data.type == undefined ? "column" : data.type,
-        title: data.ytitle + "运行效率分布图",
+        title: data.ytitle + lang.EmployeePerformance.DistributionOfItsOperationEfficiency,
         //ytitle: data.ytitle,
         subtitle: data.subtitle == undefined ? "" : data.subtitle,
         categories: data.xdata == undefined ? [] : data.xdata,
