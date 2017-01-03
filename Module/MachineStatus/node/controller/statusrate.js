@@ -4,13 +4,17 @@
 var path = require('path');
 var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
-exports.statusrate = function (req, res) {
+exports.statusrate = function(req, res) {
     if (!req.session.user)
         res.redirect('/');
     else
-        res.render(path.resolve(__dirname, '../../web/view/statusrate/index'), { menulist: req.session.menu ,user:req.session.user});
+        res.render(path.resolve(__dirname, '../../web/view/statusrate/index'), {
+            menulist: req.session.menu,
+            user: req.session.user,
+            lang: post_argu.getLanguage()
+        });
 }
-exports.fun = function (req, res) {
+exports.fun = function(req, res) {
     var args = [];
     args.push(res);
     method = post_argu.getpath(__filename, req.params.method);

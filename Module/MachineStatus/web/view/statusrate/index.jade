@@ -13,71 +13,71 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 历史状态
+                | #{lang.MachineStatus.historicalStatus}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 加工效率分析
+                    a(href='javascript:;', data-lang='System') #{lang.MachineStatus.MachiningEfficiencyAnalysis}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='MachineScheduling') 历史状态
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.MachineStatus.historicalStatus}
     form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
         .row-fluid
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 开始日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.StartTime}
                     .BZcontrols
                         input#startTime.m-wrap(type='text', name='startTime')
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 结束日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.EndTime}
                     .BZcontrols
                         input#endTime.m-wrap(type='text', name='endTime')
         .row-fluid
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 分组方式
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.Grouping}
                     .BZcontrols(style='line-height: 32px;')
                         label.radio(style='margin-top: 0px !important;font-size: 12px;')
                             input(type='radio', name='searchType', checked='', value='1')
-                            | 日期
+                            | #{lang.EmployeePerformance.Date}
                         label.radio(style='margin-top: 0px !important;font-size: 12px;')
                             input(type='radio', name='searchType', value='2')
-                            | 设备
+                            | #{lang.EmployeePerformance.Equipment}
             .span(style='width: 150px !important;')
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 明细
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.MachineStatus.Detail}
                     .BZcontrols(style='line-height: 32px;')
                         label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
                             input(type='checkbox', name='detailshow')
             .span
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD', style='width: 60px;') 过滤
+                    label.control-label(data-lang='Common.PASSWORD', style='width: 60px;') #{lang.MachineStatus.Filter}
                     .BZcontrols(style='line-height: 32px; margin-left: 70px;')
                         label.checkbox(style='margin-top: 0px !important;font-size: 12px;')
                             input(type='checkbox', name='filter')
                         input#filterLogic.m-wrap(type='text', style='width:100px;')
                         input#filterValue.m-wrap(type='text', style='width: 50px; margin-top: 1px; margin-right: 5px;')
-                        | 秒
+                        | #{lang.EmployeePerformance.Seconds}
             div(style='float: left;margin-left:0px;width:350px;')
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 设备
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.EmployeePerformance.Equipment}
                     .BZcontrols
                         input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
             .span
                 .control-group(style='margin-bottom: 5px;')
                     #search.btn.green(style='margin-left: 50px;')
-                        | 查询
+                        | #{lang.EmployeePerformance.Search}
                         i.icon-search
     .row-fluid(style='padding-top:5px;', oncontextmenu='return false', ondragstart='return false', onselectstart='return false', onselect='document.selection.empty()', oncopy='document.selection.empty()', onbeforecopy='return false', onmouseup='document.selection.empty()')
         #filter.m-wrap
         table#table_status(border='0', cellpadding='0', cellspacing='0', width='100%')
         #loading(style='font-size:25px;text-align:center;display:none;margin-top:10px;')
             i.icon-spinner.icon-spin
-            |  正在努力加载数据......
+            |  #{lang.MachineStatus.AreTryingToLoadData}
         #display
         .row-fluid(style='margin-top:10px;')
             .span6
@@ -89,8 +89,8 @@ block content
         <form class="form-horizontal" id="memberviewmodel" style="width:850px;padding:0px;">
         <div id="form-grid"></div>
         <div class="form-actions" style="margin-top: 0px;">
-        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
-        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
         </div>
         </form>
     script#popup-showStatus(type='text/x-kendo-template').
@@ -99,8 +99,8 @@ block content
         <div id="status"></div>
         </div>
         <div class="form-actions" style="margin-top: 0px;">
-        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
-        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        <div data-bind="click:save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
         </div>
         </form>
     script#treeview-template(type='text/kendo-ui-template').
