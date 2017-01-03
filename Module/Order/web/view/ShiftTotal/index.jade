@@ -8,39 +8,39 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 班次统计
+                | #{lang.Order.FrequencyStatistics}    
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/')  #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 工单管理
+                    a(href='javascript:;', data-lang='System') #{lang.Order.WorkOrderManagement}    
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='MachineScheduling') 班次统计
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.Order.FrequencyStatistics}
     div(ng-app='app', ng-controller='appCtrl')
         form.form-horizontal(style='padding: 5px 2px 0px;height:35px')
             .span(style='width: 350px !important;')
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 开始日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.Order.StartDate}
                     .BZcontrols
                         input#startTime.m-wrap(type='text', name='startTime', style='width:200px;')
             .span(style='width: 350px !important;')
                 .control-group(style='margin-bottom: 5px;')
-                    label.control-label(data-lang='Common.PASSWORD') 结束日期
+                    label.control-label(data-lang='Common.PASSWORD') #{lang.Order.EndDate}
                     .BZcontrols
                         input#endTime.m-wrap(type='text', name='endTime', style='width:200px;')
             .span(style='width: 130px !important;')
                 .control-group(style='margin-bottom: 5px;')
                     .btn.green(style='margin-left: 50px;', ng-click='search()')
-                        | 查询
+                        | #{lang.EmployeePerformance.Search}
                         i.icon-search
         #grid(style='margin-top:10px;')
         .row-fluid
             div(style='width: 49%; display: inline-table; ')
                 div
-                    h3(style='width:100%; text-align: center; ') 人员产量
+                    h3(style='width:100%; text-align: center; ') #{lang.Order.ProductionPersonnel}
                 table(style='width: 100%; text-align: center; border-bottom:#999 solid 1px;')
                     tr(ng-repeat='cont in conts')
                         td(width='60') {{cont.MEN_NAME}}
@@ -52,7 +52,7 @@ block content
                                 li(style='height: 20px; background: #BB2413; text-align: center; line-height: 20px; ', ng-style='{width:cont.STOP_TIMEB}') {{cont.STOP_TIME}}
             div(style='width: 49%; display: inline-table; border-left: #999 solid 1px;')
                 div
-                    h3(style='width: 100%; text-align: center; ') 设备产量
+                    h3(style='width: 100%; text-align: center; ') #{lang.Order.EquipmentProduction}
                 table(style='width: 100%; text-align: center; border-bottom: #999 solid 1px; ')
                     tr(ng-repeat='item in items')
                         td(width='60') {{item.MAC_NO}}
@@ -65,10 +65,10 @@ block content
         ul#flo.block(style='width: 500px; height: 20px; margin: 10px auto; display: none')
             li
                 span(style='background: #d0ce19; ')
-                |  产量
+                |  #{lang.EmployeePerformance.Production}
             li
                 span(style='background: #1D943B; ')
-                |  运行用时
+                |   #{lang.Order.RunIt}
             li
                 span(style='background: #BB2413; ')
-                |  停机用时
+                |  #{lang.Order.StopIt}
