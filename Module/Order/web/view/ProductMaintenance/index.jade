@@ -9,17 +9,17 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 产品维护
+                | #{lang.Order.ProductMaintenance}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 工单管理
+                    a(href='javascript:;', data-lang='System') #{lang.Order.WorkOrderManagement}    
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='AccountManage') 产品维护
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.Order.ProductMaintenance}
     .row-fluid
         table(width='100%', cellpadding='0', cellspacing='0')
             tr
@@ -27,18 +27,18 @@ block content
                     .control-group
                         .controls
                             button#tree_add.btn.blue(data-bind='click:tree_add', title='')
-                                | 新增
+                                | #{lang.Order.Add}
                                 i.icon-plus-sign
                             button#tree_edit.btn.purple(style='outline: medium', data-bind='click:tree_edit', title='')
-                                | 编辑
+                                | #{lang.Order.Modify}
                                 i.icon-edit
                             button#tree_delete.btn.red(style='outline: medium', data-bind='click:tree_delete', title='')
-                                | 删除
+                                | #{lang.Order.Delete}
                                 i.icon-remove-sign
                     table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
                         tr
                             td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
-                                a.k-link(tabindex='-1', href='#') 产品组
+                                a.k-link(tabindex='-1', href='#') #{lang.Order.ProductGroup}
                                 i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
                         tr
                             td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
@@ -48,9 +48,9 @@ block content
                 td(valign='top', style='padding-left:5px;')
                     .control-group(style='height: 34px;')
                         .controls(style='position:relative;')
-                            button#slide.btn.purple(title='', style='position: absolute; top: 0px; right: 114px; outline: medium') 折叠
+                            button#slide.btn.purple(title='', style='position: absolute; top: 0px; right: 114px; outline: medium') #{lang.Order.Folding}
                             button.btn.blue(data-bind='click:grid_add', title='', style='position:absolute;top:0px;right:10px;')
-                                | 新增产品
+                                | #{lang.Order.NewProduct}
                                 i.icon-plus-sign
                     #grid
     script#treeview-template(type='text/kendo-ui-template').
@@ -61,7 +61,7 @@ block content
         <div class="row-fluid">
         <div style="float: left;margin-left:0px;width:350px;">
         <div class="control-group" style="margin-bottom: 5px;">
-        <label class="control-label" data-lang="Order.ProductNumber" id="PROD_NO_text">产品编号</label>
+        <label class="control-label" data-lang="Order.ProductNumber" id="PROD_NO_text">#{lang.Order.ProductNumber}</label>
         <div class="BZcontrols">
         <input type="text" id="PROD_NO" name="PROD_NO" data-bind='value: PROD_NO,attr: { disabled: CMD() != 0 && CMD() != 1}' class="m-wrap" value="" />
         </div>
@@ -71,7 +71,7 @@ block content
         <div class="row-fluid" style="margin:10px auto 20px">
         <div style="float: left;margin-left:0px;width:350px;">
         <div class="control-group" style="margin-bottom: 5px;">
-        <label class="control-label" data-lang="Order.ProductName" id="PROD_NAME_text">产品名称</label>
+        <label class="control-label" data-lang="Order.ProductName" id="PROD_NAME_text">#{lang.Order.ProductName}</label>
         <div class="BZcontrols">
         <input type="text" id="PROD_NAME" name="PROD_NAME" data-bind='value: PROD_NAME,attr: { disabled: CMD() != 0 && CMD() != 1}' class="m-wrap" value="" />
         </div>
@@ -82,22 +82,22 @@ block content
         <div id='productList' style="width:960px;margin:10px 0px 0px 20px;">
         <table class='contactsEditor' style="margin:auto;">
         <tr>
-        <th style="width: 85px;">工艺编号</th>
-        <th style="width: 85px;">工艺名称</th>
-        <th style="width: 85px;">工序编号</th>
-        <th style="width: 85px;">工序名称</th>
-        <th style="width: 85px;">工序顺序</th>
-        <th style="width: 85px;">最后工序</th>
-        <th style="width: 85px;">标准用时</th>
-        <th style="width: 85px;">循环倍率</th>
-        <th style="width: 85px;">备注</th>
+        <th style="width: 85px;">#{lang.Order.CraftId}</th>
+        <th style="width: 85px;">#{lang.Order.CraftName}</th>
+        <th style="width: 85px;">#{lang.Order.ProcessId}</th>
+        <th style="width: 85px;">#{lang.Order.ProcessName}</th>
+        <th style="width: 85px;">#{lang.Order.OperationSequence}</th>
+        <th style="width: 85px;">#{lang.Order.LastProcess}</th>
+        <th style="width: 85px;">#{lang.Order.StandardTime}</th>
+        <th style="width: 85px;">#{lang.Order.CirculationRatio}</th>
+        <th style="width: 85px;">#{lang.Order.Note}</th>
         <th style="width: 85px;"></th>
         </tr>
         <tbody data-bind="foreach: CRAFT_LIST">
         <tr>
         <td valign="top">
         <input class="filed-input" data-bind='value: CRAFT_NO,attr: { disabled: FLAG() == 1 && $root.CMD() != 3}' />
-        <div><a href='\\#' data-bind='click: $root.removeCraft,visible: FLAG() == 0'>删除工艺</a></div>
+        <div><a href='\\#' data-bind='click: $root.removeCraft,visible: FLAG() == 0'>#{lang.Order.DeleteCraft}</a></div>
         </td>
         <td style="display:inline-block">
         <input class="filed-input" data-bind='value: CRAFT_NAME,attr: { disabled: FLAG() == 1 && $root.CMD() != 3}' />
@@ -116,29 +116,29 @@ block content
         <td><input class="filed-input" data-bind='value: CYCLE_RATE,attr: { disabled: FLAG() == 1 }' /></td>
         <td><input class="filed-input" data-bind='value: MEMO,attr: { disabled: FLAG() == 1 }' /></td>
         <td>
-        <a href='\\#' data-bind='click: $root.removeProcess,visible: FLAG() == 0 && $root.CMD() != 5'>删除工序</a>
+        <a href='\\#' data-bind='click: $root.removeProcess,visible: FLAG() == 0 && $root.CMD() != 5'>#{lang.Order.DeleteProcess}</a>
         </td>
         </tr>
         </tbody>
         </table>
-        <a href='\\#' data-bind='click: $root.addProcess,visible: $root.CMD() != 1 && FLAG() == 0 || $root.CMD() == 4'>新增工序</a>
+        <a href='\\#' data-bind='click: $root.addProcess,visible: $root.CMD() != 1 && FLAG() == 0 || $root.CMD() == 4'>#{lang.Order.NewProcess}</a>
         </td>
         </tr>
         </tbody>
         </table>
         </div>
         <p>
-        <button data-bind='click: addCraft,visible: CMD() == 0 || CMD() == 2' style="margin-left:65px;">新增工艺</button>
+        <button data-bind='click: addCraft,visible: CMD() == 0 || CMD() == 2' style="margin-left:65px;">#{lang.Order.NewCraft}</button>
         </p>
         </div>
         <div class="form-actions">
-        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
-        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        <div data-bind="click:save" class="btn green">#{lang.Order.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.Order.Cancel}<i class="icon-remove"></i></div>
         </div>
         </form>
     script#PROC_TYPE_TEMPLATE(type='x-kendo-template').
         # if ( data.PROC_TYPE ==0) { #
-        否
+        #{lang.Order.No}
         # } else if(data.PROC_TYPE == 1) { #
-        是
+        #{lang.Order.Yes}
         # } #
