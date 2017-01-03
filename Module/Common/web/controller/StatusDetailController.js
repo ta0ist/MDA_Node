@@ -3,15 +3,15 @@
  */
 var groupOrMachine;
 var grid;
-$(function () {
+$(function() {
     $("#startTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
     $("#endTime").kendoDatePicker({ format: "yyyy/MM/dd", value: new Date() });
     $("#filterLogic").kendoComboBox({
         dataTextField: "text",
         dataValueField: "value",
         dataSource: [
-            { value: 1, text: "小于等于" },
-            { value: 2, text: "大于等于" }
+            { value: 1, text: lang.MachineStatus.LessThanOrEqualTo },
+            { value: 2, text: lang.MachineStatus.GreaterThanOrEqualTo }
         ]
     });
     groupOrMachine = $("#groupOrMachine").multipleComboxTree({
@@ -25,9 +25,10 @@ $(function () {
     App.initUniform();
     //grid_show();
     //查询
-    $("#search").click(function () {
+    $("#search").click(function() {
         grid_show();
     });
+
     function grid_show() {
         var data = {
             StartTime: $("#startTime").val(),
@@ -36,14 +37,14 @@ $(function () {
             ObjectIDs: groupOrMachine.rData == undefined ? 10 : groupOrMachine.rData
         }
         var cols = [];
-        cols.push({ field: "STATUSID", title: "状态ID", width: 80, sortable: true, filterable: false });
-        cols.push({ field: "NAME", title: "状态名称", width: 80, sortable: true, filterable: false});
-        cols.push({ field: "START", title: "开始时间", type: 'date', format: '{0: yyyy-MM-dd HH:mm:ss}', width: 80, sortable: true, filterable: false, hidden: false });
-        cols.push({ field: "END", title: "结束时间", type: 'date', format: '{0: yyyy-MM-dd HH:mm:ss}', width: 80, sortable: true, filterable: false });
-        cols.push({ field: "durations", title: "持续时间", width: 80, sortable: true, filterable: false });
-        cols.push({ field: "Program_Number", title: "程序号", width: 80, sortable: true, filterable: false });
-        cols.push({ field: "Operator", title: "操作人员", width: 80, sortable: true, filterable: false });
-        $.post("/StatusDetail/GetMachineStatusListByName",data, function (data) {
+        cols.push({ field: "STATUSID", title: lang.MachineStatus.StateID, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "NAME", title: lang.MachineStatus.StateName, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "START", title: lang.Order.StartDate, type: 'date', format: '{0: yyyy-MM-dd HH:mm:ss}', width: 80, sortable: true, filterable: false, hidden: false });
+        cols.push({ field: "END", title: lang.Order.EndDate, type: 'date', format: '{0: yyyy-MM-dd HH:mm:ss}', width: 80, sortable: true, filterable: false });
+        cols.push({ field: "durations", title: lang.EmployeePerformance.DurationTime, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "Program_Number", title: lang.Common.ApplicationNo, width: 80, sortable: true, filterable: false });
+        cols.push({ field: "Operator", title: lang.Order.Operator, width: 80, sortable: true, filterable: false });
+        $.post("/StatusDetail/GetMachineStatusListByName", data, function(data) {
             console.log(data);
             var result = data.Data[0].StatusData[0].Data;
             for (var i = 0; i < result.length; i++) {
@@ -86,9 +87,9 @@ $(function () {
                     //pageSizes: [20, 50, 100, 200, 500]ss
                 }
             });
-            for (var i = 1; i < re.length+1; i++) {
+            for (var i = 1; i < re.length + 1; i++) {
                 $("tbody[role='rowgroup'] >tr:nth-child(" + i + ")>td:nth-child(2)").html("<span>" + "&nbsp;&nbsp;" + re[i - 1].NAME + "</span>");
-                $("tbody[role='rowgroup'] >tr:nth-child(" + i + ")>td:nth-child(2)>span").css("background", '#'+re[i - 1].COLOR.Name);
+                $("tbody[role='rowgroup'] >tr:nth-child(" + i + ")>td:nth-child(2)>span").css("background", '#' + re[i - 1].COLOR.Name);
             }
             $("tbody[role='rowgroup']>tr>td>span").css({ "width": "100%", "display": "inline-block", "line-height": "30px" });
 
@@ -97,9 +98,9 @@ $(function () {
 });
 //秒转为时间00：00：00
 function formatSeconds(value) {
-    var theTime = parseInt(value);// 秒
-    var theTime1 = 0;// 分
-    var theTime2 = 0;// 小时
+    var theTime = parseInt(value); // 秒
+    var theTime1 = 0; // 分
+    var theTime2 = 0; // 小时
     if (theTime > 60) {
         theTime1 = parseInt(theTime / 60);
         theTime = parseInt(theTime % 60);
@@ -117,6 +118,6 @@ function formatSeconds(value) {
     if (theTime2 < 10) {
         theTime2 = "0" + theTime2
     }
-    var result = theTime2+":"+theTime1+":" + theTime;
+    var result = theTime2 + ":" + theTime1 + ":" + theTime;
     return result;
 }

@@ -77,17 +77,14 @@ block content
  .row-fluid
   .span12
     h3.page-title(data-lang='AccountManage')
-      | 协助诊断
+      | #{lang.MachineParameters.AssistDiagnosis}
     ul.breadcrumb
       li
         i.icon-home
-        a(href='/') 主页
+        a(href='/') #{lang.EmployeePerformance.Home}
         i.icon-angle-right
       li
-        a(href='javascript:;', data-lang='System') 协助诊断
-        i.icon-angle-right
-      li
-        a(href='javascript:;', data-lang='AccountManage') 协助诊断
+        a(href='javascript:;', data-lang='AccountManage') #{lang.MachineParameters.AssistDiagnosis}
  .row-fluid(ng-controller='appCtrl')
   #wrap
     #sidebar

@@ -1,25 +1,28 @@
 var chartObj = {
-    chart1: {}, chart2: {}, chart3: {}, chart4: {}, chart5: {}
+    chart1: {},
+    chart2: {},
+    chart3: {},
+    chart4: {},
+    chart5: {}
 };
 var baseUrl = "/diagnosis/";
-$(function () {
+$(function() {
     // 检查插件是否已经安装过
     var iRet = WebVideoCtrl.I_CheckPluginInstall();
     if (-2 == iRet) {
-        alert("您的Chrome浏览器版本过高，不支持NPAPI插件！");
+        alert(lang.MachineParameters.Alert_1);
     } else if (-1 == iRet) {
-        alert("您还未安装过插件，双击开发包目录里的WebComponentsKit.exe安装！");
-    }
-    else {
+        alert(lang.MachineParameters.Alert_2);
+    } else {
         var oPlugin = {
-            iWidth: 600,			// plugin width
-            iHeight: 400			// plugin height
+            iWidth: 600, // plugin width
+            iHeight: 400 // plugin height
         };
         // 初始化插件参数及插入插件
         WebVideoCtrl.I_InitPlugin(oPlugin.iWidth, oPlugin.iHeight, {
-            bWndFull: true,//是否支持单窗口双击全屏，默认支持 true:支持 false:不支持
+            bWndFull: true, //是否支持单窗口双击全屏，默认支持 true:支持 false:不支持
             iWndowType: 1,
-            cbSelWnd: function (xmlDoc) {
+            cbSelWnd: function(xmlDoc) {
 
             }
         });
@@ -29,24 +32,24 @@ $(function () {
 
         // 检查插件是否最新
         if (-1 == WebVideoCtrl.I_CheckPluginVersion()) {
-            alert("检测到新的插件版本，双击开发包目录里的WebComponentsKit.exe升级！");
+            alert(lang.MachineParameters.Alert_3);
             return;
         }
 
         var oLiveView = {
-            iProtocol: 1,			// protocol 1：http, 2:https
-            szIP: "192.168.0.7",	// protocol ip
-            szPort: "80",			// protocol port
-            szUsername: "admin",	// device username
-            szPassword: "Bandex123",	// device password
-            iStreamType: 1,			// stream 1：main stream  2：sub-stream  3：third stream  4：transcode stream
-            iChannelID: 1,			// channel no
-            bZeroChannel: false		// zero channel
+            iProtocol: 1, // protocol 1：http, 2:https
+            szIP: "192.168.0.7", // protocol ip
+            szPort: "80", // protocol port
+            szUsername: "admin", // device username
+            szPassword: "Bandex123", // device password
+            iStreamType: 1, // stream 1：main stream  2：sub-stream  3：third stream  4：transcode stream
+            iChannelID: 1, // channel no
+            bZeroChannel: false // zero channel
         };
 
         // 登录设备
         WebVideoCtrl.I_Login(oLiveView.szIP, oLiveView.iProtocol, oLiveView.szPort, oLiveView.szUsername, oLiveView.szPassword, {
-            success: function (xmlDoc) {
+            success: function(xmlDoc) {
                 // 开始预览
                 WebVideoCtrl.I_StartRealPlay(oLiveView.szIP, {
                     iStreamType: oLiveView.iStreamType,
@@ -57,7 +60,7 @@ $(function () {
         });
 
         // 关闭浏览器
-        $(window).unload(function () {
+        $(window).unload(function() {
             WebVideoCtrl.I_Stop();
         });
     }
@@ -66,41 +69,41 @@ $(function () {
     var seriesdata = [];
     var type = $.getparam("type");
     //$.each(parameter[type], function (item, k) {$.getparam("no")
-    $.post(baseUrl + "GetImmediatelyparameter", { machineIds: $.getparam("no") }, function (data) {
+    $.post(baseUrl + "GetImmediatelyparameter", { machineIds: $.getparam("no") }, function(data) {
         if (data.Status == 0) {
             //选择图标类型
             var type;
-            $.each(data.Data.MAC_DATA, function (a, b) {
+            $.each(data.Data.MAC_DATA, function(a, b) {
 
                 for (var m = 0; m < b.DATAITEMS.length; m++) {
                     type = b.DATAITEMS[m].ChartType;
                     var item = 'par' + m;
                     //.split(",");
                     switch (type) {
-                        case "chart1"://转速
+                        case "chart1": //转速
                             $(".chart1").append('<div id="' + item + '"><div class="chart1_flagLabel">' + b.DATAITEMS[m].Description + '</div><div id="' + item + '_chart"></div></div>');
                             chartObj.chart1[item] = drawSpeedChart(item + "_chart", 300, 260, b.DATAITEMS[m].UnitName);
                             break;
-                        case "chart2"://进度
+                        case "chart2": //进度
                             $(".chart2").append('<div id="' + item + '"><div class="chart2_flagLabel">' + b.DATAITEMS[m].Description + '<span id="' + item + '_chartValue"></span></div><div id="' + item + '_chart"></div></div>');
                             chartObj.chart2[item] = drawProgressBar(item + "_chart", 500, 40);
                             break;
-                        case "chart3"://数码管
+                        case "chart3": //数码管
                             $(".chart3").append('<div id="' + item + '" style="margin-right: 10px;"><div class="chart2_flagLabel">' + b.DATAITEMS[m].Description + '</div><div id="' + item + '_chart" style="border-radius: 5px ! important; border: 4px solid rgb(204, 204, 204);"></div></div>');
                             chartObj.chart3[item] = drawSSegArray(item + "_chart", 350, 100);
                             $("#" + item + "_chart").append('<span style="color: rgb(239, 247, 22); font-size: 18px; margin-right: 5px;">' + b.DATAITEMS[m].UnitName + '</span>');
                             break;
-                        case "chart4"://文本框
+                        case "chart4": //文本框
                             $(".chart4").append('<div style="margin-bottom: 10px;"><div class="chart4_flagLabel">' + b.DATAITEMS[m].Description + ':</div><div class="chart4_value" id="' + item + '_chart"></div></div>');
                             chartObj.chart4[item] = item + "_chart";
                             break;
-                        case "chart5"://实时曲线
+                        case "chart5": //实时曲线
                             var tjson = {
                                 name: b.DATAITEMS[m].Description,
                                 type: 'line',
                                 yAxis: 0,
                                 //data: intivalue.FD_WindSpeed_3s,
-                                data: (function () {
+                                data: (function() {
                                     var data = [];
                                     var time = (new Date()).getTime();
                                     var i = 0;
@@ -128,7 +131,7 @@ $(function () {
                 drawRealCurve($.Translate("MachineParameters.MACHINE_PARS_REAL_CURVE"), "curves", seriesdata);
                 resizeChart();
             }
-            $("#contextPage").resize(function () {
+            $("#contextPage").resize(function() {
                 resizeChart();
             });
 
@@ -137,12 +140,13 @@ $(function () {
     });
 
 });
+
 function GetImmediatelyparameter() {
     var no = ($.getparam("no"));
-    $.post(baseUrl + "GetImmediatelyparameter", { machineIds: no }, function (data) {
+    $.post(baseUrl + "GetImmediatelyparameter", { machineIds: no }, function(data) {
         if (data.Status == 0) {
             //var series = this.series[0];
-            $.each(data.Data.MAC_DATA, function (a, b) {
+            $.each(data.Data.MAC_DATA, function(a, b) {
                 $("#MAC_NAME").html(b.MAC_NAME);
                 $("#MAC_NO").html(" NO:" + b.MAC_NO);
                 //
@@ -203,26 +207,30 @@ function GetImmediatelyparameter() {
                 }
             })
             setTimeout("GetImmediatelyparameter()", 5000);
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
 }
+
 function resizeChart() {
     var width = $(".chart5").width() - 30;
     chart.setSize(width, 350);
 }
+
 function drawSpeedChart(Container, width, height, unit) {
     return new zyGH.CGauge(Container, width, height).StartAngleSet(0).EndAngleSet(270).LargeTickSet(10).SmallTickSet(5).MinValueSet(0).MaxValueSet(10000).DialRadiusSet(113).ltlenSet(10).stlenSet(8).SetName(unit).Create(130, 130);
 }
+
 function drawProgressBar(Container, width, height) {
     return new zyGH.ProgressBar(Container, width, height).SetWidth(width - 2).SetHight(height - 2).max(200).min(0).Radio(10).SetStrokecolor("#EF3130").SetcolorTop("#F18284").SetcolorMid("#EF3130").SetcolorButtom("#EF7574").Setopacity(50).Create(1, 1);
 }
+
 function drawSSegArray(Container, width, height) {
     return new zyGH.SSegArray(Container, width, height).Spacing(10).scale(1).Count(4).initialValue(1).SetcolorBlack("#212020").SetcolorTop("#07F7EB").Create(0, 12);
 }
 var chart;
+
 function drawRealCurve(title, contains, seriesdata) {
     Highcharts.setOptions({
         global: {
@@ -235,7 +243,7 @@ function drawRealCurve(title, contains, seriesdata) {
             alignTicks: true,
             animation: false,
             //width: 700, //790
-            height: 350,  //445
+            height: 350, //445
             //margin: [8, 90, 20, 85]
             backgroundColor: "#000000",
             events: {
@@ -292,34 +300,34 @@ function drawRealCurve(title, contains, seriesdata) {
                 }
             }
         },
-        yAxis: [{  //曲线1
-            //minorTickInterval: 1,
-            lineColor: '#FFFFFF',
-            lineWidth: 1,
-            tickWidth: 1,
-            tickColor: '#FFFFFF',
-            gridlinewidth: 0,
-            tickInterval: 2000,
-            //minorTickInterval: 'auto',
-            maxPadding: 0,
-            minPadding: 0,
-            offset: 0,
-            labels: {
-                formatter: function () {
-                    return this.value;
+        yAxis: [{ //曲线1
+                //minorTickInterval: 1,
+                lineColor: '#FFFFFF',
+                lineWidth: 1,
+                tickWidth: 1,
+                tickColor: '#FFFFFF',
+                gridlinewidth: 0,
+                tickInterval: 2000,
+                //minorTickInterval: 'auto',
+                maxPadding: 0,
+                minPadding: 0,
+                offset: 0,
+                labels: {
+                    formatter: function() {
+                        return this.value;
+                    },
+                    style: {
+                        font: '12px Arial',
+                        color: '#FFFFFF'
+                    }
                 },
-                style: {
-                    font: '12px Arial',
-                    color: '#FFFFFF'
-                }
-            },
-            title: {
-                text: ''
-            },
-            opposite: false, //Y轴靠左
-            min: 0,
-            max: 10000 //
-        }
+                title: {
+                    text: ''
+                },
+                opposite: false, //Y轴靠左
+                min: 0,
+                max: 10000 //
+            }
             //, {
             //    //minorTickInterval: 4,
             //    lineColor: '#FFFFFF',
@@ -356,7 +364,7 @@ function drawRealCurve(title, contains, seriesdata) {
             useHTML: true,
             headerFormat: '<small>{point.key}</small><table>',
             pointFormat: '<tr><td align="right" style="color: {series.color}">{series.name}: </td>' +
-            '<td align="left"><b>{point.y}</b></td></tr>',
+                '<td align="left"><b>{point.y}</b></td></tr>',
             footerFormat: '</table>',
             //crosshairs: true,
             xDateFormat: '%Y-%m-%d %H:%M:%S',
