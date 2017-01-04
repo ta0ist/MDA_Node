@@ -1,4 +1,3 @@
-
 var path = require('path');
 var request = require('request');
 var logger = require('../../../../routes/logger.js');
@@ -6,37 +5,41 @@ var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
 var fs = require('fs');
 //加载页面
-exports.index = function (req, res) {
-    if (!req.session.menu) {
-        res.redirect("/login");
+exports.index = function(req, res) {
+        if (!req.session.menu) {
+            res.redirect("/login");
 
-    } else {
-        res.render(path.resolve(__dirname, '../../web/view/member/index'), { menulist: req.session.menu,user:req.session.user });
+        } else {
+            res.render(path.resolve(__dirname, '../../web/view/member/index'), {
+                menulist: req.session.menu,
+                user: req.session.user,
+                lang: post_argu.getLanguage()
+            });
+        }
     }
-}
-//加载组
-//exports.GetMenberGrouplist = function (req, res) {
-//    request.post({
-//        url: config.wbmember + '/GetGrouplist',
-//        form: { groupId: 0 },
-//        json:true,
-//        headers: {
-//            "content-type": "application/json",
-//        }
-//    }, function (error, response, body) {
-//        console.log(body);
-//        res.json({
-//            Data: body,
-//            Status: 0,
-//            Message: "成功"
-//        } )
-//    });
-//}
+    //加载组
+    //exports.GetMenberGrouplist = function (req, res) {
+    //    request.post({
+    //        url: config.wbmember + '/GetGrouplist',
+    //        form: { groupId: 0 },
+    //        json:true,
+    //        headers: {
+    //            "content-type": "application/json",
+    //        }
+    //    }, function (error, response, body) {
+    //        console.log(body);
+    //        res.json({
+    //            Data: body,
+    //            Status: 0,
+    //            Message: "成功"
+    //        } )
+    //    });
+    //}
 
-exports.fun = function (req, res) {
+exports.fun = function(req, res) {
     var args = [];
     args.push(res);
-    args.push(method =post_argu.getpath(__filename,req.params.method));
+    args.push(method = post_argu.getpath(__filename, req.params.method));
     args.push(req.body);
     doCallback(eval(req.params.method), args, res);
 
@@ -120,13 +123,14 @@ function UpLoadFileWithCut(res, method, args) {
 function ShowAllPic(res, method, args) {
     var root = './public';
     var imagesDir = '/images/people';
-    var body = {}, data = [];
-    fs.readdirSync(root + imagesDir).forEach(function (file) {
+    var body = {},
+        data = [];
+    fs.readdirSync(root + imagesDir).forEach(function(file) {
         if (fs.lstatSync(root + imagesDir + '/' + file)) {
             var dirname = file;
             // var img = {};
             // img.FileDesc = "file";
-            fs.readdirSync(root + imagesDir + '/' + file).forEach(function (file) {
+            fs.readdirSync(root + imagesDir + '/' + file).forEach(function(file) {
                 data.push({ FileName: file, FilePath: imagesDir + '/' + dirname + '/' + file, FileDesc: dirname });
             })
             body.Data = data;
@@ -137,11 +141,3 @@ function ShowAllPic(res, method, args) {
     res.json(body);
 
 }
-
-
-
-
-
-
-
-

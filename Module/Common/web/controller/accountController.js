@@ -32,7 +32,7 @@ app.controller('accountctrl', ['$scope', '$http', function($scope, $http) {
     cols.push({ field: "EXPIRED", title: lang.Common.ExpirationDate, width: 80, format: "{0: yyyy/MM/dd}", sortable: true, filterable: false });
     cols.push({
         command: [
-            { name: "aa", text: lang.Common.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
+            { name: "aa", text: lang.Order.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
             { name: "bb", text: lang.Common.Reset + '<i class="icon-key"></i>', className: "btn red ", click: f_reset }
         ],
         title: lang.Order.Operation,

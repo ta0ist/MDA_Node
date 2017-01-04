@@ -59,17 +59,17 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 人员管理
+                | #{lang.Common.ManagementPersonnel}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 系统
+                    a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='AccountManage') 人员管理
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.Common.ManagementPersonnel}
     .row-fluid
         table(width='100%', cellpadding='0', cellspacing='0')
             tr
@@ -77,18 +77,18 @@ block content
                     .control-group
                         .controls
                             button#tree_add.btn.blue(data-bind='click:tree_add', title='@LanguageService.Translate(')
-                                | 新增
+                                | #{lang.EmployeePerformance.Add}
                                 i.icon-plus-sign
                             button#tree_edit.btn.purple(data-bind='click:tree_edit', title='@LanguageService.Translate(')
-                                | 编辑
+                                | #{lang.Order.Edit}
                                 i.icon-edit
                             button#tree_delete.btn.red(data-bind='click:tree_delete', title='@LanguageService.Translate(')
-                                | 删除
+                                | #{lang.Order.Delete}
                                 i.icon-remove-sign
                     table.table.table-bordered.table-condensed(style='border-color: #C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
                         tr
                             td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
-                                a.k-link(tabindex='-1', href='#') 人员组
+                                a.k-link(tabindex='-1', href='#') #{lang.Common.PersonnelGroup}
                                 i#tree_expand.icon-sitemap(style='cursor: pointer; float: right; margin-top: 3px;')
                         tr
                             td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
@@ -100,15 +100,15 @@ block content
                         .controls
                             .input-icon.left(style='width: 250px; display: inline;')
                                 i.icon-search
-                                input#filter.m-wrap(type='text', placeholder='人员名字')
+                                input#filter.m-wrap(type='text', placeholder='#{lang.Common.StaffName}')
                             button#grid_add.btn.blue(data-bind='click:grid_add', title='@LanguageService.Translate(')
-                                | 新增
+                                | #{lang.EmployeePerformance.Add}
                                 i.icon-plus-sign
                             button#grid_delete.btn.red(data-bind='click:grid_delete', title='@LanguageService.Translate(')
-                                | 删除
+                                | #{lang.Order.Delete}
                                 i.icon-remove-sign
                             button#grid_move.btn.green(data-bind='click:grid_move')
-                                | 移组
+                                | #{lang.Common.MoveGroup}
                                 i.icon-exchange
                     #grid
 
@@ -117,7 +117,7 @@ block content
                 .control-group
                     label.control-label(data-lang='Common.USER_NAME')
                         span.required *
-                        | 员工照片
+                        | #{lang.Common.StaffPhotos}
                     .controls
                         div
                             input#PHOTO(type='text', data-bind='value:PHOTO', style='display:none;')
@@ -125,11 +125,11 @@ block content
                             #Gallery(style='display:none; overflow-y: auto; width: 320px; height: 150px; display: inline-block; border: 1px solid \#ddd;')
                         span.btn.green.fileinput-button
                             i.icon-plus.icon-white
-                            span 上传
+                            span #{lang.Common.Upload}
                             input#fileupload(type='file', name='files[]')
                         button#galleryshow.btn.blue.fileinput-button(data-bind='click:galleryshow')
                             i.icon-inbox.icon-white
-                            span 图库
+                            span #{lang.Common.Gallery}
                 .control-group
                     table
                         tr
@@ -142,7 +142,7 @@ block content
                             td
                                 label.control-label(data-lang='Common.MEM_NAME')
                                     span.required *
-                                    | 名字
+                                    | #{lang.Common.Name}
                                 .controls
                                     input#MEM_NAME.span6.m-wrap(type='text', name='MEM_NAME', data-bind='value:MEM_NAME')
                 .control-group

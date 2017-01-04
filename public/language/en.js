@@ -159,7 +159,12 @@ module.exports = {
         SelectDate: 'Please Choose The Date',
         Detailed: 'Detail',
         ApplicationNo: 'Program Number',
-        ProcurementStaff: 'Purchase Man'
+        ProcurementStaff: 'Purchase Man',
+        ManagementPersonnel: 'Manage People',
+        PersonnelGroup: 'Personnel Group',
+        PersonnelNumbers: 'Staff No',
+        IsNotEmpty: 'Is Not Empty',
+        Prompt: 'Please select a node'
 
     },
     EmployeePerformance: {

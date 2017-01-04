@@ -1,8 +1,7 @@
-﻿
-var grid;
+﻿var grid;
 var image;
 var validator;
-$(function () {
+$(function() {
 
 
     var fields = {
@@ -24,10 +23,10 @@ $(function () {
     var cols = [];
     cols.push({ field: "MAC_NBR", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "GP_NBR", title: "", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "MAC_NO", title: "设备编号", width: 80, sortable: true, filterable: false });
-    cols.push({ field: "MAC_NAME", title: "设备名称", width: 80, sortable: true, filterable: false });
-    cols.push({ field: "ELECTRICAL_SYSTEM", title: "电气系统", width: 80, sortable: true, filterable: false });
-    cols.push({ field: "CATEGORY", title: "电气系统", width: 80, sortable: true, filterable: false });
+    cols.push({ field: "MAC_NO", title: lang.Order.EquipmentSerialNumber, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "MAC_NAME", title: lang.Order.DeviceName, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "ELECTRICAL_SYSTEM", title: lang.Common.ElectricalSystem, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "CATEGORY", title: lang.Common.ElectricalSystem, width: 80, sortable: true, filterable: false });
     cols.push({ field: "PRICE", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "MANUFACTURE", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "BORN_DATE", title: "", width: 80, format: "{0: yyyy/MM/dd HH:mm:ss}", sortable: true, filterable: false, hidden: true });
@@ -38,10 +37,11 @@ $(function () {
     cols.push({ field: "SERIAL_NO", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({
         command: [
-            { name: "aa", text: "编辑" + '<i class="icon-edit"></i>', className: "btn purple", click: upd_mac },
-            { name: "bb", text: "删除" + '<i class="icon-remove-sign"></i>', className: "btn red ", click: del_mac }
+            { name: "aa", text: lang.Order.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: upd_mac },
+            { name: "bb", text: lang.Order.Delete + '<i class="icon-remove-sign"></i>', className: "btn red ", click: del_mac }
         ],
-        title: "操作", width: 200
+        title: lang.Order.Operation,
+        width: 200
     });
 
     grid = $("#grid").grid({
@@ -52,7 +52,7 @@ $(function () {
         scrollable: true,
         editable: false, //是否可编辑
         autoBind: false,
-        resizeGridWidth: true,//列宽度可调
+        resizeGridWidth: true, //列宽度可调
         isPage: true,
         filter: null,
         //server: true, //服务器端刷新，包括排序，筛选等
@@ -65,7 +65,7 @@ $(function () {
     });
 
 
-    $("#tree_add").click(function () {
+    $("#tree_add").click(function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
         if (selectedNode.length > 0) {
@@ -76,7 +76,7 @@ $(function () {
                 RANK_NUM: 0
             }
 
-            $.post("machine/AddMachineGroup", GroupInfo, function (data) {
+            $.post("machine/AddMachineGroup", GroupInfo, function(data) {
                 if (data.Status == 0) {
                     var obj = treeobj.append({
                         text: GroupInfo.GP_NAME,
@@ -90,18 +90,16 @@ $(function () {
                     //进入编辑
                     treeobj.select(obj);
                     $("#tree_edit").trigger('click');
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
-        }
-        else {
-            BzAlert("请选择节点");
+        } else {
+            BzAlert(lang.Common.PleaseSelectANode);
         }
 
     });
-    $("#tree_edit").click(function () {
+    $("#tree_edit").click(function() {
         var GP_NAME;
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
@@ -111,7 +109,7 @@ $(function () {
                 selectedNode.find('.k-state-selected span').editer({
                     url: "machine/UpdMachineGroup",
                     title: "文本框",
-                    Ok: function (name) {
+                    Ok: function(name) {
                         GP_NAME = name;
                         this.close();
                         var treeobj = $("#orgnizetree").data("kendoTreeView");
@@ -120,20 +118,18 @@ $(function () {
                             GP_NAME: name,
                             RANK_NUM: 0
                         }
-                        $.post("machine/UpdMachineGroup", (GroupInfo), function (data) {
+                        $.post("machine/UpdMachineGroup", (GroupInfo), function(data) {
                             if (data.Status == 0) {
                                 var treeobj = $("#orgnizetree").data("kendoTreeView");
                                 $(treeobj.select()).find('.k-state-selected span').html(GP_NAME);
                                 BzSuccess(data.Message);
-                            }
-                            else {
+                            } else {
                                 BzAlert(data.Message);
                             }
                         });
                     }
                 });
-            }
-            else {
+            } else {
                 obj.show();
             }
         }
@@ -142,17 +138,16 @@ $(function () {
     });
 
 
-    $("#tree_delete").click(function () {
-        BzConfirm("删除", function (e) {
+    $("#tree_delete").click(function() {
+        BzConfirm(lang.Order.Delete, function(e) {
             if (e) {
                 var treeobj = $("#orgnizetree").data("kendoTreeView");
-                $.post("machine/DelMachineGroup", { gourpID: $(treeobj.select()).find('.k-state-selected span').attr("nodeid") }, function (data) {
+                $.post("machine/DelMachineGroup", { gourpID: $(treeobj.select()).find('.k-state-selected span').attr("nodeid") }, function(data) {
                     if (data.Status == 0) {
                         var selectedNode = treeobj.select();
                         treeobj.remove(selectedNode);
                         BzSuccess(data.Message);
-                    }
-                    else {
+                    } else {
                         BzAlert(data.Message);
                     }
                 });
@@ -160,12 +155,12 @@ $(function () {
         });
     });
 
-    $("#add_mac").click(function () {
+    $("#add_mac").click(function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
-        if (selectedNode.length > 0) {//判断是否有选中的节点
-            $.x5window("新增", kendo.template($("#popup-add").html()));
-             addOrEdit();
+        if (selectedNode.length > 0) { //判断是否有选中的节点
+            $.x5window(lang.Order.Add, kendo.template($("#popup-add").html()));
+            addOrEdit();
             // var validator = $("#machineviewmodel").validate({
             //     rules: {
             //         MAC_NO: { required: true },
@@ -216,14 +211,13 @@ $(function () {
             // });
 
 
-        }
-        else {
-            BzAlert("请选择组");
+        } else {
+            BzAlert(lang.Common.PleaseSelectSetOf);
         }
     });
 
-    $("#del_mac").click(function () {
-        BzConfirm("批量删除设备", function (e) {
+    $("#del_mac").click(function() {
+        BzConfirm(lang.Common.BatchRemoveDevices, function(e) {
             if (e) {
                 var dd = grid.data("bz-grid").checkedDataRows();
                 var machineId = "";
@@ -231,12 +225,11 @@ $(function () {
                     machineId += dd[i].MAC_NBR + ',';
                 }
                 machineId = machineId.substring(0, machineId.length - 1);
-                $.post("machine/DelMachine", { macs: machineId }, function (data) {
+                $.post("machine/DelMachine", { macs: machineId }, function(data) {
                     if (data.Status == 0) {
                         refreshGrid();
                         BzSuccess(data.Message);
-                    }
-                    else {
+                    } else {
                         BzAlert(data.Message);
                     }
                 });
@@ -245,12 +238,12 @@ $(function () {
     });
 
 
-    $('#filter').bind('keypress', function (event) {
+    $('#filter').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             getDataByKeyWord();
         }
     });
-    $("#move_mac").click(function () {
+    $("#move_mac").click(function() {
         var obj = $("#move_mac").data("BZ-editer");
         if (obj == undefined) {
             $("#move_mac").editer({
@@ -262,7 +255,7 @@ $(function () {
                     url2: "/machine/GetKeywordGrouplist"
                 },
                 grouptype: 1,
-                Ok: function (data) {
+                Ok: function(data) {
                     var dd = grid.data("bz-grid").checkedDataRows();
                     var machineiIds = "";
                     for (var i = 0; i < dd.length; i++) {
@@ -274,27 +267,25 @@ $(function () {
                         machineiIds: machineiIds
                     };
 
-                    $.post("/machine/MoveMachine", (data), function (data) {
+                    $.post("/machine/MoveMachine", (data), function(data) {
                         if (data.Status == 0) {
                             refreshGrid();
                             BzSuccess(data.Message);
-                        }
-                        else {
+                        } else {
 
-                            BzAlert("对不起，您的输入有误");
+                            BzAlert(lang.Common.Sorry);
                             return (data.Message);
                         }
                     });
                 }
             });
-        }
-        else {
+        } else {
             obj.show();
         }
 
     });
 
-    $("#tree_addRootNode").click(function () {
+    $("#tree_addRootNode").click(function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var GroupInfo = {
             PID: 0,
@@ -302,7 +293,7 @@ $(function () {
             GP_NAME: "新节点",
             RANK_NUM: 0
         }
-        $.post("machine/AddMachineGroup", (GroupInfo), function (data) {
+        $.post("machine/AddMachineGroup", (GroupInfo), function(data) {
             if (data.Status == 0) {
                 var obj = treeobj.append({
                     text: GroupInfo.GP_NAME,
@@ -315,8 +306,7 @@ $(function () {
                 //进入编辑
                 treeobj.select(obj);
                 $("#tree_edit").trigger('click');
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         });
@@ -326,14 +316,14 @@ $(function () {
 
 
     GetGrouplist(0, "machine/GetGrouplist", $("#treeview-template").html(), "icon-group");
-    $("#tree_expand").toggle(function () {
+    $("#tree_expand").toggle(function() {
         $("#orgnizetree").data("kendoTreeView").expand(".k-item");
-    }, function () {
+    }, function() {
         $("#orgnizetree").data("kendoTreeView").collapse(".k-item");
     });
 
     //图库
-    $(document).on('click', '#galleryshow', function () {
+    $(document).on('click', '#galleryshow', function() {
 
         if ($("#Gallery").is(":hidden")) {
             $("#Gallery").show();
@@ -344,33 +334,34 @@ $(function () {
 
 
 });
+
 function photoevnet() {
     $(".galleryli").unbind("click");
     $(".icon-trash").unbind("click");
-    $(".galleryli").click(function (e) {
+    $(".galleryli").click(function(e) {
         $(".galleryli .icon-ok-sign").hide();
         $(this).find(".icon-ok-sign").show();
         $("#PHOTO_img").css("backgroundImage", "url(/images/machine/" + $(this).attr("name") + ")");
         image = "images/machine/" + $(this).attr('name');
     });
-    $(".icon-trash").click(function (e) {
+    $(".icon-trash").click(function(e) {
         var obj = $(this).parent().attr("name");
         var data = {
             fileName: obj.split("/")[1],
             type: "NoDefault"
         }
-        $.post("/member/DeleteFile", JSON.stringify(data), function (data) {
+        $.post("/member/DeleteFile", JSON.stringify(data), function(data) {
             if (data.Status == 0) {
                 $('.galleryli[name="' + obj + '"]').remove();
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         });
         e.stopPropagation();
     });
 }
-function getDataByKeyWord() {//关键字查询
+
+function getDataByKeyWord() { //关键字查询
     var ds = grid.data("bz-grid").ds;
     var data = {
         PageIndex: ds._page,
@@ -378,40 +369,40 @@ function getDataByKeyWord() {//关键字查询
         keyword: $("#filter").val(),
 
     }
-    $.post("machine/GetKeywordMachinelist", (data), function (data) {
+    $.post("machine/GetKeywordMachinelist", (data), function(data) {
         if (data.Status == 0) {
             var dd = [];
             for (var i = 0; i < data.Data.List.length; i++) {
                 data.Data.List[i].BORN_DATE = moment(data.Data.List[i].BORN_DATE).format("YYYY-MM-DD");
             }
             grid.data("bz-grid").ds.data(data.Data.List);
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
 }
+
 function del_mac(e) {
 
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-    BzConfirm("删除设备", function (e) {
+    BzConfirm(lang.Common.RemoveEquipment, function(e) {
         if (e) {
 
 
-            $.post("machine/DelMachine", { macs: dataItem.MAC_NBR }, function (data) {
+            $.post("machine/DelMachine", { macs: dataItem.MAC_NBR }, function(data) {
                 if (data.Status == 0) {
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
         }
     });
 }
+
 function upd_mac(e) {
-    $.x5window("编辑", kendo.template($("#popup-add").html()));
+    $.x5window(lang.Order.Edit, kendo.template($("#popup-add").html()));
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
     addOrEdit(dataItem);
     //     $("#RANK_NUM").kendoNumericTextBox({ format: "c", min: 0 });
@@ -482,24 +473,24 @@ function upd_mac(e) {
 
 
 }
+
 function refreshGrid() {
     if ($("#filter").val() == "") {
-        grid.grid("refresh", function () {
+        grid.grid("refresh", function() {
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var selectedNode = treeobj.select();
             return [
                 { field: "keyword", Operator: "eq", value: parseInt(selectedNode.find('.k-state-selected span').attr("nodeid")) }
             ];
         });
-    }
-    else {
+    } else {
         getDataByKeyWord();
     }
 
 }
 
 function addOrEdit(dataItem) {
-   App.initUniform();
+    App.initUniform();
     //验证
     validator = $("#machineviewmodel").validate({
         rules: {
@@ -509,8 +500,8 @@ function addOrEdit(dataItem) {
 
         },
         messages: {
-            MAC_NO: { required: '不为空' },
-            MAC_NAME: { required: '不为空' }
+            MAC_NO: { required: lang.Common.IsNotEmpty },
+            MAC_NAME: { required: lang.Common.IsNotEmpty }
         }
     });
 
@@ -524,17 +515,17 @@ function addOrEdit(dataItem) {
         // $("#BORN_DATE").kendoDatePicker({ format: "yyyy/MM/dd" });
         $("#PHOTO").val();
         $("#MAC_NBR").val(dataItem.MAC_NBR),
-        $("#MAC_NO").val(dataItem.MAC_NO),
-        $("#MAC_NAME").val(dataItem.MAC_NAME),
-        //$("#BORN_DATE").data("kendoDatePicker").value(dataItem.BORN_DATE),
-        $("#BUY_PERSON").val(dataItem.BUY_PERSON),
-        $("#CATEGORY").val(dataItem.CATEGORY),
-        $("#ELECTRICAL_SYSTEM").val(dataItem.ELECTRICAL_SYSTEM),
-        $("#MANUFACTURE").val(dataItem.MANUFACTURE),
-        $("#MEMO").val(dataItem.MEMO),
-        // $("#PRICE").data("kendoNumericTextBox").value(dataItem.PRICE),
-        // $("#RANK_NUM").data("kendoNumericTextBox").value(dataItem.RANK_NUM),
-        $("#SERIAL_NO").val(dataItem.SERIAL_NO)
+            $("#MAC_NO").val(dataItem.MAC_NO),
+            $("#MAC_NAME").val(dataItem.MAC_NAME),
+            //$("#BORN_DATE").data("kendoDatePicker").value(dataItem.BORN_DATE),
+            $("#BUY_PERSON").val(dataItem.BUY_PERSON),
+            $("#CATEGORY").val(dataItem.CATEGORY),
+            $("#ELECTRICAL_SYSTEM").val(dataItem.ELECTRICAL_SYSTEM),
+            $("#MANUFACTURE").val(dataItem.MANUFACTURE),
+            $("#MEMO").val(dataItem.MEMO),
+            // $("#PRICE").data("kendoNumericTextBox").value(dataItem.PRICE),
+            // $("#RANK_NUM").data("kendoNumericTextBox").value(dataItem.RANK_NUM),
+            $("#SERIAL_NO").val(dataItem.SERIAL_NO)
 
     }
     $("#RANK_NUM").kendoNumericTextBox({ format: "n0", min: 0, value: dataItem == undefined ? 0 : dataItem.RANK_NUM });
@@ -544,7 +535,7 @@ function addOrEdit(dataItem) {
         value: dataItem == undefined ? new Date() : dataItem.BORN_DATE
     });
     //保存
-    $("#Win_Submit").click(function () {
+    $("#Win_Submit").click(function() {
         if (validator.form()) {
             var para = {
                 GP_NBR: parseInt(selectedNode.find('.k-state-selected span').attr("nodeid")),
@@ -562,22 +553,21 @@ function addOrEdit(dataItem) {
                 RANK_NUM: $("#RANK_NUM").data("kendoNumericTextBox").value(),
                 SERIAL_NO: $("#SERIAL_NO").val()
             };
-            $.post(url, para, function (data) {
+            $.post(url, para, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
         }
     });
-   
+
 
     //获取图库列表
-    $.post("/member/ShowAllPic", function (data) {
+    $.post("/member/ShowAllPic", function(data) {
         if (data.Status == 0) {
             var html = '<ul class="galleryul" style="margin-left: 0px; margin-bottom: 0px;">';
             for (var i = 0; i < data.Data.length; i++) {
@@ -588,15 +578,13 @@ function addOrEdit(dataItem) {
             //注册图片事件
             photoevnet();
             //新增默认选择no.jpg
-            if (dataItem == undefined) {//新增
+            if (dataItem == undefined) { //新增
                 $('.galleryli[name="Default/no.jpg"]').find(".icon-ok-sign").show();
-            }
-            else {
+            } else {
                 var path = dataItem.PHOTO.split("//");
                 $('.galleryli[name="' + path[2] + '/' + path[3] + '"]').find(".icon-ok-sign").show();
             }
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -604,20 +592,19 @@ function addOrEdit(dataItem) {
     if (dataItem == undefined) {
         $("#PHOTO_img").css("backgroundImage", "url(/images/machine/Default/no.jpg)");
         image = "images/machine/Default/no.jpg";
-    }
-    else {
+    } else {
         $("#PHOTO_img").css("backgroundImage", "url(" + dataItem.PHOTO.replace(/\/\//g, "/") + ")");
         image = dataItem.PHOTO.replace(/\/\//g, "/");
     }
 
-    $("#fileupload").fileupload({//文件上传
+    $("#fileupload").fileupload({ //文件上传
         dataType: 'json',
         autoUpload: true,
         url: "/machine/upload/img",
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         maxNumberOfFiles: 1,
         maxFileSize: 1000000,
-        done: function (e, data) {
+        done: function(e, data) {
             if (data.result.Status == 0) {
                 $("#PHOTO_img").css("backgroundImage", "url(./images/people/NoDefault/" + data.result.Data + ")");
                 //addviewModel.PHOTO(data.result.Data);
@@ -629,21 +616,12 @@ function addOrEdit(dataItem) {
                 //注册图片事件
                 photoevnet();
                 BzSuccess(data.result.Message);
-            }
-            else {
+            } else {
                 BzAlert(data.result.Message);
             }
         },
-        fail: function (e, data) {
+        fail: function(e, data) {
             var cc = 1;
         }
     });
 }
-
-   
-
-
-
-
-
-

@@ -167,11 +167,12 @@ module.exports = {
 
         Detailed: '详细',
         ApplicationNo: '程序号',
-        ProcurementStaff: '采购人员'
-
-
-
-
+        ProcurementStaff: '采购人员',
+        ManagementPersonnel: '管理人员',
+        PersonnelGroup: '人员组',
+        PersonnelNumbers: '人员编号',
+        IsNotEmpty: '不为空',
+        Prompt: '请选择一个节点'
     },
     EmployeePerformance: {
         RunningStateAnalysis: '运行状态分析',

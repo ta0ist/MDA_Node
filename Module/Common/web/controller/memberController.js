@@ -4,7 +4,7 @@ var validator;
 var addviewModel;
 var MyRow = undefined;
 var image = "";
-$(function () {
+$(function() {
 
     var fields = {
         MEM_NBR: { type: "string" },
@@ -23,17 +23,17 @@ $(function () {
     var cols = [];
     cols.push({ field: "MEM_NBR", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "GP_NBR", title: "", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "MEMBER_NO", title: '人员编号', width: 80, sortable: true, filterable: false });
-    cols.push({ field: "MEM_NAME", title: '名字', width: 80, sortable: true, filterable: false });
-    cols.push({ field: "SEX", title: '性别', width: 80, sortable: true, filterable: false, template: null });
-    cols.push({ field: "TEL", title: '联系方式', width: 80, sortable: true, filterable: false });
-    cols.push({ field: "ADDRESS", title: '地址', width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "EMAIL", title: '邮箱', width: 80, sortable: true, filterable: false, hidden: true });
+    cols.push({ field: "MEMBER_NO", title: lang.Common.PersonnelNumbers, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "MEM_NAME", title: lang.Common.Name, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "SEX", title: lang.Common.Gender, width: 80, sortable: true, filterable: false, template: null });
+    cols.push({ field: "TEL", title: lang.Common.Contact, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "ADDRESS", title: lang.Common.Location, width: 80, sortable: true, filterable: false, hidden: true });
+    cols.push({ field: "EMAIL", title: lang.Common.Email, width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "IDENTITY_NO", title: '名字', width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "PHOTO", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({
         field: "BIRTHDAY",
-        title: '生日',
+        title: lang.Common.Birthday,
         width: 80,
         format: "{0: yyyy/MM/dd}",
         sortable: true,
@@ -42,10 +42,11 @@ $(function () {
     cols.push({ field: "RANK_NUM", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({
         command: [
-            { name: "aa", text: "编辑" + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
-            { name: "bb", text: "删除" + '<i class="icon-remove-sign"></i>', className: "btn red ", click: f_delete }
+            { name: "aa", text: lang.Order.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
+            { name: "bb", text: lang.Order.Delete + '<i class="icon-remove-sign"></i>', className: "btn red ", click: f_delete }
         ],
-        title: '操作', width: 200
+        title: lang.Order.Operation,
+        width: 200
     });
 
     //Grid
@@ -57,7 +58,7 @@ $(function () {
         scrollable: true,
         editable: false, //是否可编辑
         autoBind: false,
-        resizeGridWidth: true,//列宽度可调
+        resizeGridWidth: true, //列宽度可调
         isPage: true,
         detailTemplate: $("#detail-template").html(),
         //server: true, //服务器端刷新，包括排序，筛选等
@@ -73,7 +74,7 @@ $(function () {
     GetGrouplist(0, "/member/GetGrouplist", $("#treeview-template").html(), "icon-group");
     //对树的增删改查
     //add
-    $("#tree_add").click(function () {
+    $("#tree_add").click(function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
         if (selectedNode.length > 0) {
@@ -83,7 +84,7 @@ $(function () {
                 GP_NAME: "New Node",
                 RANK_NUM: 0
             }
-            $.post("/member/AddGroup", GroupInfo, function (data) {//新增直接传
+            $.post("/member/AddGroup", GroupInfo, function(data) { //新增直接传
                 if (data.Data != 3) {
                     var obj = treeobj.append({
                         text: GroupInfo.GP_NAME,
@@ -97,18 +98,16 @@ $(function () {
                     //进入编辑
                     treeobj.select(obj);
                     $("#tree_edit").trigger('click');
-                }
-                else {
-                    BzAlert("不能添加重复数据");
+                } else {
+                    BzAlert(lang.Common.CanNotAddDuplicateData);
                 }
             });
-        }
-        else {
-            BzAlert("请选择节点！");
+        } else {
+            BzAlert(lang.Common.PleaseSelectANode);
         }
     });
     //update
-    $("#tree_edit").click(function () {
+    $("#tree_edit").click(function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
         if (selectedNode.length > 0) {
@@ -116,8 +115,8 @@ $(function () {
             if (obj == undefined) {
                 selectedNode.find('.k-state-selected span').editer({
                     url: "/member/UpdGroup",
-                    title: "请输入人员组名",
-                    Ok: function (name) {
+                    title: lang.Common.PleaseEnterTheGroupName,
+                    Ok: function(name) {
                         this.close();
                         var treeobj = $("#orgnizetree").data("kendoTreeView");
                         var GroupInfo = {
@@ -125,37 +124,34 @@ $(function () {
                             GP_NAME: name,
                             RANK_NUM: 0
                         }
-                        $.post("/member/UpdGroup", (GroupInfo), function (data) {
+                        $.post("/member/UpdGroup", (GroupInfo), function(data) {
                             if (data.Status == 0) {
                                 var treeobj = $("#orgnizetree").data("kendoTreeView");
                                 // $(treeobj.select()).find('.k-state-selected span').html(JSON.parse(this.data).GP_NAME);
                                 $(treeobj.select()).find('.k-state-selected span').html(name);
                                 BzSuccess(data.Message);
-                            }
-                            else {
+                            } else {
                                 BzAlert(data.Message);
                             }
                         });
                     }
                 });
-            }
-            else {
+            } else {
                 obj.show();
             }
         }
     });
     //delete
-    $("#tree_delete").click(function () {
-        BzConfirm('请确认是否要删除数据', function (e) {
+    $("#tree_delete").click(function() {
+        BzConfirm(lang.Order.DeleteData, function(e) {
             if (e) {
                 var treeobj = $("#orgnizetree").data("kendoTreeView");
-                $.post("/member/DelGroup", { groupId: $(treeobj.select()).find('.k-state-selected span').attr("nodeid") }, function (data) {
+                $.post("/member/DelGroup", { groupId: $(treeobj.select()).find('.k-state-selected span').attr("nodeid") }, function(data) {
                     if (data.Status == 0) {
                         var selectedNode = treeobj.select();
                         treeobj.remove(selectedNode);
                         BzSuccess(data.Message);
-                    }
-                    else {
+                    } else {
                         BzAlert(data.Message);
                     }
                 });
@@ -164,34 +160,32 @@ $(function () {
     });
     /******************************************grid 增删改查移动*************************************/
     //弹出新增或者更新窗口
-    $("#grid_add").click(function () {
+    $("#grid_add").click(function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
-        if (selectedNode.length > 0) {//判断是否有选中的节点
-            $.x5window("新增", $("#popup-add").html());
+        if (selectedNode.length > 0) { //判断是否有选中的节点
+            $.x5window(lang.Order.Add, $("#popup-add").html());
             addOrEdit();
-        }
-        else {
-            BzAlert("请选择一个节点");
+        } else {
+            BzAlert(lang.Common.请选择一个节点);
         }
     });
 
     //删除人员
-    $("#grid_delete").click(function () {
+    $("#grid_delete").click(function() {
 
-        BzConfirm('请确认是否要删除数据', function (e) {
+        BzConfirm(lang.Order.DeleteData, function(e) {
             if (e) {
                 var dd = grid.data("bz-grid").checkedDataRows();
                 var memberId = [];
                 for (var i = 0; i < dd.length; i++) {
                     memberId.push(dd[i].MEM_NBR);
                 }
-                $.post("/member/DelMember", JSON.stringify({ memberId: memberId }), function (data) {
+                $.post("/member/DelMember", JSON.stringify({ memberId: memberId }), function(data) {
                     if (data.Status == 0) {
                         refreshGrid();
                         BzSuccess(data.Message);
-                    }
-                    else {
+                    } else {
                         BzAlert(data.Message);
                     }
                 });
@@ -199,7 +193,7 @@ $(function () {
         });
     });
     //移动组
-    $("#grid_move").click(function () {
+    $("#grid_move").click(function() {
         var obj = $("#grid_move").data("BZ-editer");
         if (obj == undefined) {
             $("#grid_move").editer({
@@ -211,7 +205,7 @@ $(function () {
                     url2: "/member/GetKeywordGrouplist"
                 },
                 grouptype: 3,
-                Ok: function (data) {
+                Ok: function(data) {
                     var dd = grid.data("bz-grid").checkedDataRows();
                     var memberIds = [];
                     for (var i = 0; i < dd.length; i++) {
@@ -222,39 +216,37 @@ $(function () {
                         groupId: data.rData
                     };
 
-                    $.post("/member/MoveMemberGroup", data, function (data) {
+                    $.post("/member/MoveMemberGroup", data, function(data) {
                         if (data.Status == 0) {
                             refreshGrid();
                             BzSuccess(data.Message);
 
-                        }
-                        else {
-                            BzAlert("对不起，您的输入有误");
+                        } else {
+                            BzAlert(lang.Order.Sorry);
                             return (data.Message);
                         }
                     });
                 }
             });
-        }
-        else {
+        } else {
             obj.show();
         }
     });
 
 
-    $("#tree_expand").toggle(function () {
+    $("#tree_expand").toggle(function() {
         $("#orgnizetree").data("kendoTreeView").expand(".k-item");
-    }, function () {
+    }, function() {
         $("#orgnizetree").data("kendoTreeView").collapse(".k-item");
     });
 
-    $('#filter').bind('keypress', function (event) {
+    $('#filter').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             getDataByKeyWord();
         }
     });
     //图库
-    $(document).on('click', '#galleryshow', function () {
+    $(document).on('click', '#galleryshow', function() {
 
         if ($("#Gallery").is(":hidden")) {
             $("#Gallery").show();
@@ -269,67 +261,65 @@ $(function () {
 function photoevnet() {
     $(".galleryli").unbind("click");
     $(".icon-trash").unbind("click");
-    $(".galleryli").click(function (e) {
+    $(".galleryli").click(function(e) {
         $(".galleryli .icon-ok-sign").hide();
         $(this).find(".icon-ok-sign").show();
         $("#PHOTO_img").css("backgroundImage", "url(/images/people/" + $(this).attr("name") + ")");
         image = "images/people/" + $(this).attr('name');
     });
-    $(".icon-trash").click(function (e) {
+    $(".icon-trash").click(function(e) {
         var obj = $(this).parent().attr("name");
         var data = {
             fileName: obj.split("/")[1],
             type: "NoDefault"
         }
-        $.post("/member/DeleteFile", JSON.stringify(data), function (data) {
+        $.post("/member/DeleteFile", JSON.stringify(data), function(data) {
             if (data.Status == 0) {
                 $('.galleryli[name="' + obj + '"]').remove();
-            }
-            else {
+            } else {
                 BzAlert(data.Message);
             }
         });
         e.stopPropagation();
     });
 }
+
 function refreshGrid() {
     if ($("#filter").val() == "") {
-        grid.grid("refresh", function () {
+        grid.grid("refresh", function() {
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var selectedNode = treeobj.select();
             return [
                 { field: "keyword", Operator: "eq", value: parseInt(selectedNode.find('.k-state-selected span').attr("nodeid")) }
             ];
         });
-    }
-    else {
+    } else {
         getDataByKeyWord();
     }
 }
 
-function getDataByKeyWord() {//关键字查询
+function getDataByKeyWord() { //关键字查询
     var ds = grid.data("bz-grid").ds;
     var data = {
         PageIndex: ds._page,
         PageSize: ds._pageSize,
         keyword: $("#filter").val()
     }
-    $.post("/member/GetKeywordMemberlist", data, function (data) {
+    $.post("/member/GetKeywordMemberlist", data, function(data) {
         if (data.Status == 0) {
             var dd = [];
             for (var i = 0; i < data.Data.List.length; i++) {
                 data.Data.List[i].BIRTHDAY = moment(data.Data.List[i].BIRTHDAY).format("YYYY-MM-DD");
             }
             grid.data("bz-grid").ds.data(data.Data.List);
-        }
-        else {
+        } else {
             x5alert(data.Message);
         }
     });
 }
 //弹出编辑人员
 function f_edit(e) {
-    $.x5window('编辑', $("#popup-add").html());//kendo.template($("#popup-add").html())
+    $.x5window(lang.Order.Edit, $("#popup-add").html()); //kendo.template($("#popup-add").html())
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
     // MyRow = dataItem;
     // $("#MEM_NBR").val(dataItem.MEM_NBR);
@@ -340,20 +330,19 @@ function f_edit(e) {
     // $("#EMAIL").val(dataItem.EMAIL);
     // $("#IDENTITY_NO").val(dataItem.IDENTITY_NO);
     // $("#ADDRESS").val(dataItem.ADDRESS);
-    addOrEdit(dataItem);//编辑
+    addOrEdit(dataItem); //编辑
 
 }
 //删除人员
 function f_delete(e) {
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-    BzConfirm('删除', function (e) {
+    BzConfirm(lang.Order.Delete, function(e) {
         if (e) {
-            $.post("/member/DelMember", JSON.stringify({ memberId: [dataItem.MEM_NBR] }), function (data) {
+            $.post("/member/DelMember", JSON.stringify({ memberId: [dataItem.MEM_NBR] }), function(data) {
                 if (data.Status == 0) {
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
@@ -375,8 +364,8 @@ function addOrEdit(dataItem) {
 
         },
         messages: {
-            MEMBER_NO: { required: '不为空' },
-            MEM_NAME: { required: '不为空' }
+            MEMBER_NO: { required: lang.Common.IsNotEmpty },
+            MEM_NAME: { required: lang.Common.IsNotEmpty }
         }
     });
 
@@ -395,7 +384,7 @@ function addOrEdit(dataItem) {
         $("#ADDRESS").val(dataItem.ADDRESS);
     }
     //保存
-    $(document).on('click', '#btn_save', function () {
+    $(document).on('click', '#btn_save', function() {
         if (validator.form()) {
             var memberinfo = {
                 GP_NBR: parseInt(selectedNode.find('.k-state-selected span').attr("nodeid")),
@@ -412,13 +401,12 @@ function addOrEdit(dataItem) {
                 //PRICE: $("#PRICE").data("kendoNumericTextBox").value(),
                 RANK_NUM: $("#RANK_NUM").val()
             }
-            $.post(url, memberinfo, function (data) {
+            $.post(url, memberinfo, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
@@ -431,7 +419,7 @@ function addOrEdit(dataItem) {
     });
 
     //获取图库列表
-    $.post("/member/ShowAllPic", function (data) {
+    $.post("/member/ShowAllPic", function(data) {
         if (data.Status == 0) {
             var html = '<ul class="galleryul" style="margin-left: 0px; margin-bottom: 0px;">';
             for (var i = 0; i < data.Data.length; i++) {
@@ -442,15 +430,13 @@ function addOrEdit(dataItem) {
             //注册图片事件
             photoevnet();
             //新增默认选择no.jpg
-            if (dataItem == undefined) {//新增
+            if (dataItem == undefined) { //新增
                 $('.galleryli[name="Default/no.jpg"]').find(".icon-ok-sign").show();
-            }
-            else {
+            } else {
                 var path = dataItem.PHOTO.split("//");
                 $('.galleryli[name="' + path[2] + '/' + path[3] + '"]').find(".icon-ok-sign").show();
             }
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -458,20 +444,19 @@ function addOrEdit(dataItem) {
     if (dataItem == undefined) {
         $("#PHOTO_img").css("backgroundImage", "url(/images/people/Default/no.jpg)");
         image = "images/people/Default/no.jpg";
-    }
-    else {
+    } else {
         $("#PHOTO_img").css("backgroundImage", "url(" + dataItem.PHOTO.replace(/\/\//g, "/") + ")");
         image = dataItem.PHOTO.replace(/\/\//g, "/");
     }
 
-    $("#fileupload").fileupload({//文件上传
+    $("#fileupload").fileupload({ //文件上传
         dataType: 'json',
         autoUpload: true,
         url: "/member/upload/img",
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         maxNumberOfFiles: 1,
         maxFileSize: 1000000,
-        done: function (e, data) {
+        done: function(e, data) {
             if (data.result.Status == 0) {
                 $("#PHOTO_img").css("backgroundImage", "url(./images/people/NoDefault/" + data.result.Data + ")");
                 //addviewModel.PHOTO(data.result.Data);
@@ -483,12 +468,11 @@ function addOrEdit(dataItem) {
                 //注册图片事件
                 photoevnet();
                 BzSuccess(data.result.Message);
-            }
-            else {
+            } else {
                 BzAlert(data.result.Message);
             }
         },
-        fail: function (e, data) {
+        fail: function(e, data) {
             var cc = 1;
         }
     });
