@@ -2,12 +2,16 @@
 var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
-exports.machineload = function (req, res) {
+exports.machineload = function(req, res) {
     if (!req.session.menu) {
         res.redirect("/login");
 
     } else {
-        res.render(path.resolve(__dirname, '../../web/view/machine/index'), { menulist: req.session.menu, user: req.session.user });
+        res.render(path.resolve(__dirname, '../../web/view/machine/index'), {
+            menulist: req.session.menu,
+            user: req.session.user,
+            lang: post_common.getLanguage()
+        });
     }
 }
 
@@ -34,7 +38,7 @@ exports.machineload = function (req, res) {
 // }
 
 
-exports.fun = function (req, res) {
+exports.fun = function(req, res) {
     var args = [];
     args.push(res);
     args.push(method = post_common.getpath(__filename, req.params.method));

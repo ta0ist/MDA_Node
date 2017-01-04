@@ -1,5 +1,5 @@
 ﻿var grid;
-app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('accountctrl', ['$scope', '$http', function($scope, $http) {
     $scope.user = {
         USER_NBR: 0,
         USER_NAME: "",
@@ -23,19 +23,20 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
     };
     var cols = [];
     cols.push({ field: "USER_NBR", title: "", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "USER_NAME", title: "用户名称", width: 80, sortable: true, filterable: false });
+    cols.push({ field: "USER_NAME", title: lang.Common.UserName, width: 80, sortable: true, filterable: false });
     cols.push({ field: "RESOURCE_TYPE", title: "", width: 80, sortable: true, filterable: false, hidden: true });
     cols.push({ field: "SECURITY_LEVEL", title: "", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "STATE", title: "启用状态", width: 80, sortable: true, filterable: false, template: kendo.template($("#template_STATE").html()) });
+    cols.push({ field: "STATE", title: lang.Common.Enabled, width: 80, sortable: true, filterable: false, template: kendo.template($("#template_STATE").html()) });
     cols.push({ field: "REF_RESOURCE", title: "关联名称", width: 80, sortable: true, filterable: false, hidden: true });
-    cols.push({ field: "REF_NAME", title: "关联名称", width: 80, sortable: true, filterable: false });
-    cols.push({ field: "EXPIRED", title: "过期日期", width: 80, format: "{0: yyyy/MM/dd}", sortable: true, filterable: false });
+    cols.push({ field: "REF_NAME", title: lang.Common.AssociatedWithTheName, width: 80, sortable: true, filterable: false });
+    cols.push({ field: "EXPIRED", title: lang.Common.ExpirationDate, width: 80, format: "{0: yyyy/MM/dd}", sortable: true, filterable: false });
     cols.push({
         command: [
-            { name: "aa", text: "编辑" + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
-            { name: "bb", text: "重置" + '<i class="icon-key"></i>', className: "btn red ", click: f_reset }
+            { name: "aa", text: lang.Common.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: f_edit },
+            { name: "bb", text: lang.Common.Reset + '<i class="icon-key"></i>', className: "btn red ", click: f_reset }
         ],
-        title: "操作", width: 200
+        title: lang.Order.Operation,
+        width: 200
     });
     grid = $("#grid").grid({
         checkBoxColumn: true,
@@ -45,7 +46,7 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
         scrollable: true,
         editable: false, //是否可编辑
         autoBind: false,
-        resizeGridWidth: true,//列宽度可调
+        resizeGridWidth: true, //列宽度可调
         isPage: true,
         filter: null,
         //server: true, //服务器端刷新，包括排序，筛选等
@@ -56,11 +57,11 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
             cols: cols
         }
     });
-    $(".nav-tabs li").mouseup(function () {
+    $(".nav-tabs li").mouseup(function() {
         refreshGrid(parseInt($(this).attr("value")));
     });
     //添加用户
-    $scope.adduser = function () {
+    $scope.adduser = function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         //验证
         validator = $("#signupForm").validate({
@@ -68,23 +69,22 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
                 USER_NAME: { required: true }
             },
             messages: {
-                USER_NAME: { required: "不可为空！" }
+                USER_NAME: { required: lang.Common.NotEmpty }
             }
         });
         var selectedNode = treeobj.select();
-        if (selectedNode.length > 0) {//判断是否有选中的节点
-            $.x5window("添加", kendo.template($("#popup-add").html()), function () {
+        if (selectedNode.length > 0) { //判断是否有选中的节点
+            $.x5window(lang.Common.Added, kendo.template($("#popup-add").html()), function() {
                 $("#Combox_orgnizetree_context_COMBOX").data("kendoTreeView").destroy();
                 $("#Combox_orgnizetree_COMBOX").remove();
             });
             var url, tdata, url2;
-            if (parseInt($('.nav-tabs li[class="active"]').attr("value")) == 1) {//员工
+            if (parseInt($('.nav-tabs li[class="active"]').attr("value")) == 1) { //员工
                 url = "/account/GetAllMemberAndMemberGroup";
                 tdata = { groupID: 0 };
                 url2 = "/account/GetKeywordMemberlist";
                 type = 4;
-            }
-            else {
+            } else {
                 url = "/account/GetAllMachineAndMachineGroup";
                 tdata = { groupID: 0 };
                 url2 = "/account/GetKeywordMachinelist";
@@ -99,12 +99,13 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
                 width: 176,
                 diffwidth: 36,
                 validate: true,
-                validateMessage: "不可为空!",
+                validateMessage: lang.Common.NotEmpty,
                 url2: url2
             });
             $("#EXPIRED").kendoDatePicker({ format: "yyyy/MM/dd" });
-            var USER_NAME = $("#USER_NAME").val(), PASSWORD = $("#PASSWORD").val();
-            $("#Win_Submit").bind("click", function (e) {
+            var USER_NAME = $("#USER_NAME").val(),
+                PASSWORD = $("#PASSWORD").val();
+            $("#Win_Submit").bind("click", function(e) {
                 if (validator.form()) {
                     var data = {
                         USER_NAME: USER_NAME,
@@ -114,19 +115,17 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
                         GP_NBR: parseInt($(selectedNode).find('.k-state-selected span').attr("nodeid")),
                         EXPIRED: $("#EXPIRED").val()
                     }
-                    $.post("/account/AddUser", data, function (data) {
+                    $.post("/account/AddUser", data, function(data) {
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
                             BzSuccess(data.Message);
-                        }
-                        else {
+                        } else {
                             BzAlert(data.Message);
                         }
                     });
-                }
-                else {
-                    BzAlert("用户名密码不能为空！");
+                } else {
+                    BzAlert(lang.Common.UserNamePasswordCannotBeEmpty);
                 }
             })
         }
@@ -134,43 +133,40 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
     }
 
     //启/禁用户
-    $scope.lockuser = function () {
+    $scope.lockuser = function() {
         var dd = grid.data("bz-grid").checkedDataRows();
         var UserIDs = [];
         for (var i = 0; i < dd.length; i++) {
             UserIDs.push(dd[i].USER_NBR);
         }
         if (UserIDs.length > 0) {
-            $.post("/account/Switch", JSON.stringify({ UserIDs: UserIDs }), function (data) {
+            $.post("/account/Switch", JSON.stringify({ UserIDs: UserIDs }), function(data) {
                 if (data.Status == 0) {
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
-        }
-        else {
-            BzAlert("操作失败！");
+        } else {
+            BzAlert(lang.Common.OperationFailure);
         }
     }
 
     //删除用户
-    $scope.deleteuser = function () {
-        BzConfirm("删除用户", function (e) {
+    $scope.deleteuser = function() {
+        BzConfirm(lang.Common.DeleteUser, function(e) {
             if (e) {
                 var dd = grid.data("bz-grid").checkedDataRows();
                 var UserIDs = [];
                 for (var i = 0; i < dd.length; i++) {
                     UserIDs.push(dd[i].USER_NBR);
                 }
-                $.post("/account/DeleteUser", JSON.stringify({ UserIDs: UserIDs }), function (data) {
+                $.post("/account/DeleteUser", JSON.stringify({ UserIDs: UserIDs }), function(data) {
                     if (data.Status == 0) {
                         refreshGrid();
                         BzSuccess(data.Message);
-                    }
-                    else {
+                    } else {
                         BzAlert(data.Message);
                     }
                 });
@@ -183,14 +179,14 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
     GetGrouplist(0, "account/FindSubGroupByParentIdRecycle", $("#treeview-template").html(), "icon-group");
 
     //变化树的图标
-    $("#tree_expand").toggle(function () {
+    $("#tree_expand").toggle(function() {
         $("#orgnizetree").data("kendoTreeView").expand(".k-item");
-    }, function () {
+    }, function() {
         $("#orgnizetree").data("kendoTreeView").collapse(".k-item");
     });
 
     //添加树
-    $scope.tree_add = function () {
+    $scope.tree_add = function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
         if (selectedNode.length > 0) {
@@ -200,7 +196,7 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
                 GP_NAME: "新节点",
                 RANK_NUM: 0
             }
-            $.post("account/AddGroup", GroupInfo, function (data) {
+            $.post("account/AddGroup", GroupInfo, function(data) {
                 if (data.Status == 0) {
                     var obj = treeobj.append({
                         text: GroupInfo.GP_NAME,
@@ -214,19 +210,17 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
                     //进入编辑
                     treeobj.select(obj);
                     $("#tree_edit").trigger('click');
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
-        }
-        else {
-            BzAlert("请选择节点");
+        } else {
+            BzAlert(lang.Common.PleaseSelectANode);
         }
     }
 
     //编辑树
-    $scope.tree_edit = function () {
+    $scope.tree_edit = function() {
         var GP_NAME;
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         var selectedNode = treeobj.select();
@@ -236,7 +230,7 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
                 selectedNode.find('.k-state-selected span').editer({
                     url: "account/ModifyGroup",
                     title: "文本框",
-                    Ok: function (name) {
+                    Ok: function(name) {
                         GP_NAME = name;
                         this.close();
                         var treeobj = $("#orgnizetree").data("kendoTreeView");
@@ -245,20 +239,18 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
                             GP_NAME: name,
                             RANK_NUM: 0
                         }
-                        $.post("account/ModifyGroup", (GroupInfo), function (data) {
+                        $.post("account/ModifyGroup", (GroupInfo), function(data) {
                             if (data.Status == 0) {
                                 var treeobj = $("#orgnizetree").data("kendoTreeView");
                                 $(treeobj.select()).find('.k-state-selected span').html(GP_NAME);
                                 BzSuccess(data.Message);
-                            }
-                            else {
+                            } else {
                                 BzAlert(data.Message);
                             }
                         });
                     }
                 });
-            }
-            else {
+            } else {
                 obj.show();
             }
         }
@@ -266,17 +258,16 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
     }
 
     //删除树
-    $scope.tree_delete = function () {
-        BzConfirm("删除", function (e) {
+    $scope.tree_delete = function() {
+        BzConfirm(lang.Order.Delete, function(e) {
             if (e) {
                 var treeobj = $("#orgnizetree").data("kendoTreeView");
-                $.post("account/DelGroupWithAccountUsers", { groupid: $(treeobj.select()).find('.k-state-selected span').attr("nodeid") }, function (data) {
+                $.post("account/DelGroupWithAccountUsers", { groupid: $(treeobj.select()).find('.k-state-selected span').attr("nodeid") }, function(data) {
                     if (data.Status == 0) {
                         var selectedNode = treeobj.select();
                         treeobj.remove(selectedNode);
                         BzSuccess(data.Message);
-                    }
-                    else {
+                    } else {
                         BzAlert(data.Message);
                     }
                 });
@@ -289,7 +280,7 @@ app.controller('accountctrl', ['$scope', '$http', function ($scope, $http) {
 
 //编辑用户
 function f_edit(e) {
-    $.x5window("编辑数据", kendo.template($('#popup-edit').html()), function () {
+    $.x5window(lang.Common.EditData, kendo.template($('#popup-edit').html()), function() {
         $("#Combox_orgnizetree_context_COMBOX").data("kendoTreeView").destroy();
         $("#Combox_orgnizetree_COMBOX").remove();
     });
@@ -298,17 +289,16 @@ function f_edit(e) {
             USER_NAME: { required: true }
         },
         messages: {
-            USER_NAME: { required: "不可为空！" }
+            USER_NAME: { required: lang.Common.NotEmpty }
         }
     });
     var url, tdata, url2;
-    if (parseInt($('.nav-tabs li[class="active"]').attr("value")) == 1) {//员工
+    if (parseInt($('.nav-tabs li[class="active"]').attr("value")) == 1) { //员工
         url = "/account/GetAllMemberAndMemberGroup";
         tdata = { groupID: 0 };
         url2 = "/account/GetKeywordMemberlist";
         type = 4;
-    }
-    else {
+    } else {
         url = "/account/GetAllMachineAndMachineGroup";
         tdata = { groupID: 0 };
         url2 = "/account/GetKeywordMachinelist";
@@ -322,14 +312,14 @@ function f_edit(e) {
         type: type,
         width: 176,
         diffwidth: 36,
-        validateMessage: "不可为空！",
+        validateMessage: lang.Common.NotEmpty,
         url2: url2
     });
 
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
     $("#USER_NAME").val(dataItem.USER_NAME)
     $("#EXPIRED").kendoDatePicker({ format: "yyyy/MM/dd", value: dataItem.EXPIRED });
-    $("#Win_Submit").bind("click", function (e) {
+    $("#Win_Submit").bind("click", function(e) {
         if (validator.form() && $("#COMBOX").data("BZ-comboxTree").validate()) {
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var selectedNode = treeobj.select();
@@ -341,25 +331,23 @@ function f_edit(e) {
                 GP_NBR: parseInt($(selectedNode).find('.k-state-selected span').attr("nodeid")),
                 EXPIRED: $("#EXPIRED").val()
             }
-            $.post("/account/ModifyUser", data, function (data) {
+            $.post("/account/ModifyUser", data, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
-        }
-        else {
+        } else {
 
         }
     })
 }
 
 function f_reset(e) {
-    $.x5window("重置密码", kendo.template($("#popup-passwordreset").html()));
+    $.x5window(lang.Common.ResetPassword, kendo.template($("#popup-passwordreset").html()));
     //验证
     validator = $("#signupForm").validate({
         rules: {
@@ -367,26 +355,26 @@ function f_reset(e) {
             CONFIRM_PASSWORD: { required: true, equalTo: "#PASSWORD" }
         },
         messages: {
-            PASSWORD: { required: "请输入密码" },
+            PASSWORD: { required: lang.Common.PleaseEnterThePassword },
             CONFIRM_PASSWORD: {
-                required: "请再次输入密码", equalTo: "密码不匹配"
+                required: lang.Common.PleaseEnterThePasswordAgain,
+                equalTo: lang.Common.PasswordDoesNotMatch
             }
         }
     });
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-    $("#Win_Submit").bind("click", function (e) {
+    $("#Win_Submit").bind("click", function(e) {
         if (validator.form()) {
             var data = {
                 userId: dataItem.USER_NBR,
                 password: UT.MD5($("#PASSWORD").val()),
             }
-            $.post("/account/ResetPassword", data, function (data) {
+            $.post("/account/ResetPassword", data, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
                     refreshGrid();
                     BzSuccess(data.Message);
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             });
@@ -398,10 +386,10 @@ function f_reset(e) {
 //点击禁用按钮
 function f_Enable(e) {
     var dd = grid.data("bz-grid").selectedDataRows();
-    $.post("/account/Switch", JSON.stringify({ UserIDs: [dd[0].USER_NBR] }), function (data) {
+    $.post("/account/Switch", JSON.stringify({ UserIDs: [dd[0].USER_NBR] }), function(data) {
         if (data.Status == 0) {
-            if ($("#filter").val() == "") {//关键字查询
-                grid.grid("refresh", function () {
+            if ($("#filter").val() == "") { //关键字查询
+                grid.grid("refresh", function() {
                     var treeobj = $("#orgnizetree").data("kendoTreeView");
                     var selectedNode = treeobj.select();
                     return [
@@ -409,13 +397,11 @@ function f_Enable(e) {
                         { field: "userType", Operator: "eq", value: parseInt($('.nav-tabs li[class="active"]').attr("value")) }
                     ];
                 });
-            }
-            else {
+            } else {
                 getDataByKeyWord();
             }
             BzSuccess(data.Message);
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -424,7 +410,7 @@ function f_Enable(e) {
 
 function refreshGrid(type) {
     if ($("#filter").val() == "") {
-        grid.grid("refresh", function () {
+        grid.grid("refresh", function() {
             var treeobj = $("#orgnizetree").data("kendoTreeView");
             var selectedNode = treeobj.select();
             return [

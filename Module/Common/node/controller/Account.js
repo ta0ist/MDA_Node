@@ -10,7 +10,8 @@ exports.accountpage = function(req, res) {
     else {
         res.render(path.resolve(__dirname, '../../web/view/account/index'), {
             menulist: req.session.menu,
-            user: req.session.user
+            user: req.session.user,
+            lang: post_argu.getLanguage()
         });
     }
 }
