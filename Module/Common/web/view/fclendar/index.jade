@@ -7,17 +7,17 @@ block content
     .row-fluid
       .span12
         h3.page-title()
-          | 工厂日历
+          | #{lang.Common.FactoryCalendar}
         ul.breadcrumb
           li
             i.icon-home
-            a(href='/') 主页
+            a(href='/') #{lang.EmployeePerformance.Home}
             i.icon-angle-right
           li
-            a(href='javascript:;', data-lang='System') 系统
+            a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
             i.icon-angle-right
           li
-            a(href='javascript:;', data-lang='AccountManage') 工厂日历
+            a(href='javascript:;', data-lang='AccountManage') #{lang.Common.FactoryCalendar}
      .row-fluid
        .aboluo-w-700
         .aboluo-leftdiv
@@ -26,18 +26,18 @@ block content
           .aboluo-calendar-month
            a.aboluo-month-a-perv(href='javascript:;') < 
            a.aboluo-month-a-next(href='javascript:;') >
-          input.aboluo-toToday(type='button', value='返回今天')
+          input.aboluo-toToday(type='button', value='#{lang.Common.ReturnToday}')
          .aboluo-rilidiv 
           table.aboluo-rilitable(cellspacing='0', cellpadding='0')
            thead.aboluo-rilithead
             tr
-              th 一
-              th 二
-              th 三
-              th 四
-              th 五
-              th(style='color: red;') 六
-              th(style='color: red;') 日
+              th #{lang.Common.One}
+              th #{lang.Common.Two}
+              th #{lang.Common.Three}
+              th #{lang.Common.Four}
+              th #{lang.Common.Five}
+              th(style='color: red;') #{lang.Common.Six}
+              th(style='color: red;') #{lang.Common.Seven}
         .aboluo-rightdiv
           p.aboluo-xssj
           p

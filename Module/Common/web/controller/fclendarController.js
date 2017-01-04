@@ -1,10 +1,10 @@
-$(function () {
-    var jjrmodelidlist = [];  //用于存放从数据库取出的所有节假日的id
+$(function() {
+    var jjrmodelidlist = []; //用于存放从数据库取出的所有节假日的id
     var jjrmodeltimelist = []; //用于存放从数据库取出的所有节假日的time
     var jjrmodelztlist = []; //用于存放从数据库取出的所有节假日的状态
 
-    createSelectYear();  //创建年份下拉,并给对应事件
-    createMonthSelect();  //创建月份下拉，并给对应事件
+    createSelectYear(); //创建年份下拉,并给对应事件
+    createMonthSelect(); //创建月份下拉，并给对应事件
     getjjrszModelByYear(withID("aboluo-yearSelect").value); //从数据库取出已经设置了的节假日的数据，例：休息，上班等
     //根据年，月，用table绘制日历。 年月变动则 重新绘制
     createTabledate(parseInt(withID("aboluo-yearSelect").value), parseInt(withID("aboluo-selectmonth").value));
@@ -12,15 +12,15 @@ $(function () {
     leftrightclick();
     //设置右边显示栏显示内容，显示栏还可以设置节假日的状态等
     setRigth(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());
-    var years = $('#aboluo-yearSelect option:selected').val();//选中的值
-    var months = $('#aboluo-selectmonth option:selected').val();//选中的值
+    var years = $('#aboluo-yearSelect option:selected').val(); //选中的值
+    var months = $('#aboluo-selectmonth option:selected').val(); //选中的值
     getjjrszModelByYear(years);
-   
+
 });
 
 //阻止冒泡
 function stopBubble(e) {
-    if (e && e.stopPropagation) {// 别的浏览器
+    if (e && e.stopPropagation) { // 别的浏览器
         e.stopPropagation();
     } else { //IE
         window.event.cancelBubble = true;
@@ -38,7 +38,7 @@ function createSelectYear() {
             yearSelect.options[i].selected = true;
         }
     }
-    yearSelect.onchange = function (e) {
+    yearSelect.onchange = function(e) {
         var aclick = withClass("aboluo-aclick");
         //重新赋值给变全局变量,所有的带状态的日期;然后下一步将创建table,完成动态样式,
         //这里要重读数据就5个位置,选择年时,上一个月,下一个月,设置节假日button,返回今天button
@@ -72,14 +72,14 @@ function createSelectYear() {
 function getjjrszModelByYear(years) {
     jjrmodelidlist = [];
     jjrmodeltimelist = []; //这里时间的格式为yyyy-MM-dd HH:mm:ss
-    jjrmodelztlist = [];  //1为上班，2为休息
+    jjrmodelztlist = []; //1为上班，2为休息
     var datas = { clendaryear: years };
-    $.post("/fcalendar/GetDateStatus", (datas), function (data) {
+    $.post("/fcalendar/GetDateStatus", (datas), function(data) {
         for (var i = 0; i < data.Data.length; i++) {
             jjrmodeltimelist.push(moment(data.Data[i].NATRUE_DAY).format("YYYY-MM-DD HH:mm:ss"));
             jjrmodelztlist.push(data.Data[i].IS_WORK_DAY);
             jjrmodelidlist.push(data.Data[i].IS_WORK_DAY);
-          
+
         }
         setA();
 
@@ -92,7 +92,7 @@ function createMonthSelect() {
     var selectmonth = newElement('select');
     selectmonth.name = "aboluo-selectmonth";
     selectmonth.id = "aboluo-selectmonth";
-    selectmonth.onchange = function (e) {
+    selectmonth.onchange = function(e) {
         var aclick = withClass("aboluo-aclick");
         createTabledate(withID("aboluo-yearSelect").value, selectmonth.options[selectmonth.selectedIndex].value);
         if (aclick == "") {
@@ -187,7 +187,7 @@ function createTabledate(year, yue) {
     var xhcs = 0;
     if (check(syts / 7)) {
         //是小数
-        xhcs = Math.ceil(syts / 7);//向上取整
+        xhcs = Math.ceil(syts / 7); //向上取整
     } else {
         xhcs = syts / 7;
     }
@@ -222,8 +222,8 @@ function createTabledate(year, yue) {
         }
         rilitable.appendChild(tr1);
     }
-    setHolidayred();//设置星期六星期天的样式
-    setTrHeight();//设置table日期的行高
+    setHolidayred(); //设置星期六星期天的样式
+    setTrHeight(); //设置table日期的行高
     setA(); //设置td中a的事件
 }
 
@@ -231,9 +231,9 @@ function createTabledate(year, yue) {
 
 //给上一个月最后几天点击跳转月份
 function pervA(year, yue, day) {
-    createTabledate(year, yue);  //创建对应的table(日期)
-    setRigth(year, yue, day);    //设置右边明细栏内容
-    updateSelect(year, yue);    //改变年月select值
+    createTabledate(year, yue); //创建对应的table(日期)
+    setRigth(year, yue, day); //设置右边明细栏内容
+    updateSelect(year, yue); //改变年月select值
 }
 
 //给上一个月最后几天点击跳转月份
@@ -289,7 +289,7 @@ function setRigth(year, yue, day) {
     //设置rigthdiv的marginleft;
     var rigthdiv = withClass("aboluo-rightdiv");
     var w = withClass("aboluo-w-700");
-    rigthdiv.style.marginLeft = (w.offsetWidth * 0.7 + 4) + "px";  //设置margin-left
+    rigthdiv.style.marginLeft = (w.offsetWidth * 0.7 + 4) + "px"; //设置margin-left
     //给p中添加span显示值
     var span = newElement('span');
     var date = setdateinfo(year, yue, day);
@@ -302,26 +302,26 @@ function setRigth(year, yue, day) {
     aboluoxssj.appendChild(span1);
     var currday = withClass("aboluo-currday");
     currday.innerHTML = day;
-    currday.style.lineHeight = currday.offsetHeight + "px";    //实际在得到长宽时不能用style.height，得用.offsetHeight,但是设置的时候要用style.height=...
+    currday.style.lineHeight = currday.offsetHeight + "px"; //实际在得到长宽时不能用style.height，得用.offsetHeight,但是设置的时候要用style.height=...
     var szrq = withClass("aboluo-ssjjr");
     szrq.style.marginTop = "20px";
     var span2 = newElement('span');
-    span2.innerHTML = "设置日志状态:";
+    span2.innerHTML = lang.Common.SetsTheLogStatus + ":";
     szrq.appendChild(span2);
     var szrqselect = newElement("select");
     szrqselect.id = "selstatu";
     szrqselect.style.width = (withClass("aboluo-rightdiv").offsetWidth * 0.9) + "px";
-    szrqselect.options.add(new Option("无", "0")); //0代表还原
-    szrqselect.options.add(new Option("上班", "1"));
-    szrqselect.options.add(new Option("休息", "2"));
+    szrqselect.options.add(new Option(lang.Common.Without, "0")); //0代表还原
+    szrqselect.options.add(new Option(lang.Common.GoToWork, "1"));
+    szrqselect.options.add(new Option(lang.Common.Rest, "2"));
     //这里要判断一下如果是星期67就只能设置上班,如果是星期1-5就只能设置休息
     isweekend(year, yue, day);
 
     szrq.appendChild(szrqselect);
     var szrqbutton = newElement('input');
     szrqbutton.type = "button";
-    szrqbutton.className = "btn";  //设置class
-    szrqbutton.value = "确认";
+    szrqbutton.className = "btn"; //设置class
+    szrqbutton.value = lang.EmployeePerformance.OK;
     szrqbutton.setAttribute("onclick", "javascript:aboluoSetrq();");
     szrq.appendChild(szrqbutton);
     setaclass(year, yue, day);
@@ -363,7 +363,7 @@ function setA() {
                     arr[i].style.background = "#f5f5f5";
                     arr[i].setAttribute("ztid", jjrmodelidlist[n]);
                     arr[i].setAttribute("jjrzt", jjrmodelztlist[n]);
-                    span.innerHTML = "班";
+                    span.innerHTML = lang.Common.On;
                     arr[i].appendChild(span);
                 } else if (jjrmodelztlist[n] == 2) { //2休息
                     var span = newElement('span');
@@ -371,7 +371,7 @@ function setA() {
                     arr[i].setAttribute("ztid", jjrmodelidlist[n]);
                     arr[i].setAttribute("jjrzt", jjrmodelztlist[n]);
                     arr[i].style.background = "#fff0f0";
-                    span.innerHTML = "休";
+                    span.innerHTML = lang.Common.Hugh;
                     arr[i].appendChild(span);
                 } else if (jjrmodelztlist[n] == 0) { // 这里为了保证操作过的节假日的唯一性,不给样式只设置a的ztid
                     arr[i].setAttribute("ztid", jjrmodelidlist[n]);
@@ -390,8 +390,7 @@ function setaclass(year, yue, day) {
     var year1 = date.getFullYear();
     var month1 = date.getMonth();
     var day1 = date.getDate();
-    if (year1 == year && yue == month1 + 1 && day1 == day) {
-    } else {
+    if (year1 == year && yue == month1 + 1 && day1 == day) {} else {
         var tbody = withClass("aboluo-rilitbody");
         var arr = tbody.getElementsByTagName("a");
         for (var i = 0; i < arr.length; i++) {
@@ -449,7 +448,7 @@ function isweekend(year, yue, day) {
     var choesday = { clendarday: year + "-" + yue + "-" + day };
     var result;
 
-    $.post("/fcalendar/GetDateStatus_Model", (choesday), function (data) {
+    $.post("/fcalendar/GetDateStatus_Model", (choesday), function(data) {
         if (data.Status == 0) {
             $("#selstatu").val(data.Data.IS_WORK_DAY);
 
@@ -458,20 +457,20 @@ function isweekend(year, yue, day) {
 
         }
     });
-   
+
 
 }
 
 //根据getDay()返回对应的星期字符串
 function getWeek(val) {
     var weekxq = new Array();
-    weekxq[0] = "星期日";
-    weekxq[1] = "星期一";
-    weekxq[2] = "星期二";
-    weekxq[3] = "星期三";
-    weekxq[4] = "星期四";
-    weekxq[5] = "星期五";
-    weekxq[6] = "星期六";
+    weekxq[0] = lang.Common.Sun;
+    weekxq[1] = lang.Common.Mon;
+    weekxq[2] = lang.Common.Tue;
+    weekxq[3] = lang.Common.Wed;
+    weekxq[4] = lang.Common.Thu;
+    weekxq[5] = lang.Common.Fri;
+    weekxq[6] = lang.Common.Sat;
     return weekxq[val];
 }
 
@@ -513,7 +512,7 @@ function getA(year, yue, day) {
 function leftrightclick() {
     var lefta = withClass("aboluo-month-a-perv");
     var righta = withClass("aboluo-month-a-next");
-    righta.onclick = function () {
+    righta.onclick = function() {
         var monthselect = withID("aboluo-selectmonth");
         var monthvalue = parseInt(monthselect.value);
         var yearselect = withID("aboluo-yearSelect");
@@ -552,7 +551,7 @@ function leftrightclick() {
             setRigth(aarr[1] + 1 == 13 ? aarr[0] + 1 : aarr[0], aarr[1] + 1 == 13 ? 1 : aarr[1] + 1, aarr[2]);
         }
     }
-    lefta.onclick = function () {
+    lefta.onclick = function() {
         var monthselect = withID("aboluo-selectmonth");
         var monthvalue = parseInt(monthselect.value);
         var yearselect = withID("aboluo-yearSelect");
@@ -593,7 +592,7 @@ function leftrightclick() {
     }
 
     var today = withClass("aboluo-toToday");
-    today.onclick = function () {
+    today.onclick = function() {
         var monthselect = withID("aboluo-selectmonth");
         var yearselect = withID("aboluo-yearSelect");
         var date = new Date();
@@ -646,29 +645,29 @@ function withClass(id) {
 function aboluoSetrq() {
     //选中的日期
     var curra = getAclickDom();
-    var dates = curra.getAttribute("date");  //得到日期
+    var dates = curra.getAttribute("date"); //得到日期
     var ztid = curra.getAttribute("ztid"); //得到ztid，如果空，就是新增,不为空是修改
-    var jjrzt = curra.getAttribute("jjrzt");  //节假日当前状态
-    var szjjr = withClass("aboluo-ssjjr");    //要设置的当前日期状态
-    var a = $('#selstatu option:selected').val();//选中的值
+    var jjrzt = curra.getAttribute("jjrzt"); //节假日当前状态
+    var szjjr = withClass("aboluo-ssjjr"); //要设置的当前日期状态
+    var a = $('#selstatu option:selected').val(); //选中的值
     $.ajax({
         type: "POST",
         url: '/fcalendar/UpdateStatus',
         data: { clendarday: dates, isworkday: a }, //这里用ajax可以改变状态
         //async: false,
-        success: function (json) {
+        success: function(json) {
             if (json.Status == 0) {
                 var date = getAclickDomDate();
                 var datearr = date.split("-");
                 getjjrszModelByYear(datearr[0]);
-                createTabledate(datearr[0], datearr[1]);  //创建对应的table(日期)
-                setRigth(datearr[0], datearr[1], datearr[2]);    //设置右边明细栏内容
+                createTabledate(datearr[0], datearr[1]); //创建对应的table(日期)
+                setRigth(datearr[0], datearr[1], datearr[2]); //设置右边明细栏内容
             } else {
-                alert("设置失败");
+                alert(lang.Common.SetupFailed);
             }
         },
-        error: function (json) {
-            alert("设置失败");
+        error: function(json) {
+            alert(lang.Common.SetupFailed);
         }
     });
 }
