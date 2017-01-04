@@ -164,7 +164,13 @@ module.exports = {
         PersonnelGroup: 'Personnel Group',
         PersonnelNumbers: 'Staff No',
         IsNotEmpty: 'Is Not Empty',
-        Prompt: 'Please select a node'
+        Prompt: 'Please select a node',
+        Scheduling: 'Schedule The Shift',
+        SelectDeviceContext: 'Please Choose The Equipment Related To',
+        NewShift: 'Add Shift',
+        StartTimeCannotBeEmpty: 'The Start Time Cannot Be Empty',
+        ValidTimeNotGreater: 'Valid time is not greater than 24 hours!',
+        Divisions: 'Divisions do not overlap!'
 
     },
     EmployeePerformance: {

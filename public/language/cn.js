@@ -172,7 +172,13 @@ module.exports = {
         PersonnelGroup: '人员组',
         PersonnelNumbers: '人员编号',
         IsNotEmpty: '不为空',
-        Prompt: '请选择一个节点'
+        Prompt: '请选择一个节点',
+        Scheduling: '排班',
+        SelectDeviceContext: '请选择关联设备',
+        NewShift: '新增班次',
+        StartTimeCannotBeEmpty: '开始时间不能为空',
+        ValidTimeNotGreater: '有效时间不能大于24个小时！',
+        Divisions: '班次不可有重叠！'
     },
     EmployeePerformance: {
         RunningStateAnalysis: '运行状态分析',

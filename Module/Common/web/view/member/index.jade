@@ -7,9 +7,9 @@ append headjavascript
 
     script#template_SEX(type='text/x-kendo-template').
                 | # if ( data.SEX == 1) { #
-                | 男
+                | #{lang.Common.Man}
                 | # } else { #
-                | 女
+                | #{lang.Common.Woman}
                 | # } #
     script#detail-template(type='text/kendo-ui-template')
         div
@@ -17,13 +17,13 @@ append headjavascript
             .employee-details(style='float:left')
                 ul(style='margin: 0px;')
                     li
-                        label 邮箱:
+                        label #{lang.Common.Email}:
                         | #= EMAIL #
                     li
-                        label 身份证:
+                        label #{lang.Common.IdCard}:
                         | #= IDENTITY_NO #
                     li
-                        label 地址:
+                        label #{lang.Common.Location}:
                         | #= ADDRESS #
 
 
@@ -136,7 +136,7 @@ block content
                             td(width='354')
                                 label.control-label(data-lang='Common.MEMBER_NO')
                                     span.required *
-                                    | 人员编号
+                                    | #{lang.Common.PersonnelNumbers}
                                 .controls
                                     input#MEMBER_NO.span6.m-wrap(type='text', name='MEMBER_NO', data-bind='value:MEMBER_NO')
                             td
@@ -149,54 +149,54 @@ block content
                     table
                         tr
                             td
-                                label.control-label(data-lang='Common.RANK_NUM') 排序
+                                label.control-label(data-lang='Common.RANK_NUM') #{lang.Common.Sort}
                                 .controls
                                     input#RANK_NUM.span6.m-wrap.rank-num(type='text', name='RANK_NUM', data-required='1', style='width: 214px; margin-left: 0px;')
                             td
-                                label.control-label(data-lang='Common.TEL') 联系方式
+                                label.control-label(data-lang='Common.TEL') #{lang.Common.Contact}
                                 .controls
                                     input#TEL.span6.m-wrap(type='text', name='TEL', data-bind='value:TEL', data-required='1')
                 .control-group
                     table
                         tr
                             td
-                                label.control-label(data-lang='Common.BIRTHDAY') 出身年月日
+                                label.control-label(data-lang='Common.BIRTHDAY') #{lang.Common.BirthDate}
                                 .controls
                                     input#BIRTHDAY.span6.m-wrap(type='text', name='BIRTHDAY', data-bind='value:BIRTHDAY', data-required='1', style='width: 214px; margin-left: 0px;')
                             td
-                                label.control-label(data-lang='Common.SEX') 性别
+                                label.control-label(data-lang='Common.SEX') #{lang.Common.Gender}
                                 .controls(style='line-height: 32px;')
                                     label.radio(style='margin-top: 0px !important;font-size: 12px;')
                                         input(type='radio', name='SEX', checked='', value='1')
-                                        | 男
+                                        | #{lang.Common.Man}
                                     label.radio(style='margin-top: 0px !important;font-size: 12px;')
                                         input(type='radio', name='SEX', value='2')
-                                        | 女
+                                        | #{lang.Common.Woman}
                 .control-group
                     table
                         tr
                             td
-                                label.control-label(data-lang='Common.BORN_DATE') 邮箱
+                                label.control-label(data-lang='Common.BORN_DATE') #{lang.Common.Email}
                                 .controls
                                     input#EMAIL.span6.m-wrap(name='EMAIL', type='text', data-bind='value:EMAIL')
                             td
-                                label.control-label(data-lang='Common.IDENTITY_NO') 身份证
+                                label.control-label(data-lang='Common.IDENTITY_NO') #{lang.Common.IdCard}
                                 .controls
                                     input#IDENTITY_NO.span6.m-wrap(type='text', name='IDENTITY_NO', data-bind='value:IDENTITY_NO', data-required='1')
                 .control-group
                     table
                         tr
                             td
-                                label.control-label(data-lang='Common.ADDRESS') 地址
+                                label.control-label(data-lang='Common.ADDRESS') #{lang.Common.Location}
                                 .controls
                                     input#ADDRESS.span6.m-wrap(type='text', name='ADDRESS', data-bind='value:ADDRESS', data-required='1', style='width: 555px;')
                             td
                 .form-actions
                     button#btn_save.btn.green(data-bind='click:save')
-                        | 确定
+                        | #{lang.EmployeePerformance.OK}
                         i.icon-ok
                     button#Win_Cancel.btn
-                        | 取消
+                        | #{lang.EmployeePerformance.Cancel}
                         i.icon-remove
 
 

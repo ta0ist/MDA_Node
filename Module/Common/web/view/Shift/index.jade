@@ -9,17 +9,17 @@ block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-                | 设备排班
+                | #{lang.Common.EquipmentScheduling}
             ul.breadcrumb
                 li
                     i.icon-home
-                    a(href='/') 主页
+                    a(href='/') #{lang.EmployeePerformance.Home}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='System') 系统
+                    a(href='javascript:;', data-lang='System')  #{lang.MachineParameters.System}
                     i.icon-angle-right
                 li
-                    a(href='javascript:;', data-lang='MachineScheduling') 班次管理
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.Common.FlightManagement}
     .row-fluid
         table(width='100%', cellpadding='0', cellspacing='0')
             tr
@@ -28,11 +28,11 @@ block content
                         .controls
                             .input-icon.left(style=' display: inline;')
                                 i.icon-search
-                                input#filter.m-wrap(type='text', placeholder='设备', style='width: 199px;')
+                                input#filter.m-wrap(type='text', placeholder='#{lang.EmployeePerformance.Equipment}', style='width: 199px;')
                     table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
                         tr
                             td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
-                                a.k-link(tabindex='-1', href='#', data-lang='Common.USER_NAME') 设备
+                                a.k-link(tabindex='-1', href='#', data-lang='Common.USER_NAME') #{lang.EmployeePerformance.Equipment}
                                 i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
                         tr
                             td(style='border-color: rgb(197, 197, 197); height: 460px; padding: 0px;')
@@ -42,15 +42,15 @@ block content
                     .control-group(style='height: 34px;')
                         .controls(style='text-align:right;')
                             button#function_add.btn.blue
-                                | 排班
+                                | #{lang.Common.Scheduling}
                                 i.icon-calendar
                             button#grid_schedul.btn.green
-                                | 班次方案
+                                | #{lang.Common.FlightPlan}
                                 i.icon-tag
                     #resize
                         table.table.table-bordered.table-condensed.gridtreehead(style='border-color: #C5C5C5; margin-bottom: 0px;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
                             tr
-                                td#machinePlan.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;') 排班计划
+                                td#machinePlan.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;') #{lang.Common.SchedulingPlan}
                             tr
                                 td(style='border-color: rgb(197, 197, 197); padding: 0px;', colspan='3')
                                     div(style='height: 448px; overflow-y: auto; padding: 10px;')
@@ -79,29 +79,29 @@ block content
     script#popup-add(type='text/kendo-ui-template').
         <form class="form-horizontal" id="viewmodel" style="min-width: 800px; position: relative;">
         <div class="control-group">
-        <label class="control-label" data-lang="Common.SOLUTION_NAME"><span class="required">*</span>开始时间</label>
+        <label class="control-label" data-lang="Common.SOLUTION_NAME"><span class="required">*</span>#{lang.EmployeePerformance.StartTime}</label>
         <div class="controls">
         <input type="text" id="START_DATE" name="START_DATE" data-bind="value:START_DATE" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
         </div>
         </div>
         <div class="control-group">
-        <label class="control-label" data-lang="Common.SOLUTION_NAME">结束时间</label>
+        <label class="control-label" data-lang="Common.SOLUTION_NAME">#{lang.EmployeePerformance.EndTime}</label>
         <div class="controls">
         <input type="text" id="END_DATE" name="END_DATE" data-bind="value:END_DATE" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
         </div>
         </div>
         <div class="control-group">
-        <label class="control-label" data-lang="Common.SOLUTION_NAME"><span class="required">*</span>方案选择</label>
+        <label class="control-label" data-lang="Common.SOLUTION_NAME"><span class="required">*</span>#{lang.Common.SchemeSelection}</label>
         <div class="controls">
         <input type="text" id="SOLUTIONS" name="SOLUTIONS" data-bind="value:SOLUTION_NAME" class="span6 m-wrap" style="height:32px; width: 500px; margin-left: 0px;" />
         </div>
         </div>
         <div class="control-group">
-        <label class="control-label" data-lang="Common.SEX">类型</label>
+        <label class="control-label" data-lang="Common.SEX">#{lang.Common.Type}</label>
         <div class="controls" style="line-height: 32px;">
-        <label class="radio" style="margin-top: 0px !important;font-size: 12px;"><input type="radio" name="CYCLE_TYPE" checked value="0" />不循环</label>
-        <label class="radio" style="margin-top: 0px !important;font-size: 12px;"><input type="radio" name="CYCLE_TYPE" value="1" />周循环</label>
-        <label class="radio" style="margin-top: 0px !important;font-size: 12px;"><input type="radio" name="CYCLE_TYPE" value="2" />月循环</label>
+        <label class="radio" style="margin-top: 0px !important;font-size: 12px;"><input type="radio" name="CYCLE_TYPE" checked value="0" />#{lang.Common.NoCycle}</label>
+        <label class="radio" style="margin-top: 0px !important;font-size: 12px;"><input type="radio" name="CYCLE_TYPE" value="1" />#{lang.Common.WeeklyCycle}</label>
+        <label class="radio" style="margin-top: 0px !important;font-size: 12px;"><input type="radio" name="CYCLE_TYPE" value="2" />#{lang.Common.MonthlyCycle}</label>
         </div>
         </div>
         <div class="control-group">
@@ -111,7 +111,7 @@ block content
         </div>
         </div>
         <div class="control-group">
-        <label class="control-label" data-lang="Common.SOLUTION_NAME"><span class="required">*</span>设备关联</label>
+        <label class="control-label" data-lang="Common.SOLUTION_NAME"><span class="required">*</span>#{lang.Common.EquipmentAssociated}</label>
         <div class="controls">
         <label class="checkbox">
         <input type="checkbox" id="relateMachine" value="" style="margin-bottom: 0px;" />
@@ -121,12 +121,12 @@ block content
         </div>
         <div id="machineOrg">
         <div id="machineOrgHead" style="width: 245px; margin-top: 0px; padding-top: 10px; padding-bottom: 10px; padding-left: 5px;font-size:14px;" class="k-window-titlebar k-header">
-        请选择关联设备<span style="cursor:pointer;"><i class="icon-angle-right" id="hideMachineOrg" style="float: right; margin-right: 10px; margin-top: -18px;"></i></span>
+        #{lang.Common.SelectDeviceContext}<span style="cursor:pointer;"><i class="icon-angle-right" id="hideMachineOrg" style="float: right; margin-right: 10px; margin-top: -18px;"></i></span>
         </div>
         <div id="machineTree" style="width: 250px; overflow-y: auto; margin-top: 37px; "></div>
         </div>
         <div class="form-actions">
-        <div id="Add" class="btn green">确定<i class="icon-ok"></i></div>
-        <button id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></button>
+        <div id="Add" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <button id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></button>
         </div>
         </form>
