@@ -8,7 +8,7 @@ block append headjavascript
     script#popup-add(type='text/x-kendo-template').
       <form class="form-horizontal" id="machineviewmodel" style="width:750px;">
           <div class="control-group">
-              <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>设备图片</label>
+              <label class="control-label" data-lang="Common.USER_NAME"><span class="required">*</span>#{lang.Common.EquipmentPictures}</label>
               <div class="controls">
                   <div>
                       <input id="PHOTO" type="text" data-bind="value:PHOTO" style="display:none;" />
@@ -17,12 +17,12 @@ block append headjavascript
                   </div>
                   <span class="btn green fileinput-button">
                       <i class="icon-plus icon-white"></i>
-                      <span>上传</span>
+                      <span>#{lang.Common.Upload}</span>
                       <input id="fileupload" type="file" name="files[]">
                   </span>
                   <button class="btn blue fileinput-button" data-bind="click:galleryshow">
                       <i class="icon-inbox icon-white"></i>
-                      <span>图库</span>
+                      <span>#{lang.Common.Gallery}</span>
                   </button>
               </div>
           </div>
@@ -30,14 +30,14 @@ block append headjavascript
               <table>
                   <tr>
                       <td width="354">
-                          <label class="control-label" data-lang="Common.MAC_NO"><span class="required">*</span>设备编号</label>
+                          <label class="control-label" data-lang="Common.MAC_NO"><span class="required">*</span>#{lang.Order.EquipmentSerialNumber}</label>
                           <div class="controls">
                               <input type="text" id="MAC_NO" name="MAC_NO" data-bind="value:MAC_NO" class="span6 m-wrap" />
                               <input type="hidden" id="MAC_NBR" name="MAC_NBR" /> 
                           </div>
                       </td>
                       <td>
-                          <label class="control-label" data-lang="Common.MAC_NAME"><span class="required">*</span>设备名称</label>
+                          <label class="control-label" data-lang="Common.MAC_NAME"><span class="required">*</span>#{lang.Order.DeviceName}</label>
                           <div class="controls">
                               <input type="text" id="MAC_NAME" name="MAC_NAME" data-bind="value:MAC_NAME" class="span6 m-wrap" />
                           </div>
@@ -49,13 +49,13 @@ block append headjavascript
               <table>
                   <tr>
                       <td>
-                          <label class="control-label" data-lang="Common.RANK_NUM">排序</label>
+                          <label class="control-label" data-lang="Common.RANK_NUM">#{lang.Common.Sort}</label>
                           <div class="controls">
                               <input type="text" id="RANK_NUM" name="RANK_NUM" data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
                           </div>
                       </td>
                       <td>
-                          <label class="control-label" data-lang="Common.CATEGORY">设备类型</label>
+                          <label class="control-label" data-lang="Common.CATEGORY">#{lang.Common.DeviceType}</label>
                           <div class="controls">
                               <input type="text" id="CATEGORY" name="CATEGORY" data-bind="value:CATEGORY" data-required="1" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
                           </div>
@@ -67,13 +67,13 @@ block append headjavascript
               <table>
                   <tr>
                       <td>
-                          <label class="control-label" data-lang="Common.ELECTRICAL_SYSTEM">电气系统</label>
+                          <label class="control-label" data-lang="Common.ELECTRICAL_SYSTEM">#{lang.Common.ElectricalSystem}</label>
                           <div class="controls">
                               <input type="text" id="ELECTRICAL_SYSTEM" name="ELECTRICAL_SYSTEM" data-bind="value:ELECTRICAL_SYSTEM" data-required="1" class="span6 m-wrap" />
                           </div>
                       </td>
                       <td>
-                          <label class="control-label" data-lang="Common.BUY_PERSON">采购人员</label>
+                          <label class="control-label" data-lang="Common.BUY_PERSON">#{lang.Common.ProcurementStaff}</label>
                           <div class="controls">
                               <input type="text" id="BUY_PERSON" name="BUY_PERSON" data-bind="value:BUY_PERSON" data-required="1" class="span6 m-wrap" />
                           </div>
@@ -85,13 +85,13 @@ block append headjavascript
               <table>
                   <tr>
                       <td>
-                          <label class="control-label" data-lang="Common.BORN_DATE">采购日期</label>
+                          <label class="control-label" data-lang="Common.BORN_DATE">#{lang.Common.PurchaseDate}</label>
                           <div class="controls">
                               <input id="BORN_DATE" name="BORN_DATE" type="text" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
                           </div>
                       </td>
                       <td>
-                          <label class="control-label" data-lang="Common.PRICE">采购价格</label>
+                          <label class="control-label" data-lang="Common.PRICE">#{lang.Common.PurchasePrice}</label>
                           <div class="controls">
                               <input type="text" id="PRICE" name="PRICE" data-required="1" class="span6 m-wrap" style="width: 214px; margin-left: 0px; " />
                           </div>
@@ -103,13 +103,13 @@ block append headjavascript
               <table>
                   <tr>
                       <td>
-                          <label class="control-label" data-lang="Common.MANUFACTURE">生产商</label>
+                          <label class="control-label" data-lang="Common.MANUFACTURE">#{lang.Common.Producers}</label>
                           <div class="controls">
                               <input type="text" id="MANUFACTURE" name="MANUFACTURE" data-bind="value:MANUFACTURE" data-required="1" class="span6 m-wrap" />
                           </div>
                       </td>
                       <td>
-                          <label class="control-label" data-lang="Common.MEMO">描述</label>
+                          <label class="control-label" data-lang="Common.MEMO">#{lang.Common.Describe}</label>
                           <div class="controls">
                               <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" />
                           </div>
@@ -121,7 +121,7 @@ block append headjavascript
               <table>
                   <tr>
                       <td>
-                          <label class="control-label" data-lang="Common.SERIAL_NO">设备序列号</label>
+                          <label class="control-label" data-lang="Common.SERIAL_NO">#{lang.Common.EquipmentSerialNumber}</label>
                           <div class="controls">
                               <input type="text" id="SERIAL_NO" name="SERIAL_NO" data-bind="value:SERIAL_NO" data-required="1" class="span6 m-wrap" style="width: 555px;" />
                           </div>
@@ -132,8 +132,8 @@ block append headjavascript
               </table>
           </div>
           <div class="form-actions">
-              <div id="Win_Submit" class="btn green">确定<i class="icon-ok"></i></div>
-              <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+              <div id="Win_Submit" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+              <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
           </div>
       </form>
 
@@ -143,17 +143,17 @@ block content
  .row-fluid
   .span12
     h3.page-title(data-lang='AccountManage')
-      | 设备管理
+      | #{lang.Common.EquipmentManagement}
     ul.breadcrumb
       li
         i.icon-home
-        a(href='/') 主页
+        a(href='/') #{lang.EmployeePerformance.Home}
         i.icon-angle-right
       li
-        a(href='javascript:;', data-lang='System') 系统
+        a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
         i.icon-angle-right
       li
-        a(href='javascript:;', data-lang='AccountManage') 设备管理
+        a(href='javascript:;', data-lang='AccountManage') #{lang.Common.EquipmentManagement}
  .row-fluid
   table(width='100%', cellpadding='0', cellspacing='0')
     tr
@@ -161,18 +161,18 @@ block content
         .control-group
           .controls
             button#tree_add.btn.blue( title='新增组')
-              | 新增
+              | #{lang.EmployeePerformance.Add}
               i.icon-plus-sign
             button#tree_edit.btn.purple
-              | 编辑
+              | #{lang.Order.Edit}
               i.icon-edit
             button#tree_delete.btn.red
-              | 删除
+              | #{lang.Order.Delete}
               i.icon-remove-sign
         table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
           tr
             td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
-              a.k-link(tabindex='-1', href='#') 设备组
+              a.k-link(tabindex='-1', href='#') #{lang.Efficiencystatistics.EquipmentGroup}
               i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
           tr
             td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
@@ -184,14 +184,14 @@ block content
           .controls
             .input-icon.left(style='width: 250px; display: inline;')
               i.icon-search
-              input#filter.m-wrap(type='text', placeholder='设备名称')
+              input#filter.m-wrap(type='text', placeholder='#{lang.EmployeePerformance.DeviceName}')
             button#add_mac.btn.blue(data-bind='click:grid_add')
-              | 新增
+              | #{lang.EmployeePerformance.Add}
               i.icon-plus-sign
             button#del_mac.btn.red(data-bind='click:grid_delete')
-              | 删除
+              | #{lang.Order.Edit}
               i.icon-remove-sign
             button#move_mac.btn.green(data-bind='click:grid_move')
-              | 移组
+              | #{lang.Common.MoveGroup}
               i.icon-exchange
         #grid

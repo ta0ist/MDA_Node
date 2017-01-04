@@ -167,7 +167,7 @@ module.exports = {
 
         Detailed: '详细',
         ApplicationNo: '程序号',
-
+        ProcurementStaff: '采购人员'
 
 
 

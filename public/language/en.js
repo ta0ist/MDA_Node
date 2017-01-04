@@ -158,7 +158,8 @@ module.exports = {
         RunResume: 'Run Record',
         SelectDate: 'Please Choose The Date',
         Detailed: 'Detail',
-        ApplicationNo: 'Program Number'
+        ApplicationNo: 'Program Number',
+        ProcurementStaff: 'Purchase Man'
 
     },
     EmployeePerformance: {
@@ -359,7 +360,7 @@ module.exports = {
     MachineParameters: {
         AssistDiagnosis: 'Real-time watch',
         RealTimeMonitoring: 'Real-time watch',
-        System: 'Home',
+        System: 'System',
         Alert_1: 'Your Chrome version is too high to support API plug-in！',
         Alert_2: 'You have not installed plug-in yet,please double-click on WebComponentsKit.exe in the development package to install！',
         Alert_3: 'We have checked the new version,please double-click on WebComponentsKit.exe in the development package to upgrade！'
