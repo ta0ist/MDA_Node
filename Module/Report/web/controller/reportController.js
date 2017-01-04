@@ -1,13 +1,13 @@
 var grid;
-app.controller('reportctrl', ['$scope', '$http', function ($scope, $http) {
-    $http.get('/reports/GetRepostName').success(function (data) {
+app.controller('reportctrl', ['$scope', '$http', function($scope, $http) {
+    $http.get('/reports/GetRepostName').success(function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: gettreeReport(data.Data)
                 },
                 template: kendo.template($("#treeview-template").html()),
-                select: function (e) {
+                select: function(e) {
                     var name = $(e.node).find('[attr="treenode"]').text();
                     renderReport(name);
                 }
@@ -17,8 +17,7 @@ app.controller('reportctrl', ['$scope', '$http', function ($scope, $http) {
                 treeview.select($(".k-item:first"));
                 renderReport($(treeview.select()).find('.k-state-selected span').text());
             }
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
 
@@ -39,24 +38,25 @@ function gettreeReport(data) {
 //生成报表查询界面
 function renderReport(name) {
     var pars = {
-        "LineName": { value: "MachineGroup", name: "产线" },
-        "Machine": { value: "Machine", name: "设备" },
-        "StartDate": { value: "DateTime", name: "开始日期" },
-        "EndDate": { value: "DateTime", name: "结束日期" },
-        "Shift": { value: "Shift", name: "班次" },
-        "PlanNo": { value: "Plan", name: "生产计划编号" },
-        "Type": { value: "Type", name: "报表类型" },
-        "OperatorDate": { value: "DateTime", name: "操作日期" },
-        "Parameters": { value: "Pars", name: "参数" },
-        "StartNum": { value: "Num", name: "开始值" },
-        "EndNum": { value: "Num", name: "结束值" },
-        "part_no": { value: "part_no", name: "产品名称" },
-        "mem_nbr": { value: "mem_nbr", name: "人员" },
-        "statis": { value: "statis", name: "查询类型" }
+        "LineName": { value: "MachineGroup", name: lang.Report.ProductionLine },
+        "Machine": { value: "Machine", name: lang.EmployeePerformance.Equipment },
+        "StartDate": { value: "DateTime", name: lang.EmployeePerformance.StartTime },
+        "EndDate": { value: "DateTime", name: lang.EmployeePerformance.EndTime },
+        "Shift": { value: "Shift", name: lang.EmployeePerformance.Shift },
+        "PlanNo": { value: "Plan", name: lang.Report.ProductionPlanNumber },
+        "Type": { value: "Type", name: lang.Report.ReportType },
+        "OperatorDate": { value: "DateTime", name: lang.Report.OperationDate },
+        "Parameters": { value: "Pars", name: lang.Report.Parameter },
+        "StartNum": { value: "Num", name: lang.Report.BeginToValue },
+        "EndNum": { value: "Num", name: lang.Report.EndValue },
+        "part_no": { value: "part_no", name: lang.Order.ProductName },
+        "mem_nbr": { value: "mem_nbr", name: lang.EmployeePerformance.Personnel },
+        "statis": { value: "statis", name: lang.Report.TypesOfQueries }
     };
     switch (name) {
         //报表名称不用翻译；需要和模板对应
-        case "状态用时及占比报表": case "停机原因用时及占比报表":
+        case "状态用时及占比报表":
+        case "停机原因用时及占比报表":
             var tpars = ["Machine", "StartDate", "EndDate", "statis", "Type"];
             creatSearchPars(pars, tpars, name);
             break;
@@ -96,7 +96,9 @@ function renderReport(name) {
             var tpars = ["Type"];
             creatSearchPars(pars, tpars, name);
             break;
-        case "设备稼动率报表": case "设备每日产量报表": case "机床参数报表":
+        case "设备稼动率报表":
+        case "设备每日产量报表":
+        case "机床参数报表":
             var tpars = ["Machine", "StartDate", "EndDate", "Type"];
             creatSearchPars(pars, tpars, name);
             break;
@@ -126,7 +128,7 @@ function creatSearchPars(pars, tpars, name) {
         if (i == tpars.length - 1) {
             var shtml = shtml + '<div class="control-group">' +
                 '<div class="controls" style="margin-left: 100px;">' +
-                '<div id="Win_Submit" class="btn green" style=" width: 170px;" >导出<i class="icon-search"></i></div>' +
+                '<div id="Win_Submit" class="btn green" style=" width: 170px;" >' + lang.Report.Export + '<i class="icon-search"></i></div>' +
                 '</div>' +
                 '</div>';
         }
@@ -190,7 +192,7 @@ function creatSearchPars(pars, tpars, name) {
                             }
                         },
                         schema: {
-                            data: function (response) {
+                            data: function(response) {
                                 var dd = [];
                                 for (var i = 0; i < response.Data.length; i++) {
                                     var tjson = {}
@@ -233,11 +235,11 @@ function creatSearchPars(pars, tpars, name) {
                     dataTextField: "text",
                     dataValueField: "value",
                     dataSource: [
-                        { text: "班次", value: 1 },
-                        { text: "日", value: 2 },
-                        { text: "周", value: 3 },
-                        { text: "月", value: 4 },
-                        { text: "年", value: 5 }
+                        { text: lang.EmployeePerformance.Shift, value: 1 },
+                        { text: lang.EmployeePerformance.Day, value: 2 },
+                        { text: lang.EmployeePerformance.Weeks, value: 3 },
+                        { text: lang.EmployeePerformance.Month, value: 4 },
+                        { text: lang.EmployeePerformance.Years, value: 5 }
                     ],
                     value: 2
                 });
@@ -245,14 +247,13 @@ function creatSearchPars(pars, tpars, name) {
         }
     }
     //导出
-    $("#Win_Submit").bind("click", function () {
+    $("#Win_Submit").bind("click", function() {
 
         var dd = {};
         dd.filename = name;
         dd.filetype = $("#Type").data("kendoComboBox").value();
-        if(dd.filetype=='')
-        {
-            BzAlert('报表类型不可为空!');
+        if (dd.filetype == '') {
+            BzAlert(lang.Report.Alert_1);
             return;
         }
         dd.parameters = [];
@@ -260,7 +261,10 @@ function creatSearchPars(pars, tpars, name) {
             var tt = {};
             if (tpars[mm] != "Type") {
                 switch (tpars[mm]) {
-                    case "LineName": case "Machine": case "Shift": case "mem_nbr":
+                    case "LineName":
+                    case "Machine":
+                    case "Shift":
+                    case "mem_nbr":
                         tt.FieldName = tpars[mm];
                         var p = [];
                         var kk = $("#" + tpars[mm]).data("BZ-multipleComboxTree");
@@ -270,7 +274,8 @@ function creatSearchPars(pars, tpars, name) {
                         tt.FieldValue = p.toString();
                         tt.FieldType = "string";
                         break;
-                    case "PlanNo": case "part_no":
+                    case "PlanNo":
+                    case "part_no":
                         tt.FieldName = tpars[mm];
                         var p = [];
                         var kk = $("#" + tpars[mm]).data("BZ-multipleComboxTree");
@@ -280,12 +285,14 @@ function creatSearchPars(pars, tpars, name) {
                         tt.FieldValue = p.toString();
                         tt.FieldType = "string";
                         break;
-                    case "StartDate": case "EndDate":
+                    case "StartDate":
+                    case "EndDate":
                         tt.FieldName = tpars[mm];
                         tt.FieldValue = $("#" + tpars[mm]).val()
                         tt.FieldType = "date";
                         break;
-                    case "StartNum": case "EndNum":
+                    case "StartNum":
+                    case "EndNum":
                         tt.FieldName = tpars[mm];
                         tt.FieldType = "string";
                         tt.FieldValue = $("#" + tpars[mm]).data("kendoNumericTextBox").value();
@@ -300,6 +307,6 @@ function creatSearchPars(pars, tpars, name) {
             }
         }
         var pe = $('#path').html();
-        window.open("http://localhost:27516/Modules/Report/Report.asmx/GetRepost?filename=" + dd.filename + ".json&filetype=" + dd.filetype + "&parameters=" + JSON.stringify(dd.parameters)+"&templateName="+pe+"\\"+dd.filename+".json");
+        window.open("http://localhost:27516/Modules/Report/Report.asmx/GetRepost?filename=" + dd.filename + ".json&filetype=" + dd.filetype + "&parameters=" + JSON.stringify(dd.parameters) + "&templateName=" + pe + "\\" + dd.filename + ".json");
     });
 }

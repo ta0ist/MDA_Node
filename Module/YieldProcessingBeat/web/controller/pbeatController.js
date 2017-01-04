@@ -309,10 +309,10 @@ function LoadChart(data, obj, j) {
         if (stand_value_For_AS_List.length > 0) {
             var AS_STANDADR = _.where(stand_value_For_AS_List[0].Processing_Beat_list, { Line_Type: "AS" })[0].PROCESSING_BEAT_VALUE; //A标准值
             var BS__STANDADR = _.where(stand_value_For_AS_List[0].Processing_Beat_list, { Line_Type: "BS" })[0].PROCESSING_BEAT_VALUE; //B标准值
-            tittle_A = "(" + stand_value_For_AS_List[0].name + "设备)-------每日产量用时加工节拍-------（参考值[红色实线]：" + AS_STANDADR + ")";
+            tittle_A = "(" + stand_value_For_AS_List[0].name + lang.YieldProcessingBeat.tittle_A + AS_STANDADR + ")";
             sub_tittle_A = lang.YieldProcessingBeat.sub_tittle;
 
-            tittle_B = "(" + stand_value_For_AS_List[0].name + "设备)-------每日产量运行加工节拍-------（参考值[绿色实线]：" + BS__STANDADR + ")"
+            tittle_B = "(" + stand_value_For_AS_List[0].name + lang.YieldProcessingBeat.tittle_B + BS__STANDADR + ")"
             sub_tittle_B = lang.YieldProcessingBeat.sub_tittle;
             //标准值对象包装
             var y_A_standard_axis_obj = {};
