@@ -1,7 +1,7 @@
 /**
  * Created by qb on 2016/12/2.
  */
-var notice_nbr;//id
+var notice_nbr; //id
 var num = 1000;
 var num_1 = 9999999;
 var up_condition = [];
@@ -12,56 +12,56 @@ $.ajax({
     type: "get",
     url: "/OperationRatioFormula/GetStatusData",
     async: false,
-    success: function (data) {
+    success: function(data) {
         dataarray = data.Data
     }
 })
 $.ajax({
-    type: "post",
-    url: "/OperationRatioFormula/GetDropListList",
-    async: false,
-    success: function (data) {
-        formula_name = data.Data
-    }
-})
-//下拉公式选择
+        type: "post",
+        url: "/OperationRatioFormula/GetDropListList",
+        async: false,
+        success: function(data) {
+            formula_name = data.Data
+        }
+    })
+    //下拉公式选择
 function dropDownList() {
     for (var i = 0; i < formula_name.length; i++) {
         $(".ComboBox").append(
-            '<li>'+
+            '<li>' +
             '<span>' + formula_name[i].DataText + '</span>' +
             '<input type="hidden"  value="' + formula_name[i].DataValue + '"/>' +
             '</li>'
         )
     }
     //点击小三角
-    $("#caret").click(function () {
+    $("#caret").click(function() {
         $(".ComboBox").toggle();
     })
-    $(".ComboBox").mouseleave(function () {
+    $(".ComboBox").mouseleave(function() {
         $(this).hide();
     })
-    $(".ComboBox>li").click(function () {
-        var re = $(this).children().eq(0).html();
-        var va = $(this).children().eq(1).val();
-        $("#formula").html("");
-        LoadData(va);
-        $("input[type='email']").focus()
-        $("input[type='email']").val(re);
-        $("input[type='email']").addClass("mui--is-not-empty");
-    })
-    //点击下文本框，查询所有
-    $("#NAME").click(function () {
+    $(".ComboBox>li").click(function() {
+            var re = $(this).children().eq(0).html();
+            var va = $(this).children().eq(1).val();
+            $("#formula").html("");
+            LoadData(va);
+            $("input[type='email']").focus()
+            $("input[type='email']").val(re);
+            $("input[type='email']").addClass("mui--is-not-empty");
+        })
+        //点击下文本框，查询所有
+    $("#NAME").click(function() {
         $("#formula").html("");
         LoadData('')
     })
-    $("#NAME").change(function () {
-        var re = $(this).val()==""?undefined:$(this).val();
+    $("#NAME").change(function() {
+        var re = $(this).val() == "" ? undefined : $(this).val();
         $("#formula").html("");
         var va = "";
         var t = "";
         for (var i = 0; i < formula_name.length; i++) {
-            if (formula_name[i].DataText.indexOf(re) != -1)//如果返回值不等于-1 说明存在
+            if (formula_name[i].DataText.indexOf(re) != -1) //如果返回值不等于-1 说明存在
             {
                 t = formula_name[i].DataText;
                 va = formula_name[i].DataValue;
@@ -78,17 +78,17 @@ function dropDownList() {
 dropDownList()
 
 //加载刷新
-function LoadData(objbane)
-{
+function LoadData(objbane) {
     $.ajax({
         type: "post",
         url: "/OperationRatioFormula/GetList",
         async: false,
         data: { name: objbane },
-        success: function (data) {
+        success: function(data) {
             function Num() {
                 return num++;
             }
+
             function NumB() {
                 return num_1++;
             }
@@ -99,11 +99,11 @@ function LoadData(objbane)
                 var specific_formalu_name = _.where(formula_name, { DataValue: data.Data[i].FORMULA_NAME })[0].DataText;
                 //分子
                 var str_menber = "";
-                var member_name = data.Data[i].MEMBER;//1+2+3+4
+                var member_name = data.Data[i].MEMBER; //1+2+3+4
                 var ArrrayMember = member_name.split("+");
                 //分母
                 var str_denominator = "";
-                var denominator_name = data.Data[i].DENOMINATOR;//1+2+3+4
+                var denominator_name = data.Data[i].DENOMINATOR; //1+2+3+4
                 var Arrraydenominator = denominator_name.split("+");
 
 
@@ -112,12 +112,10 @@ function LoadData(objbane)
                     var temp_int = parseInt(ArrrayMember[j]);
                     if (ArrrayMember.length == 1) {
                         str_menber = _.where(dataarray, { STATUS_NBR: temp_int })[0].NAME;
-                    }
-                    else {
+                    } else {
                         if (j + 1 == ArrrayMember.length) {
                             str_menber += _.where(dataarray, { STATUS_NBR: temp_int })[0].NAME;
-                        }
-                        else {
+                        } else {
                             str_menber += _.where(dataarray, { STATUS_NBR: temp_int })[0].NAME + "+"
                         }
                     }
@@ -128,12 +126,10 @@ function LoadData(objbane)
                     var temp_int = parseInt(Arrraydenominator[j]);
                     if (Arrraydenominator.length == 1) {
                         str_denominator = _.where(dataarray, { STATUS_NBR: temp_int })[0].NAME;
-                    }
-                    else {
+                    } else {
                         if (j + 1 == Arrraydenominator.length) {
                             str_denominator += _.where(dataarray, { STATUS_NBR: temp_int })[0].NAME;
-                        }
-                        else {
+                        } else {
                             str_denominator += _.where(dataarray, { STATUS_NBR: temp_int })[0].NAME + "+";
                         }
                     }
@@ -149,7 +145,7 @@ function LoadData(objbane)
                     '</canvas>' +
                     '<div class="clearfix pull-left box" style="min-width:500px;">' +
                     '<div class="pull-left" style="margin-top:11px;">' +
-                        //'<h2> <input type="text" value="' + data.Data[i].FORMULA_NAME + '" style="height:40px;font-size:30px;font-weight:1200;text-align:center;"/>' + "=" + '</h2>' +
+                    //'<h2> <input type="text" value="' + data.Data[i].FORMULA_NAME + '" style="height:40px;font-size:30px;font-weight:1200;text-align:center;"/>' + "=" + '</h2>' +
                     '<div class="clearfix" style="margin-top:15px;">' +
                     '<h3 style="min-width: 206px; border: 1px solid #eee; margin: 6px 0 0 0; text-align: center;line-height:42px;height:42px;" class="pull-left ">' +
                     '<span class="font_color">' + specific_formalu_name + '</span>' +
@@ -177,7 +173,7 @@ function LoadData(objbane)
                     '<div class="dropdown upAdd">' +
                     '<i class="icon-plus-sign dropdown-toggle" data-toggle="dropdown" id="dropdownMenu' + num + '"></i>' +
                     '<ul class="dropdown-menu font" role="menu" aria-labelledby="dropdownMenu' + num + '">' +
-                        //多选框
+                    //多选框
                     '</ul>' +
                     '</div>' +
                     '</div>' +
@@ -191,11 +187,11 @@ function LoadData(objbane)
                     '</div>' +
                     '<div class="pull-right change_shape" >' +
                     '<button class="btn green btn_001" id="save" style="margin-right:5px;">' +
-                    '保存' +
+                    lang.Common.Save +
                     '<i class="icon-ok"></i>' +
                     '</button>' +
                     '<button class="btn red btn_001" id="delete">' +
-                    '删除' +
+                    lang.Order.Delete +
                     '<i class="icon-remove-sign"></i>' +
                     '</button>' +
                     '</div>' +
@@ -208,7 +204,7 @@ function LoadData(objbane)
 
             }
         },
-        error: function () {
+        error: function() {
 
         }
     })
@@ -221,28 +217,27 @@ function LoadData(objbane)
 
 
 //页面加载显示下拉字
-$(document).ready(function () {
+$(document).ready(function() {
     LoadData('');
 });
 
 
 //新增方法
 ////新增
-$("#btn").click(function () {
+$("#btn").click(function() {
     notice_nbr = undefined;
     show();
 })
 
 //保存
-$("#save").live("click", function () {
+$("#save").live("click", function() {
     // var fn = "";// $(this).parent().prev().children().eq(0).children().children().eq(0).children().eq(1).val();
     var fn = $(this).parent().prev().children().eq(0).children().children().children().eq(1).val();
     //分子
     var str_menber = "";
     var member = $(this).parent().prev().children().eq(1).children().children().eq(0).children().eq(0).html();
-    if (member == undefined)
-    {
-        BzAlert("必须输入分子");
+    if (member == undefined) {
+        BzAlert(lang.Common.YouMustEnterTheMolecular);
         //activateOverlay("必须输入分子", 1,2000);
         return;
     }
@@ -253,20 +248,17 @@ $("#save").live("click", function () {
             var temp_str = ArrrayMember[j];
             if (ArrrayMember.length == 1) {
                 str_menber = _.where(dataarray, { NAME: temp_str })[0].STATUS_NBR;
-            }
-            else {
+            } else {
                 if (j + 1 == ArrrayMember.length) {
                     str_menber += _.where(dataarray, { NAME: temp_str })[0].STATUS_NBR;
-                }
-                else {
+                } else {
                     str_menber += _.where(dataarray, { NAME: temp_str })[0].STATUS_NBR + "+"
 
                 }
             }
         }
-    }
-    else {
-        BzAlert("必须输入分子");
+    } else {
+        BzAlert(lang.Common.YouMustEnterTheMolecular);
         //activateOverlay("必须输入分子", 1, 2000);
         return;
     }
@@ -275,25 +267,23 @@ $("#save").live("click", function () {
     var str_denominator = "";
     var denominator = $(this).parent().prev().children().eq(1).children().children().eq(2).children().eq(0).html();
     var Arrraydenominator = denominator.split("+");
-    if (denominator != "") {//"<input type="hidden">"
+    if (denominator != "") { //"<input type="hidden">"
         for (var j = 0; j < Arrraydenominator.length; j++) {
 
             var temp_str = Arrraydenominator[j];
             if (Arrraydenominator.length == 1) {
                 str_denominator = _.where(dataarray, { NAME: temp_str })[0].STATUS_NBR;
-            }
-            else {
+            } else {
                 if (j + 1 == Arrraydenominator.length) {
                     str_denominator += _.where(dataarray, { NAME: temp_str })[0].STATUS_NBR;
-                }
-                else {
+                } else {
                     str_denominator += _.where(dataarray, { NAME: temp_str })[0].STATUS_NBR + "+"
 
                 }
             }
         }
     } else {
-        BzAlert("必须输入分母");
+        BzAlert(lang.Common.YouMustEnterTheDenominator);
         //activateOverlay("必须输入分母", 1,2000);
         return;
     }
@@ -311,7 +301,7 @@ $("#save").live("click", function () {
             DATETIME: null
         };
         if (fn != "" && fn != undefined) {
-            $.post("/OperationRatioFormula/AddDynamicBroadFormula", data, function (data) {
+            $.post("/OperationRatioFormula/AddDynamicBroadFormula", data, function(data) {
                 if (data.Status == 0) {
                     $("#formula").html("");
                     notice_nbr = data.Data;
@@ -319,8 +309,7 @@ $("#save").live("click", function () {
                     BzSuccess(data.Message);
                     LoadData('');
 
-                }
-                else {
+                } else {
                     //$("#formula").html("");
                     BzAlert(data.Message);
                     //activateOverlay("此公式已存在，请选择其他公式！", 2,3000);
@@ -329,27 +318,23 @@ $("#save").live("click", function () {
             })
         }
 
-    }
-    else {
+    } else {
         data = {
             FORMULA_NAME: fn,
             TYPE: 'A',
-            NOTICE_NBR:notice_nbr,
-            USER_NBR:0,
+            NOTICE_NBR: notice_nbr,
+            USER_NBR: 0,
             MEMBER: str_menber,
             DENOMINATOR: str_denominator,
             DATETIME: null
         }
-        $.post("/OperationRatioFormula/UpdateDynamicBroadFormula2", data, function (data) {
+        $.post("/OperationRatioFormula/UpdateDynamicBroadFormula2", data, function(data) {
             if (data.Status == 0) {
                 $("#formula").html("");
                 //activateOverlay("操作成功", 2, 3000);
                 BzSuccess(data.Message);
                 LoadData('');
-            }
-
-
-            else {
+            } else {
                 BzAlert(data.Message);
                 //activateOverlay("此公式已存在，请选择其他公式！", 2,3000);
                 // LoadData();
@@ -364,6 +349,7 @@ function show() {
     function Num() {
         return num++;
     }
+
     function NumB() {
         return num_1++;
     }
@@ -405,7 +391,7 @@ function show() {
         '<div class="dropdown upAdd">' +
         '<i class="icon-plus-sign dropdown-toggle" data-toggle="dropdown" id="dropdownMenu' + num + '"></i>' +
         '<ul class="dropdown-menu font" role="menu" aria-labelledby="dropdownMenu' + num + '">' +
-            //多选框
+        //多选框
         '</ul>' +
         '</div>' +
         '</div>' +
@@ -419,11 +405,11 @@ function show() {
         '</div>' +
         '<div class="pull-right change_shape" >' +
         '<button class="btn green btn_001" id="save" style="margin-right:5px;">' +
-        '保存' +
+        lang.Common.Save +
         '<i class="icon-ok"></i>' +
         '</button>' +
         '<button class="btn red btn_001" id="delete">' +
-        '删除' +
+        lang.Order.Delete +
         '<i class="icon-remove-sign"></i>' +
         '</button>' +
         '</div>' +
@@ -438,30 +424,30 @@ function show() {
 
 }
 //公式下拉选择
-$(".btn_xiala").live("click", function () {
+$(".btn_xiala").live("click", function() {
     $(this).next().html("");
-    for(var i = 0; i < formula_name.length; i++) {
+    for (var i = 0; i < formula_name.length; i++) {
         $(this).next().append(
-            '<li>'+
-            '<a href="#">'+
+            '<li>' +
+            '<a href="#">' +
             '<span>' + formula_name[i].DataText + '</span>' +
             '<input type="hidden" value="' + formula_name[i].DataValue + '"/>' +
-            '</a>'+
+            '</a>' +
             '</li>'
         )
     }
 })
 
-$(".formula_options>li").live("click", function (e) {
-    e.preventDefault();
-    var rel = $(this).children().eq(0).html();
-    console.log(rel)
-    $(this).parent().parent().prev().html(rel);
-    $(this).parent().parent().prev().children().eq(0).addClass("font_color")  //改变颜色
-    var r = $(this).children().children().eq(1).val();
-})
-//提示
-function activateOverlay(message, falg,interval) {
+$(".formula_options>li").live("click", function(e) {
+        e.preventDefault();
+        var rel = $(this).children().eq(0).html();
+        console.log(rel)
+        $(this).parent().parent().prev().html(rel);
+        $(this).parent().parent().prev().children().eq(0).addClass("font_color") //改变颜色
+        var r = $(this).children().children().eq(1).val();
+    })
+    //提示
+function activateOverlay(message, falg, interval) {
     //flag=1提示框不会自动退出，flag=2 提示框自动退出
     // show overlay
     var modalEl = document.createElement('div');
@@ -473,63 +459,61 @@ function activateOverlay(message, falg,interval) {
     modalEl.style.textAlign = 'center';
     modalEl.style.borderRadius = "5px"
     $(modalEl).append(
-        '<h3 style="margin:0;line-height:100px;border-radius:5px;">' + message + '</h3>'
-    )
-    // show modal
+            '<h3 style="margin:0;line-height:100px;border-radius:5px;">' + message + '</h3>'
+        )
+        // show modal
     if (falg == 1) {
         mui.overlay('on', modalEl);
-    }
-    else
-    {
+    } else {
         mui.overlay('on', modalEl);
-        $(modalEl).fadeOut(interval, function () {
+        $(modalEl).fadeOut(interval, function() {
             $("#mui-overlay").css("background-color", "transparent");
         });
     }
 }
 
 //点击上+号添加
-$(".upAdd>i").live("click", function () {
+$(".upAdd>i").live("click", function() {
     $(".upAdd>i").next().html("");
-    var a=$(this).parent().parent().parent().parent().children().eq(3).children().eq(1).children().children().children().eq(0).html()//.split("+");
-    var Interface_data = a==""?[]:a.split("+");
+    var a = $(this).parent().parent().parent().parent().children().eq(3).children().eq(1).children().children().children().eq(0).html() //.split("+");
+    var Interface_data = a == "" ? [] : a.split("+");
 
     //获取状态数据
     //$.get("/MachineStatus/StatusDataMaintenance/GetStatusData", function (data) {
     //    var dataarray = data.Data;
-    var one_level_list = _.where(dataarray, { LEVEL: 1 });//1 LEVEL
-    var two_level_list = _.where(dataarray, { LEVEL: 2 });//1 LEVEL
+    var one_level_list = _.where(dataarray, { LEVEL: 1 }); //1 LEVEL
+    var two_level_list = _.where(dataarray, { LEVEL: 2 }); //1 LEVEL
     if ($(".upAdd>i").next().html() == "") {
         $(".upAdd>i").next().append(
-            '<li style="line-height:40px;font-size:17px;" class="font"> 一级状态（主状态）</li>'
+            '<li style="line-height:40px;font-size:17px;" class="font"> ' + lang.Common.LevelOneStatus + '</li>'
         )
         for (var i = 0; i < one_level_list.length; i++) {
-            var plan = dataarray[i].PLANED == 1 ? "（计划外）" : "（计划内）";
+            var plan = dataarray[i].PLANED == 1 ? "（" + lang.Common.Unplanned + "）" : "（" + lang.Common.InThePlan + "）";
             if (dataarray[i].LEVEL == 1) {
                 $(".upAdd>i").next().append(
                     '<li role="presentation" style="background:' + one_level_list[i].COLOR16 + ';font-size:16px;">' +
-                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' +//多选框
-                    '<label>'+
-                    '<input type="checkbox" name="cbHobby" value="' + one_level_list[i].NAME + '" >'+
+                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' + //多选框
+                    '<label>' +
+                    '<input type="checkbox" name="cbHobby" value="' + one_level_list[i].NAME + '" >' +
                     '<span>' + one_level_list[i].NAME + plan + '</span>' +
-                    '</label>'+
+                    '</label>' +
                     '</a>' +
                     '</li>'
                 )
             }
         }
         $(".upAdd>i").next().append(
-            '<li style="line-height:40px;font-size:17px;" class="font"> 二级状态（子状态）</li>'
+            '<li style="line-height:40px;font-size:17px;" class="font"> ' + lang.Common.LevelTwoStatus + '</li>'
         )
         for (var i = 0; i < two_level_list.length; i++) {
-            var plan = dataarray[i].PLANED == 1 ? "（计划外）" : "（计划内）";
+            var plan = dataarray[i].PLANED == 1 ? "（" + lang.Common.Unplanned + "）" : "（" + lang.Common.InThePlan + "）";
             if (dataarray[i].LEVEL == 1) {
                 $(".upAdd>i").next().append(
                     '<li role="presentation" style="background:' + two_level_list[i].COLOR16 + ';font-size:16px;">' +
-                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' +//多选框
+                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' + //多选框
                     '<label >' +
                     '<input type="checkbox" name="cbHobby" value="' + two_level_list[i].NAME + '">' +
-                    '<span>'+two_level_list[i].NAME + plan +'</span>'+
+                    '<span>' + two_level_list[i].NAME + plan + '</span>' +
                     '</label>' +
                     '</a>' +
                     '</li>'
@@ -543,7 +527,7 @@ $(".upAdd>i").live("click", function () {
     for (var i = 0; i < check.length; i++) {
         for (var j = 0; j < Interface_data.length; j++) {
             if (check[i].value == Interface_data[j]) {
-                $(check[i]).attr("checked",true)
+                $(check[i]).attr("checked", true)
             }
         }
     }
@@ -557,26 +541,26 @@ $(".upAdd>i").live("click", function () {
 });
 
 //点击下+号添加
-$(".downAdd>i").live("click", function () {
+$(".downAdd>i").live("click", function() {
     $(".downAdd>i").next().html("");
-    var a=$(this).parent().parent().parent().parent().children().eq(3).children().eq(1).children().children().children().eq(2).html()//.split("+")
-    var Interface_data = a == ""?[] : a.split("+");
+    var a = $(this).parent().parent().parent().parent().children().eq(3).children().eq(1).children().children().children().eq(2).html() //.split("+")
+    var Interface_data = a == "" ? [] : a.split("+");
     console.log(Interface_data);
     //获取状态数据
     //$.get("/MachineStatus/StatusDataMaintenance/GetStatusData", function (data) {
     //    var dataarray = data.Data;
-    var one_level_list = _.where(dataarray, { LEVEL: 1 });//1 LEVEL
-    var two_level_list = _.where(dataarray, { LEVEL: 2 });//1 LEVEL
+    var one_level_list = _.where(dataarray, { LEVEL: 1 }); //1 LEVEL
+    var two_level_list = _.where(dataarray, { LEVEL: 2 }); //1 LEVEL
     if ($(".downAdd>i").next().html() == "") {
         $(".downAdd>i").next().append(
-            '<li style="line-height:40px;font-size:17px;" class="font"> 一级状态（主状态）</li>'
+            '<li style="line-height:40px;font-size:17px;" class="font"> ' + lang.Common.LevelOneStatus + '</li>'
         )
         for (var i = 0; i < one_level_list.length; i++) {
-            var plan = dataarray[i].PLANED == 1 ? "（计划外）" : "（计划内）";
+            var plan = dataarray[i].PLANED == 1 ? "（" + lang.Common.Unplanned + "）" : "（" + lang.Common.InThePlan + "）";
             if (dataarray[i].LEVEL == 1) {
                 $(".downAdd>i").next().append(
                     '<li role="presentation" style="background:' + one_level_list[i].COLOR16 + ';font-size:16px;">' +
-                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' +//多选框
+                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' + //多选框
                     '<label >' +
                     '<input type="checkbox" name="cbHobby1" value="' + one_level_list[i].NAME + '">' +
                     '<span>' + one_level_list[i].NAME + plan + '</span>' +
@@ -587,14 +571,14 @@ $(".downAdd>i").live("click", function () {
             }
         }
         $(".downAdd>i").next().append(
-            '<li style="line-height:40px;font-size:17px;" class="font"> 二级状态（子状态）</li>'
+            '<li style="line-height:40px;font-size:17px;" class="font"> ' + lang.Common.LevelTwoStatus + '</li>'
         )
         for (var i = 0; i < two_level_list.length; i++) {
-            var plan = dataarray[i].PLANED == 1 ? "（计划外）" : "（计划内）";
+            var plan = dataarray[i].PLANED == 1 ? "（" + lang.Common.Unplanned + "）" : "（" + lang.Common.InThePlan + "）";
             if (dataarray[i].LEVEL == 1) {
                 $(".downAdd>i").next().append(
                     '<li role="presentation" style="background:' + two_level_list[i].COLOR16 + ';font-size:16px;">' +
-                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' +//多选框
+                    '<a role="menuitem" tabindex="-1" href="javascript:;" data-stopPropagation="true" style="color:black">' + //多选框
                     '<label >' +
                     '<input type="checkbox" name="cbHobby1" value="' + two_level_list[i].NAME + '">' +
                     '<span>' + two_level_list[i].NAME + plan + '</span>' +
@@ -625,36 +609,36 @@ $(".downAdd>i").live("click", function () {
 })
 
 //点击上多选框
-$(".upAdd input[name='cbHobby']").live("click", function () {
-    if (this.checked == true) {
-        if ($.inArray(this.value, up_condition) == -1) {
-            up_condition.push($(this).val());
+$(".upAdd input[name='cbHobby']").live("click", function() {
+        if (this.checked == true) {
+            if ($.inArray(this.value, up_condition) == -1) {
+                up_condition.push($(this).val());
+            }
+        } else {
+            up_condition.remove($(this).val(), "")
         }
-    } else {
-        up_condition.remove($(this).val(), "")
-    }
-    var a = up_condition.join("+")
-    $(this).parent().parent().parent().parent().parent().parent().prev().children().children().eq(0).eq(0).children().eq(0).html(a);
+        var a = up_condition.join("+")
+        $(this).parent().parent().parent().parent().parent().parent().prev().children().children().eq(0).eq(0).children().eq(0).html(a);
 
 
-})
-//点击下多选框
-$(".downAdd input[name='cbHobby1']").live("click", function () {
-    console.log(1)
-    if (this.checked == true) {
-        if ($.inArray(this.value, down_condition) == -1) {
-            down_condition.push($(this).val());
+    })
+    //点击下多选框
+$(".downAdd input[name='cbHobby1']").live("click", function() {
+        console.log(1)
+        if (this.checked == true) {
+            if ($.inArray(this.value, down_condition) == -1) {
+                down_condition.push($(this).val());
+            }
+        } else {
+            down_condition.remove($(this).val(), "");
         }
-    } else {
-        down_condition.remove($(this).val(), "");
-    }
 
-    var a = down_condition.join("+");
-    $(this).parent().parent().parent().parent().parent().parent().prev().prev().children().children().eq(2).children().eq(0).html(a);
+        var a = down_condition.join("+");
+        $(this).parent().parent().parent().parent().parent().parent().prev().prev().children().children().eq(2).children().eq(0).html(a);
 
-})
-//删除
-$("#delete").live("click",function () {
+    })
+    //删除
+$("#delete").live("click", function() {
     $(this).parent().parent().remove();
     var r = $(this).parent().siblings("input").val();
     console.log(r)
@@ -664,38 +648,38 @@ $("#delete").live("click",function () {
 })
 
 //数组去指定内容
-Array.prototype.indexOf = function (val) {
+Array.prototype.indexOf = function(val) {
     for (var i = 0; i < this.length; i++) {
         if (this[i] == val) return i;
     }
     return -1;
 };
-Array.prototype.remove = function (val) {
+Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
     if (index > -1) {
         this.splice(index, 1);
     }
 };
 //下拉框点击不消失
-$(function () {
-    $("ul.dropdown-menu").live("click", "[data-stopPropagation]", function (e) {
+$(function() {
+    $("ul.dropdown-menu").live("click", "[data-stopPropagation]", function(e) {
         e.stopPropagation();
     });
 });
 //数组去重复
-Array.prototype.unique1 = function () {
-    var n = []; //一个新的临时数组
-    for (var i = 0; i < this.length; i++) //遍历当前数组
-    {
-        //如果当前数组的第i已经保存进了临时数组，那么跳过，
-        //否则把当前项push到临时数组里面
-        if (n.indexOf(this[i]) == -1) n.push(this[i]);
+Array.prototype.unique1 = function() {
+        var n = []; //一个新的临时数组
+        for (var i = 0; i < this.length; i++) //遍历当前数组
+        {
+            //如果当前数组的第i已经保存进了临时数组，那么跳过，
+            //否则把当前项push到临时数组里面
+            if (n.indexOf(this[i]) == -1) n.push(this[i]);
+        }
+        return n;
     }
-    return n;
-}
-//随机数
+    //随机数
 function randomNum() {
-    return parseInt(Math.random() * 10+10);
+    return parseInt(Math.random() * 10 + 10);
 }
 //随机色
 function randomColor() {
@@ -705,11 +689,11 @@ function randomColor() {
     return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
 //数组是否有相同的值
-function ArrayNot(arr1,arr2){
-    var relsute=[];
-    for(var k in arr1){
-        for(var j in arr2){
-            if(arr1[k]==arr2[j]){
+function ArrayNot(arr1, arr2) {
+    var relsute = [];
+    for (var k in arr1) {
+        for (var j in arr2) {
+            if (arr1[k] == arr2[j]) {
                 arr3.push(arr1[k]);
             }
         }
