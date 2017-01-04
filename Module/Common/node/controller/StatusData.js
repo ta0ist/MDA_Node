@@ -5,18 +5,22 @@ var config = require('../../../../routes/config.js');
 var error = require('../../../../routes/error.js');
 var post_argu = require('../../../../routes/post_argu.js');
 
-exports.statusdatapage = function (req, res) {
-    if(!req.session.user)
+exports.statusdatapage = function(req, res) {
+    if (!req.session.user)
         res.redirect('/');
-    res.render(path.resolve(__dirname, '../../web/view/statusdata/index'), { menulist: req.session.menu,user:req.session.user });
+    res.render(path.resolve(__dirname, '../../web/view/statusdata/index'), {
+        menulist: req.session.menu,
+        user: req.session.user,
+        lang: post_argu.getLanguage()
+    });
 }
 
 
 //处理事件
-exports.fun = function (req, res) {
+exports.fun = function(req, res) {
     var args = [];
     args.push(res);
-    method = post_argu.getpath(__filename,req.params.method);
+    method = post_argu.getpath(__filename, req.params.method);
     args.push(method);
     args.push(req.body);
     doCallback(eval(req.params.method), args, res);
@@ -37,7 +41,7 @@ function DeleteStatus(res, method, args) {
     for (var i in args) {
         arg = i;
     }
-    post_argu.post_argu(res, method,JSON.parse(arg));
+    post_argu.post_argu(res, method, JSON.parse(arg));
 }
 
 //新增状态信息
@@ -46,9 +50,6 @@ function NewStatus(res, method, args) {
 }
 
 //更新信息
-function UpdateStatusData(res, method, args){
+function UpdateStatusData(res, method, args) {
     post_argu.post_argu(res, method, args);
 }
-
-
-
