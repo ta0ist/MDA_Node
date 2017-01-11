@@ -16,7 +16,11 @@ exports.post_argu = function(res, method, args) {
         body: args,
     }, function(error, response, body) {
         if (error) {
-            throw error;
+            res.json({
+                Data: null,
+                Status: -9999,
+                Message: error
+            })
         } else {
             if (body.d) {
                 var result = JSON.parse(body.d);

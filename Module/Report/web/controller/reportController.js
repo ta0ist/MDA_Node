@@ -307,6 +307,6 @@ function creatSearchPars(pars, tpars, name) {
             }
         }
         var pe = $('#path').html();
-        window.open("http://localhost:27516/Modules/Report/Report.asmx/GetRepost?filename=" + dd.filename + ".json&filetype=" + dd.filetype + "&parameters=" + JSON.stringify(dd.parameters) + "&templateName=" + pe + "\\" + dd.filename + ".json");
+        window.open("http://" + config.webIP + ":" + config.webPort + "/Modules/Report/Report.asmx/GetRepost?filename=" + dd.filename + ".json&filetype=" + dd.filetype + "&parameters=" + JSON.stringify(dd.parameters) + "&templateName=" + pe + "\\" + dd.filename + ".json");
     });
 }
