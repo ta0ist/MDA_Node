@@ -1,0 +1,63 @@
+ ul,
+ li {
+     padding: 0;
+     list-style: none;
+     margin: 0;
+ }
+ 
+ .other {
+     display: none;
+ }
+ 
+ .employee-details ul {
+     list-style: none;
+     font-style: italic;
+     margin: 15px;
+     padding: 0;
+ }
+ 
+ .employee-details ul li {
+     margin: 0;
+     line-height: 1.7em;
+ }
+ 
+ .employee-details label {
+     display: inline-block;
+     width: 90px;
+     padding-right: 10px;
+     text-align: right;
+     font-style: normal;
+     font-weight: bold;
+     font-size: 12px;
+ }
+ 
+ #caret {
+     position: absolute;
+     right: -10px;
+     top: 15px;
+     cursor: pointer;
+ }
+ 
+ #time {
+     display: none;
+ }
+ 
+ .Options {
+     border: 1px solid #ddd;
+     position: absolute;
+     top: 34px;
+     left: 0;
+     width: 198px;
+     z-index: 10;
+     display: none;
+ }
+ 
+ .Options>li {
+     padding: 5px 0;
+     background: #fff;
+ }
+ 
+ .Options input {
+     width: 20px;
+     height: 20px;
+ }

@@ -1,0 +1,54 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./InferiorReasonReturn/web/css/InferiorMultiple.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/ParameterTable.js')
+    script(type='text/javascript',src='./InferiorReasonReturn/web/controller/InferiorMultipleController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 综合查询
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 综合查询
+                
+    .row-fluid
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(valign='top', style='padding-left:5px;')
+                    .clearfix(style='width:1000px;')
+                        .span(style='width: 180px !important;')
+                            .control-group(style='margin-bottom: 5px;')
+                                label.control-label(style='width: 90px;margin-top:12px;') 零件号
+                                .BZcontrols(style='margin-left: 43px; margin-top: -32px;')
+                                    div
+                                        input#PART_NO.m-wrap(type='text', name='PART_NO', style='width:200px;')
+                        .pull-left
+                            form.form-horizontal(style='padding: 5px 2px 0px;height:35px')
+                                .span(style='width: 350px !important;')
+                                    .control-group(style='margin-bottom: 5px;')
+                                        label.control-label(data-lang='Common.PASSWORD', style='width:130px;') 开始时间
+                                        .BZcontrols
+                                            input#startTime.m-wrap(type='text', name='startTime', style='width:200px;')
+                                .span(style='width: 256px !important;')
+                                    .control-group(style='margin-bottom: 5px;')
+                                        label.control-label(data-lang='Common.PASSWORD', style='width:56px;') 结束时间
+                                        .BZcontrols
+                                            input#endTime.m-wrap(type='text', name='endTime', style='width:200px;')
+                                .span(style='width: 130px !important;')
+                                    .control-group(style='margin-bottom: 5px;')
+                                        .btn.green(style='margin-left: 50px;', onclick='search()')
+                                            | 查询
+                                            i.icon-search
+                        .pull-left(style='margin-top:5px;')
+                            button#gird_derive.btn.green(data-bind='')
+                                | 导出
+                                i.icon-exchange
+        #grid
+
+

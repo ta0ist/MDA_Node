@@ -37,6 +37,8 @@ exports.post_argu = function(res, method, args) {
     })
 }
 
+
+
 //获取路径
 exports.getpath = function(_path, method) {
     var pt = _path.split('\\');
