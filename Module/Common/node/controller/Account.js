@@ -112,8 +112,8 @@ function ModifyUser(res, method, args) {
 
 //修改密码
 function ResetPassword(res, method, args) {
-    var para = { userInfo: args, GP_NBR: args.GP_NBR };
-    post_argu.post_argu(res, method, para);
+
+    post_argu.post_argu(res, method, args);
 }
 
 //添加用户组

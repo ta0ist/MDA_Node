@@ -16,14 +16,15 @@ var post_argu = require('../../../../routes/post_argu.js');
 // var report = edge.func(path.join(__dirname, 'ReportServer.cs'));
 
 exports.page = function(req, res) {
-    if (!req.session.menu) {
+    if (!req.session.user) {
         res.redirect('/');
     }
     res.render(path.resolve(__dirname, '../../web/view/report/index'), {
         menulist: req.session.menu,
         report: path.resolve('./ReportTemplate'),
         user: req.session.user,
-        lang: post_argu.getLanguage()
+        lang: post_argu.getLanguage(),
+        config: config
     });
 }
 

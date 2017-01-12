@@ -265,7 +265,7 @@ function photoevnet() {
         $(".galleryli .icon-ok-sign").hide();
         $(this).find(".icon-ok-sign").show();
         $("#PHOTO_img").css("backgroundImage", "url(/images/people/" + $(this).attr("name") + ")");
-        image = "images/people/" + $(this).attr('name');
+        image = $(this).attr('name').split('/')[$(this).attr('name').split('/').length - 1];
     });
     $(".icon-trash").click(function(e) {
         var obj = $(this).parent().attr("name");
@@ -443,9 +443,9 @@ function addOrEdit(dataItem) {
 
     if (dataItem == undefined) {
         $("#PHOTO_img").css("backgroundImage", "url(/images/people/Default/no.jpg)");
-        image = "images/people/Default/no.jpg";
+        image = "no.jpg";
     } else {
-        $("#PHOTO_img").css("backgroundImage", "url(" + dataItem.PHOTO.replace(/\/\//g, "/") + ")");
+        $("#PHOTO_img").css("backgroundImage", "url(/images/people/NoDefault/" + dataItem.PHOTO + ")");
         image = dataItem.PHOTO.replace(/\/\//g, "/");
     }
 
