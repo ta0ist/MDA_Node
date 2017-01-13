@@ -1,0 +1,91 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./InferiorReasonReturn/web/css/PartNoInferior.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/ParameterTable.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./InferiorReasonReturn/web/controller/PartNoInferiorController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 次品原因
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 次品原因
+                    i.icon-angle-right
+    .row-fluid
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(valign='top', style='padding-left:5px;')
+                    .control-group(style='height: 34px;')
+                        .controls
+                            .input-icon.left(style='width: 250px; display: inline;')
+                                i.icon-search
+                                input#filter.m-wrap(type='text', placeholder='零件号')
+                            button#search.btn.green
+                                | 查询
+                                i.icon-search
+                            button.btn.blue(data-bind='click:grid_add')
+                                | 新增
+                                i.icon-plus-sign
+                            button.btn.red(data-bind='click:grid_delete')
+                                | 删除
+                                i.icon-remove-sign
+                            div(style='display:inline-block;position:relative;')
+                                form(action='/', method='post', enctype='multipart/form-data')
+                                    input#file(type='file', name='file', value='file')
+                    #grid
+    script#popup-add(type='text/x-kendo-template').
+        <form class="form-horizontal" id="machineviewmodel" style="width:450px;">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="InferiorReasonReturn.PART_NO">零件号</label>
+        <div class="controls">
+        <input type="text" id="PART_NO" name="PART_NO" data-bind="value:PART_NO" data-required="1" class="span6 m-wrap" style="width: 314px; margin-left: 0px; " />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="InferiorReasonReturn.INTERRIOR_NUM">不合格数</label>
+        <div class="controls">
+        <input type="text" id="INTERRIOR_NUM" name="INTERRIOR_NUM" data-bind="value:INTERRIOR_NUM" data-required="1" class="span6 m-wrap rank-num" style="width: 314px; margin-left: 0px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="InferiorReasonReturn.INTERROR_REASON">次品原因名字</label>
+        <div class="controls">
+        <input type="text" id="INTERROR_REASON" name="INTERROR_REASON" data-bind="value:INTERROR_REASON" data-required="1" class="span6 m-wrap" style="width: 314px; margin-left: 0px; " />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group" id="time">
+        <label class="control-label">反馈日期</label>
+        <div class="controls">
+        <input id="REPORT_MAN_DATE" name="REPORT_MAN_DATE" type="text" class="span6 m-wrap" style="width: 314px; margin-left: 0px; " />
+        </div>
+        </div>
+        <div class="form-actions">
+        <button data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></button>
+        <button id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></button>
+        </div>
+        </form>
