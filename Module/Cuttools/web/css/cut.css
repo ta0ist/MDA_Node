@@ -1,0 +1,25 @@
+body {
+    background-color: #293c55;
+}
+
+#head>div {
+    display: inline;
+}
+
+#title {
+    background-color: #63cb39;
+    color: #2654f9;
+    font: bold 1em "宋体", Arial, Times;
+    font-size: 30px;
+    height: 40px;
+}
+
+#mode {
+    color: #df8bc6;
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+#attr>div {
+    display: inline;
+}

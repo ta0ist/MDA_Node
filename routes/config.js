@@ -1,5 +1,4 @@
-﻿
-module.exports = {
+﻿module.exports = {
     //node发布端口
     port: '8080',
 
@@ -13,10 +12,8 @@ module.exports = {
             'cookie': ''
         }
     },
-    // webIP: 'localhost',
-    // webPort: 27516
-    // webIP:'192.168.0.211',
-    // webPort:8020
-    webIP:'192.168.0.95',
-    webPort:8013
+    webIP: 'localhost',
+    webPort: 27516
+        //webIP:'192.168.0.95',
+        //webPort:8013
 }
