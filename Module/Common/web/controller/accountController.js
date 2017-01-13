@@ -64,14 +64,7 @@ app.controller('accountctrl', ['$scope', '$http', function($scope, $http) {
     $scope.adduser = function() {
         var treeobj = $("#orgnizetree").data("kendoTreeView");
         //验证
-        validator = $("#signupForm").validate({
-            rules: {
-                USER_NAME: { required: true }
-            },
-            messages: {
-                USER_NAME: { required: lang.Common.NotEmpty }
-            }
-        });
+
         var selectedNode = treeobj.select();
         if (selectedNode.length > 0) { //判断是否有选中的节点
             $.x5window(lang.Common.Added, kendo.template($("#popup-add").html()), function() {
@@ -103,9 +96,19 @@ app.controller('accountctrl', ['$scope', '$http', function($scope, $http) {
                 url2: url2
             });
             $("#EXPIRED").kendoDatePicker({ format: "yyyy/MM/dd" });
-            var USER_NAME = $("#USER_NAME").val(),
-                PASSWORD = $("#PASSWORD").val();
+
+
             $("#Win_Submit").bind("click", function(e) {
+                validator = $("#signupForm").validate({
+                    rules: {
+                        USER_NAME: { required: true }
+                    },
+                    messages: {
+                        USER_NAME: { required: lang.Common.NotEmpty }
+                    }
+                });
+                var USER_NAME = $("#USER_NAME").val(),
+                    PASSWORD = $("#PASSWORD").val();
                 if (validator.form()) {
                     var data = {
                         USER_NAME: USER_NAME,
