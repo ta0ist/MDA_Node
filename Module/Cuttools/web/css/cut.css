@@ -6,6 +6,14 @@ body {
     display: inline;
 }
 
+table tr {
+    height: 30px;
+}
+
+td {
+    text-align: center;
+}
+
 #title {
     background-color: #63cb39;
     color: #2654f9;
@@ -20,6 +28,42 @@ body {
     margin-left: 20px;
 }
 
+.title {
+    color: #B5E1CB;
+    font: bold 1em "宋体", Arial, Times;
+    font-size: 25px;
+}
+
+#attr {
+    margin-top: 10px;
+}
+
 #attr>div {
-    display: inline;
+    float: left;
+}
+
+#mac_name {
+    color: #df8bc6;
+    font-size: 30px;
+}
+
+#part_name {
+    color: #F69797;
+    font-size: 25px;
+}
+
+#cut_content,
+#dime {
+    color: #FCDDDD;
+    font-size: 25px;
+}
+
+.measured_val {
+    color: #FDFD8A;
+    font-size: 40px;
+}
+
+.nor {
+    font-size: 30px;
+    color: #B5E1CB;
 }

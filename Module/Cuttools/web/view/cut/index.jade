@@ -2,25 +2,43 @@ html
   head
     title cuttools
     link(href="./Cuttools/web/css/cut.css", rel="stylesheet")
-  body
+  body(ng-app='X_cut',ng-controller='X_cut_ctrl')
     #head
       #title SHIMANO FANUC FOCAS Auto Offset System
       #mode 补正模式
     #attr
-      div
-        table
-          tr
+      div(style='width:50%;')
+        table(style='width:100%;')
+          tr.title
             td 设备名称
             td 加工零件型号名称
           tr
-            td NW100 N2
-            td SG3R40
-          tr 
+            td#mac_name NW100 N2
+            td#part_name SG3R40
+          tr.title
             td 检查项目
             td 尺寸规格    
           tr
-            td 49.42
-            td
+            td#cut_content 49.42
+            td#dime
               div 49.02
               div -0.015
-              div -0.135  
+              div -0.135
+       div(style='width:50%;margin-top:40px;')
+         table(style='width:100%;')
+           tr.title  
+              td.measured_val 计测值 
+              td 刃物台 
+              td 刀具No. 
+              td 补正轴
+           tr
+              td.measured_val 49.295
+              td.nor L
+              td.nor 3
+              td.nor 刀具径
+    #chart
+      #chart_draw
+        #measured_chart
+
+      #chart_memo
+      #chart_table
