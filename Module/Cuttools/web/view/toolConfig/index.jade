@@ -1,0 +1,149 @@
+extends ../../../../../views/layout
+block append headcss
+    link(href="./Cuttools/web/css/toolConfig.css", rel="stylesheet")
+block append headjavascript
+    script(type='text/javascript',src='./Cuttools/web/controller/toolConfigController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 刀具配置
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') 刀具配置
+    .row-fluid
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(valign='top', style='padding-left:5px;')
+                    .control-group(style='height: 34px;')
+                        .controls
+                            .input-icon.left(style='width: 250px; display: inline;')
+                                i.icon-search
+                                input#filter.m-wrap(type='text', placeholder='产品名称')
+                            button#search.btn.green(onclick='search()')
+                                | #{lang.EmployeePerformance.Search}
+                                i.icon-search
+                             button#add.btn.blue(title='',onclick='add()')
+                                | #{lang.Order.Add}
+                                i.icon-plus-sign
+                            //- button#deleteAll.btn.red(style='outline: medium', title='',onclick="deleteAll()")
+                            //-     | #{lang.Order.Delete}
+                            //-     i.icon-remove-sign
+    #grid
+    script#addTemplate(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:700px;">
+        <div id="PROG_NA" style="width: 600px; margin: -20px auto 30px;"> </div>
+        <table class="control-group" style="margin-left: -40px;">
+        <tr>
+        <td class="PROG">
+        <label class=" control-label"><span class="required"></span>产线</label>
+        <div class="controls">
+        <input type="text" class="span6 m-wrap" style="width:200px; margin-left: 0px;" id="Line" name="Line" />
+        </div>
+        </td>
+        <td class="">
+        <label class="control-label"><span class="required"></span>产品名称</label>
+        <div class="controls">
+        <input type="text" id="Part_Name" name="Part_Name" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <table class="control-group" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+        <label class="control-label">Process</label>
+        <div class="controls">
+        <input type="text" id="Process" name="Process" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td class="">
+        <label class="control-label">Product_Model</label>
+        <div class="controls" id="span">
+        <input type="text" id="Product_Model" name="Product_Model" class="span6 m-wrap" style="width:214px; margin-left: 0px;line-height:34px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <table class="control-group" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+        <label class="control-label">Program</label>
+        <div class="controls">
+        <input type="text" id="Program" name="Program" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td class="">       
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#editTemplate(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:700px;">
+        <div id="PROG_NA" style="width: 600px; margin: -20px auto 30px;"> </div>
+        <table class="control-group" style="margin-left: -40px;">
+        <tr>
+        <td class="PROG">
+        <label class=" control-label"><span class="required"></span>产线</label>
+        <div class="controls">
+        <input type="text" class="span6 m-wrap " style="width:200px; margin-left: 0px;" id="Line" name="Line" />
+        </div>
+        </td>
+        <td class="">
+        <label class="control-label"><span class="required"></span>产品名称</label>
+        <div class="controls">
+        <input type="text" id="Part_Name" name="Part_Name" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <table class="control-group" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+        <label class="control-label">Process</label>
+        <div class="controls">
+        <input type="text" id="Process" name="Process" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td class="">
+        <label class="control-label">Product_Model</label>
+        <div class="controls" id="span">
+        <input type="text" id="Product_Model" name="Product_Model" class="span6 m-wrap" style="width:214px; margin-left: 0px;line-height:34px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <table class="control-group" style="margin-left:-40px;">
+        <tr>
+        <td class="">
+        <label class="control-label">Program</label>
+        <div class="controls">
+        <input type="text" id="Program" name="Program" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td class="">       
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#del(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:700px;">
+        <div id="PROG_NA" style="width: 600px; margin: -20px auto 30px;"> </div>
+        <h3 style="margin-left:100px">确定要删除吗！</h3>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>

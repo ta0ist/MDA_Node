@@ -1,0 +1,69 @@
+<div class='addModal' ng-show='EditModalDisplay'>
+    <div class="modal-dialog" style="width: 800px">
+        <div class="modal-content" style="width: 800px">
+            <div class="modal-header">
+                <h4 class="modal-title ">编辑</h4>
+            </div>
+            <div class="modal-body ">
+                <form class="row ">
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Tool:</span>
+                        <input type="text " ng-model="Edit_Tool" >
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>L Turret</span>
+                        <input type="text " ng-model="Edit_Turret">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Tool No:</span>
+                        <input type="text " ng-model="Edit_Tool_No">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Cutting Content:</span>
+                        <input type="text " ng-model="Edit_Cutting_Content">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Dime nsion:</span>
+                        <input type="number" ng-model="Edit_Dime_Nsion">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Up Offset:</span>
+                        <input type="number" ng-model="Edit_Up_Offset">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Down Offset:</span>
+                        <input type="number" ng-model="Edit_Down_Offset">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Control Base On Cpk:</span>
+                        <input type="number" ng-model="Edit_CPK">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Macro Adress:</span>
+                        <input type="text " ng-model="Edit_Macro_Address">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Offset Axis:</span>
+                        <input type="text " ng-model="Edit_OFFSET_AXIS">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Remark:</span>
+                        <input type="text " ng-model="Edit_Remark">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Offset Type:</span>
+                        <input type="text " ng-model="Edit_OFFSET_TYPE">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>QPLCAdress:</span>
+                        <input type="text " ng-model="Edit_QPLC" disabled="disabled" class='disabled'>
+                    </label>
+                </form>
+            </div>
+            <div class="modal-footer ">
+                <button type="button " class="btn btn-primary " ng-click='EditData()'>确定</button>
+                <button type="button " class="btn btn-default " ng-click="EditColse() ">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
