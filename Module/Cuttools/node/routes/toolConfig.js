@@ -9,4 +9,5 @@ module.exports = function(app) {
     app.post('/toolConfig/r/delete', toolConfig.delete);
     app.post('/toolConfig/r/deleteAll', toolConfig.deleteAll);
     app.post('/toolConfig/r/search', toolConfig.search);
+    app.post('/toolConfig/r/del', toolConfig.del);
 }

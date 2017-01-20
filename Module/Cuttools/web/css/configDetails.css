@@ -29,6 +29,10 @@
      margin-left: 5px;
  }
  
+ #grid {
+     margin-top: -1px;
+ }
+ 
  #grid td,
  #grid th {
      border: 1px solid #000;
@@ -110,5 +114,16 @@
  
  .box {
      overflow-y: auto;
-     border: 1px solid transparent;
+     height: 500px;
+     padding: 0 15px;
+     border-left: 1px solid #000;
+     border-right: 1px solid #000;
+     border-top: 1px solid #000;
+ }
+ 
+ .btn_add_box {
+     padding: 15px 15px 15px 15px;
+     border-bottom: 1px solid #000;
+     border-left: 1px solid #000;
+     border-right: 1px solid #000;
  }

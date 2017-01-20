@@ -83,7 +83,24 @@ exports.edit = function(req, res) {
         }
     })
 }
+exports.del = function(req, res) {
+    var obj = req.body;
+    var strsql = "SELECT 1 FROM dbo.TOOLS_INFO WHERE X_nbr=" + obj.ID;
+    db.sql(strsql, function(err, data) {
+        if (data.length > 0) {
+            res.json({
+                Status: 1,
+                Message: '存在刀具不能删除！'
+            })
+        } else {
+            res.json({
+                Status: 0,
+                Message: err
+            })
+        }
 
+    })
+}
 exports.delete = function(req, res) {
     var obj = req.body;
     var strsql = "DELETE FROM dbo.TOOLS_PRODUCT WHERE ID=" + obj.ID

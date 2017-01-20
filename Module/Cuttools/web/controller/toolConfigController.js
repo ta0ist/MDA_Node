@@ -133,6 +133,7 @@ function add() {
 
 /**********编辑***********/
 function edit(e) {
+
     $.x5window("编辑", kendo.template($("#editTemplate").html()));
     groupOrMachine = $("#Line").multipleComboxTree({
         url: "/machine/GetGrouplist_Customer",
@@ -175,28 +176,36 @@ function edit(e) {
 }
 /**********删除**********/
 function Delete(e) {
-    $.x5window("编辑", kendo.template($("#del").html()));
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-    $("#Save").on('click', function() {
-        var data = {
-            ID: dataItem.ID
+    $.post(baseUrl + 'del', { ID: dataItem.ID }, function(data) {
+        if (data.Status == 0) {
+            $.x5window("删除", kendo.template($("#del").html()));
+            $("#Save").on('click', function() {
+                var data = {
+                    ID: dataItem.ID
+                }
+                $.post(baseUrl + 'delete', data, function(data) {
+                    if (data.Status == 0) {
+                        $("#x5window").data("kendoWindow").close();
+                        //grid.grid("refresh", []);
+                        showGrid('getTool', "");
+                        BzSuccess(data.Message);
+                    }
+                })
+            })
+        } else {
+            BzAlert(data.Message);
         }
-        $.post(baseUrl + 'delete', data, function(data) {
-            if (data.Status == 0) {
-                $("#x5window").data("kendoWindow").close();
-                //grid.grid("refresh", []);
-                showGrid('getTool', "");
-                BzSuccess(data.Message);
-            }
-        })
     })
+
 }
 
 /*******多个删除 ******/
 function deleteAll() {
-    $.x5window("删除", kendo.template($("#del").html()));
     var dd = grid.data("bz-grid").checkedDataRows();
     console.log(dd);
+
+    $.x5window("删除", kendo.template($("#del").html()));
     var ID = [];
     for (var i = 0; i < dd.length; i++) {
         ID.push(dd[i].ID);

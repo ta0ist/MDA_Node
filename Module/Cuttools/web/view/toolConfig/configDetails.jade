@@ -152,11 +152,13 @@ html
                     td 
                         button.btn.btn-primary(style='margin-left:3px;',ng-click="edit(x)") 编辑
                         button.btn.btn-danger(style='margin-left:3px;',ng-click="deleteTool(x)") 删除
-            tfoot
-                tr
-                    td(colspan="18") 
-                        button.btn.btn-success.btn-block(ng-click='add()') 新增
+            //- tfoot
+            //-     tr
+            //-         td(colspan="18") 
                         
+    div.btn_add_box
+        div
+            button.btn.btn-success.btn-block(ng-click='add()') 新增
     add-Modal
     edit-Modal
     delete-Modal

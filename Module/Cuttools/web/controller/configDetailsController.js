@@ -1,3 +1,7 @@
+window.onload = function() {
+    console.log(document.body.clientHeight)
+}
+
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $location, $http) {
     $http.post('/configDetails/r/getdata', { id: $location.search().id }).success(function(data) {
