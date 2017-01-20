@@ -1,0 +1,70 @@
+<div class='addModal' ng-show='addModalDisplay'>
+    <div class="modal-dialog" style="width: 800px">
+        <div class="modal-content" style="width: 800px">
+            <div class="modal-header">
+                <h4 class="modal-title ">新增</h4>
+            </div>
+            <div class="modal-body ">
+                <form class="row ">
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Tool:</span>
+                        <input type="text " ng-model="Tool" >
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>L Turret</span>
+                        <input type="text " ng-model="Turret">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Tool No:</span>
+                        <input type="text " ng-model="Tool_No">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Cutting Content:</span>
+                        <input type="text " ng-model="Cutting_Content">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Dime nsion:</span>
+                        <input type="number" ng-model="Dime_Nsion">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Up Offset:</span>
+                        <input type="number" ng-model="Up_Offset">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Down Offset:</span>
+                        <input type="number" ng-model="Down_Offset">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Control Base On Cpk:</span>
+                        <input type="number" ng-model="CPK">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Macro Adress:</span>
+                        <input type="text " ng-model="Macro_Address">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Offset Axis:</span>
+                        <input type="text " ng-model="OFFSET_AXIS">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Remark:</span>
+                        <input type="text " ng-model="Remark">
+                    </label>
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>Offset Type:</span>
+                        <input type="text " ng-model="OFFSET_TYPE">
+                    </label>
+
+                    <label class="col-xs-12 col-sm-6 ">
+                        <span>QPLCAdress:</span>
+                        <input type="text " ng-model="QPLC">
+                    </label>
+                </form>
+            </div>
+            <div class="modal-footer ">
+                <button type="button " class="btn btn-primary " ng-click='addData()'>确定</button>
+                <button type="button " class="btn btn-default " ng-click="addColse() ">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

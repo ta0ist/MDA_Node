@@ -1,0 +1,171 @@
+doctype html
+html
+  head
+    title
+    link(href='./Cuttools/web/css/bootstrap.min.css', rel="stylesheet")
+    link(href='./Cuttools/web/css/configDetails.css', rel="stylesheet")
+  body(ng-app='myApp',ng-controller='myCtrl')
+    table#table.table.table-bordered.text-center
+        thead.thead
+            tr
+            th.text-center(colspan='6')  KIP MS Process FANUC FOCAS Auto Offset Tool Control List(L Turret)
+        tbody
+            tr
+                td
+                    span Product-Model:
+                    span {{head[0].Product_Model}}
+                td(rowspan='2')
+                    | Made By:
+                td
+                td(rowspan='2')
+                    | Approval by
+                td
+                td Revision Content
+            tr
+                td
+                    span Part-Name:
+                    span {{head[0].Part_Name}}
+                td
+                td
+                td
+            tr
+                td
+                    span KIP MS Line:
+                    span 
+                td(rowspan='2')
+                    | Made Date:
+                td
+                td(rowspan='2')
+                    | Approval Date
+                td
+                td
+            tr
+                td
+                    span Line No:
+                    span {{head[0].Line}}
+                td
+                td
+                td
+            tr
+                td
+                    span MachiningProgram No:
+                    span {{head[0].Program}}
+                td(rowspan='2')
+                    | Check By:
+                td
+                td(rowspan='2')
+                    | check Sheet 
+                    br
+                    | Revision:
+                td
+                td
+            tr
+                td
+                    span Process Name:
+                    span {{head[0].Process}}
+                
+                td
+                td
+                td
+    div.box
+        table#grid.table.table-bordered.text-center
+            thead
+                tr
+                    th Tool
+                    th
+                        | L 
+                        br
+                        | Turret
+                    th Tool No
+                    th Cutting Content
+                    th Dime nsion
+                    th
+                        | Control 
+                        br
+                        | Base On 
+                        br
+                        | Cpk
+                    th.red
+                        | Min 
+                        br
+                        | Spec 
+                        br
+                        | (Red)
+                    th.yellow
+                        | Min 
+                        br
+                        | Control 
+                        br
+                        | Yellow
+                    th.green
+                        | Min 
+                        br
+                        | Control 
+                        br
+                        | Green
+                    th.green
+                        | Max 
+                        br
+                        | Control 
+                        br
+                        | Green
+                    th.yellow
+                        | Max 
+                        br
+                        | Control 
+                        br
+                        | Yellow
+                    th.red
+                        | Max 
+                        br
+                        | Spsc 
+                        br
+                        | (Red)
+                    th
+                        | Macro 
+                        br
+                        | Adress
+                    th Offset Axis
+                    th Remark
+                    th QPLCAdress
+                    th Offset Type
+                    th operate
+            tbody
+                tr(ng-repeat='x in list',ng-click="row($index)",ng-class="{trColor:rowColor==$index}")
+                    td {{x.Tool}}
+                    td {{x.Turret | Turret}}
+                    td {{x.Tool_No}}
+                    td {{x.Cutting_Content}}
+                    td ø{{x.Dime_Nsion}}+{{x.Up_Offset}}/-{{x.Down_Offset}}
+                    td {{x.CPK}}
+                    td.red {{x.Dime_Nsion-x.Down_Offset}}
+                    td.yellow {{x | MinSpec}}       
+                    td.green {{x | MinControl}}   
+                    td.green {{x | MaxControl}}   
+                    td.yellow {{x | MaxSpec}}   
+                    td.red {{x.Dime_Nsion+x.Up_Offset}}
+                    td {{x.OFFSET_AXIS}}
+                    td {{x.CPK}}
+                    td {{x.Remark}}
+                    td {{x.QPLC}}
+                    td {{x.OFFSET_TYPE}}
+                    td 
+                        button.btn.btn-primary(style='margin-left:3px;',ng-click="edit(x)") 编辑
+                        button.btn.btn-danger(style='margin-left:3px;',ng-click="deleteTool(x)") 删除
+            //- tfoot
+            //-     tr
+            //-         td(colspan="18") 
+                        
+    div.btn_add_box
+        div
+            button.btn.btn-success.btn-block(ng-click='add()') 新增
+    add-Modal
+    edit-Modal
+    delete-Modal
+    script(src="./Cuttools/web/js/jquery-1.11.3.js")
+    script(src="./Cuttools/web/js/angular.min.js")   
+    script(src="./javascripts/jquery-ui-1.10.1.custom.min.js")
+    script(src="./Bandex.js")
+    script(src="./Cuttools/web/controller/configDetailsController.js")
+             
+                 

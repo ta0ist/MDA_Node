@@ -1,0 +1,129 @@
+ #table td {
+     vertical-align: middle;
+ }
+ 
+ .thead>tr {
+     background: #FFFF00;
+     line-height: 60px;
+     font-size: 26px;
+ }
+ 
+ #table>tbody {
+     background: #BFBFBF;
+ }
+ 
+ #table td,
+ #table th {
+     border: 1px solid #000;
+ }
+ 
+ #table>tbody>tr>td>span:first-child {
+     width: 200px;
+     text-align: right;
+     float: left;
+ }
+ 
+ #table>tbody>tr>td>span:nth-child(2) {
+     float: left;
+     text-align: left;
+     margin-left: 5px;
+ }
+ 
+ #grid {
+     margin-top: -1px;
+ }
+ 
+ #grid td,
+ #grid th {
+     border: 1px solid #000;
+     vertical-align: middle;
+     text-align: center;
+ }
+ 
+ #grid td {
+     min-height: 37px;
+ }
+ 
+ .red {
+     background: #FF0000;
+ }
+ 
+ .green {
+     background: #00B150;
+ }
+ 
+ .yellow {
+     background: #FFFF00;
+ }
+ 
+ .active {
+     background: #BFBFBF;
+ }
+ 
+ .trColor {
+     background: #f58;
+ }
+ 
+ .addModal {
+     position: fixed;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     z-index: 1040;
+     overflow: auto;
+     overflow-y: scroll;
+ }
+ 
+ .addModal span {
+     display: inline-block;
+     width: 150px;
+     text-align: right;
+ }
+ 
+ .addModal form label {
+     margin-top: 8px;
+ }
+ 
+ .disabled {
+     background: #ddd;
+     border: 1px solid #BFBFBF;
+ }
+ 
+ .deleteModal {
+     padding: 10px;
+     width: 400px;
+     border: 1px solid #ddd;
+     z-index: 9999;
+     background: #fff;
+     border-radius: 5px;
+     box-shadow: #ddd 10px;
+     position: fixed;
+     top: 100px;
+     left: 50%;
+     margin-left: -200px;
+ }
+ 
+ .delete_btn>button {
+     margin-right: 5px;
+ }
+ 
+ body {
+     height: 100%;
+ }
+ 
+ .box {
+     overflow-y: auto;
+     height: 500px;
+     padding: 0 15px;
+     border-left: 1px solid #000;
+     border-right: 1px solid #000;
+     border-top: 1px solid #000;
+ }
+ 
+ .btn_add_box {
+     padding: 15px 15px 15px 15px;
+     border-bottom: 1px solid #000;
+     border-left: 1px solid #000;
+     border-right: 1px solid #000;
+ }
