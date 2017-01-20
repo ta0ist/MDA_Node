@@ -13,17 +13,17 @@ html
             td 设备名称
             td 加工零件型号名称
           tr
-            td#mac_name NW100 N2
-            td#part_name SG3R40
+            td#mac_name {{macList[focus_mac].MAC_NAME}}
+            td#part_name {{Pro.Product_Model}}
           tr.title
             td 检查项目
             td 尺寸规格    
           tr
-            td#cut_content 49.42
+            td#cut_content {{Pro.Cutting_Content}}
             td#dime
-              div 49.02
-              div -0.015
-              div -0.135
+              div {{Pro.Dime_Nsion}}
+              div {{'+'+Pro.Up_Offset}}
+              div {{-Pro.Down_Offset}}
        div(style='width:50%;margin-top:40px;')
          table(style='width:100%;')
            tr.title  
@@ -32,13 +32,68 @@ html
               td 刀具No. 
               td 补正轴
            tr
-              td.measured_val 49.295
-              td.nor L
-              td.nor 3
-              td.nor 刀具径
+              td.measured_val {{measured_table[0].SURVEY_VAL}}
+              td.nor {{Pro.Turrent | Tr}}
+              td.nor {{Pro.Tool_No}}
+              td.nor {{Pro.OFFSET_AXIS}}
     #chart
       #chart_draw
         #measured_chart
-
+        #cut_chart
       #chart_memo
+        ul
+          li UL
+          li
+            .bush_red
+          li UCL
+          li
+            .bush_yellow
+          li Target
+          li
+            .bush_yellow
+          li Center
+          li
+            .solid_blue
+          li LCL
+          li
+            .bush_yellow
+          li LL
+          li
+            .bush_red
+          li#sumcut 累计补正
+          li#cutval 0.000
+
+
+            
       #chart_table
+        table#his_table
+          tr
+            td no
+            td Dimension
+          tr(ng-repeat='md in measured_table')
+            td {{$index+1}}
+            td {{md.SURVEY_VAL}}
+          
+    
+    #foot
+      #dimes
+        .dime_btn(ng-repeat='b in bun')
+            input(type="button" ng-value='b.value' ng-click='change_dime($index)' ng-class='{choose:$index==focus}')
+      //- #page 
+      //-     img(src='./images/cuttool/arrow_right.png' style='height:42px;' ng-click='getDime()')
+    #machine
+      #maclist
+        .machine_btn(ng-repeat='mac in macList',id='{{mac.MAC_NAME}}')
+            input(type="button" ng-value='mac.MAC_NAME' ng-click='change_mac($index)' ng-class='{choose_mac:$index==focus_mac}')
+      #page 
+        img(src='./images/cuttool/arrow_right.png' style='height:42px;' ng-click='getmac()')
+    #cpk
+      #cpk_title CPK设定
+      #cpk_val {{Pro.CPK}}
+    script(src="./javascripts/UI/Scripts/jquery-1.10.2.js")
+    script(src="./javascripts/UI/Scripts/Angular/angular.min.js")
+    script(src="./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js")
+    script(src="./Cuttools/web/js/X_chart.js")
+    script(src="./Cuttools/web/controller/cutController.js")
+    script(src='./javascripts/underscore-min.js')
+    
