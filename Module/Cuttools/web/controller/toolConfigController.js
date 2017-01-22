@@ -4,56 +4,6 @@ var groupOrMachine;
 $(function() {
         showGrid('getTool', "");
 
-
-
-
-
-
-        // var fields = {
-        //     ID: { type: "string" },
-        //     Line: { type: "string" },
-        //     Part_Name: { type: "string" },
-        //     Process: { type: "string" },
-        //     Product_Model: { type: "string" },
-        //     Program: { type: "string" }
-        // };
-        // var cols = [];
-        // cols.push({ field: "ID", title: 'ID', width: 80, sortable: true, filterable: false, hidden: true });
-        // cols.push({ field: "Line", title: '产线', width: 80, sortable: true, filterable: false, hidden: false });
-        // cols.push({ field: "Part_Name", title: '产品名称', width: 80, sortable: true, filterable: false });
-        // cols.push({ field: "Process", title: 'Process', width: 80, sortable: true, filterable: false });
-        // cols.push({ field: "Product_Model", title: 'Product_Model', width: 80, sortable: true, filterable: false });
-        // cols.push({ field: "Program", title: "Program", width: 80, sortable: true, filterable: false });
-        // cols.push({
-        //     command: [
-        //         { name: "aa", text: lang.Order.Edit + '<i class="icon-edit"></i>', className: "btn purple", click: edit },
-        //         { name: "bb", text: lang.Order.Delete + '<i class="icon-remove-sign"></i>', className: "btn red ", click: Delete }
-        //     ],
-        //     title: lang.Order.Operation,
-        //     width: 200
-        // });
-
-        // grid = $("#grid").grid({
-        //     checkBoxColumn: true,
-        //     baseUrl: baseUrl, //调用的URL
-        //     selectable: "single", //行选择方式
-        //     //sort: [{ field: "USER_NBR", dir: "ASC" }],
-        //     scrollable: true,
-        //     editable: false, //是否可编辑
-        //     autoBind: true,
-        //     //resizeGridWidth: true,//列宽度可调
-        //     isPage: true,
-        //     //toolbar: kendo.template($("#template").html()),
-        //     server: false,
-        //     //detailTemplate: kendo.template($("#detail-template").html()),
-
-        //     actionUrl: ["getTool", "", "", "DelList"], //读、新增、更改、删除的URLaction
-        //     custom: {
-        //         PrimaryKey: "ID",
-        //         fields: fields,
-        //         cols: cols
-        //     }
-        // });
     })
     /*******GIRD*********/
 function showGrid(url, str) {
@@ -78,6 +28,7 @@ function showGrid(url, str) {
     }
     $.post(baseUrl + url, data, function(data) {
         if (data.Status == 0) {
+
             grid = $("#grid").kendoGrid({
                 checkBoxColumn: true,
                 columns: cols,
@@ -121,7 +72,12 @@ function add() {
             $.post(baseUrl + 'add', data, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
-                    showGrid('getTool', "");
+                    // showGrid('getTool', "");
+                    $.post(baseUrl + 'getTool', { filter: "" }, function(result) {
+                        if (result.Status == 0)
+                            refresh(result);
+                    });
+
                     BzSuccess(data.Message);
                 }
             })
@@ -129,6 +85,10 @@ function add() {
             BzAlert('内容不能为空')
         }
     })
+}
+/****刷新gird****/
+function refresh(result) {
+    $("#grid").data("kendoGrid").dataSource.data(result.Data);
 }
 
 /**********编辑***********/
@@ -164,8 +124,12 @@ function edit(e) {
             $.post(baseUrl + 'edit', data, function(data) {
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
-                    //grid.grid("refresh", []);
-                    showGrid('getTool', "");
+
+                    //showGrid('getTool', "");
+                    $.post(baseUrl + 'getTool', { filter: "" }, function(result) {
+                        if (result.Status == 0)
+                            refresh(result);
+                    });
                     BzSuccess(data.Message);
                 }
             })
@@ -186,10 +150,15 @@ function Delete(e) {
                 }
                 $.post(baseUrl + 'delete', data, function(data) {
                     if (data.Status == 0) {
-                        $("#x5window").data("kendoWindow").close();
+
                         //grid.grid("refresh", []);
-                        showGrid('getTool', "");
+                        //showGrid('getTool', "");
+                        $.post(baseUrl + 'getTool', { filter: "" }, function(result) {
+                            if (result.Status == 0)
+                                refresh(result);
+                        });
                         BzSuccess(data.Message);
+                        $("#x5window").data("kendoWindow").close();
                     }
                 })
             })
@@ -200,30 +169,6 @@ function Delete(e) {
 
 }
 
-/*******多个删除 ******/
-function deleteAll() {
-    var dd = grid.data("bz-grid").checkedDataRows();
-    console.log(dd);
-
-    $.x5window("删除", kendo.template($("#del").html()));
-    var ID = [];
-    for (var i = 0; i < dd.length; i++) {
-        ID.push(dd[i].ID);
-    }
-    var data = {
-        Ids: ID
-    }
-    console.log(data)
-    $("#Save").on('click', function() {
-        $.post(baseUrl + 'deleteAll', data, function(data) {
-            if (data.Status == 0) {
-                $("#x5window").data("kendoWindow").close();
-                grid.grid("refresh", []);
-                BzSuccess(data.Message);
-            }
-        })
-    })
-}
 /**********查询************/
 function search() {
     var data = {
