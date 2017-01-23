@@ -56,7 +56,7 @@ app.controller('appCtrl', ['$scope', function($scope) {
                                         UNIT: b.DATAITEMS[k].UnitName
                                     }
 
-                                } else if (b.DATAITEMS[k].Name == "STD::StartTime" || b.DATAITEMS[k].Name == "DeviceDateTime") {
+                                } else if (b.DATAITEMS[k].Name == "STD::StatusStartTime" || b.DATAITEMS[k].Name == "DeviceDateTime") {
                                     tjson = {
                                         NAME: b.DATAITEMS[k].Description,
 
