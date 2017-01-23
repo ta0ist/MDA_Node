@@ -1,12 +1,13 @@
 var db = require('../../../../routes/db.js');
 var path = require('path');
+var config = require('../../../../routes/config.js');
 exports.Index = function(req, res) {
     res.render(path.resolve(__dirname, '../../web/view/cut/index'));
 }
 
 
 exports.product = function(req, res) {
-    db.sql("select * from dbo.TOOLS_PRODUCT tr left join TOOLS_INFO ti on tr.ID = ti.X_nbr where Product_Model='SG3R40'", function(err, result) {
+    db.sql("select * from dbo.TOOLS_PRODUCT tr left join TOOLS_INFO ti on tr.ID = ti.X_nbr where Product_Model='" + config.Model + "'", function(err, result) {
         if (err) {
             res.json({
                 Status: -9999,
