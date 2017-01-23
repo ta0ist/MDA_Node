@@ -111,7 +111,7 @@ block content
             i.icon-circle-arrow-right(ng-click='showDetail($index)')
 
  append headjavascript 
-    script(type='text/javascript',src='./MachineParameters/web/controller/diagnosissController.js')
+    script(type='text/javascript',src='./MachineParameters/web/controller/diagnosissController.js')    
     script#treeview-template(type='text/kendo-ui-template').
       <i class="#:item.icon#"></i>
       <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode">#:item.text#</span>
