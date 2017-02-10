@@ -151,8 +151,34 @@ app.directive('addModal', function() {
             replace: true,
             templateUrl: './Cuttools/web/view/toolConfig/addModel.html',
             link: function(scope, element, arrts) {
-                var head = angular.element(document.getElementsByClassName('modal-header'));
-                var box = angular.element(document.getElementsByClassName('modal-content'));
+                var head = angular.element(document.getElementsByClassName('addHeader'));
+                var box = angular.element(document.getElementsByClassName('addContent'));
+                head.css({ cursor: 'move' })
+                head.on('mousedown', function(e) {
+                    var x = e.clientX - box[0].offsetLeft;
+                    var y = e.clientY - box[0].offsetTop;
+                    head.on('mousemove', function(e) {
+                        box.css({
+                            left: e.clientX - x,
+                            top: e.clientY - y
+                        })
+                    })
+                    head.on('mouseup', function() {
+                        head.unbind('mousemove');
+                    })
+                })
+            }
+        }
+    })
+    /*******动态创建编辑框*******/
+app.directive('editModal', function() {
+        return {
+            restrict: 'EA',
+            replace: true,
+            templateUrl: './Cuttools/web/view/toolConfig/EditModel.html',
+            link: function(scope, element, arrts) {
+                var head = angular.element(document.getElementsByClassName('editHeader'));
+                var box = angular.element(document.getElementsByClassName('editContent'));
                 head.css({ cursor: 'move' })
                 head.on('mousedown', function(e) {
                     var x = e.clientX - box[0].offsetLeft;
@@ -168,32 +194,6 @@ app.directive('addModal', function() {
                     })
                 })
 
-            }
-        }
-    })
-    /*******动态创建编辑框*******/
-app.directive('editModal', function() {
-        return {
-            restrict: 'EA',
-            replace: true,
-            templateUrl: './Cuttools/web/view/toolConfig/EditModel.html',
-            link: function(scope, element, arrts) {
-                var head = angular.element(document.getElementsByClassName('modal-header'));
-                var box = angular.element(document.getElementsByClassName('modal-content'));
-                head.css({ cursor: 'move' })
-                head.on('mousedown', function(e) {
-                    var x = e.clientX - box[0].offsetLeft;
-                    var y = e.clientY - box[0].offsetTop;
-                    head.on('mousemove', function(e) {
-                        box.css({
-                            left: e.clientX - x,
-                            top: e.clientY - y
-                        })
-                    })
-                    head.on('mouseup', function() {
-                        head.unbind('mousemove');
-                    })
-                })
 
             }
         }
@@ -216,6 +216,16 @@ app.directive('deleteModal', function() {
             link: function(scope, element, arrts) {
 
             }
+        }
+    })
+    /**Dime_Nsion**/
+app.filter('Dime_Nsion', function() {
+        return function(data) {
+            var PiSize = 'ø' + data.Dime_Nsion.toFixed(3);
+            var Up_Offset = data.Up_Offset.toFixed(3) >= 0 ? "+" + data.Up_Offset.toFixed(3) : data.Up_Offset.toFixed(3);
+            var Down_Offset = data.Down_Offset.toFixed(3) >= 0 ? "+" + data.Down_Offset.toFixed(3) : data.Down_Offset.toFixed(3);
+            var result = PiSize + Up_Offset + "/" + Down_Offset;
+            return result;
         }
     })
     /** 计算左边红色公式***/

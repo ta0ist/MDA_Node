@@ -136,7 +136,8 @@ html
                     td {{x.Turret | Turret}}
                     td {{x.Tool_No}}
                     td {{x.Cutting_Content}}
-                    td ø{{x.Dime_Nsion}}+{{x.Up_Offset}}/{{x.Down_Offset}}
+                    //- td ø{{x.Dime_Nsion}}+{{x.Up_Offset}}/{{x.Down_Offset}}
+                    td {{x | Dime_Nsion}}
                     td {{x.CPK}}
                     td.red {{x | LeftRed}}
                     td.yellow {{x | MinSpec}}       
