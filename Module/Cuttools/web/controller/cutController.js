@@ -201,8 +201,8 @@ app.filter('Tr', function() {
 })
 
 //绘制测量图
-function F_Xchart_M(categories, measured_data, plotLines) {
-    Xchart_M('#measured_chart', categories, measured_data, plotLines);
+function F_Xchart_M(categories, measured_data, plotLines, max_red, min_red) {
+    Xchart_M('#measured_chart', categories, measured_data, plotLines, max_red, min_red);
 
 }
 
@@ -220,7 +220,7 @@ function get_plotLines(max_red, min_red, cpk) {
         value: max_red,
         width: 2,
         label: {
-            text: '1',
+            text: 34.720,
             align: 'left',
             x: -20,
             style: {
@@ -231,24 +231,72 @@ function get_plotLines(max_red, min_red, cpk) {
     var maxYellow = {
         color: 'yellow',
         dashStyle: 'dash',
-        value: ((max_red - min_red) / (cpk * 6)) * 3 + (max_red + min_red) / 2,
+        //value: (max_red - min_red) / (cpk * 6 * 3) + (max_red + min_red) / 2,
+        value: 34.697,
         width: 2,
         label: {
-            text: '1',
+            text: 34.697,
             align: 'left',
             x: -20,
             style: {
-                color: 'red'
+                color: 'yellow'
             }
         }
     };
     var minYellow = {
         color: 'yellow',
         dashStyle: 'dash',
-        value: (max_red + min_red) / 2 - (((max_red - min_red) / cpk * 6) * 3),
+        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
+        value: 34.652,
         width: 2,
         label: {
-            text: '1',
+            text: 34.652,
+            align: 'left',
+            x: -20,
+            style: {
+                color: 'yellow'
+            }
+        }
+    };
+    var minGreen = {
+        color: 'green',
+        dashStyle: 'dash',
+        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
+        value: 34.664,
+        width: 2,
+        label: {
+            text: 34.664,
+            align: 'left',
+            x: -20,
+            style: {
+                color: 'lawngreen'
+            }
+        }
+    };
+
+    var maxGreen = {
+        color: 'green',
+        dashStyle: 'dash',
+        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
+        value: 34.686,
+        width: 2,
+        label: {
+            text: 34.686,
+            align: 'left',
+            x: -20,
+            style: {
+                color: 'lawngreen'
+            }
+        }
+    };
+    var minRed = {
+        color: 'red',
+        dashStyle: 'dash',
+        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
+        value: 34.630,
+        width: 2,
+        label: {
+            text: 34.630,
             align: 'left',
             x: -20,
             style: {
@@ -256,6 +304,6 @@ function get_plotLines(max_red, min_red, cpk) {
             }
         }
     };
-    var plotLines = [maxYellow, minYellow];
+    var plotLines = [maxRed, maxYellow, minYellow, minGreen, maxGreen, minRed];
     return plotLines;
 }
