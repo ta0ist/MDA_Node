@@ -136,14 +136,14 @@ html
                     td {{x.Turret | Turret}}
                     td {{x.Tool_No}}
                     td {{x.Cutting_Content}}
-                    td ø{{x.Dime_Nsion}}+{{x.Up_Offset}}/-{{x.Down_Offset}}
+                    td ø{{x.Dime_Nsion}}+{{x.Up_Offset}}/{{x.Down_Offset}}
                     td {{x.CPK}}
-                    td.red {{x.Dime_Nsion-x.Down_Offset}}
+                    td.red {{x | LeftRed}}
                     td.yellow {{x | MinSpec}}       
                     td.green {{x | MinControl}}   
                     td.green {{x | MaxControl}}   
                     td.yellow {{x | MaxSpec}}   
-                    td.red {{x.Dime_Nsion+x.Up_Offset}}
+                    td.red {{x | RightRed}}
                     td {{x.OFFSET_AXIS}}
                     td {{x.CPK}}
                     td {{x.Remark}}

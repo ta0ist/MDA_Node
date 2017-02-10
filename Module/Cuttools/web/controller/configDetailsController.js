@@ -218,13 +218,27 @@ app.directive('deleteModal', function() {
             }
         }
     })
-    /** 计算小黄公式***/
+    /** 计算左边红色公式***/
+app.filter('LeftRed', function() {
+        return function(data) {
+            var result = (data.Dime_Nsion + data.Down_Offset).toFixed(3);
+            return result
+        }
+    })
+    /** 计算右边红色公式***/
+app.filter('RightRed', function() {
+        return function(data) {
+            var result = (data.Dime_Nsion + data.Up_Offset).toFixed(3);
+            return result
+        }
+    })
+    /** 计算左边小黄公式***/
 app.filter('MinSpec', function() {
         return function(data) {
             var max_temp = data.Dime_Nsion + data.Up_Offset;
-            var min_temp = data.Dime_Nsion - data.Down_Offset;
+            var min_temp = data.Dime_Nsion + data.Down_Offset;
             var before_temp = (max_temp + min_temp) / 2;
-            var after_temp = ((max_temp - min_temp) / (data.CPK * 6)) * 3;
+            var after_temp = (max_temp - min_temp) / (data.CPK * 6) * 3;
             var result = (before_temp - after_temp).toFixed(3);
             return result;
         }
@@ -233,9 +247,9 @@ app.filter('MinSpec', function() {
 app.filter('MinControl', function() {
         return function(data) {
             var max_temp = data.Dime_Nsion + data.Up_Offset;
-            var min_temp = data.Dime_Nsion - data.Down_Offset;
+            var min_temp = data.Dime_Nsion + data.Down_Offset;
             var before_temp = (max_temp + min_temp) / 2;
-            var after_temp = ((max_temp - min_temp) / (data.CPK * 6)) * 1.5;
+            var after_temp = (max_temp - min_temp) / (data.CPK * 6) * 1.5;
             var result = (before_temp - after_temp).toFixed(3);
             return result;
         }
@@ -244,8 +258,8 @@ app.filter('MinControl', function() {
 app.filter('MaxControl', function() {
         return function(data) {
             var max_temp = data.Dime_Nsion + data.Up_Offset;
-            var min_temp = data.Dime_Nsion - data.Down_Offset;
-            var before_temp = ((max_temp - min_temp) / (data.CPK * 6)) * 1.5;
+            var min_temp = data.Dime_Nsion + data.Down_Offset;
+            var before_temp = (max_temp - min_temp) / (data.CPK * 6) * 1.5;
             var after_temp = (max_temp + min_temp) / 2;
             var result = (before_temp + after_temp).toFixed(3);
             return result;
@@ -255,8 +269,8 @@ app.filter('MaxControl', function() {
 app.filter('MaxSpec', function() {
         return function(data) {
             var max_temp = data.Dime_Nsion + data.Up_Offset;
-            var min_temp = data.Dime_Nsion - data.Down_Offset;
-            var before_temp = ((max_temp - min_temp) / (data.CPK * 6)) * 3;
+            var min_temp = data.Dime_Nsion + data.Down_Offset;
+            var before_temp = (max_temp - min_temp) / (data.CPK * 6) * 3;
             var after_temp = (max_temp + min_temp) / 2;
             var result = (before_temp + after_temp).toFixed(3);
             return result;
