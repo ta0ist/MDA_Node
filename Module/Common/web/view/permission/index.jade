@@ -1,0 +1,17 @@
+extends ../../../../../views/layout
+
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+            | @LanguageService.Translate("FunctionManage")
+            ul.breadcrumb
+            li
+                i.icon-home
+                a(href='/') @LanguageService.Translate("Home")
+                i.icon-angle-right
+            li
+                a(href='javascript:;', data-lang='System') @LanguageService.Translate("System")
+                i.icon-angle-right
+            li
+                a(href='javascript:;', data-lang='AccountManage') @LanguageService.Translate("FunctionManage")

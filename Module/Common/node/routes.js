@@ -1,5 +1,4 @@
-﻿
-var Common = {};
+﻿var Common = {};
 Common.login = require('./routes/Login.js');
 Common.account = require('./routes/Account.js');
 Common.machine = require('./routes/machine.js');
@@ -12,8 +11,9 @@ Common.Shift = require('./routes/Shift.js');
 Common.StatusDetail = require('./routes/StatusDetail.js');
 Common.StatusData = require('./routes/statusdata.js');
 Common.Main = require('./routes/main.js');
+Common.Permission = require('./routes/Permission.js');
 
-module.exports = function (app) {
+module.exports = function(app) {
     Common.login(app);
     Common.account(app);
     Common.machine(app);
@@ -26,4 +26,5 @@ module.exports = function (app) {
     Common.operationratioformula(app);
     Common.StatusData(app);
     Common.Main(app);
+    Common.Permission(app);
 }
