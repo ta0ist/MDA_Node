@@ -16,5 +16,5 @@
     // webPort: 27516
     webIP: '192.168.0.95',
     webPort: 8013,
-    model: 'SVG'
+    model: 'HGFH'
 }

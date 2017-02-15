@@ -7,7 +7,7 @@ exports.Index = function(req, res) {
 
 
 exports.product = function(req, res) {
-    db.sql("select * from dbo.TOOLS_PRODUCT tr left join TOOLS_INFO ti on tr.ID = ti.X_nbr where Product_Model='" + config.Model + "'", function(err, result) {
+    db.sql("select * from dbo.TOOLS_PRODUCT tr left join TOOLS_INFO ti on tr.ID = ti.X_nbr where Product_Model='" + config.model + "'", function(err, result) {
         if (err) {
             res.json({
                 Status: -9999,
@@ -28,8 +28,7 @@ exports.get_TOOLS_MEASURED = function(req, res) {
     // var MAC_NBR = 22;
     var PART_NO = req.body.PART_NO;
     var ADDR = req.body.ADDR;
-    db.sql(
-        "select Top 60 * from dbo.TOOLS_MEASURED where MAC_NBR = " + MAC_NBR + " and PART_NO = '" + PART_NO + "' and ADDR = '" + ADDR + "' order by EVENT_DATE desc",
+    db.sql("exec Pro_getOFT " + MAC_NBR + ", '" + PART_NO + "', '" + ADDR + "'",
         function(err, result) {
             if (err) {
                 res.json({

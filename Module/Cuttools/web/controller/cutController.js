@@ -7,6 +7,9 @@ app.controller('X_cut_ctrl', function($scope, $http) {
     //标准项
     $scope.bun = [];
 
+    //累计补正
+    $scope.offset_val_sum = 0;
+
     //横坐标
     $scope.categories = [];
     for (var i = 0; i < 60; i++) {
@@ -141,6 +144,7 @@ app.controller('X_cut_ctrl', function($scope, $http) {
                 $scope.measured_data.data = [];
                 $scope.cut_data.data = [];
                 for (var i = 0; i < result.Data.length; i++) {
+                    $scope.offset_val_sum = result.Data[i].OFFSET_VAL_SUM;
                     $scope.measured_data.data.push(result.Data[i].SURVEY_VAL);
                     $scope.cut_data.data.push(result.Data[i].OFFSET_VAL);
                 }
