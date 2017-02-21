@@ -11,7 +11,7 @@ Common.Shift = require('./routes/Shift.js');
 Common.StatusDetail = require('./routes/StatusDetail.js');
 Common.StatusData = require('./routes/statusdata.js');
 Common.Main = require('./routes/main.js');
-Common.Permission = require('./routes/Permission.js');
+Common.Permission = require('./routes/permission.js');
 
 module.exports = function(app) {
     Common.login(app);

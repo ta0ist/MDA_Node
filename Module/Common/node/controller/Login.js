@@ -20,29 +20,33 @@ exports.main = function(req, res, next) {
         req.session.error = "请先登录";
         res.redirect("/login");
     } else if (!req.session.menu) {
-        // db.sql('select * from MENU where MENU_ENABLE=1', function (err, result) {
-        //     if (err) {
-        //         console.log(err);
-        //         res({Status:-1,Message:"连接失败！"});
-        //     }
-        //     var menulist = result;
-        //     var menu = [];
-        //     GetSubMenu(menulist, 0, menu);
-        //     req.session.menu = menu;
-        //     res.render(path.resolve(__dirname, '../../web/view/main/index'), { menulist: menu });
-        // })
-        request.post({ url: post_argu.getpath(__filename, 'LodeMenu') }, function(error, response, body) {
-            var menulist = JSON.parse(body);
-            var menu = [];
-            GetSubMenu(menulist, 0, menu);
-            req.session.menu = menu;
-            res.render(path.resolve(__dirname, '../../web/view/main/index'), {
-                menulist: menu,
-                user: req.session.user,
-                lang: post_argu.getLanguage()
-            });
-            //res.render('Module/web/view/', { menulist: menu });
-        });
+        db.sql('select * from MENU where MENU_ENABLE=1', function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res({ Status: -1, Message: "连接失败！" });
+                }
+                var menulist = result;
+                var menu = [];
+                GetSubMenu(menulist, 0, menu);
+                req.session.menu = menu;
+                res.render(path.resolve(__dirname, '../../web/view/main/index'), {
+                    menulist: menu,
+                    user: req.session.user,
+                    lang: post_argu.getLanguage()
+                });
+            })
+            // request.post({ url: post_argu.getpath(__filename, 'LodeMenu') }, function(error, response, body) {
+            //     var menulist = JSON.parse(body);
+            //     var menu = [];
+            //     GetSubMenu(menulist, 0, menu);
+            //     req.session.menu = menu;
+            //     res.render(path.resolve(__dirname, '../../web/view/main/index'), {
+            //         menulist: menu,
+            //         user: req.session.user,
+            //         lang: post_argu.getLanguage()
+            //     });
+            //     //res.render('Module/web/view/', { menulist: menu });
+            // });
     } else {
         res.render(path.resolve(__dirname, '../../web/view/main/index'), {
             menulist: req.session.menu,

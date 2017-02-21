@@ -1,17 +1,124 @@
 extends ../../../../../views/layout
+append headjavascript
+    script(type='text/javascript',src='./Common/web/controller/permissionController.js')
+append headcss
+    style(type='text/css').
+        .ss{
+            background-color: #E3FCFC;
+        }
+        .function-bt {
+            float: left;
+            cursor: pointer;
+        }
+
+            .function-bt .tt {
+                min-width: 100px;
+                height: 40px;
+                border: 1px solid #cdcdcd;
+                margin: 8px;
+                line-height: 40px;
+                text-align: center;
+                cursor: pointer;
+            }
+        .select-style {
+            position: absolute;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+                  .select-style i {
+                    position: absolute;
+                    left: -24px;
+                    top: 35px;
+                    z-index: 2;
+                    color: #fff;
+                    cursor: pointer;
+                }
+
+                .select-style::after {
+                    position: absolute;
+                    display: block;
+                    content: ' ';
+                    left: -36px;
+                    top: 22px;
+                    
+                
+                }
+        .ok::after {
+            border: 14px solid #09f;
+            border-left-color: transparent;
+            border-top-color: transparent;
+         }
+        .remove::after {
+            border: 14px solid #ff0000;
+            border-left-color: transparent;
+            border-top-color: transparent;
+        }
+        .aa {
+            float: left;
+        }
 
 block content
     .row-fluid
         .span12
             h3.page-title(data-lang='AccountManage')
-            | @LanguageService.Translate("FunctionManage")
+                | 权限管理
             ul.breadcrumb
-            li
-                i.icon-home
-                a(href='/') @LanguageService.Translate("Home")
-                i.icon-angle-right
-            li
-                a(href='javascript:;', data-lang='System') @LanguageService.Translate("System")
-                i.icon-angle-right
-            li
-                a(href='javascript:;', data-lang='AccountManage') @LanguageService.Translate("FunctionManage")
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 权限管理
+    .row-fluid(ng-controller='perCtrl')
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(style='width: 240px;')
+                    table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                        tr
+                            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                                a.k-link(tabindex='-1', href='#', data-lang='Common.USER_NAME') 账号
+                                i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
+                        tr
+                            td(style='border-color: rgb(197, 197, 197); height: 460px; padding: 0px;')
+                                 div(style='height: 458px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                                    #orgnizetree
+                                    i#tree_addRootNode.icon-plus-sign(data-bind='click:tree_addRootNode', style='margin-left:20px;font-size:14px;display:none;')
+                td(style='width: 240px;padding-left:5px;')
+                    table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                        tr
+                            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                                a.k-link(tabindex='-1', href='#', data-lang='Common.USER_NAME') 菜单
+                        tr
+                            td(style='border-color: rgb(197, 197, 197); height: 460px; padding: 0px;')
+                                div(style='height: 458px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                                    #orgnizetree_menu
+                td(valign='top', style='padding-left:5px;')
+                    table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                        tr
+                            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                                a.k-link(tabindex='-1', href='#', data-lang='Common.USER_NAME') 功能
+                        tr
+                            td(style='border-color: rgb(197, 197, 197); height: 460px; padding: 0px;')
+                                div(style='height: 458px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                                    ul(style='list-style:none;')
+                                        li.function-bt(ng-repeat='item in buttons', ng-click='setFn($index)')
+                                            .tt.aa
+                                                span {{item.Text}}
+                                            .aa
+                                                span.select-style(ng-class="{0:'remove',1: 'ok',2: 'ok', 3:'remove'}[item.PERMISSION]")
+                                                    i.icon-white(ng-class="{0:'icon-remove',1: 'icon-ok',2: 'icon-group', 3:'icon-remove'}[item.PERMISSION]")
+
+    script#treeviewmenu-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" url="#:item.urls#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span type="1" nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" flag="#:item.flag#" attr="treenode">#:item.text#</span>
+
+
+
+                    
