@@ -6,16 +6,17 @@ var post_argu = require('../../../../routes/post_argu.js');
 var fs = require('fs');
 //加载页面
 exports.index = function(req, res) {
-        if (!req.session.menu) {
-            res.redirect("/login");
+        post_argu.permission(req, res, '/member', 'view', path.resolve(__dirname, '../../web/view/member/index'));
+        // if (!req.session.menu) {
+        //     res.redirect("/login");
 
-        } else {
-            res.render(path.resolve(__dirname, '../../web/view/member/index'), {
-                menulist: req.session.menu,
-                user: req.session.user,
-                lang: post_argu.getLanguage()
-            });
-        }
+        // } else {
+        //     res.render(path.resolve(__dirname, '../../web/view/member/index'), {
+        //         menulist: req.session.menu,
+        //         user: req.session.user,
+        //         lang: post_argu.getLanguage()
+        //     });
+        // }
     }
     //加载组
     //exports.GetMenberGrouplist = function (req, res) {

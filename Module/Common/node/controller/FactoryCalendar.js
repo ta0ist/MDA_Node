@@ -6,15 +6,16 @@ var post_argu = require('../../../../routes/post_argu.js');
 
 exports.fclendarpage = function(req, res) {
     // var t = new Date().getTime();
-    if (!req.session.user) {
-        req.session.error = "请先登录";
-        res.redirect("/login");
-    } else
-        res.render(path.resolve(__dirname, '../../web/view/fclendar/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_argu.getLanguage()
-        });
+    post_argu.permission(req, res, '/fcalendar', 'view', path.resolve(__dirname, '../../web/view/fclendar/index'));
+    // if (!req.session.user) {
+    //     req.session.error = "请先登录";
+    //     res.redirect("/login");
+    // } else
+    //     res.render(path.resolve(__dirname, '../../web/view/fclendar/index'), {
+    //         menulist: req.session.menu,
+    //         user: req.session.user,
+    //         lang: post_argu.getLanguage()
+    //     });
 }
 exports.fun = function(req, res) {
     var args = [];

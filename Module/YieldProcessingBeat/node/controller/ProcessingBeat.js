@@ -5,16 +5,7 @@ var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
 //加载页面
 exports.index = function(req, res) {
-    if (!req.session.menu) {
-        res.redirect("/login");
-
-    } else {
-        res.render(path.resolve(__dirname, '../../web/view/pbeat/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_argu.getLanguage()
-        });
-    }
+    post_argu.permission(req, res, '/pbeat', 'view', path.resolve(__dirname, '../../web/view/pbeat/index'));
 }
 
 exports.fun = function(req, res) {

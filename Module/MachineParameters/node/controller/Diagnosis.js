@@ -3,13 +3,7 @@ var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
 exports.diagnosispage = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    res.render(path.resolve(__dirname, '../../web/view/diagnosisview/index'), {
-        menulist: req.session.menu,
-        user: req.session.user,
-        lang: post_common.getLanguage()
-    });
+    post_argu.permission(req, res, '/diagnosis', 'view', path.resolve(__dirname, '../../web/view/diagnosisview/index'));
 }
 exports.diagnosisdetailpage = function(req, res) {
     if (!req.session.user)

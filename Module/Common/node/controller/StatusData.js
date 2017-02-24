@@ -6,13 +6,14 @@ var error = require('../../../../routes/error.js');
 var post_argu = require('../../../../routes/post_argu.js');
 
 exports.statusdatapage = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    res.render(path.resolve(__dirname, '../../web/view/statusdata/index'), {
-        menulist: req.session.menu,
-        user: req.session.user,
-        lang: post_argu.getLanguage()
-    });
+    post_argu.permission(req, res, '/statusdata', 'view', path.resolve(__dirname, '../../web/view/statusdata/index'));
+    // if (!req.session.user)
+    //     res.redirect('/');
+    // res.render(path.resolve(__dirname, '../../web/view/statusdata/index'), {
+    //     menulist: req.session.menu,
+    //     user: req.session.user,
+    //     lang: post_argu.getLanguage()
+    // });
 }
 
 

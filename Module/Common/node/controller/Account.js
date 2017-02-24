@@ -5,15 +5,16 @@ var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
 
 exports.accountpage = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    else {
-        res.render(path.resolve(__dirname, '../../web/view/account/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_argu.getLanguage()
-        });
-    }
+    post_argu.permission(req, res, '/account', 'view', path.resolve(__dirname, '../../web/view/account/index'));
+    // if (!req.session.user)
+    //     res.redirect('/');
+    // else {
+    //     res.render(path.resolve(__dirname, '../../web/view/account/index'), {
+    //         menulist: req.session.menu,
+    //         user: req.session.user,
+    //         lang: post_argu.getLanguage()
+    //     });
+    // }
 }
 
 exports.getuser = function(req, res) {

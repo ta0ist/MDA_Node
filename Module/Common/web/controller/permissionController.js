@@ -31,7 +31,7 @@ app.controller('perCtrl', function($scope, $http) {
                 userFunctions: $scope.buttons[index].FUNC_NBR,
                 status: $scope.buttons[index].PERMISSION
             }
-            $.post('/AddUserFun', JSON.stringify(data), function(data) {
+            $.post('/AddUserFun', data, function(data) {
                 if (data.Status == 0) {
                     $scope.buttons[index].PERMISSION = data.Data;
                     $scope.$apply();

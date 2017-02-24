@@ -5,15 +5,16 @@ var path = require('path');
 var config = require('../../../../routes/config');
 var post_argu = require('../../../../routes/post_argu.js');
 exports.MachineYield = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    else {
-        res.render(path.resolve(__dirname, '../../web/view/MachineYield/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_argu.getLanguage()
-        });
-    }
+    post_argu.permission(req, res, '/MachineYield', 'view', path.resolve(__dirname, '../../web/view/MachineWorkingState/index'));
+    // if (!req.session.user)
+    //     res.redirect('/');
+    // else {
+    //     res.render(path.resolve(__dirname, '../../web/view/MachineYield/index'), {
+    //         menulist: req.session.menu,
+    //         user: req.session.user,
+    //         lang: post_argu.getLanguage()
+    //     });
+    // }
     //res.render(path.resolve(__dirname,'../../web/view/MachineYield/index'),{ menulist: req.session.menu });
 }
 exports.OutPutIndexYield = function(req, res) {

@@ -12,11 +12,13 @@ var post_argu = require('../../../../routes/post_argu.js');
 
 
 exports.loginpage = function(req, res) {
+
     res.render(path.resolve(__dirname, '../../web/view/login/index'), { lang: post_argu.getLanguage() });
 }
 
 exports.main = function(req, res, next) {
-    if (!req.session.user) {
+
+    if (!session.user) {
         req.session.error = "请先登录";
         res.redirect("/login");
     } else if (!req.session.menu) {
@@ -76,6 +78,7 @@ exports.checkuser = function(req, res) {
                 })
             } else {
                 req.session.user = JSON.parse(body);
+                session.user = JSON.parse(body);
                 res.json({
                     Status: 0,
                     Message: "登录成功！"

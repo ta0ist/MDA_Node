@@ -3,16 +3,17 @@ var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
 exports.machineload = function(req, res) {
-    if (!req.session.menu) {
-        res.redirect("/login");
+    post_common.permission(req, res, '/machine', 'view', path.resolve(__dirname, '../../web/view/machine/index'));
+    // if (!req.session.menu) {
+    //     res.redirect("/login");
 
-    } else {
-        res.render(path.resolve(__dirname, '../../web/view/machine/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_common.getLanguage()
-        });
-    }
+    // } else {
+    //     res.render(path.resolve(__dirname, '../../web/view/machine/index'), {
+    //         menulist: req.session.menu,
+    //         user: req.session.user,
+    //         lang: post_common.getLanguage()
+    //     });
+    // }
 }
 
 // exports.GetGrouplist = function (req, res) {

@@ -4,13 +4,7 @@ var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
 
 exports.partNoMatchProgram = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    res.render(path.resolve(__dirname, '../../web/view/partNoMatchProgram/index'), {
-        menulist: req.session.menu,
-        user: req.session.user,
-        lang: post_common.getLanguage()
-    });
+    post_argu.permission(req, res, '/PartNoMatchProgram', 'view', path.resolve(__dirname, '../../web/view/partNoMatchProgram/index'));
 }
 exports.fun = function(req, res) {
     var args = [];

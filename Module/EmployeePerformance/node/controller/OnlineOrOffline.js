@@ -6,16 +6,7 @@ var config = require('../../../../routes/config');
 var post_argu = require('../../../../routes/post_argu.js');
 var session = require('express-session');
 exports.OnlineOrOfflinectrl = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    else {
-        res.render(path.resolve(__dirname, '../../web/view/OnlineOrOffline/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_argu.getLanguage()
-        });
-    }
-    //res.render(path.resolve(__dirname,'../../web/view/OnlineOrOffline/index'),{ menulist: req.session.menu });
+    post_argu.permission(req, res, '/OnlineOrOffline', 'view', path.resolve(__dirname, '../../web/view/OnlineOrOffline/index'));
 }
 
 exports.fun = function(req, res) {

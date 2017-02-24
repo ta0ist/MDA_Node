@@ -5,13 +5,14 @@ var path = require('path');
 var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
 exports.Alarm = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    res.render(path.resolve(__dirname, '../../web/view/Alarm/index'), {
-        menulist: req.session.menu,
-        user: req.session.user,
-        lang: post_argu.getLanguage()
-    });
+    post_argu.permission(req, res, '/Alarm', 'view', path.resolve(__dirname, '../../web/view/Alarm/index'));
+    // if (!req.session.user)
+    //     res.redirect('/');
+    // res.render(path.resolve(__dirname, '../../web/view/Alarm/index'), {
+    //     menulist: req.session.menu,
+    //     user: req.session.user,
+    //     lang: post_argu.getLanguage()
+    // });
 }
 exports.fun = function(req, res) {
     var args = [];

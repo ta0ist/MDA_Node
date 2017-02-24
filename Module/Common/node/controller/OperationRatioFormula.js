@@ -6,15 +6,16 @@ var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
 var session = require('express-session')
 exports.operationratioformula = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    else {
-        res.render(path.resolve(__dirname, '../../web/view/operationratioformula/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_argu.getLanguage()
-        });
-    }
+    post_argu.permission(req, res, '/OperationRatioFormula', 'view', path.resolve(__dirname, '../../web/view/operationratioformula/index'));
+    // if (!req.session.user)
+    //     res.redirect('/');
+    // else {
+    //     res.render(path.resolve(__dirname, '../../web/view/operationratioformula/index'), {
+    //         menulist: req.session.menu,
+    //         user: req.session.user,
+    //         lang: post_argu.getLanguage()
+    //     });
+    // }
     //res.render(path.resolve(__dirname,'../../web/view/operationratioformula/index'),{menulist: req.session.menu})
 }
 exports.fun = function(req, res) {

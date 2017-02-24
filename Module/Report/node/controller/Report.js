@@ -7,25 +7,9 @@ var session = require('express-session');
 var edge = require('edge');
 var fs = require('fs');
 var post_argu = require('../../../../routes/post_argu.js');
-// var helloWorld = edge.func(function () {/*
-//     async (input) => { 
-//         return ".NET Welcomes " + input.ToString(); 
-//     }
-// */});
-
-// var report = edge.func(path.join(__dirname, 'ReportServer.cs'));
 
 exports.page = function(req, res) {
-    if (!req.session.user) {
-        res.redirect('/');
-    }
-    res.render(path.resolve(__dirname, '../../web/view/report/index'), {
-        menulist: req.session.menu,
-        report: path.resolve('./ReportTemplate'),
-        user: req.session.user,
-        lang: post_argu.getLanguage(),
-        config: config
-    });
+    post_argu.permission(req, res, '/reports', 'view', path.resolve(__dirname, '../../web/view/report/index'));
 }
 
 //处理事件

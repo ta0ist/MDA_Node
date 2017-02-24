@@ -6,14 +6,15 @@ var post_argu = require('../../../../routes/post_argu.js');
 var config = require('../../../../routes/config.js');
 var request = require('request');
 exports.StatusDetail = function(req, res) {
-        if (!req.session.user)
-            res.redirect('/');
-        else
-            res.render(path.resolve(__dirname, '../../web/view/StatusDetail/index'), {
-                menulist: req.session.menu,
-                user: req.session.user,
-                lang: post_argu.getLanguage()
-            });
+        post_argu.permission(req, res, '/StatusDetail', 'view', path.resolve(__dirname, '../../web/view/StatusDetail/index'));
+        // if (!req.session.user)
+        //     res.redirect('/');
+        // else
+        //     res.render(path.resolve(__dirname, '../../web/view/StatusDetail/index'), {
+        //         menulist: req.session.menu,
+        //         user: req.session.user,
+        //         lang: post_argu.getLanguage()
+        //     });
     }
     //exports.GetAllMachineAndMachineGroup = function (req, res) {
     //    request.post({

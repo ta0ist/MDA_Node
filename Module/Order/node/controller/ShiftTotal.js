@@ -6,15 +6,7 @@ var config = require('../../../../routes/config');
 var post_argu = require('../../../../routes/post_argu.js');
 var session = require('express-session');
 exports.ShiftTotal = function(req, res) {
-    if (!req.session.user)
-        res.redirect('/');
-    else {
-        res.render(path.resolve(__dirname, '../../web/view/ShiftTotal/index'), {
-            menulist: req.session.menu,
-            user: req.session.user,
-            lang: post_argu.getLanguage()
-        });
-    }
+    post_argu.permission(req, res, '/ShiftTotal', 'view', path.resolve(__dirname, '../../web/view/ShiftTotal/index'));
 }
 exports.fun = function(req, res) {
     var args = [];
