@@ -1,5 +1,6 @@
 var app = angular.module('X_cut', [])
 app.controller('X_cut_ctrl', function($scope, $http) {
+    get_plotLines(34.72, 34.63, 2.5);
     //产品列表
     $scope.Prolist;
     $scope.Pro;
@@ -235,8 +236,8 @@ function get_plotLines(max_red, min_red, cpk) {
     var maxYellow = {
         color: 'yellow',
         dashStyle: 'dash',
-        //value: (max_red - min_red) / (cpk * 6 * 3) + (max_red + min_red) / 2,
-        value: 34.697,
+        value: (max_red - min_red) / (cpk * 6) * 3 + (max_red + min_red) / 2,
+        //value: 34.697,
         width: 2,
         label: {
             text: 34.697,
@@ -250,8 +251,8 @@ function get_plotLines(max_red, min_red, cpk) {
     var minYellow = {
         color: 'yellow',
         dashStyle: 'dash',
-        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
-        value: 34.652,
+        value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6) * 3,
+        //value: 34.652,
         width: 2,
         label: {
             text: 34.652,
@@ -265,8 +266,8 @@ function get_plotLines(max_red, min_red, cpk) {
     var minGreen = {
         color: 'green',
         dashStyle: 'dash',
-        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
-        value: 34.664,
+        value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6) * 1.5,
+        //value: 34.664,
         width: 2,
         label: {
             text: 34.664,
@@ -281,8 +282,8 @@ function get_plotLines(max_red, min_red, cpk) {
     var maxGreen = {
         color: 'green',
         dashStyle: 'dash',
-        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
-        value: 34.686,
+        value: (max_red - min_red) / (cpk * 6) * 1.5 + (max_red + min_red) / 2,
+        //value: 34.686,
         width: 2,
         label: {
             text: 34.686,
@@ -296,8 +297,8 @@ function get_plotLines(max_red, min_red, cpk) {
     var minRed = {
         color: 'red',
         dashStyle: 'dash',
-        //value: (max_red + min_red) / 2 - (max_red - min_red) / (cpk * 6 * 3),
-        value: 34.630,
+        value: min_red,
+        //value: 34.630,
         width: 2,
         label: {
             text: 34.630,
