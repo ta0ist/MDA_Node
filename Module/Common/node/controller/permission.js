@@ -4,7 +4,7 @@ var db = require('../../../../routes/db.js');
 var post_argu = require('../../../../routes/post_argu.js');
 var _ = require('underscore');
 var async = require('async');
-var _ = require('underscore');
+
 
 exports.index = function(req, res) {
     post_argu.permission(req, res, '/permission', 'view', path.resolve(__dirname, '../../web/view/permission/index'));

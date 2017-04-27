@@ -1,19 +1,20 @@
 /**
  * Created by qb on 2016/11/18.
  */
-app.controller("myCtrl", function ($scope, $http) {
+app.controller("myCtrl", function($scope, $http) {
     $scope.global_data = [];
     $scope.Datas = [];
     var flag = 1;
     //点击面包层
-    $scope.change_page = function () {
+    $scope.change_page = function() {
         $(".parent_img_menu").animate({
-            width: 'toggle', opacity: 'toggle'
+            width: 'toggle',
+            opacity: 'toggle'
         }, "slow");
         //缩进去
         if (flag == 1) {
             $scope.getToolData();
-            setTimeout(function () {
+            setTimeout(function() {
                 $("#img_content").removeClass("parent_img_content_a").addClass("parent_img_content_b").addClass("a");
                 $("#Hidden_bread").css("display", "block");
                 $(".big_img_conter_loc").removeClass("hide");
@@ -22,9 +23,7 @@ app.controller("myCtrl", function ($scope, $http) {
             }, 600);
             flag = 0;
 
-
-
-        } else {//张开
+        } else { //张开
             $("#img_content").removeClass("parent_img_content_b").removeClass("a").addClass("parent_img_content_a");
             $("#Hidden_bread").css("display", "none");
             $(".big_img_conter_loc").addClass("hide");
@@ -34,48 +33,49 @@ app.controller("myCtrl", function ($scope, $http) {
 
         }
     }
+    $('#context').factoryview();
     //显示左侧小图
-    $scope.load = function () {
-        $http.post("/GetWorkPlaceNbrs", JSON.stringify({ workplace: "" })).success(function (data) {
+    $scope.load = function() {
+        $http.post("/GetWorkPlaceNbrs", JSON.stringify({ workplace: "" })).success(function(data) {
             $scope.global_data = data.Data;
             $scope.Datas = data.Data;
-            bigIMG.src = $scope.global_data[0].PIC_IMG;
-            console.log($scope.global_data)
+            //bigIMG.src = $scope.global_data[0].PIC_IMG;
+            // console.log($scope.global_data);
+
         });
     }
     $scope.load();
     //AJAX调用机床状态
-    $scope.getToolData=function () {
-        var currentTool = $(".img_border_active ").prev().html();//当前选中的机床
-        $(".table span").html("");
-        $http.post("/GetImmediateState", { Page: currentTool }).success(function (result) {
+    $scope.getToolData = function() {
+            var currentTool = $(".img_border_active ").prev().html(); //当前选中的机床
+            $(".table span").html("");
+            $http.post("/GetImmediateState", { Page: currentTool }).success(function(result) {
 
-            if (result.Status === 0) {
-                var result = result.Data;
-                var st = [];
-                var li = [];
-                for (var i = 0; i < result.length; i++) {
-                    st[i] = result[i].STATUS_NAME;
-                }
-                var sts = RepeatArray(st);
-                for (var i = 0; i < sts.length; i++) {
-                    var obj = {}
-                    obj.status = sts[i];
-                    obj.number = valInarr(sts[i], st);
-                    obj.color = getColor(sts[i], result);
-                    li.push(obj);
-                }
-                $scope.data_status = li;
-                console.log(li)
+                if (result.Status === 0) {
+                    var result = result.Data;
+                    var st = [];
+                    var li = [];
+                    for (var i = 0; i < result.length; i++) {
+                        st[i] = result[i].STATUS_NAME;
+                    }
+                    var sts = RepeatArray(st);
+                    for (var i = 0; i < sts.length; i++) {
+                        var obj = {}
+                        obj.status = sts[i];
+                        obj.number = valInarr(sts[i], st);
+                        obj.color = getColor(sts[i], result);
+                        li.push(obj);
+                    }
+                    $scope.data_status = li;
+                    console.log(li)
 
-            }
-            else {
-                BzAlert(result.Message);
-            }
-        });
-    }
-    //判断一个值在数组中有几个
-    function valInarr(val,arr) {
+                } else {
+                    BzAlert(result.Message);
+                }
+            });
+        }
+        //判断一个值在数组中有几个
+    function valInarr(val, arr) {
         var count = 0;
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] == val) {
@@ -89,7 +89,7 @@ app.controller("myCtrl", function ($scope, $http) {
     function RepeatArray(arr) {
         arr.sort();
         var result = [];
-        for (var i = 0; i <arr.length; i++) {
+        for (var i = 0; i < arr.length; i++) {
             arr[i] != arr[i + 1] && result.push(arr[i]);
         }
         return result;
@@ -117,18 +117,18 @@ app.controller("myCtrl", function ($scope, $http) {
         revert: true,
         cursor: 'move',
         handle: '.font_style',
-        update: function () {
-            var newids = [];//新数组对象
-            var arr = [];//保存ORDER_NUM
-            var name = [];//保存名称
-            var id = [];//保存id
+        update: function() {
+            var newids = []; //新数组对象
+            var arr = []; //保存ORDER_NUM
+            var name = []; //保存名称
+            var id = []; //保存id
             var group = []; //保存组
             var smallImg = [];
             var bigImg = [];
-            for (var i = 0; i < $("#module_list>div").length; i++) {//遍历添加newids对象
+            for (var i = 0; i < $("#module_list>div").length; i++) { //遍历添加newids对象
                 var obj = {}
                 arr[i] = i;
-                smallImg[i] = $("#module_list>div>img")[i].src.replace($("#module_list>div>img")[i].baseURI,"../../../");
+                smallImg[i] = $("#module_list>div>img")[i].src.replace($("#module_list>div>img")[i].baseURI, "../../../");
                 name[i] = $("#module_list>div>p")[i].innerHTML;
                 id[i] = $("#module_list>div>.id")[i].value;
                 group[i] = $("#module_list>div>b")[i].value;
@@ -141,23 +141,84 @@ app.controller("myCtrl", function ($scope, $http) {
                 obj.WORKSHOP_CODE = name[i];
                 newids[i] = obj
             }
-            $.post("/UpdateOrderedDiv", JSON.stringify({ newids: newids, oldids: $scope.Datas }), function (data) {
+            $.post("/UpdateOrderedDiv", JSON.stringify({ newids: newids, oldids: $scope.Datas }), function(data) {
                 if (data.Status == 0) {
                     //$scope.load();
                 }
             })
         },
-        stop: function (e, ui) {
+        stop: function(e, ui) {
             var currentItem = ui.item[0].innerText.slice(0, length - 1);
-
-            var specific_formalu_name = _.where($scope.global_data, { WORKSHOP_CODE: currentItem })[0].PIC_IMG;//[0].PIC_IMG;
+            var specific_formalu_name = _.where($scope.global_data, { WORKSHOP_CODE: currentItem })[0].PIC_IMG; //[0].PIC_IMG;
             bigIMG.src = specific_formalu_name;
         }
     });
     //点击小图方法
     $scope.isSelect = 0;
-    $scope.showBigImg = function (obj,index) {
+    $scope.showBigImg = function(obj, index) {
         $scope.isSelect = index;
         bigIMG.src = obj;
-    }
+    };
+
+    // //读取机床数据
+    // $scope.loadStatus = function(wid) {
+
+    // }
+
+
 });
+
+(function($) {
+    //view视图
+    $.widget("BZ.factoryview", {
+        options: {
+            WORKSHOP_CODE: "cj01",
+            TIME: 3000
+        },
+        _init: function() {
+            var self = this;
+            paper = Raphael("context", 1360, 680);
+            this.MAC = drawFactoryView(paper, this.option.WORKSHOP_CODE);
+            self._update();
+        },
+        _create: function() {
+
+        },
+        _update: function() {
+            var self = this;
+            $.post("/GetImmediateState", { Page: this.options.WORKSHOP_CODE }, function(result) {
+                if (result.Status == 0) {
+                    self.updateview(result.Data);
+                } else {
+                    BzAlert(result.Message);
+                }
+            });
+        },
+        updatedata: function() {
+            var self = this;
+            return function() {
+                $.post("/GetImmediateState", { Page: self.options.WORKSHOP_CODE }, function(result) {
+                    if (result.Status == 0) {
+                        self.updateview(result.Data);
+                    } else {
+                        BzAlert(result.Message);
+                    }
+                });
+            };
+        },
+        updateview: function(data) {
+            for (var i = 0; i < data.length; i++) {
+                var mac_no = data[i].MAC_NO;
+                if (this.MAC[mac_no] != undefined) {
+                    this.MAC[mac_no].MAC.attr("fill", data[i].STATUS_COLOR);
+                    //this.MAC[mac_no].TEXT.attr("text", data[i].DURATION);
+                }
+            }
+            setTimeout(this.updatedata(), this.options.TIME);
+            // var t = setTimeout(this.updatedata(), 50000);
+        },
+        destroy: function() {
+
+        }
+    });
+})(jQuery);
