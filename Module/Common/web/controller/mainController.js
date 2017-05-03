@@ -496,7 +496,11 @@ app.controller("commonPlusController", function($scope, $http) {
                 ID: obj.rData,
                 ICON: obj.icon
             }
+<<<<<<< HEAD
             $.post("/Main/AddPersonalSetting", data, function(data) {
+=======
+            $.post("/Main/AddPersonalSetting", JSON.stringify(data), function(data) {
+>>>>>>> cuttools
                 if (data.Status == 0) {
                     $("#x5window").data("kendoWindow").close();
                     $scope.GetPersonalSettingList();
@@ -514,7 +518,11 @@ app.controller("commonPlusController", function($scope, $http) {
         var data = {
             personalid: $scope.menus[index].ID
         }
+<<<<<<< HEAD
         $.get("Common/Menu/DeletePersonalSetting", data, function(data) {
+=======
+        $.post("/Main/DeletePersonalSetting", data, function(data) {
+>>>>>>> cuttools
             if (data.Status == 0) {
                 $scope.menus.splice(index, 1);
                 $scope.$apply();

@@ -20,9 +20,6 @@
         "ICON_IMG": "./images/factory/威强电.png"
     }],
     webIP: 'localhost',
-    webPort: 27516
-        // webIP:'192.168.0.211',
-        // webPort:8020
-        // webIP: '192.168.0.95',
-        // webPort: 8013
+    webPort: 27516,
+    model: 'HGFH'
 }
