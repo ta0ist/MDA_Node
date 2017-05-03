@@ -82,5 +82,9 @@ function AddPersonalSetting(res, method, args) {
 //删除菜单
 function DeletePersonalSetting(res, method, args, req) {
     var UserId = req.session.user.UserId;
-    post_common.post_argu(res, method, args);
+    var data = {
+        UserId: UserId,
+        personalid: args.personalid
+    }
+    post_common.post_argu(res, method, data);
 }
