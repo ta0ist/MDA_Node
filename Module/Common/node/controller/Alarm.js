@@ -37,10 +37,14 @@ function GetKeywordMachinelist(res, method, args) {
 }
 
 function GetMachineByAlarmInfo(res, method, data) {
-    console.log(data)
-    var MachineIds = [];
+    var MachineIds = [];;
+    if (typeof(data['MachineIds[]']) == 'string') {
+        MachineIds.push(data['MachineIds[]']);
+    } else {
+        MachineIds = data['MachineIds[]'];
+    }
     var re = {
-        MachineIds: data['MachineIds[]'],
+        MachineIds: MachineIds,
         StartTime: data.StartTime,
         EndTime: data.EndTime,
         QueryType: parseInt(data.QueryType)
