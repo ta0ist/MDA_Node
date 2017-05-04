@@ -9,7 +9,17 @@ var fs = require('fs');
 var post_argu = require('../../../../routes/post_argu.js');
 
 exports.page = function(req, res) {
-    post_argu.permission(req, res, '/reports', 'view', path.resolve(__dirname, '../../web/view/report/index'));
+    //post_argu.permission(req, res, '/reports', 'view', path.resolve(__dirname, '../../web/view/report/index'));
+    if (!req.session.menu) {
+        res.redirect('/');
+    }
+    res.render(path.resolve(__dirname, '../../web/view/report/index'), {
+        menulist: req.session.menu,
+        report: path.resolve('./ReportTemplate'),
+        user: req.session.user,
+        lang: post_argu.getLanguage(),
+        config: config
+    });
 }
 
 //处理事件

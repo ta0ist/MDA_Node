@@ -3,7 +3,7 @@ var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
 exports.activationpage = function(req, res) {
-    post_argu.permission(req, res, '/machineactivation', 'view', path.resolve(__dirname, '../../web/view/machineactivation/index'));
+    post_common.permission(req, res, '/machineactivation', 'view', path.resolve(__dirname, '../../web/view/machineactivation/index'));
     // if (!req.session.user)
     //     res.redirect('/');
     // else

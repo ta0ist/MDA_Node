@@ -38,6 +38,7 @@ function GetKeywordMachinelist(res, method, args) {
 
 function GetMachineByAlarmInfo(res, method, data) {
     console.log(data)
+    var MachineIds = [];
     var re = {
         MachineIds: data['MachineIds[]'],
         StartTime: data.StartTime,
