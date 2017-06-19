@@ -1,6 +1,8 @@
-﻿
-var Diagnosisroute = {};
+﻿var Diagnosisroute = {};
+var HeatTreament = {};
 Diagnosisroute.routes = require('./routes/diagnosiss.js');
-module.exports = function (app) {
- Diagnosisroute.routes(app);
+HeatTreament = require('./routes/HeatTreament.js');
+module.exports = function(app) {
+    Diagnosisroute.routes(app);
+
 }
