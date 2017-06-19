@@ -1,0 +1,167 @@
+   .span {
+       float: left !important;
+       margin-left: 0px !important;
+       width: 300px !important;
+   }
+   
+   .BZcontrols {
+       margin-left: 130px;
+   }
+   
+   .BZcontrols>.radio,
+   .BZcontrols>.checkbox {
+       display: inline-block;
+       margin: 8px 15px 0 0 !important;
+       padding: 0 !important;
+   }
+   
+   .statustable {
+       border-color: #000 !important;
+   }
+   
+   .statustable th,
+   .statustable td {
+       border-left: 1px solid #000 !important;
+   }
+   
+   .statustable td {
+       border-top: 1px solid #000 !important;
+       width: 35px;
+   }
+   
+   .callout-control-label {
+       margin-top: 0px !important;
+       margin-bottom: 0px !important;
+       padding-top: 0 !important;
+       width: 70px !important;
+       color: #000;
+       font-size: 12px;
+   }
+   
+   .controls-control-label {
+       margin-left: 70px !important;
+       text-align: left;
+       color: #000;
+       font-size: 12px;
+   }
+   
+   .badge {
+       padding: 5px;
+       border-radius: 3px !important;
+   }
+   
+   .callout {
+       border: 1px solid #CECECE !important;
+       background-color: #CECECE !important;
+   }
+   
+   .notch_right {
+       border-right-color: #CECECE !important;
+   }
+   
+   .order-detail {
+       margin: 0px;
+       list-style: none;
+   }
+   
+   .order-detail .item {
+       display: inline-block;
+       margin-bottom: 0px;
+       margin-left: 10px;
+       border-left: 1px dashed #cdcdcd;
+       padding: 0px 10px;
+   }
+   
+   .order-detail-ui {
+       margin: 0px;
+       list-style: none;
+   }
+   
+   .order-detail-li-group {
+       display: inline-block;
+   }
+   
+   .control-label {
+       width: 80px !important;
+   }
+   
+   .BZcontrols {
+       margin-left: 90px !important;
+   }
+   
+   #po tr {
+       height: 20px;
+   }
+   
+   #item_CRAFT_NAME {
+       width: 80px;
+       overflow: hidden;
+       white-space: nowrap;
+       text-overflow: ellipsis;
+   }
+   
+   #checkbox {
+       width: 20px;
+       height: 20px;
+       margin-left: 30px;
+       margin-bottom: 10px;
+   }
+   
+   .checkbox-label {
+       font-size: 16px;
+       font-weight: bold;
+       margin-left: 15px;
+   }
+   
+   #zong {
+       width: 60%;
+       height: 100%;
+       margin: 0 auto;
+       text-align: center;
+       position: relative;
+   }
+   
+   table {
+       border-right: 1px solid black;
+       border-bottom: 1px solid black;
+       border-collapse: collapse;
+       width: 100%;
+   }
+   
+   table td {
+       width: 250px;
+       height: 30px;
+       text-align: center;
+       border-left: 1px solid black;
+       border-top: 1px solid black;
+       font-weight: bold;
+   }
+   
+   #quxian>div {
+       position: relative;
+       left: 50px;
+   }
+   
+   #quxian>div>div {
+       position: relative;
+       float: left;
+       text-align: left;
+       line-height: 25px;
+       margin-top: 15px;
+       margin-left: 5px;
+   }
+   
+   #show>label,
+   #show>input,
+   #show>div {
+       position: relative;
+       float: left;
+   }
+   
+   .SChart {
+       display: block;
+   }
+   
+   .HChart {
+       display: none;
+   }

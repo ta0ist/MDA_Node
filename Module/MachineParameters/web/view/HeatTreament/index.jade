@@ -1,4 +1,184 @@
 extends ../../../../../views/layout
-append headcss
+block append headcss
+    link(type='text/css',href='./MachineParameters/web/css/HeatTreament.css',rel='stylesheet')
+    link(type='text/css',href='./MachineParameters/web/css/jcallout.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/underscore-min.js')
+    script(type='text/javascript',src='./MachineParameters/web/controller/heatTreamentController.js')
 block content
-    h1 hello world!
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 热处理炉
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 首页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 过程参数
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 热处理炉
+    .row-fluid(ng-app='app', ng-controller='appCtrl')
+        #wrap
+            #sidebar
+                div
+                    ul
+                        li#1.dianji
+                            i.icon-cogs
+                            |  A炉
+                        li#2
+                            i.icon-cogs
+                            |  B炉
+                        li#3
+                            i.icon-cogs
+                            |  C炉
+                        li#4
+                            i.icon-cogs
+                            |  D炉
+                        li#5
+                            i.icon-cogs
+                            |  E炉
+            #content
+                #grid_one.content_grid
+                    span(style='font-size:22px;font-weight:bold;color:red') 一区
+                    .grid_content
+                        .left
+                            table
+                                tr
+                                    td PV值 
+                                    td.td
+                                        input.PV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td SV值 
+                                    td.td
+                                        input.SV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td 热处理批号 
+                                    td.td
+                                        input.RCLPH(type='text', name='name', value=' ')
+                                tr
+                                    td 数量 
+                                    td.td
+                                        input.COUNT(type='number', name='name', value=' ')
+                                tr
+                                    td 材料 
+                                    td.td
+                                        input.CAILIAO(type='text', name='name', value=' ')
+                        #right1.right
+                    .grid_footer
+                        button.btn.green.save(style='margin-left:50px;margin-top:10px;')
+                            | 保存
+                            i.icon-ok
+                        button.btn.purple.print(style='margin-left: 80px; margin-top:10px; ')
+                            | 打印
+                            i.icon-edit
+                br
+                #grid_two.content_grid
+                    span(style='font-size:22px;font-weight:bold;color:red') 二区
+                    .grid_content
+                        .left
+                            table
+                                tr
+                                    td PV值 
+                                    td.td
+                                        input.PV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td SV值 
+                                    td.td
+                                        input.SV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td 热处理批号 
+                                    td.td
+                                        input.RCLPH(type='text', name='name', value=' ')
+                                tr
+                                    td 数量 
+                                    td.td
+                                        input.COUNT(type='number', name='name', value=' ')
+                                tr
+                                    td 材料 
+                                    td.td
+                                        input.CAILIAO(type='text', name='name', value=' ')
+                        #right2.right
+                    .grid_footer
+                        button.btn.green.save(style='margin-left:50px;margin-top:5px;')
+                            | 保存
+                            i.icon-ok
+                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ')
+                            | 打印
+                            i.icon-edit
+                br
+                #grid_three.content_grid
+                    span(style='font-size:22px;font-weight:bold;color:red') 三区
+                    .grid_content
+                        .left
+                            table
+                                tr
+                                    td PV值 
+                                    td.td
+                                        input.PV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td SV值 
+                                    td.td
+                                        input.SV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td 热处理批号 
+                                    td.td
+                                        input.RCLPH(type='text', name='name', value=' ')
+                                tr
+                                    td 数量 
+                                    td.td
+                                        input.COUNT(type='number', name='name', value=' ')
+                                tr
+                                    td 材料 
+                                    td.td
+                                        input.CAILIAO(type='text', name='name', value=' ')
+                        #right3.right
+                    .grid_footer
+                        button.btn.green.save(style='margin-left:50px;margin-top:5px;')
+                            | 保存
+                            i.icon-ok
+                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ')
+                            | 打印
+                            i.icon-edit
+                br
+                #grid_four.content_grid
+                    span(style='font-size:22px;font-weight:bold;color:red') 四区
+                    .grid_content
+                        .left
+                            table
+                                tr
+                                    td PV值 
+                                    td.td
+                                        input.PV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td SV值 
+                                    td.td
+                                        input.SV_VALUE(type='number', name='name', value=' ')
+                                tr
+                                    td 热处理批号 
+                                    td.td
+                                        input.RCLPH(type='text', name='name', value=' ')
+                                tr
+                                    td 数量 
+                                    td.td
+                                        input.COUNT(type='number', name='name', value=' ')
+                                tr
+                                    td 材料 
+                                    td.td
+                                        input.CAILIAO(type='text', name='name', value=' ')
+                        #right4.right
+                    .grid_footer
+                        button.btn.green.save(style='margin-left:50px;margin-top:5px;')
+                            | 保存
+                            i.icon-ok
+                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ')
+                            | 打印
+                            i.icon-edit
+                br
+
+
+
