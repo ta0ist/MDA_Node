@@ -1,8 +1,24 @@
 extends ../../../../../views/layout
 block append headcss
     link(type='text/css',href='./Common/web/css/factory.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/Content/jcallout.css',rel='stylesheet')
+    style.
+        .callout-control-label {
+            margin-bottom: 2px !important;
+            padding-top: 0 !important;
+            width: 80px !important;
+        }
+
+        .controls-control-label {
+            margin-left: 100px !important;
+        }
+        
 block append headjavascript
     script(type='text/javascript',src='./Common/web/controller/factoryController.js')
+    script(src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(src='./javascripts/UI/Scripts/moment.js')
+    script(src='./javascripts/UI/Scripts/jcallout.js')
+    script(type='text/javascript',src='./Common/web/javascripts/FactoryView_wqd.js')
 block content
     div
         .row-fluid
@@ -33,7 +49,7 @@ block content
 
                         input.big_pic(type='hidden', value='{{li.PIC_IMG}}', name='PIC_IMG')
                         b(type='hidden', value='{{li.GP_NBR}}')
-
+        
         // 隐藏的面包
         #Hidden_bread.Hidden_bread.pull-left
             .location_hamburger.hidden_hamburger(ng-click='change_page()')
@@ -52,6 +68,7 @@ block content
                                     span(ng-style='background:{{x.color}}') {{x.status}}
                                 td
                                     span {{x.number}}台
-                #big_img
-                    img#bigIMG(src='', alt='Alternate Text')
+                #context
+                    #display
+                    //img#bigIMG(src='', alt='Alternate Text')
 

@@ -1,0 +1,254 @@
+body {
+    background-color: #293c55;
+}
+
+#head>div {
+    display: inline;
+}
+
+table tr {
+    height: 30px;
+}
+
+td {
+    text-align: center;
+}
+
+#title {
+    background-color: #63cb39;
+    color: #2654f9;
+    font: bold 1em "宋体", Arial, Times;
+    font-size: 30px;
+    height: 40px;
+}
+
+#mode {
+    color: #df8bc6;
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+.title {
+    color: #B5E1CB;
+    font: bold 1em "宋体", Arial, Times;
+    font-size: 25px;
+}
+
+#attr {
+    margin-top: 10px;
+}
+
+#attr>div {
+    float: left;
+}
+
+#mac_name {
+    color: #df8bc6;
+    font-size: 30px;
+}
+
+#part_name {
+    color: #F69797;
+    font-size: 25px;
+}
+
+#cut_content,
+#dime {
+    color: #FCDDDD;
+    font-size: 25px;
+}
+
+.measured_val {
+    color: #FDFD8A;
+    font-size: 40px;
+}
+
+.nor {
+    font-size: 30px;
+    color: #B5E1CB;
+}
+
+#measured_chart {
+    width: 60%;
+    height: 30%;
+}
+
+#cut_chart {
+    width: 60%;
+    height: 20%;
+    margin-top: 15%;
+    margin-left: -15px;
+}
+
+#chart_memo {
+    position: absolute;
+    top: 250px;
+    left: 60%;
+    width: 200px;
+    /*height: 60px;*/
+}
+
+#chart_memo>ul {
+    list-style-type: none;
+}
+
+#chart_memo>ul>li {
+    color: #FDFD8A;
+    font-size: 40px;
+}
+
+.bush_red {
+    border-top: 3px dashed red;
+    height: 2px;
+    overflow: hidden;
+    width: 80px;
+}
+
+.bush_yellow {
+    border-top: 3px dashed #FDFD8A;
+    height: 2px;
+    overflow: hidden;
+    width: 80px;
+}
+
+.solid_blue {
+    border-top: 3px solid #2654f9;
+    height: 2px;
+    overflow: hidden;
+    width: 80px;
+}
+
+#sumcut {
+    margin-top: 20%;
+}
+
+#cutval {
+    margin-left: 40px;
+}
+
+#chart_table {
+    position: absolute;
+    top: 250px;
+    left: 80%;
+    width: 20%;
+    height: 680px;
+    overflow-y: scroll;
+}
+
+#his_table {
+    width: 100%;
+    background-color: #93cddd;
+    border: solid #000000;
+    border-width: 5px 0px 0px 5px;
+}
+
+#his_table td {
+    font-size: 20px;
+    font-family: "MicrosoftYaHei";
+    border: solid #000000;
+    border-width: 0px 5px 5px 0px;
+}
+
+#foot {
+    position: absolute;
+    top: 85%;
+    left: 10%;
+    background-color: #FFFFFF;
+}
+
+#dimes {
+    display: inline;
+    /*width: 500px;*/
+}
+
+.dime_btn {
+    float: left;
+    height: 40px;
+}
+
+.dime_btn input {
+    width: 100px;
+    height: 38px;
+    margin-top: 1px;
+    background-color: #7EC0EE;
+    border-radius: 10px;
+}
+
+.choose {
+    background-color: #FDFD8A !important;
+}
+
+#machine {
+    position: absolute;
+    top: 95%;
+    left: 10%;
+    background-color: #FFFFFF;
+}
+
+#maclist {
+    /*width: 600px;*/
+    display: inline;
+}
+
+#page {
+    display: inline;
+}
+
+.machine_btn {
+    float: left;
+    height: 40px;
+}
+
+.machine_btn input {
+    width: 120px;
+    height: 38px;
+    margin-top: 1px;
+    background-color: #bfbfbf;
+    border-radius: 10px;
+}
+
+.choose_mac {
+    background-color: #63cb39 !important;
+}
+
+#cpk {
+    position: absolute;
+    top: 90%;
+    background-color: #FFFFFF;
+    height: 10%;
+    width: 8%;
+}
+
+#cpk>div {
+    margin-top: 10px;
+}
+
+#cpk_title {
+    text-align: center;
+    font-size: 30px;
+}
+
+#cpk_val {
+    text-align: center;
+    font-size: 30px;
+    color: red;
+}
+
+.animated_div {
+    width: 60px;
+    height: 40px;
+    color: #ffffff;
+    position: relative;
+    font-weight: bold;
+    padding: 20px 10px 0px 10px;
+    float: left;
+    margin: 20px;
+    margin-right: 50px;
+    border: 1px solid #888888;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font: 12px Verdana, Arial, Helvetica, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+}

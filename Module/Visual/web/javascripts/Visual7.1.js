@@ -1,55 +1,75 @@
 ﻿/// <reference path="../WebMethod/GetDemoMethod.asmx" />k
 /// <reference path="../WebMethod/GetDemoMethod.asmx" />
 /// <reference path="jquery-ui-1.10.0.custom.js" />
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.VisualConfig", {
         options: {
             headShow: true, //head区域是否显示
-            footShow: true,  //foot区域是否显示
+            footShow: true, //foot区域是否显示
             notice: true,
             pagePar: [ //页面显示内容参数配置，此处数组的个数决定了页面的数目
                 {
-                    url: "/Visual/View/GetImmediateState", demo: true, name: "factoryView", type: "view", showtimes: 5, time: 3000, id: 1
+                    url: "/Visual/View/GetImmediateState",
+                    demo: true,
+                    name: "factoryView",
+                    type: "view",
+                    showtimes: 5,
+                    time: 3000,
+                    id: 1
                 },
                 {
-                    url: "/Visual/View/GetImmediateState", demo: true, name: "statusTable", type: "table", time: 3000, columns: [
-                     //{ field: "NULL", title: "", width: "5%" },
-                     //{ field: "NO", title: $.Translate("Visual.NO"), width: "5%" },
-                     { field: "MAC_NAME", title: "机床名称", width: "10%" },
-                     { field: "STATUS_NAME", title: "状态名称", width: "10%" },
-                     { field: "RUNNING_DATE", type: "datetime", title: "起始时间", width: "15%" },
-                     { field: "DURATION", title: "持续时间", width: "15%" },
-                     //{ field: "PERSON", title: $.Translate("Visual.PERSON"), width: "10%" },
-                   //  { field: "TASK", title: $.Translate("Visual.TASK"), width: "10%" },
-                     //{ field: "STOP_REASON", title: $.Translate("Visual.STOP_REASON"), width: "15%" },
-                     //{ field: "ALARM_REASON", title: $.Translate("Visual.ALARM_REASON"), width: "15%" },
-                    // { field: "YEILD", title: $.Translate("Visual.YEILD"), width: "10%" }
+                    url: "/Visual/View/GetImmediateState",
+                    demo: true,
+                    name: "statusTable",
+                    type: "table",
+                    time: 3000,
+                    columns: [
+                        //{ field: "NULL", title: "", width: "5%" },
+                        //{ field: "NO", title: $.Translate("Visual.NO"), width: "5%" },
+                        { field: "MAC_NAME", title: "机床名称", width: "10%" },
+                        { field: "STATUS_NAME", title: "状态名称", width: "10%" },
+                        { field: "RUNNING_DATE", type: "datetime", title: "起始时间", width: "15%" },
+                        { field: "DURATION", title: "持续时间", width: "15%" },
+                        //{ field: "PERSON", title: $.Translate("Visual.PERSON"), width: "10%" },
+                        //  { field: "TASK", title: $.Translate("Visual.TASK"), width: "10%" },
+                        //{ field: "STOP_REASON", title: $.Translate("Visual.STOP_REASON"), width: "15%" },
+                        //{ field: "ALARM_REASON", title: $.Translate("Visual.ALARM_REASON"), width: "15%" },
+                        // { field: "YEILD", title: $.Translate("Visual.YEILD"), width: "10%" }
                     ]
                 },
                 {
-                    url: "/visuals/r/GetYieldByProgramRate", demo: true, name: "shiftRatio", type: "table", time: 10000, columns: [
+                    url: "/visuals/r/GetYieldByProgramRate",
+                    demo: true,
+                    name: "shiftRatio",
+                    type: "table",
+                    time: 10000,
+                    columns: [
 
-                     { field: "MAC_NAME", title: "设备", width: "10%" },
-                     { field: "PROG_NAME", title: "程序号", width: "15%" },
-                     //{ field: "PROG_PLAN_CNT", title: "计划工件完成量", width: "20%" },
-                     { field: "COUNT", title: "实际产量", width: "20%" },
-                     //{ field: "YIELD_RATIO", title: "工件完成率", width: "15%" },
-                     { field: "TIME_STR", title: "总用时", width: "20%" },
-                     { field: "AVG_TIME_STR", title: "平均用时", width: "20%" }
+                        { field: "MAC_NAME", title: "设备", width: "10%" },
+                        { field: "PROG_NAME", title: "程序号", width: "15%" },
+                        //{ field: "PROG_PLAN_CNT", title: "计划工件完成量", width: "20%" },
+                        { field: "COUNT", title: "实际产量", width: "20%" },
+                        //{ field: "YIELD_RATIO", title: "工件完成率", width: "15%" },
+                        { field: "TIME_STR", title: "总用时", width: "20%" },
+                        { field: "AVG_TIME_STR", title: "平均用时", width: "20%" }
                     ]
                 },
                 {
-                    url: "/Visual/View/GetShiftActivation", demo: true, name: "activation", type: "chart", time: 10000
+                    url: "/Visual/View/GetShiftActivation",
+                    demo: true,
+                    name: "activation",
+                    type: "chart",
+                    time: 10000
                 }
             ]
         },
-        _init: function () {
-            window.onresize = function () {
+        _init: function() {
+            window.onresize = function() {
                 $.VisualConfig.Onresize();
             }
             this.Onresize();
         },
-        _create: function () {
+        _create: function() {
 
             var self = this;
             $.VisualConfig = this;
@@ -61,15 +81,15 @@
                 cache: false,
                 async: false,
                 contentType: 'application/json',
-                beforeSend: function (xhr, data) {
+                beforeSend: function(xhr, data) {
                     if (data && data.type == "POST" && $("#ajaxLoading").length == 0) {
                         $("body").append("<div id='ajaxLoading' style='top:0;right:0;padding:5px;background-color:red;position:absolute;z-index:999999;width:120px;text-align:center;'><span style='color:#fff;' class='font16'><i class='fa fa-refresh fa-spin'></i> _ 处理中...</span></div>");
                     }
                 },
-                complete: function () {
+                complete: function() {
                     $("#ajaxLoading").remove();
                 },
-                error: function (o) {
+                error: function(o) {
                     //if (o.responseText != null) {
                     //    alert("错误:" + o.responseText);
                     //}
@@ -79,15 +99,15 @@
             });
             //***********************************
             //读取配置文件
-            $.get('/visuals/r/ReadyFile?path='+$('#path').html(), function (data) {
+            $.get('/visuals/r/ReadyFile?path=' + $('#path').html(), function(data) {
                 if (data.Status == 0) {
                     var rdata = JSON.parse($.trim(data.Data));
                     self.options.setting = rdata;
                     //设置背景 
                     $('body').css({
-                        'background-color': self.options.setting.page_head.backgroundColor
-                    })
-                    //
+                            'background-color': self.options.setting.page_head.backgroundColor
+                        })
+                        //
                     self.options.pagePar = [];
                     var pagename = {
                         1: { name: "factoryView", type: "view" },
@@ -106,21 +126,18 @@
                             time: rdata.page_body.pages[i].time,
                             bind_data: rdata.page_body.pages[i].bindData
                         }
-                        if (rdata.page_body.pages[i].pageid == 1) {  //pageid == 1 为车间布局图界面
+                        if (rdata.page_body.pages[i].pageid == 1) { //pageid == 1 为车间布局图界面
                             tjson["showtimes"] = Math.floor(rdata.page_body.pages[i].time / 5000); //5秒采集频率
                             tjson["maps"] = rdata.page_body.pages[i].maps;
-                        }
-                        else if (rdata.page_body.pages[i].pageid == 2 || rdata.page_body.pages[i].pageid == 4) {
+                        } else if (rdata.page_body.pages[i].pageid == 2 || rdata.page_body.pages[i].pageid == 4) {
                             tjson["columns"] = rdata.page_body.pages[i].fileds;
-                        }
-                        else if (rdata.page_body.pages[i].pageid == 3) {
+                        } else if (rdata.page_body.pages[i].pageid == 3) {
                             tjson["plot_value"] = rdata.page_body.pages[i].plot_value;
                             tjson["backcolor"] = rdata.page_head.backgroundColor;
                         }
                         self.options.pagePar.push(tjson);
                     }
-                }
-                else {
+                } else {
                     BzAlert(data.Message);
                 }
             })
@@ -141,55 +158,53 @@
                 logimg = self.options.setting.page_head.logo_img;
                 if (window.Event)
                     document.captureEvents(Event.MOUSEUP);
+
                 function nocontextmenu(event) {
                     event.cancelBubble = true
                     event.returnValue = false;
                     return false;
                 }
+
                 function norightclick(e, event) {
                     if (window.Event) {
-                        if (e.which == 3) {//右键
+                        if (e.which == 3) { //右键
                             //计算菜单位置
                             $("#menu").removeAttr("style");
                             var posit = {};
                             if (($("#menu").width() + e.clientX) > $(window).width()) {
                                 posit.left = ($(window).width() - $("#menu").width() - 20) + "px";
-                            }
-                            else {
+                            } else {
                                 posit.left = e.clientX + "px";
                             }
                             if (($("#menu").height() + e.clientY) > $(window).height()) {
                                 posit.top = ($(window).height() - $("#menu").height() - 20) + "px";
-                            }
-                            else {
+                            } else {
                                 posit.top = e.clientY + "px";
                             }
 
                             posit.position = "absolute";
                             $("#menu").css(posit).show();
                         }
+                    } else
+                    if (event.button == 2 || event.button == 3) {
+                        event.cancelBubble = true
+                        event.returnValue = false;
+                        return false;
                     }
-                    else
-                        if (event.button == 2 || event.button == 3) {
-                            event.cancelBubble = true
-                            event.returnValue = false;
-                            return false;
-                        }
                 }
                 document.oncontextmenu = nocontextmenu; // for IE5+ 
                 document.onmousedown = norightclick; // for all others
-            }
-            else {
+            } else {
                 this.times = 1;
-                this.timeOutEvent = 0;//定时器 
+                this.timeOutEvent = 0; //定时器 
                 less.modifyVars({
                     '@times': 1
                 });
                 logimg = self.options.setting.page_head.logo_img;
                 $("body").on({
-                    "touchstart": function (e) {
+                    "touchstart": function(e) {
                         //开始按 
-                        $.VisualConfig.timeOutEvent = setTimeout(function () {
+                        $.VisualConfig.timeOutEvent = setTimeout(function() {
                             $.VisualConfig.timeOutEvent = 0;
                             //执行长按要执行的内容，如弹出菜单 
                             $("#menu li a").css({
@@ -203,14 +218,14 @@
                                 "top": "10px",
                                 "left": ($(window).width() - $("#menu").width() - 10) + "px"
                             }).show();
-                        }, 2000);//这里设置定时器，定义长按500毫秒触发长按事件
+                        }, 2000); //这里设置定时器，定义长按500毫秒触发长按事件
                     },
-                    "touchmove": function () {
-                        clearTimeout($.VisualConfig.timeOutEvent);//清除定时器 
+                    "touchmove": function() {
+                        clearTimeout($.VisualConfig.timeOutEvent); //清除定时器 
                         $.VisualConfig.timeOutEvent = 0;
                     },
-                    "touchend": function () {
-                        clearTimeout($.VisualConfig.timeOutEvent);//清除定时器 
+                    "touchend": function() {
+                        clearTimeout($.VisualConfig.timeOutEvent); //清除定时器 
                         if ($.VisualConfig.timeOutEvent != 0) {
                             //这里写要执行的内容（尤如onclick事件） 
                             //alert("你这是点击，不是长按");
@@ -223,32 +238,32 @@
 
             //*****************************
             this.element.empty();
-          
+
             this.element.append('<table border="0" width="100%" cellpadding="0" cellspacing="0">' +
                 '<tr>' +
-                    '<td id="head"><div style="padding-left: 5px;display: inline-flex;">' +
-                        '<img id="logo" src="./Visual/web/image/' + logimg + '" style="position: relative;top: 5px;height:45px;"/>' +
-                        '<span id="title" style="  position: relative;top: 5px;left: 5px;font-size:' + self.options.setting.page_head.fontSize + ';font-family:' + self.options.setting.page_head.fontFamily + ';color:' + self.options.setting.page_head.color + '">' + self.options.setting.page_head.title + '</span><div id="imgtest"><ul><li style="list-style-type:none;"><img id="barcode" src="./Visual/web/image/bandexsoft.jpg" style="width: 60px; height: 60px;margin-left: 10;" /><--放大</li></ul></div></div></td>' +
+                '<td id="head"><div style="padding-left: 5px;display: inline-flex;">' +
+                '<img id="logo" src="./Visual/web/image/' + logimg + '" style="position: relative;top: 5px;height:45px;"/>' +
+                '<span id="title" style="  position: relative;top: 5px;left: 5px;font-size:' + self.options.setting.page_head.fontSize + ';font-family:' + self.options.setting.page_head.fontFamily + ';color:' + self.options.setting.page_head.color + '">' + self.options.setting.page_head.title + '</span><div id="imgtest"><ul><li style="list-style-type:none;"><img id="barcode" src="./Visual/web/image/bandexsoft.jpg" style="width: 60px; height: 60px;margin-left: 10;" /><--放大</li></ul></div></div></td>' +
                 '</tr>' +
                 '<tr>' +
-                    '<td valign="top" align="center" valign="top" style="border:0px solid yellow;">' +
-                        '<div id="context" style="border:0px solid red;"></div>' +
-                    '</td>' +
+                '<td valign="top" align="center" valign="top" style="border:0px solid yellow;">' +
+                '<div id="context" style="border:0px solid red;"></div>' +
+                '</td>' +
                 '</tr>' +
                 '<tr>' +
-                    '<td id="foot">' +
-                        '<div>' +
-                            '<marquee behavior="scroll" direction="left" scrollamount="5" width="100%" style="position: absolute;bottom: 0px;">' +
-                                '<p id="marquee_text" style="margin-bottom: 0px; border:0px solid red;"><span id="accountmesg"></span><span id="servicemesg"></span></p>' +
-                            '</marquee>' +
-                        '</div>' +
-                    '</td>' +
+                '<td id="foot">' +
+                '<div>' +
+                '<marquee behavior="scroll" direction="left" scrollamount="5" width="100%" style="position: absolute;bottom: 0px;">' +
+                '<p id="marquee_text" style="margin-bottom: 0px; border:0px solid red;"><span id="accountmesg"></span><span id="servicemesg"></span></p>' +
+                '</marquee>' +
+                '</div>' +
+                '</td>' +
                 '</tr>' +
-            '</table>');
-  var offsetX = 20 - $("#barcode").offset().left;
+                '</table>');
+            var offsetX = 20 - $("#barcode").offset().left;
             var offsetY = 20 - $("#barcode").offset().top;
             var size = 4 * $('#imgtest ul li img').width();
-            $("#barcode").mouseover(function (event) {
+            $("#barcode").mouseover(function(event) {
                 var $target = $(event.target);
                 if ($target.is('img')) {
                     $("<img id='tip' src='" + $target.attr("src") + "'>").css({
@@ -258,55 +273,54 @@
                         "left": event.pageY + offsetY,
                     }).appendTo($("#imgtest"));
                 }
-            }).mouseout(function () {
+            }).mouseout(function() {
                 $("#tip").remove();
-            }).mousemove(function () {
-                $("#tip").css(
-                {
+            }).mousemove(function() {
+                $("#tip").css({
                     "left": event.pageX + offsetX,
                     "top": event.pageY + offsetY
                 });
             });
             this.element.append('<ul id="menu" style="display:none;" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">' +
-//'<li role="presentation" data-attr="wid"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.MAC_GROUP") + '</a></li>' +
-//'<li role="presentation" data-attr="page"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.SELEC_PAGE") + '</a></li>' +
-//'<li role="presentation" data-attr="toggle"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.CLCLE") + '</a></li>' +
-//'<li role="presentation" data-attr="head"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.TITLE") + '</a></li>' +
-//'<li role="presentation" data-attr="foot"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.ACCOUNT") + '</a></li>' +
-//'<li role="presentation" class="divider"></li>' +
-//'<li role="presentation" data-attr="demo"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.DEMO") + '</a></li>' +
-//'<li role="presentation" data-attr="normal"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.NORMAL") + '</a></li>' +
-//'<li role="presentation" class="divider"></li>' +
-'<li role="presentation" data-attr="chinese"><a role="menuitem" tabindex="-1" href="#">' + "中文" + '</a></li>' +
-'<li role="presentation" data-attr="english"><a role="menuitem" tabindex="-1" href="#">' +"英文" + '</a></li>' +
-'<li role="presentation" class="divider"></li>' +
-//'<li role="presentation" data-attr="setup"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.SETUP") + '</a></li>' +
-'<li role="presentation" data-attr="exit"><a role="menuitem" tabindex="-1" href="#">' + "退出" + '</a></li>' +
-'</ul>');
+                //'<li role="presentation" data-attr="wid"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.MAC_GROUP") + '</a></li>' +
+                //'<li role="presentation" data-attr="page"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.SELEC_PAGE") + '</a></li>' +
+                //'<li role="presentation" data-attr="toggle"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.CLCLE") + '</a></li>' +
+                //'<li role="presentation" data-attr="head"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.TITLE") + '</a></li>' +
+                //'<li role="presentation" data-attr="foot"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.ACCOUNT") + '</a></li>' +
+                //'<li role="presentation" class="divider"></li>' +
+                //'<li role="presentation" data-attr="demo"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.DEMO") + '</a></li>' +
+                //'<li role="presentation" data-attr="normal"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.NORMAL") + '</a></li>' +
+                //'<li role="presentation" class="divider"></li>' +
+                '<li role="presentation" data-attr="chinese"><a role="menuitem" tabindex="-1" href="#">' + "中文" + '</a></li>' +
+                '<li role="presentation" data-attr="english"><a role="menuitem" tabindex="-1" href="#">' + "英文" + '</a></li>' +
+                '<li role="presentation" class="divider"></li>' +
+                //'<li role="presentation" data-attr="setup"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.SETUP") + '</a></li>' +
+                '<li role="presentation" data-attr="exit"><a role="menuitem" tabindex="-1" href="#">' + "退出" + '</a></li>' +
+                '</ul>');
             if (this._getPgis() == "pc") {
-                $("#menu li").bind("click", function (e) {
+                $("#menu li").bind("click", function(e) {
                     MenuEvent($(this).attr("data-attr"));
                     $("#menu").hide();
                     return false;
                 });
-            }
-            else {
-                $("#menu li").bind("touchstart", function (e) {
+            } else {
+                $("#menu li").bind("touchstart", function(e) {
                     MenuEvent($(this).attr("data-attr"));
                     $(this).children().css({
                         "color": "#FFF",
                         "background-color": "#428BCA"
                     });
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $("#menu").hide();
                     }, 200);
                     return false;
                 });
-                window.onorientationchange = function () {
+                window.onorientationchange = function() {
                     //重刷URL
                     window.location.reload();
                 }
             }
+
             function MenuEvent(attr) {
                 switch (attr) {
                     case "wid":
@@ -398,9 +412,9 @@
                 page: self._getparam("page"),
                 head: self._getparam("head"),
                 foot: self._getparam("foot"),
-                toggle: self._getparam("toggle"),//是否切换页面；当=false时不能切换页面
+                toggle: self._getparam("toggle"), //是否切换页面；当=false时不能切换页面
                 model: self._getparam("model") //模式选择；1=演示模式；2=正常模式
-                //lang: self._getparam("lang")//语言选择
+                    //lang: self._getparam("lang")//语言选择
             };
 
             if (self.url.wid == null) {
@@ -408,7 +422,7 @@
                 //return;
                 self.url.wid = "cj01";
             }
-              if(self.url.wid==null||self.url.wid=="cj01")
+            if (self.url.wid == null || self.url.wid == "cj01")
                 $("#title").eq(0).text("上海斑彰信息技术有限公司");
             else
                 $("#title").eq(0).text("2");
@@ -438,12 +452,11 @@
             //         BzAlert(data.Message);
             //     }
             // })
-            self.Index = 0;//全局索引
+            self.Index = 0; //全局索引
             if (self.url.page != null) {
                 self.pg = self.url.page.split(",");
                 self._showpage(parseInt(self.pg[0], 10));
-            }
-            else {
+            } else {
                 self.pg = [];
                 for (var i = 0; i < self.options.pagePar.length; i++) {
                     self.pg.push(i);
@@ -453,7 +466,7 @@
 
         },
         //获取设备类型
-        _getPgis: function () {
+        _getPgis: function() {
             var agent = navigator.userAgent.toLowerCase();
             var res = agent.match(/android/);
             if (res == "android")
@@ -470,25 +483,24 @@
             return "pc";
         },
         //自适应调整
-        Onresize: function () {
+        Onresize: function() {
             var newWidth = $(window).width();
             var newHeight = $(window).height();
             if (Math.abs($.VisualConfig.OldWith - newWidth) > 1 || Math.abs($.VisualConfig.OldHeight - newHeight) > 1) {
                 $.VisualConfig.OldWith = newWidth;
                 $.VisualConfig.OldHeight = newHeight;
                 $.VisualConfig.Onresize();
-            }
-            else {
-                setTimeout(function () {
+            } else {
+                setTimeout(function() {
                     $.VisualConfig._dd();
                     //alert($(window).width())
                 }, 200);
             };
         },
-        _dd: function () {
+        _dd: function() {
             this._ddSetHW($(window).width(), $(window).height())
         },
-        _ddSetHW: function (ww, hh) {
+        _ddSetHW: function(ww, hh) {
             //alert(ww + "," + hh);
             var windowHeight = hh;
             var windowWidth = ww;
@@ -497,7 +509,7 @@
             //$("#context").width(windowWidth - 10);
             $("#context").height(windowHeight - $("#head").height() - $("#foot").height() - 5);
             $("#context").width(windowWidth - 10);
-            if (typeof ($.VisualConfig.paper) != "undefined") {
+            if (typeof($.VisualConfig.paper) != "undefined") {
                 var newViewWidth;
                 var newViewHeight;
                 //var windowHeight = $(window).height();
@@ -514,14 +526,15 @@
                 }
             }
         },
-        _getparam: function (name) {
+        _getparam: function(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
+            if (r != null) return unescape(r[2]);
+            return null;
         },
-        _showpage: function (n) {
+        _showpage: function(n) {
             var self = this;
-            $("#context").hide("slide", { direction: "left" }, 1000, function () {
+            $("#context").hide("slide", { direction: "left" }, 1000, function() {
                 $("#context").empty();
                 $("#statusDetail").remove();
                 //根据具体的页面显示内容
@@ -529,28 +542,28 @@
                     case "table":
                         $.VisualConfig[$.VisualConfig.options.pagePar[n].name].init($.VisualConfig.options.pagePar[n].columns);
                         break;
-                    case "chart": case "view":
+                    case "chart":
+                    case "view":
                         $.VisualConfig[$.VisualConfig.options.pagePar[n].name].init();
                         break;
                 }
 
                 //this.options.hidepage.call(this, n);
-                $("#context").show("slide", { direction: "right" }, 1000, function () {
+                $("#context").show("slide", { direction: "right" }, 1000, function() {
                     //获取数据(是否是demo)
                     //this.options.showpage.call(this, n);
                     var self = $.VisualConfig;
                     //self.Index++;
                     if (self.options.pagePar[n].demo) {
                         self[self.options.pagePar[n].name].updatedatademo(self, self.options.pagePar[n].columns);
-                    }
-                    else {
+                    } else {
                         self[self.options.pagePar[n].name].updatedata(self, self.options.pagePar[n]);
                     }
                 });
             });
         },
-        _resizeRaphael: function (paper) {
-            if (typeof (paper) != "undefined") {
+        _resizeRaphael: function(paper) {
+            if (typeof(paper) != "undefined") {
                 var newViewWidth;
                 var newViewHeight;
                 var windowHeight = $(window).height();
@@ -569,15 +582,15 @@
         //车间布局图
         factoryView: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 this.showtimes = 0;
                 this.CONFIG = {
-                    //13T缸盖线
-                    //说明：key--客户设备编号(唯一)【可以改动】;value--VISUAL内部设备编号(唯一)【不能改动】
-                    "农机壳体01": "A001",
-                    "农机阀座01": "A002"
-                }
-                //svg布局图
+                        //13T缸盖线
+                        //说明：key--客户设备编号(唯一)【可以改动】;value--VISUAL内部设备编号(唯一)【不能改动】
+                        "农机壳体01": "A001",
+                        "农机阀座01": "A002"
+                    }
+                    //svg布局图
                 $.VisualConfig.paper = Raphael("context", 1360, 680);
                 this.MAC = drawFactoryView($.VisualConfig.paper, $.VisualConfig.url.wid);
                 //渲染页面
@@ -585,11 +598,11 @@
                 var page_no = $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]];
                 $.VisualConfig._dd();
                 //获取状态名称
-                $.get("/visuals/r/GetStatus", function (data) {
+                $.get("/visuals/r/GetStatus", function(data) {
                     var html = '<ul id="statusDetail" style="list-style:none;color:#FFFFFF;">'
                     for (var i = 0; i < data.Data.length; i++) {
                         html = html + '<li><label style="background-color:' + data.Data[i].COLOR16 + ';width: 30px;height: 15px;"></label><span style="margin-left: 10px;' +
-                        'font-size: 12px;position:relative;top:-8px;">' + data.Data[i].NAME + '</span></li>';
+                            'font-size: 12px;position:relative;top:-8px;">' + data.Data[i].NAME + '</span></li>';
                     }
                     html = html + '</ul>';
                     $('body').append(html);
@@ -598,22 +611,21 @@
                 //$.VisualConfig._resizeRaphael(this.paper);
                 $("tspan").attr("dy", 0);
             },
-            updatedata: function (self, pobj) {
+            updatedata: function(self, pobj) {
                 this.showtimes++;
                 this.demo = false;
-                $.get("/visuals/r/GetImmediateState", { Page: $.VisualConfig.url.wid }, function (result) {
+                $.get("/visuals/r/GetImmediateState", { Page: $.VisualConfig.url.wid }, function(result) {
                     if (result.Status == 0) {
                         self.factoryView.UpdateTableView(result.Data);
-                    }
-                    else {
+                    } else {
                         BzAlert(result.Message);
                     }
                 });
             },
-            updatedatademo: function (self) {
+            updatedatademo: function(self) {
                 this.showtimes++;
                 this.demo = true;
-                $.get("/Visual/Demo/GetDemo", function (result) {
+                $.get("/Visual/Demo/GetDemo", function(result) {
                     var page_no = $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]];
                     var result = {
                         Status: 0,
@@ -622,38 +634,34 @@
                     };
                     if (result.Status == 0) {
                         self.factoryView.UpdateTableView(result.Data);
-                    }
-                    else {
+                    } else {
                         BzAlert(result.Message);
                     }
                 });
             },
-            _update: function () {
-                return function () {
+            _update: function() {
+                return function() {
                     var index = $.VisualConfig.Index;
                     if ($.VisualConfig.factoryView.showtimes < $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].showtimes) {
                         if ($.VisualConfig.factoryView.demo) {
                             $.VisualConfig.factoryView.updatedatademo($.VisualConfig);
-                        }
-                        else {
+                        } else {
                             $.VisualConfig.factoryView.updatedata($.VisualConfig);
                         }
-                    }
-                    else {
-                        $.VisualConfig.factoryView.showtimes = 0;//清零
+                    } else {
+                        $.VisualConfig.factoryView.showtimes = 0; //清零
                         $.VisualConfig.chageshowPage();
                     }
                 }
             },
-            UpdateTableView: function (data) {
+            UpdateTableView: function(data) {
                 for (var i = 0; i < data.length; i++) {
                     var mac_no = data[i].MAC_NO;
                     if (this.MAC[mac_no] != undefined) {
                         this.MAC[mac_no].MAC.attr("fill", data[i].STATUS_COLOR);
                         //this.MAC[this.CONFIG[mac_no]].TEXT.attr("text", data[i].MAC_NAME);
-                        if(data[i].MAC_NO == "#1")
-                        {
-                            this.Move(data[i]);    
+                        if (data[i].MAC_NO == "#1") {
+                            this.Move(data[i]);
                         }
                     }
                     // if(this.MAC[mac_no]=="#1")
@@ -664,16 +672,16 @@
 
                 $("tspan").attr("dy", 0);
                 //console.log(new Date())
-               //this.Move();
-                setTimeout(this._update(), 5000,0);
+                //this.Move();
+                setTimeout(this._update(), 5000, 0);
             }
         },
         //状态表
         statusTable: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 var strhtml = '<table border="0" width="99%" height="100%" cellspacing="0" cellpadding="0">' +
-                '<tr><td width="100%" class="visaltablehead">' +
+                    '<tr><td width="100%" class="visaltablehead">' +
                     '<table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#13364B"><tr class="titletd">';
                 for (var i = 0; i < npage.length; i++) {
                     strhtml = strhtml + '<td class="td1" width="' + npage[i].width + '" align="Center" valign="middle">' + npage[i].title + '</td>'
@@ -683,22 +691,21 @@
                 $.VisualConfig._dd();
                 //$.VisualConfig._ddSetHW();
             },
-            updatedata: function (self, pobj) {
+            updatedata: function(self, pobj) {
                 $.ajax({
                     url: pobj.url,
                     data: '{"Page":"' + self.url.wid + '"}',
-                    success: function (result) {
+                    success: function(result) {
                         if (result.Status == 0) {
                             self.statusTable.UpdateTableView(result.Data, pobj.columns);
-                        }
-                        else {
+                        } else {
                             BzAlert(result.Message);
                         }
                     }
                 });
             },
-            updatedatademo: function (self, columns) {
-                $.get("/Visual/Demo/GetDemo", function (result) {
+            updatedatademo: function(self, columns) {
+                $.get("/Visual/Demo/GetDemo", function(result) {
                     var result = {
                         Status: 0,
                         Data: [
@@ -717,8 +724,7 @@
                     };
                     if (result.Status == 0) {
                         self.statusTable.UpdateTableView(result.Data, columns);
-                    }
-                    else {
+                    } else {
                         BzAlert(result.Message);
                     }
                     //var data = [];
@@ -728,7 +734,7 @@
                     //self.statusTable.UpdateTableView(data, columns);
                 });
             },
-            UpdateTableView: function (reList, columns) {
+            UpdateTableView: function(reList, columns) {
                 var NO = 1;
                 var imgUrl;
                 if (reList != null) {
@@ -738,17 +744,16 @@
                     var pages = Math.ceil(reList.length / pageSize);
                     var m = 1;
                     this.showdataStatus(reList, m, pageSize, pages, columns);
-                }
-                else {
+                } else {
                     $("#TabData").empty();
                 }
             },
-            _showdataStatus: function (ddobjec, m, pageSize, pages, columns) {
-                return function () {
+            _showdataStatus: function(ddobjec, m, pageSize, pages, columns) {
+                return function() {
                     $.VisualConfig.statusTable.showdataStatus(ddobjec, m, pageSize, pages, columns)
                 }
             },
-            showdataStatus: function (data, m, pageSize, pages, columns) {
+            showdataStatus: function(data, m, pageSize, pages, columns) {
                 if (m <= pages) {
                     var NO = 1;
                     var imgUrl;
@@ -758,8 +763,7 @@
                     var length;
                     if ((m * pageSize) <= data.length) {
                         length = m * pageSize;
-                    }
-                    else {
+                    } else {
                         length = data.length;
                     }
                     for (var i = (m - 1) * pageSize; i < length; i++) {
@@ -791,19 +795,16 @@
                                 break;
                         }
                         var strhtml = '<tr><td style="border-radius:5px 5px 5px 5px;padding:2px;" id="' + name + '" class="' + statusClassName + '">' +
-                        '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
+                            '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
                         for (var j = 0; j < columns.length; j++) {
                             if (columns[j].field == "NULL") {
                                 strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + statusClassName + '" style="background:' + tempdata.STATUS_COLOR + ';border-radius:3px 0px 0px 3px;"><img id="img' + name + '" src=' + imgUrl + ' alt="status"/></td>';
-                            }
-                            else if (columns[j].field == "NO") {
+                            } else if (columns[j].field == "NO") {
                                 strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + statusClassName + '" style="background:' + tempdata.STATUS_COLOR + ';">' + (i + 1) + '</td>';
-                            }
-                            else {
+                            } else {
                                 if (columns[j].type == "datetime") {
                                     strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + statusClassName + '" style="background:' + tempdata.STATUS_COLOR + ';">' + moment(tempdata[columns[j].field]).format("YYYY-MM-DD HH:mm:ss") + '</td>';
-                                }
-                                else {
+                                } else {
                                     strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + statusClassName + '" style="background:' + tempdata.STATUS_COLOR + ';">' + tempdata[columns[j].field] + '</td>';
                                 }
                             }
@@ -817,8 +818,7 @@
                     $("#TabData").append(pagenum);
                     m++
                     setTimeout(this._showdataStatus(data, m, pageSize, pages, columns), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
-                }
-                else {
+                } else {
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
@@ -827,10 +827,10 @@
         //班次达成率
         shiftRatio: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 var strhtml = '<table border="0" width="99%" height="100%" cellspacing="0" cellpadding="0">' +
-                '<tr><td width="100%" class="visaltablehead">' +
-                    '<table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#13364B"><tr class="titletd">';
+                    '<tr><td width="100%" class="visaltablehead">' +
+                    '<table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#4b7086"><tr class="titletd">';
                 for (var i = 0; i < npage.length; i++) {
                     if (!npage[i].hide) {
                         strhtml = strhtml + '<td class="td1" width="' + npage[i].width + '%" align="Center" valign="middle">' + npage[i].text + '</td>';
@@ -841,15 +841,15 @@
                 $.VisualConfig._dd();
                 //$.VisualConfig._ddSetHW();
             },
-            updatedata: function (self, pobj) {
-                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function (result) {
+            updatedata: function(self, pobj) {
+                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function(result) {
                     if (result.Status == 0) {
                         self.shiftRatio.UpdateTableView(result.Data, pobj.columns);
                     }
                 })
             },
-            updatedatademo: function (self, columns) {
-                $.get("/Visual/Demo/GetDemo", function (result) {
+            updatedatademo: function(self, columns) {
+                $.get("/Visual/Demo/GetDemo", function(result) {
                     var page_no = $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]];
                     var result = {
                         Status: 0,
@@ -862,7 +862,7 @@
 
                 });
             },
-            UpdateTableView: function (reList, columns) {
+            UpdateTableView: function(reList, columns) {
                 var NO = 1;
                 var imgUrl;
                 if (reList != null) {
@@ -872,17 +872,16 @@
                     var pages = Math.ceil(reList.length / pageSize);
                     var m = 1;
                     this.showdataStatus(reList, m, pageSize, pages, columns);
-                }
-                else {
+                } else {
                     $("#TabData").empty();
                 }
             },
-            _showdataStatus: function (ddobjec, m, pageSize, pages, columns) {
-                return function () {
+            _showdataStatus: function(ddobjec, m, pageSize, pages, columns) {
+                return function() {
                     $.VisualConfig.shiftRatio.showdataStatus(ddobjec, m, pageSize, pages, columns)
                 }
             },
-            showdataStatus: function (data, m, pageSize, pages, columns) {
+            showdataStatus: function(data, m, pageSize, pages, columns) {
                 if (m <= pages) {
                     var NO = 1;
                     NO = 1; //初始化序号
@@ -890,19 +889,17 @@
                     var length;
                     if ((m * pageSize) <= data.length) {
                         length = m * pageSize;
-                    }
-                    else {
+                    } else {
                         length = data.length;
                     }
                     for (var i = (m - 1) * pageSize; i < length; i++) {
                         var tempdata = data[i];
                         var strhtml = '<tr><td style="border-radius:5px 5px 5px 5px;padding:2px;" id="' + name + '">' +
-                        '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
+                            '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
                         var TableStatus;
                         if (i % 2 == 1) {
                             TableStatus = "TableStatus1";
-                        }
-                        else {
+                        } else {
                             TableStatus = "TableStatus2";
                         }
 
@@ -912,15 +909,13 @@
                                 var Custom_Ration = 20;
                                 if (parseFloat(tempdata[columns[j].value] * 100, 10) <= Custom_Ration) {
                                     strcolor = "#FF0000";
-                                }
-                                else {
+                                } else {
                                     strcolor = "#30971D";
                                 }
                                 var ratio;
                                 if (parseFloat(tempdata[columns[j].value] * 100, 10) > 100) {
                                     ratio = 100;
-                                }
-                                else {
+                                } else {
                                     ratio = tempdata[columns[j].value] * 100;
                                 }
                                 //strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '">' + (tempdata[columns[j].field] * 100).toFixed(1) + '%</td>';
@@ -930,14 +925,12 @@
                                     (tempdata[columns[j].value] * 100).toFixed(1) + '%</div>' +
                                     '<div style="height: 30px; background-color: ' + strcolor + '; border-radius: 3px 3px 3px 3px; width: ' + ratio + '%;"></div>' +
                                     '</div></td>';
-                            }
-                            else {
+                            } else {
                                 if (columns[j].format != "null") {
                                     var eval_value = tempdata[columns[j].value];
                                     eval(columns[j].format);
                                     strhtml = strhtml + '<td width="' + columns[j].width + '%" align="Center" valign="middle" class="' + TableStatus + '">' + eval_value + '</td>';
-                                }
-                                else {
+                                } else {
                                     strhtml = strhtml + '<td width="' + columns[j].width + '%" align="Center" valign="middle" class="' + TableStatus + '">' + tempdata[columns[j].value] + '</td>';
                                 }
                             }
@@ -950,8 +943,7 @@
                     $("#TabData").append(pagenum);
                     m++;
                     setTimeout(this._showdataStatus(data, m, pageSize, pages, columns), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
-                }
-                else {
+                } else {
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
@@ -960,25 +952,25 @@
         //班次状态利用率
         statusRatio: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 $("#context").append('<table style="width:100%;height: 100%;">' +
-            '<tr><td colspan="2" height="50" align="center" style="font-size: 25px;color: #fff;font-family: Microsoft YaHei">设备班次效率汇总</td></tr>' +
-            '<tr><td align="center" width="50%"><div id="chart1"></div></td><td align="center" width="50%"><div id="chart2"></div></td></tr>' +
-            '<tr><td height="150" align="center" id="square1"></td><td align="center" id="square2"></td></tr>' +
-            '</table>');
+                    '<tr><td colspan="2" height="50" align="center" style="font-size: 25px;color: #fff;font-family: Microsoft YaHei">设备班次效率汇总</td></tr>' +
+                    '<tr><td align="center" width="50%"><div id="chart1"></div></td><td align="center" width="50%"><div id="chart2"></div></td></tr>' +
+                    '<tr><td height="150" align="center" id="square1"></td><td align="center" id="square2"></td></tr>' +
+                    '</table>');
                 $.VisualConfig.Chart1 = {};
                 $.VisualConfig.Chart2 = {};
                 $.VisualConfig._dd();
             },
-            updatedata: function (self, pobj) {
-                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function (result) {
+            updatedata: function(self, pobj) {
+                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function(result) {
                     if (result.Status == 0) {
                         self.statusRatio.UpdateTableView(result.Data);
                     }
                 })
             },
-            updatedatademo: function (self, pobj) {
-                $.get("/Visual/Demo/GetDemo", { Page: $.VisualConfig.url.wid }, function (result) {
+            updatedatademo: function(self, pobj) {
+                $.get("/Visual/Demo/GetDemo", { Page: $.VisualConfig.url.wid }, function(result) {
                     var page_no = $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]];
                     var result = {
                         Status: 0,
@@ -990,24 +982,23 @@
                     }
                 });
             },
-            UpdateTableView: function (reList) {
+            UpdateTableView: function(reList) {
                 if (reList != null) {
                     //计算页数
                     //var pages = reList.length;
                     var pages = 1;
                     var m = 1;
                     this.showdataActivation(reList, m, pages);
-                }
-                else {
+                } else {
                     $("#TabData").empty();
                 }
             },
-            _showdataStatus: function (ddobjec, m, pages) {
-                return function () {
+            _showdataStatus: function(ddobjec, m, pages) {
+                return function() {
                     $.VisualConfig.activation.showdataActivation(ddobjec, m, pages);
                 }
             },
-            showdataActivation: function (data, m, pages) {
+            showdataActivation: function(data, m, pages) {
                 if (m <= pages) {
                     if (data !== null) {
                         try {
@@ -1016,9 +1007,7 @@
 
                             self.chart[ele + '_chart2'].destroy();
                             $("#" + ele).find("#chart2").empty();
-                        }
-                        catch (e) {
-                        }
+                        } catch (e) {}
 
                         var data1 = {};
                         data1.title = "前一班次(" + moment(data[0].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[0].SHIFT_NAME + ")";
@@ -1051,11 +1040,9 @@
                             for (var j = 0; j < data[0].StatuRates.length; j++) {
                                 if (i == 0) {
                                     shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[0].StatuRates[j].STATU_NAME + '</td>';
-                                }
-                                else if (i == 1) {
+                                } else if (i == 1) {
                                     shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[0].StatuRates[j].COLOR + '"></div></td>';
-                                }
-                                else if (i == 2) {
+                                } else if (i == 2) {
                                     shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[0].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
                                 }
                             }
@@ -1069,11 +1056,9 @@
                             for (var j = 0; j < data[1].StatuRates.length; j++) {
                                 if (i == 0) {
                                     shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[1].StatuRates[j].STATU_NAME + '</td>';
-                                }
-                                else if (i == 1) {
+                                } else if (i == 1) {
                                     shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[1].StatuRates[j].COLOR + '"></div></td>';
-                                }
-                                else if (i == 2) {
+                                } else if (i == 2) {
                                     shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[1].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
                                 }
                             }
@@ -1090,13 +1075,12 @@
                         return this
                     }
 
-                }
-                else {
+                } else {
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
             },
-            drawChart: function (id, data, chart) {
+            drawChart: function(id, data, chart) {
                 $.VisualConfig[chart] = $(id).statusRatio({
                     type: "pie",
                     title: data.title,
@@ -1117,22 +1101,22 @@
         //设备每小时产量趋势图
         yieldTrend: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 $("#context").append('<div id="chart" style="width:99%;height:100%"></div>');
                 $.VisualConfig.Chart1 = {};
                 $.VisualConfig.Chart2 = {};
                 $.VisualConfig._dd();
                 //$.VisualConfig._ddSetHW();
             },
-            updatedata: function (self, pobj) {
-                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function (result) {
+            updatedata: function(self, pobj) {
+                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function(result) {
                     if (result.Status == 0) {
                         self.yieldTrend.UpdateTableView(result.Data);
                     }
                 })
             },
-            updatedatademo: function (self, pobj) {
-                $.get("/Visual/Demo/GetDemo", function (result) {
+            updatedatademo: function(self, pobj) {
+                $.get("/Visual/Demo/GetDemo", function(result) {
                     var page_no = $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]];
                     var result = {
                         Status: 0,
@@ -1145,20 +1129,19 @@
 
                 });
             },
-            UpdateTableView: function (reList) {
+            UpdateTableView: function(reList) {
                 if (reList != null) {
                     this.showdataYieldTrend(reList);
-                }
-                else {
+                } else {
                     $("#TabData").empty();
                 }
             },
-            _showdataStatus: function () {
-                return function () {
+            _showdataStatus: function() {
+                return function() {
                     $.VisualConfig.chageshowPage();
                 }
             },
-            showdataYieldTrend: function (data) {
+            showdataYieldTrend: function(data) {
                 var par = {};
                 par.xdata = [];
                 par.ydata = [];
@@ -1166,7 +1149,7 @@
                 par.backcolor = $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].backcolor;
 
                 var tjson = {};
-                tjson.name = "产量";//班次名称
+                tjson.name = "产量"; //班次名称
                 tjson.data = [];
                 tjson.color = "#55C00A";
 
@@ -1176,20 +1159,19 @@
                     tjson.data.push(null);
                 }
                 for (var k = 0; k < data.length; k++) {
-                    tjson.data[k] = parseInt(data[k].YIELD_COUNT);//数据
+                    tjson.data[k] = parseInt(data[k].YIELD_COUNT); //数据
                 }
                 par.ydata.push(tjson);
                 try {
                     $.VisualConfig.Chart1.destroy();
                     $("#chart").empty();
-                }
-                catch (e) { }
+                } catch (e) {}
                 this.drawChart("#chart", par, "Chart1");
 
                 setTimeout(this._showdataStatus(), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
 
             },
-            drawChart: function (id, data, chart) {
+            drawChart: function(id, data, chart) {
                 $.VisualConfig[chart] = $(id).yieldTrend({
                     type: "column",
                     title: "设备组每小时效率趋势图",
@@ -1208,22 +1190,22 @@
         //稼动率
         activation: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 $("#context").append('<div id="chart" style="width:99%;height:100%"></div>');
                 $.VisualConfig.Chart1 = {};
                 $.VisualConfig.Chart2 = {};
                 $.VisualConfig._dd();
                 //$.VisualConfig._ddSetHW();
             },
-            updatedata: function (self, pobj) {
-                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function (result) {
-                    if (result.Status == 0) { 
+            updatedata: function(self, pobj) {
+                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function(result) {
+                    if (result.Status == 0) {
                         self.activation.UpdateTableView(result.Data);
                     }
                 })
             },
-            updatedatademo: function (self, pobj) {
-                $.get("/Visual/Demo/GetDemo", function (result) {
+            updatedatademo: function(self, pobj) {
+                $.get("/Visual/Demo/GetDemo", function(result) {
                     var page_no = $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]];
                     var result = {
                         Status: 0,
@@ -1236,28 +1218,26 @@
 
                 });
             },
-            UpdateTableView: function (reList) {
+            UpdateTableView: function(reList) {
                 if (reList != null) {
                     //计算页数
                     var pages = reList.length;
                     //var pages = 1;
                     var m = 1;
                     this.showdataActivation(reList, m, pages);
-                }
-                else {
+                } else {
                     $("#TabData").empty();
                 }
             },
-            _showdataStatus: function (ddobjec, m, pages) {
-                return function () {
+            _showdataStatus: function(ddobjec, m, pages) {
+                return function() {
                     $.VisualConfig.activation.showdataActivation(ddobjec, m, pages);
                 }
             },
-            showdataActivation: function (data, m, pages) {
+            showdataActivation: function(data, m, pages) {
                 if (m <= pages) {
                     var nData = data[m - 1];
-                    if(nData.DATA==null)
-                    {
+                    if (nData.DATA == null) {
                         m++;
                         setTimeout(this._showdataStatus(data, m, pages), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
                         return;
@@ -1267,31 +1247,29 @@
                     par.ydata = [];
                     par.title = nData.GROUP_NAME;
                     var tjson = {};
-                    tjson.name = "利用率";//班次名称
+                    tjson.name = "利用率"; //班次名称
                     tjson.data = [];
                     tjson.color = "#55C00A";
                     for (var i = 0; i < nData.DATA.length; i++) {
                         par.xdata.push(nData.DATA[i].MAC_NAME);
-                        tjson.data.push(nData.DATA[i].VALUE * 100);//数据
+                        tjson.data.push(nData.DATA[i].VALUE * 100); //数据
                     }
                     par.ydata.push(tjson);
                     try {
                         $.VisualConfig.Chart1.destroy();
                         $("#chart").empty();
-                    }
-                    catch (e) { }
+                    } catch (e) {}
                     this.drawChart("#chart", par, "Chart1");
 
                     $("#chart").append('<div align="right" id="pagenum" style="position:relative;top:-30px;">' + String.format(("第{0}页/共{1}页"), m, pages) + '</td></tr>');
                     m++;
                     setTimeout(this._showdataStatus(data, m, pages), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
-                }
-                else {
+                } else {
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
             },
-            drawChart: function (id, data, chart) {
+            drawChart: function(id, data, chart) {
                 $.VisualConfig[chart] = $(id).hisChart({
                     type: "column",
                     title: "设备班次利用率",
@@ -1301,7 +1279,7 @@
                     categories: data.xdata,
                     dataSource: data.ydata,
                     stacking: null,
-                    ymax:125
+                    ymax: 125
                 }).data("BZ-hisChart");
 
             }
@@ -1309,9 +1287,9 @@
         //刀具寿命
         toollife: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 var strhtml = '<table border="0" width="99%" height="100%" cellspacing="0" cellpadding="0">' +
-                '<tr><td width="100%" class="visaltablehead">' +
+                    '<tr><td width="100%" class="visaltablehead">' +
                     '<table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#13364B"><tr class="titletd">';
                 for (var i = 0; i < npage.length; i++) {
                     strhtml = strhtml + '<td class="td1" width="' + npage[i].width + '" align="Center" valign="middle">' + npage[i].title + '</td>'
@@ -1321,15 +1299,15 @@
                 $.VisualConfig._dd();
                 //$.VisualConfig._ddSetHW();
             },
-            updatedata: function (self, pobj) {
-                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function (result) {
+            updatedata: function(self, pobj) {
+                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function(result) {
                     if (result.Status == 0) {
                         self.toollife.UpdateTableView(result.Data, pobj.columns);
                     }
                 })
             },
-            updatedatademo: function (self, columns) {
-                $.get("/Visual/Demo/GetDemo", function (result) {
+            updatedatademo: function(self, columns) {
+                $.get("/Visual/Demo/GetDemo", function(result) {
                     var result = {
                         Status: 0,
                         Message: "OK",
@@ -1364,7 +1342,7 @@
 
                 });
             },
-            UpdateTableView: function (reList, columns) {
+            UpdateTableView: function(reList, columns) {
                 var NO = 1;
                 var imgUrl;
                 if (reList != null) {
@@ -1374,17 +1352,16 @@
                     var pages = Math.ceil(reList.length / pageSize);
                     var m = 1;
                     this.showdataStatus(reList, m, pageSize, pages, columns);
-                }
-                else {
+                } else {
                     $("#TabData").empty();
                 }
             },
-            _showdataStatus: function (ddobjec, m, pageSize, pages, columns) {
-                return function () {
+            _showdataStatus: function(ddobjec, m, pageSize, pages, columns) {
+                return function() {
                     $.VisualConfig.toollife.showdataStatus(ddobjec, m, pageSize, pages, columns)
                 }
             },
-            showdataStatus: function (data, m, pageSize, pages, columns) {
+            showdataStatus: function(data, m, pageSize, pages, columns) {
                 if (m <= pages) {
                     var NO = 1;
                     NO = 1; //初始化序号
@@ -1392,14 +1369,13 @@
                     var length;
                     if ((m * pageSize) <= data.length) {
                         length = m * pageSize;
-                    }
-                    else {
+                    } else {
                         length = data.length;
                     }
                     for (var i = (m - 1) * pageSize; i < length; i++) {
                         var tempdata = data[i];
                         var strhtml = '<tr><td style="border-radius:5px 5px 5px 5px;padding:2px;" id="' + name + '">' +
-                        '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
+                            '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
                         var TableStatus;
                         //if (i % 2 == 1) {
                         //    TableStatus = "TableStatus1";
@@ -1421,11 +1397,9 @@
                         for (var j = 0; j < columns.length; j++) {
                             if (columns[j].field == "NO") {
                                 strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '" style="border-radius:3px 0px 0px 3px;">' + (i + 1) + '</td>';
-                            }
-                            else if (columns[j].field == "TL_PERCENTAGE") {
+                            } else if (columns[j].field == "TL_PERCENTAGE") {
                                 strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '">' + (tempdata[columns[j].field] * 100).toFixed(1) + '%</td>';
-                            }
-                            else {
+                            } else {
                                 strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '">' + tempdata[columns[j].field] + '</td>';
                             }
                         }
@@ -1437,8 +1411,7 @@
                     $("#TabData").append(pagenum);
                     m++;
                     setTimeout(this._showdataStatus(data, m, pageSize, pages, columns), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
-                }
-                else {
+                } else {
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
@@ -1447,9 +1420,9 @@
         //TPM维修保养
         maintain: {
             lang: {},
-            init: function (npage) {
+            init: function(npage) {
                 var strhtml = '<table border="0" width="99%" height="100%" cellspacing="0" cellpadding="0">' +
-                '<tr><td width="100%" class="visaltablehead">' +
+                    '<tr><td width="100%" class="visaltablehead">' +
                     '<table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#13364B"><tr class="titletd">';
                 for (var i = 0; i < npage.length; i++) {
                     strhtml = strhtml + '<td class="td1" width="' + npage[i].width + '" align="Center" valign="middle">' + npage[i].title + '</td>'
@@ -1459,15 +1432,15 @@
                 $.VisualConfig._dd();
                 //$.VisualConfig._ddSetHW();
             },
-            updatedata: function (self, pobj) {
-                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function (result) {
+            updatedata: function(self, pobj) {
+                $.get(pobj.url, { Page: $.VisualConfig.url.wid }, function(result) {
                     if (result.Status == 0) {
                         self.maintain.UpdateTableView(result.Data, pobj.columns);
                     }
                 })
             },
-            updatedatademo: function (self, columns) {
-                $.get("/Visual/Demo/GetDemo", function (result) {
+            updatedatademo: function(self, columns) {
+                $.get("/Visual/Demo/GetDemo", function(result) {
                     var result = {
                         Status: 0,
                         Message: "OK",
@@ -1498,7 +1471,7 @@
 
                 });
             },
-            UpdateTableView: function (reList, columns) {
+            UpdateTableView: function(reList, columns) {
                 var NO = 1;
                 var imgUrl;
                 if (reList != null) {
@@ -1508,17 +1481,16 @@
                     var pages = Math.ceil(reList.length / pageSize);
                     var m = 1;
                     this.showdataStatus(reList, m, pageSize, pages, columns);
-                }
-                else {
+                } else {
                     $("#TabData").empty();
                 }
             },
-            _showdataStatus: function (ddobjec, m, pageSize, pages, columns) {
-                return function () {
+            _showdataStatus: function(ddobjec, m, pageSize, pages, columns) {
+                return function() {
                     $.VisualConfig.maintain.showdataStatus(ddobjec, m, pageSize, pages, columns)
                 }
             },
-            showdataStatus: function (data, m, pageSize, pages, columns) {
+            showdataStatus: function(data, m, pageSize, pages, columns) {
                 if (m <= pages) {
                     var NO = 1;
                     NO = 1; //初始化序号
@@ -1526,34 +1498,29 @@
                     var length;
                     if ((m * pageSize) <= data.length) {
                         length = m * pageSize;
-                    }
-                    else {
+                    } else {
                         length = data.length;
                     }
                     for (var i = (m - 1) * pageSize; i < length; i++) {
                         var tempdata = data[i];
                         var strhtml = '<tr><td style="border-radius:5px 5px 5px 5px;padding:2px;" id="' + name + '">' +
-                        '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
+                            '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
                         var TableStatus;
                         if (i % 2 == 1) {
                             TableStatus = "TableStatus1";
-                        }
-                        else {
+                        } else {
                             TableStatus = "TableStatus2";
                         }
                         for (var j = 0; j < columns.length; j++) {
                             if (columns[j].field == "NO") {
                                 strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '" style="border-radius:3px 0px 0px 3px;">' + (i + 1) + '</td>';
-                            }
-                            else if (columns[j].field == "TL_PERCENTAGE") {
+                            } else if (columns[j].field == "TL_PERCENTAGE") {
                                 strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '">' + (tempdata[columns[j].field] * 100).toFixed(1) + '%</td>';
-                            }
-                            else {
+                            } else {
                                 if (columns[j].type == "datetime") {
                                     //strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + statusClassName + '" style="background:' + tempdata.STATUS_COLOR + ';">' + moment(tempdata[columns[j].field]).format("YYYY-MM-DD HH:mm:ss") + '</td>';
                                     strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '">' + moment(tempdata[columns[j].field]).format("YYYY-MM-DD HH:mm:ss") + '</td>';
-                                }
-                                else {
+                                } else {
                                     strhtml = strhtml + '<td width="' + columns[j].width + '" align="Center" valign="middle" class="' + TableStatus + '">' + tempdata[columns[j].field] + '</td>';
                                 }
                             }
@@ -1566,26 +1533,24 @@
                     $("#TabData").append(pagenum);
                     m++;
                     setTimeout(this._showdataStatus(data, m, pageSize, pages, columns), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
-                }
-                else {
+                } else {
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
             }
         },
-        chageshowPage: function () {
+        chageshowPage: function() {
             var self = this;
             if (self.pg.length <= (self.Index + 1)) {
                 self.Index = 0;
-            }
-            else {
+            } else {
                 self.Index++;
             }
             self._showpage(self.pg[self.Index]);
         }
     });
 })(jQuery);
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.hisChart", {
         options: {
             type: "column",
@@ -1603,7 +1568,7 @@
                 y: 0
             }
         },
-        _create: function () {
+        _create: function() {
             var self = this;
             this.chartOptions = {
                 chart: {
@@ -1665,7 +1630,7 @@
                         }
                     },
                     min: 0,
-                    max:this.options.ymax + 25
+                    max: this.options.ymax + 25
                 },
                 xAxis: {
                     //type: 'datetime',
@@ -1706,7 +1671,7 @@
                                 color: '#fff',
                                 fontSize: 18
                             },
-                            formatter: function () {
+                            formatter: function() {
                                 return (this.y == null) ? "" : this.y.toFixed(1) + '%';
                             }
                         }
@@ -1719,14 +1684,14 @@
                                 fontWeight: 'bold',
                                 color: '#fff'
                             },
-                            formatter: function () {
+                            formatter: function() {
                                 return (this.y == null) ? "" : this.y.toFixed(1) + '%';
                             }
                         }
                     }
                 },
                 tooltip: {
-                    formatter: function () {
+                    formatter: function() {
                         return '<b>' + this.x + '</b><br/>' +
                             this.series.name + ': ' + this.y.toFixed(1) + '%';
                     }
@@ -1738,13 +1703,13 @@
             }
             this.chart = new Highcharts.Chart(this.chartOptions);
         },
-        destroy: function () {
+        destroy: function() {
             this.chart.destroy();
             $.Widget.prototype.destroy.call(this);
         }
     });
 })(jQuery);
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.yieldTrend", {
         options: {
             type: "column",
@@ -1763,7 +1728,7 @@
                 y: 0
             }
         },
-        _create: function () {
+        _create: function() {
             var self = this;
             this.chartOptions = {
                 chart: {
@@ -1810,14 +1775,14 @@
                     tickColor: '#FFF',
                     plotLines: [{
                         id: 'plot-line-1',
-                        color: 'red',            //线的颜色，定义为红色
-                        dashStyle: 'solid',     //默认是值，这里定义为长虚线
-                        value: this.options.plotvalue,              //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
-                        width: 2,               //标示线的宽度，2px
+                        color: 'red', //线的颜色，定义为红色
+                        dashStyle: 'solid', //默认是值，这里定义为长虚线
+                        value: this.options.plotvalue, //定义在那个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+                        width: 2, //标示线的宽度，2px
                         label: {
-                            text: '',     //标签的内容
-                            align: 'left',                //标签的水平位置，水平居左,默认是水平居中center
-                            x: 10,                         //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
+                            text: '', //标签的内容
+                            align: 'left', //标签的水平位置，水平居左,默认是水平居中center
+                            x: 10, //标签相对于被定位的位置水平偏移的像素，重新定位，水平居左10px
                             style: {
                                 fontSize: '14px',
                                 fontWeight: 'bold'
@@ -1883,7 +1848,7 @@
                                 color: '#fff',
                                 fontSize: 18
                             },
-                            formatter: function () {
+                            formatter: function() {
                                 return (this.y == null) ? "" : this.y.toFixed(0) + '';
                             }
                         }
@@ -1896,14 +1861,14 @@
                                 fontWeight: 'bold',
                                 color: '#fff'
                             },
-                            formatter: function () {
+                            formatter: function() {
                                 return (this.y == null) ? "" : this.y.toFixed(0) + '';
                             }
                         }
                     }
                 },
                 tooltip: {
-                    formatter: function () {
+                    formatter: function() {
                         return '<b>' + this.x + '</b><br/>' +
                             this.series.name + ': ' + this.y.toFixed(1) + '';
                     }
@@ -1915,13 +1880,13 @@
             }
             this.chart = new Highcharts.Chart(this.chartOptions);
         },
-        destroy: function () {
+        destroy: function() {
             this.chart.destroy();
             $.Widget.prototype.destroy.call(this);
         }
     });
 })(jQuery);
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.statusRatio", {
         options: {
             type: "pie",
@@ -1940,7 +1905,7 @@
                 y: 0
             }
         },
-        _create: function () {
+        _create: function() {
             var self = this;
             this.chartOptions = {
                 chart: {
@@ -1997,7 +1962,7 @@
             this.chart = new Highcharts.Chart(this.chartOptions);
         },
 
-        destroy: function () {
+        destroy: function() {
             this.chart.destroy();
             $.Widget.prototype.destroy.call(this);
         }

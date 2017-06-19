@@ -3,7 +3,7 @@ var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
 exports.diagnosispage = function(req, res) {
-    post_argu.permission(req, res, '/diagnosis', 'view', path.resolve(__dirname, '../../web/view/diagnosisview/index'));
+    post_common.permission(req, res, '/diagnosis', 'view', path.resolve(__dirname, '../../web/view/diagnosisview/index'));
 }
 exports.diagnosisdetailpage = function(req, res) {
     if (!req.session.user)
