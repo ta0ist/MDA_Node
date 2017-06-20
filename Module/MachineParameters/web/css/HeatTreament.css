@@ -140,7 +140,11 @@
      cursor: pointer;
  }
  
- .dianji {
+ #sidebar ul li:hover {
+     background-color: #BEB6B2;
+ }
+ 
+ .focus {
      background-color: #F35800;
      color: white;
  }

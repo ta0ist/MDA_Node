@@ -27,21 +27,9 @@ block content
             #sidebar
                 div
                     ul
-                        li#1.dianji
+                        li(ng-repeat='macName in machinesItem' ng-click="dianji(($index))" ng-class='{focus: $index==focus}')
                             i.icon-cogs
-                            |  A炉
-                        li#2
-                            i.icon-cogs
-                            |  B炉
-                        li#3
-                            i.icon-cogs
-                            |  C炉
-                        li#4
-                            i.icon-cogs
-                            |  D炉
-                        li#5
-                            i.icon-cogs
-                            |  E炉
+                            |  {{macName}}
             #content
                 #grid_one.content_grid
                     span(style='font-size:22px;font-weight:bold;color:red') 一区
@@ -70,10 +58,10 @@ block content
                                         input.CAILIAO(type='text', name='name', value=' ')
                         #right1.right
                     .grid_footer
-                        button.btn.green.save(style='margin-left:50px;margin-top:10px;')
+                        button.btn.green.save(style='margin-left:50px;margin-top:10px;' ng-click="saveInfo('一区',1)")
                             | 保存
                             i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top:10px; ')
+                        button.btn.purple.print(style='margin-left: 80px; margin-top:10px; ' ng-click="dayin(1)")
                             | 打印
                             i.icon-edit
                 br
@@ -107,7 +95,7 @@ block content
                         button.btn.green.save(style='margin-left:50px;margin-top:5px;')
                             | 保存
                             i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ')
+                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ' ng-click="dayin(1)")
                             | 打印
                             i.icon-edit
                 br
@@ -141,7 +129,7 @@ block content
                         button.btn.green.save(style='margin-left:50px;margin-top:5px;')
                             | 保存
                             i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ')
+                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ' ng-click="dayin(1)")
                             | 打印
                             i.icon-edit
                 br
@@ -175,7 +163,7 @@ block content
                         button.btn.green.save(style='margin-left:50px;margin-top:5px;')
                             | 保存
                             i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ')
+                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ' ng-click="dayin(1)")
                             | 打印
                             i.icon-edit
                 br

@@ -8,7 +8,11 @@ exports.index = function(req, res) {
     post_argu.permission(req, res, '/HeatTreament', 'view', path.resolve(__dirname, '../../web/view/HeatTreament/index'));
 }
 exports.dayin = function(req, res) {
-    res.render(path.resolve(__dirname, '../../web/view/HeatTreamentPrint/index'));
+    if (!req.session.user)
+        res.redirect('/');
+    res.render(path.resolve(__dirname, '../../web/view/HeatTreamentPrint/index'), {
+        user: req.session.user
+    });
 }
 
 exports.fun = function(req, res) {
@@ -24,7 +28,7 @@ function doCallback(fn, args, res) {
 
 //获取热处理炉
 function GetMachinesByGourpId(res, args) {
-    db.sql('select * from MACHINE_GROUP_INFO where pid = 23', function(err, result) {
+    db.sql('select * from MACHINE_GROUP_INFO where pid = 23 order by GP_NAME', function(err, result) {
         if (err) {
             res.json({
                 Data: err,
