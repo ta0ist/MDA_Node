@@ -1,7 +1,4 @@
-﻿/// <reference path="../WebMethod/GetDemoMethod.asmx" />k
-/// <reference path="../WebMethod/GetDemoMethod.asmx" />
-/// <reference path="jquery-ui-1.10.0.custom.js" />
-(function($, undefined) {
+﻿(function($, undefined) {
     $.widget("BZ.VisualConfig", {
         options: {
             headShow: true, //head区域是否显示
@@ -115,7 +112,8 @@
                         3: { name: "yieldTrend", type: "chart" },
                         4: { name: "shiftRatio", type: "table" },
                         5: { name: "activation", type: "chart" },
-                        6: { name: "statusRatio", type: "chart" }
+                        6: { name: "statusRatio", type: "chart" },
+                        7: { name: "camera", type: "chart" }
                     }
                     for (var i = 0; i < rdata.page_body.pages.length; i++) {
                         var tjson = {
@@ -1311,30 +1309,7 @@
                     var result = {
                         Status: 0,
                         Message: "OK",
-                        Data: [
-                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
-                            { MAC_NAME: "B002", LIFE_FLAG: 1, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 1, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
-                            { MAC_NAME: "B001", LIFE_FLAG: 2, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
-                            { MAC_NAME: "B002", LIFE_FLAG: 2, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
-                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
-                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 2, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
-                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
-                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 1, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
-                            { MAC_NAME: "B001", LIFE_FLAG: 1, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
-                            { MAC_NAME: "B002", LIFE_FLAG: 1, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
-                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
-                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
-                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
-                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
-                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 }
-                        ]
+                        Data: 0
                     }
                     if (result.Status == 0) {
                         self.toollife.UpdateTableView(result.Data, columns);
@@ -1537,6 +1512,34 @@
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
+            }
+        },
+        camera: {
+            init: function(npage) {
+                var html = `<div class="camera_row">
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                <div class="camera_col"></div>
+                </div>`;
+                $("#context").append(html);
+                $.VisualConfig._dd();
+                setTimeout(this.pageout, 5000);
+            },
+            updatedata: function(self, pobj) {
+
+                //$.VisualConfig.chageshowPage();
+            },
+            pageout: function() {
+                $.VisualConfig.chageshowPage();
             }
         },
         chageshowPage: function() {
