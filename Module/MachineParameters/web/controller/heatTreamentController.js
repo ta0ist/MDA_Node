@@ -1,3 +1,99 @@
+   app.controller('HeatTreamentCtrl', function($scope, $http) {
+       $scope.machinesItem = [];
+       $scope.AreaList = [];
+       $scope.focus = 0;
+       $.post("/HeatTreatment/GetMachinesByGourpId", { GroupId: 23 }, function(data) {
+           if (data.Status == 0) {
+               if (data.Data.length > 0) {
+                   $scope.machinesItem = data.Data;
+               }
+               $http.post('/HeatTreatment/GetTempNow', { GroupId: data.Data[0].GP_NBR }).success(function(result) {
+                   if (result.Status == 0) {
+                       $scope.AreaList = result.Data;
+                       $scope.$apply();
+                       $scope.drawLine(result.Data);
+                       $scope.mac_temp_Timeout = setInterval($scope.getImmidateData(data.Data[0].GP_NBR), 3000);
+                   }
+               })
+
+           }
+       })
+
+       $scope.dianji = function(index) {
+           $scope.focus = index;
+           clearInterval($scope.mac_temp_Timeout);
+           $scope.AreaList = [];
+           $http.post('/HeatTreatment/GetTempNow', { GroupId: $scope.machinesItem[index].GP_NBR }).success(function(result) {
+               if (result.Status == 0) {
+                   $scope.AreaList = result.Data;
+                   $scope.drawLine(result.Data);
+                   //$scope.$apply();
+                   $scope.mac_temp_Timeout = setInterval($scope.getImmidateData($scope.machinesItem[index].GP_NBR), 3000);
+               }
+           })
+       }
+
+
+       $scope.getImmidateData = function(machineId) {
+           return function() {
+               $http.post('/HeatTreatment/GetTempNow', { GroupId: machineId }).success(function(result) {
+                   if (result.Status == 0) {
+                       for (var i = 0; i < result.Data.length; i++) {
+                           if ($scope.AreaList[i].machineitems.length > 0) {
+                               $scope.AreaList[i].machineitems[1].Value = result.Data[i].machineitems[1].Value;
+                               $scope.AreaList[i].machineitems[0].Value = result.Data[i].machineitems[0].Value;
+                           }
+                       }
+                       //$scope.AreaList = result.Data;
+                   }
+               })
+           }
+       }
+
+       //绘制曲线图
+       $scope.drawLine = function(data) {
+           for (var i = 0; i < data.length; i++) {
+               (function(i) {
+                   $http.post('/HeatTreatment/GetTempHis', { MachineId: data[i].Mac_nbr }).success(function(result) {
+                       if (result.Status == 0) {
+                           T_line('right_' + i, '', data[i].Mac_nbr, result.Data, 4000);
+                       }
+                   })
+               })(i)
+           }
+       }
+
+
+       //保存
+       $scope.saveInfo = function(str, num) {
+           //保存（判断当前保存属于哪个炉子下的哪个区的）
+           num = $scope.focus;
+           alert("我是 " + num + " 下的 " + str + " 下的保存");
+
+           var bc = $(this).parent().parent().children(".grid_content").children(".left");
+           var pv = bc.find(".PV_VALUE").val();
+           var sv = bc.find(".SV_VALUE").val();
+           var rclph = bc.find(".RCLPH").val();
+           var count = bc.find(".COUNT").val();
+           var cailiao = bc.find(".CAILIAO").val();
+
+           var saveData = {
+               PV_VALUE: pv,
+               SV_VALUE: sv,
+               RCL_NO: rclph,
+               COUNT: count,
+               MATERAIL: cailiao
+           }
+           console.log(saveData);
+       };
+
+       $scope.dayin = function(num) {
+           location.href = "/HeatTreamentPrint";
+       };
+   });
+
+
+
    //打印
    $(".print").click(function() {
        var quType = $(this).parent().parent().children("span").html(); //获取当前打印对应的分区
@@ -127,161 +223,3 @@
            }
        });
    }
-
-   app.controller('HeatTreamentCtrl', function($scope) {
-       $scope.machinesItem = [];
-       $scope.focus = 0;
-       $.post("/HeatTreatment/GetMachinesByGourpId", null, function(data) {
-           if (data.Status == 0) {
-               for (var i = 0; i < data.Data.length; i++) {
-                   $scope.machinesItem.push(data.Data[i].GP_NAME);
-               }
-
-               $scope.$apply();
-           }
-       })
-
-       $scope.dianji = function(index) {
-           $scope.focus = index;
-
-           $("#content>div>span").each(function() {
-               var val = $(this).html();
-               var name = "";
-               var type = 0;
-
-               if (index == 0) {
-                   if (val == '一区') {
-                       name = "A炉一区";
-                       type = 1;
-                       showCharts(type, name);
-                   }
-                   if (val == '二区') {
-                       name = "A炉二区";
-                       type = 2;
-                       showCharts(type, name);
-                   }
-                   if (val == '三区') {
-                       name = "A炉三区";
-                       type = 3;
-                       showCharts(type, name);
-                   }
-                   if (val == '四区') {
-                       name = "A炉四区";
-                       type = 4;
-                       showCharts(type, name);
-                   }
-               } else if (index == 1) {
-                   if (val == '一区') {
-                       name = "B炉一区";
-                       type = 1;
-                       showCharts(type, name);
-                   }
-                   if (val == '二区') {
-                       name = "B炉二区";
-                       type = 2;
-                       showCharts(type, name);
-                   }
-                   if (val == '三区') {
-                       name = "B炉三区";
-                       type = 3;
-                       showCharts(type, name);
-                   }
-                   if (val == '四区') {
-                       name = "B炉四区";
-                       type = 4;
-                       showCharts(type, name);
-                   }
-               } else if (index == 2) {
-                   if (val == '一区') {
-                       name = "C炉一区";
-                       type = 1;
-                       showCharts(type, name);
-                   }
-                   if (val == '二区') {
-                       name = "C炉二区";
-                       type = 2;
-                       showCharts(type, name);
-                   }
-                   if (val == '三区') {
-                       name = "C炉三区";
-                       type = 3;
-                       showCharts(type, name);
-                   }
-                   if (val == '四区') {
-                       name = "C炉四区";
-                       type = 4;
-                       showCharts(type, name);
-                   }
-               } else if (index == 3) {
-                   if (val == '一区') {
-                       name = "D炉一区";
-                       type = 1;
-                       showCharts(type, name);
-                   }
-                   if (val == '二区') {
-                       name = "D炉二区";
-                       type = 2;
-                       showCharts(type, name);
-                   }
-                   if (val == '三区') {
-                       name = "D炉三区";
-                       type = 3;
-                       showCharts(type, name);
-                   }
-                   if (val == '四区') {
-                       name = "D炉四区";
-                       type = 4;
-                       showCharts(type, name);
-                   }
-               } else if (index == 4) {
-                   if (val == '一区') {
-                       name = "E炉一区";
-                       type = 1;
-                       showCharts(type, name);
-                   }
-                   if (val == '二区') {
-                       name = "E炉二区";
-                       type = 2;
-                       showCharts(type, name);
-                   }
-                   if (val == '三区') {
-                       name = "E炉三区";
-                       type = 3;
-                       showCharts(type, name);
-                   }
-                   if (val == '四区') {
-                       name = "E炉四区";
-                       type = 4;
-                       showCharts(type, name);
-                   }
-               }
-           })
-       }
-
-       //保存
-       $scope.saveInfo = function(str, num) {
-           //保存（判断当前保存属于哪个炉子下的哪个区的）
-           num = $scope.focus;
-           alert("我是 " + num + " 下的 " + str + " 下的保存");
-
-           var bc = $(this).parent().parent().children(".grid_content").children(".left");
-           var pv = bc.find(".PV_VALUE").val();
-           var sv = bc.find(".SV_VALUE").val();
-           var rclph = bc.find(".RCLPH").val();
-           var count = bc.find(".COUNT").val();
-           var cailiao = bc.find(".CAILIAO").val();
-
-           var saveData = {
-               PV_VALUE: pv,
-               SV_VALUE: sv,
-               RCL_NO: rclph,
-               COUNT: count,
-               MATERAIL: cailiao
-           }
-           console.log(saveData);
-       };
-
-       $scope.dayin = function(num) {
-           location.href = "/HeatTreamentPrint";
-       };
-   });

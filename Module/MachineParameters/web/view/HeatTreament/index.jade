@@ -6,6 +6,7 @@ block append headjavascript
     script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.min.js')
     script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
     script(type='text/javascript',src='./javascripts/UI/Scripts/underscore-min.js')
+    script(type='text/javascript',src='./MachineParameters/web/js/T_line.js')
     script(type='text/javascript',src='./MachineParameters/web/controller/heatTreamentController.js')
 block content
     .row-fluid
@@ -29,21 +30,21 @@ block content
                     ul
                         li(ng-repeat='macName in machinesItem' ng-click="dianji(($index))" ng-class='{focus: $index==focus}')
                             i.icon-cogs
-                            |  {{macName}}
+                            |  {{macName.GP_NAME}}
             #content
-                #grid_one.content_grid
-                    span(style='font-size:22px;font-weight:bold;color:red') 一区
+                #grid_one.content_grid(ng-repeat='area in AreaList')
+                    span(style='font-size:22px;font-weight:bold;color:red') {{area.Mac_Name}}
                     .grid_content
                         .left
                             table
                                 tr
                                     td PV值 
                                     td.td
-                                        input.PV_VALUE(type='number', name='name', value=' ')
+                                        input.PV_VALUE(type='number', name='name', ng-model='area.machineitems[1].Value')
                                 tr
                                     td SV值 
                                     td.td
-                                        input.SV_VALUE(type='number', name='name', value=' ')
+                                        input.SV_VALUE(type='number', name='name', ng-model='area.machineitems[0].Value')
                                 tr
                                     td 热处理批号 
                                     td.td
@@ -56,7 +57,7 @@ block content
                                     td 材料 
                                     td.td
                                         input.CAILIAO(type='text', name='name', value=' ')
-                        #right1.right
+                        .right(id='right_{{$index}}')
                     .grid_footer
                         button.btn.green.save(style='margin-left:50px;margin-top:10px;' ng-click="saveInfo('一区',1)")
                             | 保存
@@ -65,108 +66,7 @@ block content
                             | 打印
                             i.icon-edit
                 br
-                #grid_two.content_grid
-                    span(style='font-size:22px;font-weight:bold;color:red') 二区
-                    .grid_content
-                        .left
-                            table
-                                tr
-                                    td PV值 
-                                    td.td
-                                        input.PV_VALUE(type='number', name='name', value=' ')
-                                tr
-                                    td SV值 
-                                    td.td
-                                        input.SV_VALUE(type='number', name='name', value=' ')
-                                tr
-                                    td 热处理批号 
-                                    td.td
-                                        input.RCLPH(type='text', name='name', value=' ')
-                                tr
-                                    td 数量 
-                                    td.td
-                                        input.COUNT(type='number', name='name', value=' ')
-                                tr
-                                    td 材料 
-                                    td.td
-                                        input.CAILIAO(type='text', name='name', value=' ')
-                        #right2.right
-                    .grid_footer
-                        button.btn.green.save(style='margin-left:50px;margin-top:5px;')
-                            | 保存
-                            i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ' ng-click="dayin(1)")
-                            | 打印
-                            i.icon-edit
-                br
-                #grid_three.content_grid
-                    span(style='font-size:22px;font-weight:bold;color:red') 三区
-                    .grid_content
-                        .left
-                            table
-                                tr
-                                    td PV值 
-                                    td.td
-                                        input.PV_VALUE(type='number', name='name', value=' ')
-                                tr
-                                    td SV值 
-                                    td.td
-                                        input.SV_VALUE(type='number', name='name', value=' ')
-                                tr
-                                    td 热处理批号 
-                                    td.td
-                                        input.RCLPH(type='text', name='name', value=' ')
-                                tr
-                                    td 数量 
-                                    td.td
-                                        input.COUNT(type='number', name='name', value=' ')
-                                tr
-                                    td 材料 
-                                    td.td
-                                        input.CAILIAO(type='text', name='name', value=' ')
-                        #right3.right
-                    .grid_footer
-                        button.btn.green.save(style='margin-left:50px;margin-top:5px;')
-                            | 保存
-                            i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ' ng-click="dayin(1)")
-                            | 打印
-                            i.icon-edit
-                br
-                #grid_four.content_grid
-                    span(style='font-size:22px;font-weight:bold;color:red') 四区
-                    .grid_content
-                        .left
-                            table
-                                tr
-                                    td PV值 
-                                    td.td
-                                        input.PV_VALUE(type='number', name='name', value=' ')
-                                tr
-                                    td SV值 
-                                    td.td
-                                        input.SV_VALUE(type='number', name='name', value=' ')
-                                tr
-                                    td 热处理批号 
-                                    td.td
-                                        input.RCLPH(type='text', name='name', value=' ')
-                                tr
-                                    td 数量 
-                                    td.td
-                                        input.COUNT(type='number', name='name', value=' ')
-                                tr
-                                    td 材料 
-                                    td.td
-                                        input.CAILIAO(type='text', name='name', value=' ')
-                        #right4.right
-                    .grid_footer
-                        button.btn.green.save(style='margin-left:50px;margin-top:5px;')
-                            | 保存
-                            i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top: 5px; ' ng-click="dayin(1)")
-                            | 打印
-                            i.icon-edit
-                br
 
+    
 
 

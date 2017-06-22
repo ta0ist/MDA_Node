@@ -18,7 +18,7 @@ exports.loginpage = function(req, res) {
 
 exports.main = function(req, res, next) {
 
-    if (!session.user) {
+    if (!req.session.user) {
         req.session.error = "请先登录";
         res.redirect("/login");
     } else if (!req.session.menu) {

@@ -1516,26 +1516,18 @@
         },
         camera: {
             init: function(npage) {
-                var html = `<div class="camera_row">
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                <div class="camera_col"></div>
-                </div>`;
+                var html = ` <div>
+        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe>
+        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe>
+    <div>
+        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe>
+        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe>
+    </div>`;
                 $("#context").append(html);
                 $.VisualConfig._dd();
-                setTimeout(this.pageout, 5000);
+                setTimeout(this.pageout, 20000);
             },
             updatedata: function(self, pobj) {
-
                 //$.VisualConfig.chageshowPage();
             },
             pageout: function() {

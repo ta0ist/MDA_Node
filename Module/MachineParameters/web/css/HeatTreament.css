@@ -89,6 +89,7 @@
      width: 100%;
      position: relative;
      border-top: 1px solid rgb(238, 238, 238);
+     margin-bottom: 20px;
  }
  
  #content .content_grid .left {
