@@ -8,17 +8,18 @@
   "dependencies": {
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
+    "crypto": "0.0.3",
     "debug": "~2.2.0",
     "express": "~4.14.0",
-    "jade": "~1.11.0",
-    "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0",
-    "fs": "0.0.1-security",
-    "log4js": "^0.6.38",
-    "request": "^2.78.0",
-    "underscore": "^1.8.3",
     "express-session": "^1.14.2",
-    "crypto": "0.0.3"
+    "fs": "0.0.1-security",
+    "jade": "~1.11.0",
+    "log4js": "^0.6.38",
+    "moment": "^2.18.1",
+    "morgan": "~1.7.0",
+    "request": "^2.78.0",
+    "serve-favicon": "~2.3.0",
+    "underscore": "^1.8.3"
   },
   "author": {
     "name": "Bandex",
@@ -35,6 +36,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^2.0.0",
+    "mssql": "^4.0.4",
     "socket.io": "^1.7.3"
   }
 }

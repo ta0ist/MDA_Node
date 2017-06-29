@@ -1,6 +1,6 @@
-var mssql = require('mssql');
+const mssql = require('mssql');
 var db = {};
-var config = {
+const config = {
     user: 'sa',
     password: '1`q',
     server: '192.168.0.95',
@@ -12,9 +12,20 @@ var config = {
     pool: {
         min: 0,
         max: 10,
-        idleTimeoutMillis: 3000
+        idleTimeoutMillis: 30000
     }
 };
+
+// db.sql = function(sql, callBack) {
+//     var con = mssql.connect(config).then(() => {
+//         return mssql.query(sql)
+//     }).then(result => {
+//         callBack(result)
+//     }).catch(err => {
+//         callBack(err)
+//     })
+// }
+
 
 db.sql = function(sql, callBack) {
     var connection = new mssql.Connection(config, function(err) {
@@ -45,5 +56,7 @@ db.sql = function(sql, callBack) {
         })
     })
 }
+
+
 
 module.exports = db;

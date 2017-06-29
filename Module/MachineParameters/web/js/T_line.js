@@ -46,7 +46,7 @@
                        color: '#000000'
                    }
                },
-               lineColor: '#7CFC00'
+               lineColor: '#000'
            },
            yAxis: {
                gridLineWidth: 0,

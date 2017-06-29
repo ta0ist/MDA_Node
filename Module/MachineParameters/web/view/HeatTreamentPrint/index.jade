@@ -1,13 +1,80 @@
- block append headcss
+append headcss
      link(type='text/css',href='./javascripts/UI/Scripts/media/css/bootstrap.min.css',rel='stylesheet')
      link(type='text/css',href='./javascripts/UI/Scripts/media/css/bootstrap-datetimepicker.css',rel='stylesheet')
      link(type='text/css',href='./MachineParameters/web/css/HeatTreamentPrint.css',rel='stylesheet')
- block append headjavascript
+append headjavascript
+     script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-1.10.2.js')
      script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.min.js')
      script(type='text/javascript',src='./javascripts/UI/Scripts/bootstrap.js')
      script(type='text/javascript',src='./javascripts/UI/Scripts/bootstrap-datetimepicker.js')
-     script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+     script(type='text/javascript',src='./javascripts/moment.js')
+     script(type='text/javascript',src='./MachineParameters/web/js/highstock.js')
      script(type='text/javascript',src='./MachineParameters/web/controller/heatTreamentPrintController.js')
- block content
-     h1 Hello World!
+block content
+     #zong(style='width:842px;height:595px;')
+        div(style="font-size:30px;width:100%;height:40px;line-height:40px;") 上 海 芮 皓 石 油 设 备 有 限 公 司
+        br
+        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") Wellhead Solution Co.,Ltd
+        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") 热处理记录
+        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") HeatTreatment Record
+        table
+            tr
+                td 热处理批号H/T LOT No.
+                td 工艺过程Technolog
+                td 冷却介质Coolont
+                td 保温情况Perserve heat
+            tr
+                td#BATCH
+                td 
+                td 
+                td 
+            tr
+                td 
+                td 
+                td 
+                td 
+        table
+            tr
+                td 零件编号Part No.
+                td 数量Quanlity
+                td 材料Material
+                td 冶炼炉号Heat No.
+            tr
+                td 
+                td#YEILD 
+                td#MATERIAL 
+                td 
+            tr
+                td 
+                td 
+                td 
+                td 
+        br
+        div#show(style="width:100%;height:40px;")
+            label(style="font-size:18px;margin-top:10px;") 选择时间段
+            input#startTime(style="width:180px;height:25px;margin-top:7.5px;margin-left:20px;")
+            label(style="font-size:18px;margin-top:10px;margin-left:30px;") 至
+            input#endTime(style="width:180px;height:25px;margin-top:7.5px;margin-left:30px;")
+            label(style="color:red;font-size:16px;margin-top:10px;margin-left:10px;") (天数越少速度越快) 
+            button#toCharts(style="width:100px;height:30px;font-size:18px;margin-top:5px;margin-left:20px;") 加载图表
+        br
+        div#showChart.HChart(style="width:100%;height:530px;")
+            div(style="font-size:22px;width:100%;height:40px;line-height:40px;") 热处理图表
+            div(style="font-size:22px;width:100%;height:40px;line-height:40px;") Heat Treatment Chart
+            div#quxian(style="width:100%;height:50px;position:relative;")
+                button#LU_TYPE(style="width:50px;height:50px;font-size:19px;position:absolute ;left:0px;top:0px;")
+                div(style="height:50px;width:95%; display:inline-block;")
+                    //- div(style="width:145px;height:25px;background-color:#292D2C")
+                    //- div(style="width:115px;height:20px;font-size:20px;") 一区曲线
+                    //- div(style="width:145px;height:25px;background-color:#DD4B47")
+                    //- div(style="width:115px;height:20px;font-size:20px;") 二区曲线
+                    //- div(style="width:145px;height:25px;background-color:#292184")
+                    //- div(style="width:115px;height:20px;font-size:20px;") 三区曲线
+                    //- div(style="width:145px;height:25px;background-color:#7CF55A")
+                    //- div(style="width:115px;height:20px;font-size:20px;") 四区曲线
+            br
+        div#container(style="width:842px;height:600px;background-color:#C9C9BD;")
+
+
+
 

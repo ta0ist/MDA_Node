@@ -36,33 +36,37 @@ block content
                     span(style='font-size:22px;font-weight:bold;color:red') {{area.Mac_Name}}
                     .grid_content
                         .left
-                            table
+                            table(style="margin-left: 20px;")
                                 tr
                                     td PV值 
                                     td.td
                                         input.PV_VALUE(type='number', name='name', ng-model='area.machineitems[1].Value')
+                                        button.btn.green(ng-click='SetPV($index)')
+                                            | 设置PV
                                 tr
                                     td SV值 
                                     td.td
                                         input.SV_VALUE(type='number', name='name', ng-model='area.machineitems[0].Value')
+                                        button.btn.green(ng-click='SetSV($index)')
+                                            | 设置SV
                                 tr
                                     td 热处理批号 
                                     td.td
-                                        input.RCLPH(type='text', name='name', value=' ')
+                                        input.RCLPH(type='text', name='name', ng-model='area.BATCH')
                                 tr
                                     td 数量 
                                     td.td
-                                        input.COUNT(type='number', name='name', value=' ')
+                                        input.COUNT(type='number', name='name', ng-model='area.YEILD')
                                 tr
                                     td 材料 
                                     td.td
-                                        input.CAILIAO(type='text', name='name', value=' ')
+                                        input.CAILIAO(type='text', name='name', ng-model='area.MATERIAL')
                         .right(id='right_{{$index}}')
                     .grid_footer
-                        button.btn.green.save(style='margin-left:50px;margin-top:10px;' ng-click="saveInfo('一区',1)")
+                        button.btn.green.save(style='margin-left:100px;margin-top:10px;' ng-click="saveInfo($index)")
                             | 保存
                             i.icon-ok
-                        button.btn.purple.print(style='margin-left: 80px; margin-top:10px; ' ng-click="dayin(1)")
+                        button.btn.purple.print(style=' margin-top:10px; ' ng-click="dayin($index)")
                             | 打印
                             i.icon-edit
                 br
