@@ -9,20 +9,52 @@ append headjavascript
      script(type='text/javascript',src='./javascripts/UI/Scripts/bootstrap-datetimepicker.js')
      script(type='text/javascript',src='./javascripts/moment.js')
      script(type='text/javascript',src='./MachineParameters/web/js/highstock.js')
-     script(type='text/javascript',src='./javascripts/underscore-min.js')
      script(type='text/javascript',src='./MachineParameters/web/controller/heatTreamentPrintController.js')
 block content
      #zong(style='width:842px;height:595px;')
-        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") Wellhead Solution Co.,Ltd
+        div(style="font-size:30px;width:100%;height:40px;line-height:40px;") 上 海 芮 皓 石 油 设 备 有 限 公 司
         br
-        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") 热处理批次号
-        div#BATCH(style="font-size:22px;width:100%;height:40px;line-height:40px;")
+        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") Wellhead Solution Co.,Ltd
+        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") 热处理记录
+        div(style="font-size:22px;width:100%;height:40px;line-height:40px;") HeatTreatment Record
+        table
+            tr
+                td 热处理批号H/T LOT No.
+                td 工艺过程Technolog
+                td 冷却介质Coolont
+                td 保温情况Perserve heat
+            tr
+                td#BATCH
+                td 
+                td 
+                td 
+            tr
+                td 
+                td 
+                td 
+                td 
+        table
+            tr
+                td 零件编号Part No.
+                td 数量Quanlity
+                td 材料Material
+                td 冶炼炉号Heat No.
+            tr
+                td 
+                td#YEILD 
+                td#MATERIAL 
+                td 
+            tr
+                td 
+                td 
+                td 
+                td 
         br
         div#show(style="width:100%;height:40px;")
-            label(style="font-size:18px;margin-top:10px;") Dates
-            input#startTime.datetimepicker(style="width:180px;height:25px;margin-top:7.5px;margin-left:20px;")
-            label(style="font-size:18px;margin-top:10px;margin-left:30px;") to
-            input#endTime.datetimepicker(style="width:180px;height:25px;margin-top:7.5px;margin-left:30px;")
+            label(style="font-size:18px;margin-top:10px;") 选择时间段
+            input#startTime(style="width:180px;height:25px;margin-top:7.5px;margin-left:20px;")
+            label(style="font-size:18px;margin-top:10px;margin-left:30px;") 至
+            input#endTime(style="width:180px;height:25px;margin-top:7.5px;margin-left:30px;")
             label(style="color:red;font-size:16px;margin-top:10px;margin-left:10px;") (天数越少速度越快) 
             button#toCharts(style="width:100px;height:30px;font-size:18px;margin-top:5px;margin-left:20px;") 加载图表
         br

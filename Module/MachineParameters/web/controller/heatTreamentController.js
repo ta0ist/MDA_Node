@@ -2,6 +2,12 @@ app.controller('HeatTreamentCtrl', function($scope, $http) {
     $scope.machinesItem = [];
     $scope.AreaList = [];
     $scope.focus = 0;
+    $scope.work_order = {
+        BATCH: "",
+        MATERIAL: "",
+        WORK_ORDER: "",
+        YEILD: ""
+    }
     $.post("/HeatTreatment/GetMachinesByGourpId", { GroupId: 23 }, function(data) {
         if (data.Status == 0) {
             if (data.Data.length > 0) {
@@ -16,6 +22,15 @@ app.controller('HeatTreamentCtrl', function($scope, $http) {
                 }
             })
 
+            $http.post('/HeatTreatment/GetWorkOrder', { GroupId: data.Data[0].GP_NBR }).success(function(resd) {
+                if (resd.Status == 0) {
+                    if (resd.Data.length > 0) {
+                        $scope.work_order = resd.Data[0];
+                        $scope.work_order.WORK_ORDER = resd.Data[0].MEMO;
+                    }
+
+                }
+            })
         }
     })
 
@@ -28,10 +43,27 @@ app.controller('HeatTreamentCtrl', function($scope, $http) {
             if (result.Status == 0) {
                 $scope.AreaList = result.Data;
                 $scope.drawLine(result.Data);
-                //$scope.$apply();
                 $scope.mac_temp_Timeout = setInterval($scope.getImmidateData($scope.machinesItem[index].GP_NBR), 10000);
             }
         })
+
+        $http.post('/HeatTreatment/GetWorkOrder', { GroupId: $scope.machinesItem[index].GP_NBR }).success(function(resd) {
+            if (resd.Status == 0) {
+                if (resd.Data.length > 0) {
+                    $scope.work_order = resd.Data[0];
+                    $scope.work_order.WORK_ORDER = resd.Data[0].MEMO;
+                } else {
+                    $scope.work_order = {
+                        BATCH: "",
+                        MATERIAL: "",
+                        WORK_ORDER: "",
+                        YEILD: ""
+                    }
+                }
+
+            }
+        })
+
     }
 
     //获取即时数据(不含参数)
@@ -90,16 +122,15 @@ app.controller('HeatTreamentCtrl', function($scope, $http) {
 
     //保存
     $scope.saveInfo = function(index) {
-        $http.post('/HeatTreatment/setValue', { data: $scope.AreaList[index] }).success(function(result) {
+        $http.post('/HeatTreatment/setValue', { data: $scope.work_order, gp_nbr: $scope.machinesItem[$scope.focus].GP_NBR }).success(function(result) {
             if (result.Status == 0) {
                 BzSuccess('操作成功！');
             }
         })
     };
 
-    $scope.dayin = function(index) {
-        let mac_nbr = $scope.AreaList[index].Mac_nbr;
-        window.open("/HeatTreamentPrint?mac_nbr=" + mac_nbr);
+    $scope.print = function() {
+        window.open("/HeatTreamentPrint?gp_nbr=" + $scope.machinesItem[$scope.focus].GP_NBR);
     };
 
     //设置pv值

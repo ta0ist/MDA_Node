@@ -2,6 +2,11 @@ extends ../../../../../views/layout
 block append headcss
     link(type='text/css',href='./MachineParameters/web/css/HeatTreament.css',rel='stylesheet')
     link(type='text/css',href='./MachineParameters/web/css/jcallout.css',rel='stylesheet')
+    style.
+        .T_title{
+            font-size:20px;
+            color:blue;
+        }
 block append headjavascript
     script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.min.js')
     script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
@@ -32,6 +37,28 @@ block content
                             i.icon-cogs
                             |  {{macName.GP_NAME}}
             #content
+                .head
+                    table.table
+                        tr
+                            td.T_title 工作令
+                            td
+                                input.input(type='text' ng-model='work_order.WORK_ORDER')
+                            td.T_title 热处理批号
+                            td
+                                input.input(type='text' ng-model='work_order.BATCH')
+                        tr
+                            td.T_title 材料
+                            td 
+                                input.input(type='text' ng-model='work_order.MATERIAL')
+                            td.T_title 数量
+                            td
+                                input.input(type='number' ng-model='work_order.YEILD')
+                    button.btn.green.save(style='margin-left:100px;margin-top:-10px;' ng-click="saveInfo()")
+                            | 保存
+                            i.icon-ok
+                    button.btn.purple.print(style=' margin-top:-10px; ' ng-click="print()")
+                            | 打印
+                            i.icon-edit
                 #grid_one.content_grid(ng-repeat='area in AreaList')
                     span(style='font-size:22px;font-weight:bold;color:red') {{area.Mac_Name}}
                     .grid_content
@@ -49,26 +76,26 @@ block content
                                         input.SV_VALUE(type='number', name='name', ng-model='area.machineitems[0].Value')
                                         button.btn.green(ng-click='SetSV($index)')
                                             | 设置SV
-                                tr
-                                    td 热处理批号 
-                                    td.td
-                                        input.RCLPH(type='text', name='name', ng-model='area.BATCH')
-                                tr
-                                    td 数量 
-                                    td.td
-                                        input.COUNT(type='number', name='name', ng-model='area.YEILD')
-                                tr
-                                    td 材料 
-                                    td.td
-                                        input.CAILIAO(type='text', name='name', ng-model='area.MATERIAL')
+                                //- tr
+                                //-     td 热处理批号 
+                                //-     td.td
+                                //-         input.RCLPH(type='text', name='name', ng-model='area.BATCH')
+                                //- tr
+                                //-     td 数量 
+                                //-     td.td
+                                //-         input.COUNT(type='number', name='name', ng-model='area.YEILD')
+                                //- tr
+                                //-     td 材料 
+                                //-     td.td
+                                //-         input.CAILIAO(type='text', name='name', ng-model='area.MATERIAL')
                         .right(id='right_{{$index}}')
-                    .grid_footer
-                        button.btn.green.save(style='margin-left:100px;margin-top:10px;' ng-click="saveInfo($index)")
-                            | 保存
-                            i.icon-ok
-                        button.btn.purple.print(style=' margin-top:10px; ' ng-click="dayin($index)")
-                            | 打印
-                            i.icon-edit
+                    //- .grid_footer
+                        //- button.btn.green.save(style='margin-left:100px;margin-top:10px;' ng-click="saveInfo($index)")
+                        //-     | 保存
+                        //-     i.icon-ok
+                        //- button.btn.purple.print(style=' margin-top:10px; ' ng-click="dayin($index)")
+                        //-     | 打印
+                        //-     i.icon-edit
                 br
 
     

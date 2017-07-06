@@ -134,9 +134,9 @@ function Line_Temp(res, args) {
 
 //设置sv的值
 function setValue(res, args) {
-    let areaList = args.data.machineitems,
+    let gp_nbr = args.gp_nbr,
         START_DATE = moment(new Date()).format('YYYY-MM-DD hh:mm:ss');
-    let sql_insert = "insert FUJI_DETAIL (MAC_NBR,START_DATE,BATCH,MATERIAL,YEILD)values(" + args.data.Mac_nbr + ",'" + START_DATE + "','" + args.data.BATCH + "','" + args.data.MATERIAL + "','" + args.data.YEILD + "')";
+    let sql_insert = "insert FUJI_DETAIL (MAC_NBR,START_DATE,BATCH,MATERIAL,YEILD,MEMO)values(" + gp_nbr + ",'" + START_DATE + "','" + args.data.BATCH + "','" + args.data.MATERIAL + "','" + args.data.YEILD + "','" + args.data.WORK_ORDER + "'" + ")";
     db.sql(sql_insert, function(err, result) {
         if (err) {
             res.json({
@@ -318,4 +318,48 @@ function PrintTemp(res, args) {
 
     //     }
     // })
+}
+
+//获得历史温度
+function PrintTemp_Group(res, args) {
+    let gp_nbr = args.gp_nbr,
+        StartDate = args.StartDate,
+        EndDate = moment(args.EndDate).add(1, 'd').format('YYYY-MM-DD');
+    var methods = global.Webservice + '/MachineParameters/Diagnosis.asmx/GetHisTempByGroup';
+    request.post({
+        url: methods,
+        json: true,
+        headers: {
+            "content-type": "application/json",
+        },
+        body: { gp_nbr: gp_nbr, Start_Date: StartDate, End_Date: EndDate }
+    }, function(err, response, body) {
+        if (err) {
+            res.json({
+                Data: null,
+                Status: -9999,
+                Message: error
+            })
+        } else {
+            res.json(JSON.parse(body.d));
+        }
+
+    })
+}
+//获取工作令
+function GetWorkOrder(res, args) {
+    let sql_getworkorder = "select TOP 1 * from FUJI_DETAIL where MAC_NBR=" + args.GroupId + " order by START_DATE DESC";
+    db.sql(sql_getworkorder, function(err, result) {
+        if (err) {
+            res.json({
+                Data: err,
+                Status: -9999
+            })
+        } else {
+            res.json({
+                Data: result,
+                Status: 0
+            })
+        }
+    })
 }
