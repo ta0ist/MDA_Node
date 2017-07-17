@@ -62,12 +62,14 @@ $(function() {
                 let resylt = [],
                     group_list = {};
                 for (let i = 0; i < data.Data.length; i++) {
+                    data.Data[i].STORAGE_DATE = moment(data.Data[i].STORAGE_DATE).format('X') * 1000 + 8 * 3600 * 1000;
                     group_list[data.Data[i].MAC_NAME] = {
                         mac_nbr: data.Data[i].MAC_NBR
                     }
                 }
                 for (let temp in group_list) {
                     let temp_list = _.where(data.Data, { 'MAC_NBR': group_list[temp].mac_nbr });
+                    temp_list = _.sortBy(temp_list, 'STORAGE_DATE');
                     if (temp_list.length > 0) {
                         let child_list = {};
                         child_list.name = temp_list[0].MAC_NAME;
@@ -75,7 +77,7 @@ $(function() {
 
                         for (let i = 0; i < temp_list.length; i++) {
                             let ch = [],
-                                ch_time = moment(temp_list[i].STORAGE_DATE).format('X') * 1000 + 8 * 3600 * 1000,
+                                ch_time = temp_list[i].STORAGE_DATE,
                                 ch_v = temp_list[i].PV;
                             ch.push(ch_time);
                             ch.push(ch_v);
