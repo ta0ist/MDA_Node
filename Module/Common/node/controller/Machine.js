@@ -2,6 +2,7 @@
 var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
+const fs = require('fs');
 exports.machineload = function(req, res) {
     post_common.permission(req, res, '/machine', 'view', path.resolve(__dirname, '../../web/view/machine/index'));
     // if (!req.session.menu) {
@@ -139,4 +140,43 @@ function GetAllMachineAndMachineGroup(res, method, args) {
 function GetAllMachineAndMachineGroup_CustomerParameter(res, method, args) {
     var groupID = { groupID: 0 }
     post_common.post_argu(res, method, groupID);
+}
+
+function ShowAllPic(res, method, args) {
+    var root = './public';
+    var imagesDir = '/images/machine';
+    var body = {},
+        data = [];
+    fs.readdirSync(root + imagesDir).forEach(function(file) {
+        if (fs.lstatSync(root + imagesDir + '/' + file)) {
+            var dirname = file;
+            // var img = {};
+            // img.FileDesc = "file";
+            fs.readdirSync(root + imagesDir + '/' + file).forEach(function(file) {
+                data.push({ FileName: file, FilePath: imagesDir + '/' + dirname + '/' + file, FileDesc: dirname });
+            })
+            body.Data = data;
+        }
+    })
+    body.Status = 0;
+    body.Message = "上传成功！";
+    res.json(body);
+
+}
+
+
+function DeleteFile(res, method, args) {
+    let filename = args.fileName;
+    let imagesDir = './public/images/machine/NoDefault/';
+    fs.unlink(path.resolve(imagesDir + filename), (err) => {
+        var body = {};
+        if (err) {
+            body.Status = -9999;
+            body.Message = err;
+            res.json(body);
+        }
+        body.Status = 0;
+        body.Message = "删除成功！";
+        res.json(body);
+    })
 }

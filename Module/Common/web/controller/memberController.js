@@ -273,7 +273,7 @@ function photoevnet() {
             fileName: obj.split("/")[1],
             type: "NoDefault"
         }
-        $.post("/member/DeleteFile", JSON.stringify(data), function(data) {
+        $.post("/member/DeleteFile", data, function(data) {
             if (data.Status == 0) {
                 $('.galleryli[name="' + obj + '"]').remove();
             } else {

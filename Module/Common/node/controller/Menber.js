@@ -112,10 +112,10 @@ function GetKeywordMemberlist(res, method, args) {
     var para = { pinfo: args, keyword: args.keyword }
     post_argu.post_argu(res, method, para);
 }
-//显示所有图片
-function ShowAllPic(res, method, args) {
-    post_argu.post_argu(res, method);
-}
+// //显示所有图片
+// function ShowAllPic(res, method, args) {
+//     post_argu.post_argu(res, method);
+// }
 //上传
 function UpLoadFileWithCut(res, method, args) {
     //post_argu.post_argu(res,method);
@@ -141,4 +141,20 @@ function ShowAllPic(res, method, args) {
     body.Message = "上传成功！";
     res.json(body);
 
+}
+
+function DeleteFile(res, method, args) {
+    let filename = args.fileName;
+    let imagesDir = './public/images/people/NoDefault/';
+    fs.unlink(path.resolve(imagesDir + filename), (err) => {
+        var body = {};
+        if (err) {
+            body.Status = -9999;
+            body.Message = err;
+            res.json(body);
+        }
+        body.Status = 0;
+        body.Message = "删除成功！";
+        res.json(body);
+    })
 }

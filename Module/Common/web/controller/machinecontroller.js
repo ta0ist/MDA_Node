@@ -350,7 +350,7 @@ function photoevnet() {
             fileName: obj.split("/")[1],
             type: "NoDefault"
         }
-        $.post("/member/DeleteFile", JSON.stringify(data), function(data) {
+        $.post("/machine/DeleteFile", data, function(data) {
             if (data.Status == 0) {
                 $('.galleryli[name="' + obj + '"]').remove();
             } else {
@@ -567,7 +567,7 @@ function addOrEdit(dataItem) {
 
 
     //获取图库列表
-    $.post("/member/ShowAllPic", function(data) {
+    $.post("/machine/ShowAllPic", function(data) {
         if (data.Status == 0) {
             var html = '<ul class="galleryul" style="margin-left: 0px; margin-bottom: 0px;">';
             for (var i = 0; i < data.Data.length; i++) {
@@ -606,7 +606,7 @@ function addOrEdit(dataItem) {
         maxFileSize: 1000000,
         done: function(e, data) {
             if (data.result.Status == 0) {
-                $("#PHOTO_img").css("backgroundImage", "url(./images/people/NoDefault/" + data.result.Data + ")");
+                $("#PHOTO_img").css("backgroundImage", "url(./images/machine/NoDefault/" + data.result.Data + ")");
                 //addviewModel.PHOTO(data.result.Data);
                 $("#PHOTO").val(data.result.Data);
                 //添加到图库

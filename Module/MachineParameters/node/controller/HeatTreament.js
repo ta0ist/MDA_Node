@@ -9,6 +9,7 @@ var moment = require('moment')
 exports.index = function(req, res) {
     post_argu.permission(req, res, '/HeatTreament', 'view', path.resolve(__dirname, '../../web/view/HeatTreament/index'));
 }
+
 exports.dayin = function(req, res) {
     if (!req.session.user)
         res.redirect('/');

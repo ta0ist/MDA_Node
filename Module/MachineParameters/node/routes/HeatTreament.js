@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get('/HeatTreamentPrint', HeatTreamentctrl.dayin);
 
     app.post('/HeatTreatment/:method', HeatTreamentctrl.fun);
+
 }

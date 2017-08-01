@@ -1,0 +1,40 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./MachineParameters/web/css/MachinePara.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/underscore-min.js')
+    script(type='text/javascript',src='./MachineParameters/web/controller/machineparaController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 设备曲线
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 首页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 过程参数
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 设备曲线
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid(ng-controller='ParaCtrl')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 选择日期
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.PASSWORD') 选择设备
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='machine')
+            .span
+                .control-group(style='margin-bottom: 5px;')
+                    #search.btn.green(style='margin-left: 50px;')
+                        | #{lang.EmployeePerformance.Search}
+                        i.icon-search
+    
