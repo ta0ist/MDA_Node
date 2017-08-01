@@ -1,6 +1,6 @@
 var visual = require('../controller/Visual.js');
 
-module.exports = function (app) {
+module.exports = function(app) {
 
     //加载页面
     app.get('/visuals', visual.index);
@@ -20,13 +20,19 @@ module.exports = function (app) {
     app.get('/visuals/r/GetMachineHourYield', visual.GetMachineHourYield);
 
     //获取班次状态
-    app.get('/visuals/r/GetMachineShifStatuRate',visual.GetMachineShifStatuRate);
+    app.get('/visuals/r/GetMachineShifStatuRate', visual.GetMachineShifStatuRate);
 
-     //获取稼动率
-    app.get('/visuals/r/GetShiftActivation',visual.GetShiftActivation);
+    //获取稼动率
+    app.get('/visuals/r/GetShiftActivation', visual.GetShiftActivation);
 
     //班次效率汇总饼图
-    app.get('/visuals/r/GetThisShiftStatuRate',visual.GetThisShiftStatuRate);
-    
+    app.get('/visuals/r/GetThisShiftStatuRate', visual.GetThisShiftStatuRate);
 
+    app.get('/visual/board', visual.board);
+
+    app.post('/visuals/r/GetImmediatelyparameter', visual.GetImmediatelyparameter);
+
+    app.post('/visuals/r/GetMachineStatus', visual.GetMachineStatus);
+
+    app.post('/visuals/r/GetRobot', visual.GetRobot);
 }

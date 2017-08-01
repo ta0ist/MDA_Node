@@ -1,0 +1,66 @@
+doctype html
+head
+    //- link(href='./web/UI/bootstrap-3.3.5-dist/css/bootstrap.min.css', rel='stylesheet')
+    link(href='./web/css/board.css', rel='stylesheet')
+    link(href='./web/image/logoico.ico', rel='shortcut icon', type='image/x-icon')
+body(ng-app='board')
+    .container(ng-controller='boardCtrl')
+        img.leftup(src='./web/image/leftup.png')
+        img.leftdown(src='./web/image/leftdown.png')
+        img.rightup(src='./web/image/rightup.png')
+        img.rightdown(src='./web/image/rightdown.png')
+        header
+            h1 上海斑彰智能工厂管理系统           
+        .content-body
+            .box
+                .left-box 
+                    .layout-chart
+                        .title 布局图
+                        .left-chart
+                            img.title-line(src='./web/image/line.png')
+                            #factory
+                            #status
+                                ul
+                                    li
+                                        span.status_flag(style="background-color:#ff5b57;")
+                                        span 报警
+                                    li 
+                                        span.status_flag(style="background-color:#00acac;")
+                                        span 运行
+                                    li 
+                                        span.status_flag(style="background-color:#f59c1a;")
+                                        span 空闲
+                                    li 
+                                        span.status_flag(style="background-color:#348fe2;")
+                                        span 调试
+                                    li 
+                                        span.status_flag(style="background-color:#4b7086;")
+                                        span 关机
+                .right-box 
+                    .bread-chart
+                        .title 实时数据
+                        .right-up-chart
+                            img.title-line(src='./web/image/line.png')
+                            table.table
+                              tr
+                                td.title-name 参数名称
+                                td.title-name 值
+                              tr(ng-repeat="item in MachineList")
+                                td.item-name {{item.mac_name}}
+                                td.item-name {{item.value}}
+                            img.triangle(src='./web/image/triangle.png')
+                    //- .table-chart
+                    //-     .title 机械手位置
+                    //-     .right-down-chart
+                    //-         img.title-line(src='./web/image/line.png')
+                    //-         #Machine_Chart
+                    //-         img.triangle(src='./web/image/triangle.png')  
+script(src='./web/javascripts/jquery-1.10.2.js')                            
+script(src='../../../javascripts/Angular/angular.min.js')
+script(src='../../../javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')                         
+script(src='../../../javascripts/UI/Scripts/Raphael-2.1.2.js')
+script(src='../../../javascripts/UI/Scripts/moment.js')
+script(src='../../../javascripts/underscore-min.js')
+script(src='./web/javascripts/T_line.js')
+script(src='./web/controller/boardCtrl.js')
+script(src='../Visual/web/javascripts/FactoryView_jnzq.js')
