@@ -23,4 +23,6 @@ module.exports = function(app) {
         }
     });
 
+    app.post('/diagnosis/r/GetMachinePara', diagnosisctrl.GetMachinePara);
+
 }

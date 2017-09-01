@@ -2,6 +2,8 @@ var path = require('path');
 var request = require('request');
 var config = require('../../../../routes/config.js')
 var post_common = require('../../../../routes/post_argu.js');
+var db = require('../../../../routes/db.js')
+var _ = require('underscore');
 exports.diagnosispage = function(req, res) {
     post_common.permission(req, res, '/diagnosis', 'view', path.resolve(__dirname, '../../web/view/diagnosisview/index'));
 }
@@ -63,4 +65,23 @@ function GetImmediatelyparameter(res, method, args) {
     var para = { machineIds: args.machineIds.split(',') }
     post_common.post_argu(res, method, para);
 
+}
+
+exports.GetMachinePara = (req, res) => {
+    let StartTime = req.body.StartTime,
+        EndTime = req.body.EndTime;
+    let mac_nbr = req.body.ObjectIDs;
+    let sql = "select RUNNING_DATE,P_INT1,P_INT2,P_INT3,P_INT4 from MACHINE_PARAMETER_201708 where MAC_NBR=" + mac_nbr + " and RUNNING_DATE>'" + StartTime + "' and RUNNING_DATE<='" + EndTime + "'";
+    db.sql(sql, (err, result) => {
+        if (err) {
+            res.json({
+                Status: -9999,
+                Data: null
+            })
+        }
+        return res.json({
+            Status: 0,
+            Data: _.sortBy(result, 'RUNNING_DATE')
+        })
+    })
 }

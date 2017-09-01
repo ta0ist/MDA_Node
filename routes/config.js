@@ -1,6 +1,6 @@
 ﻿module.exports = {
     //node发布端口
-    port: '8888',
+    port: '8899',
 
     //http post的格式
     options: {
@@ -19,7 +19,7 @@
         "ORDER_NUM": 0,
         "ICON_IMG": "./images/factory/威强电.png"
     }],
-    webIP: '192.168.0.95',
-    webPort: 8013,
+    webIP: '192.168.0.96',
+    webPort: 8015,
     model: 'HGFH'
 }

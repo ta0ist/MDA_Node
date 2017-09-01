@@ -241,7 +241,7 @@
                 '<tr>' +
                 '<td id="head"><div style="padding-left: 5px;display: inline-flex;">' +
                 '<img id="logo" src="./Visual/web/image/' + logimg + '" style="position: relative;top: 5px;height:45px;"/>' +
-                '<span id="title" style="  position: relative;top: 5px;left: 5px;font-size:' + self.options.setting.page_head.fontSize + ';font-family:' + self.options.setting.page_head.fontFamily + ';color:' + self.options.setting.page_head.color + '">' + self.options.setting.page_head.title + '</span><div id="imgtest"><ul><li style="list-style-type:none;"><img id="barcode" src="./Visual/web/image/bandexsoft.jpg" style="width: 60px; height: 60px;margin-left: 10;" /><--放大</li></ul></div></div></td>' +
+                '<div><span id="title" style="  position: relative;top: 5px;left: 5px;font-size:' + self.options.setting.page_head.fontSize + ';font-family:' + self.options.setting.page_head.fontFamily + ';color:' + self.options.setting.page_head.color + '">' + self.options.setting.page_head.title + '</span><span>Nantong Guandong Mould & Plastic Co.,Ltd</span></div><div id="imgtest"><ul><li style="list-style-type:none;"><img id="barcode" src="./Visual/web/image/bandexsoft.jpg" style="width: 60px; height: 60px;margin-left: 10;" /><--放大</li></ul></div></div></td>' +
                 '</tr>' +
                 '<tr>' +
                 '<td valign="top" align="center" valign="top" style="border:0px solid yellow;">' +

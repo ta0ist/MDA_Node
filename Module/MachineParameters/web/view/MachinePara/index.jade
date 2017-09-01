@@ -2,7 +2,11 @@ extends ../../../../../views/layout
 block append headcss
     link(type='text/css',href='./MachineParameters/web/css/MachinePara.css',rel='stylesheet')
 block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
     script(type='text/javascript',src='./javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')
+    script(type='text/javascript',src='./MachineParameters/web/js/highstock.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jcallout.js')
     script(type='text/javascript',src='./javascripts/UI/Scripts/underscore-min.js')
     script(type='text/javascript',src='./MachineParameters/web/controller/machineparaController.js')
 block content
@@ -21,7 +25,7 @@ block content
                 li
                     a(href='javascript:;', data-lang='AccountManage') 设备曲线
     form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
-        .row-fluid(ng-controller='ParaCtrl')
+        .row-fluid
             .span
                 .control-group(style='margin-bottom: 5px;')
                     label.control-label(data-lang='Common.PASSWORD') 选择日期
@@ -31,10 +35,22 @@ block content
                 .control-group(style='margin-bottom: 5px;')
                     label.control-label(data-lang='Common.PASSWORD') 选择设备
                     .BZcontrols
-                        input#endTime.m-wrap(type='text', name='machine')
+                        input#machine.m-wrap(type='text', name='machine')
             .span
                 .control-group(style='margin-bottom: 5px;')
                     #search.btn.green(style='margin-left: 50px;')
                         | #{lang.EmployeePerformance.Search}
                         i.icon-search
-    
+    .row-fluid(style='padding-top:5px;', oncontextmenu='return false', ondragstart='return false', onselectstart='return false', onselect='document.selection.empty()', oncopy='document.selection.empty()', onbeforecopy='return false')
+        #filter.m-wrap
+        table#table_status(border='0', cellpadding='0', cellspacing='0', width='100%')
+        #loading(style='font-size:25px;text-align:center;display:none;margin-top:10px;')
+            i.icon-spinner.icon-spin
+            |  #{lang.MachineStatus.AreTryingToLoadData}
+        #display
+        .row-fluid(style='margin-top:10px;')
+        #popover(style='width:2px;height:44px;')
+        #P_INT1(style='width:90%;margin-left:9%')
+        #P_INT2(style='width:90%;margin-left:9%')
+        #P_INT3(style='width:90%;margin-left:9%')
+        #P_INT4(style='width:90%;margin-left:9%')
