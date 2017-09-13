@@ -35,4 +35,6 @@ module.exports = function(app) {
     app.post('/visuals/r/GetMachineStatus', visual.GetMachineStatus);
 
     app.post('/visuals/r/GetRobot', visual.GetRobot);
+
+
 }

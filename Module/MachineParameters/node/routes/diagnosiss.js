@@ -25,4 +25,7 @@ module.exports = function(app) {
 
     app.post('/diagnosis/r/GetMachinePara', diagnosisctrl.GetMachinePara);
 
+    //兆丰机电
+    app.get('/diagnosis/r/GetImmediatelyparameterByZF', diagnosisctrl.GetImmediatelyparameterByZF);
+
 }

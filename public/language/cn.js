@@ -421,5 +421,8 @@ module.exports = {
         RateOGrainOrMove_: '[稼动率]',
         SchematicDiagram: '稼动率分布示意图',
 
+    },
+    DNC: {
+        DNC: '程序传输'
     }
 }

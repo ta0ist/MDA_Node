@@ -1,0 +1,57 @@
+extends ../../../../../views/layout
+
+append headjavascript
+    script(type='text/javascript',src='./Smart/web/controller/DNCController.js')
+
+block content
+    .row-fluid
+      .span12
+        h3.page-title()
+          | #{lang.DNC.DNC}
+        ul.breadcrumb
+          li
+            i.icon-home
+            a(href='/') #{lang.EmployeePerformance.Home}
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='System') #{lang.MachineParameters.System}
+            i.icon-angle-right
+          li
+            a(href='javascript:;', data-lang='AccountManage') #{lang.DNC.DNC}
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+      .row-fluid
+        .span
+          label.control-label(data-lang='Common.PASSWORD',style="font-size:25px") 发送程序
+        .span(style="margin-top:20px;display:flex;")
+          label.control-label(data-lang='Common.PASSWORD',style='margin-right:20px;') 选择机床:
+          .BZcontrols
+            input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
+          label.control-label(data-lang='Common.PASSWORD') 程序名称:
+          .BZcontrols
+            input#Program.m-wrap(type='text', name='Program',style='margin-left:20px;')
+          .span
+                .control-group(style='margin-bottom: 5px;')
+                    #send.btn.green(style='margin-left: 50px;')
+                        | 发送
+                        i.icon-search
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);margin-top:40px;')
+      .row-fluid
+        .span
+          label.control-label(data-lang='Common.PASSWORD',style="font-size:25px") 接收程序
+        .span(style="margin-top:20px;display:flex;")
+          label.control-label(data-lang='Common.PASSWORD',style='margin-right:20px;') 选择机床:
+          .BZcontrols
+            input#groupOrMachineR.m-wrap(type='text', name='groupOrMachine')
+          label.control-label(data-lang='Common.PASSWORD') 程序名称:
+          .BZcontrols
+            input#ProgramR.m-wrap(type='text', name='Program',style='margin-left:20px;')
+          .span
+                .control-group(style='margin-bottom: 5px;')
+                    #recevice.btn.green(style='margin-left: 50px;')
+                        | 接收
+                        i.icon-search
+
+    
+    label.control-label(data-lang='Common.PASSWORD',style="font-size:20px;margin-top:20px") 所有程序均存于本程序目录public\program中。      
+
+    

@@ -3,8 +3,8 @@ var db = {};
 const config = {
     user: 'sa',
     password: '1`q',
-    server: '192.168.0.96',
-    database: 'BANDEX2017',
+    server: '127.0.0.1',
+    database: 'BZ2017',
     port: 1433,
     option: {
         encrpt: true

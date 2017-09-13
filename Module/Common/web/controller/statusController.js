@@ -31,8 +31,8 @@
          dataTextField: "text",
          dataValueField: "value",
          dataSource: [
-             { text: lang.Common.InThePlan, value: 0 },
-             { text: lang.Common.Unplanned, value: 1 },
+             { text: lang.Common.Unplanned, value: 0 },
+             { text: lang.Common.InThePlan, value: 1 },
              { text: lang.Common.Without, value: 2 }
 
          ],

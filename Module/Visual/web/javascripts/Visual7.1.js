@@ -603,6 +603,8 @@
                             'font-size: 12px;position:relative;top:-8px;">' + data.Data[i].NAME + '</span></li>';
                     }
                     html = html + '</ul>';
+                    //兆丰机电增加
+                    html = html + '<div id="display" style="width:200px;"></div>'
                     $('body').append(html);
                 });
                 //alert($(window).height() + "," + $(window).width());

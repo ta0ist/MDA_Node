@@ -1,0 +1,62 @@
+extends ../../../../../views/layout
+append headcss 
+    link(type='text/css',href='./MachineStatus/web/css/statusrate.css',rel='stylesheet')
+    link(type='text/css',href='./ProcessParameters/web/css/processParameters.css',rel='stylesheet')
+    
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/ParameterTable.js')  
+    script(type='text/javascript',src='./javascripts/UI/Scripts/highstock-all.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/media/js/jquery.gritter.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/media/js/jquery.pulsate.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/media/js/jquery.bootpag.min.js')
+    script(type='text/javascript',src='./ProcessParameters/web/js/Bandex.js')
+    script(type='text/javascript',src='./ProcessParameters/web/controller/processParametersController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang="AccountManage") 过程参数     
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    |                 
+                    a(href="/") 主页
+                    |                 
+                    i.icon-angle-right          
+                li
+                    a(href="javascript:;", data-lang="MachineScheduling") 过程参数
+    form.form-horizontal(style="padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);")
+        .row-fluid
+            .span(style="width: 330px !important;")
+                .control-group(style="margin-bottom: 5px;")
+                    label.control-label 设备                              
+                    .BZcontrols
+                        div
+                            input#MAC_NBR.m-wrap(type="text", name="MAC_NBR", style="width:200px;")                      
+            .span(style="width: 300px !important;")
+                .control-group(style="margin-bottom: 5px;")
+                    label.control-label(style="width: 90px;") 参数                                   
+                    .BZcontrols(style="margin-left:100px;")
+                        div
+                            input#PARAMETERS.m-wrap(type="text", name="PARAMETERS", style="width:200px;")                       
+            .span.Memo(style="width: 300px ! important; padding-top: 8px; padding-left: 10px; ") 提示:参数选择过多,加载会较慢,建议少于6条        
+        .row-fluid
+            .span
+                .control-group(style="margin-bottom: 5px;")
+                    label.control-label(data-lang="Common.PASSWORD") 开始日期                                     
+                    .BZcontrols
+                        input#startTime.m-wrap(type="text", name="startTime", style="width:198px;")                       
+            .span
+                .control-group(style="margin-bottom: 5px;")
+                    label.control-label(data-lang="Common.PASSWORD") 结束日期                                   
+                    .BZcontrols
+                        input#endTime.m-wrap(type="text", name="endTime", style="width:198px;")                        
+            .span
+                .control-group(style="margin-bottom: 5px;")
+                    #search.btn.green(style="margin-left: 50px;") 查询
+                        i.icon-search
+    #hisChart.row-fluid(style="min-width:700px;height:500px;margin-top:20px;")
+    p#dynamic_pager_demo2.pagination(style="float:right;")
+    #hisTable.row-fluid
+    script#treeview-template(type="text/kendo-ui-template").
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
