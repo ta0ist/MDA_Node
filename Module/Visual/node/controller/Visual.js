@@ -1,12 +1,19 @@
 var path = require('path');
+let fs = require('fs');
 var request = require('request');
 var logger = require('../../../../routes/logger.js');
 var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
 var _ = require('underscore');
+let _Intervalid = 0;
 //加载页面
 exports.index = function(req, res) {
     var vpath = path.resolve('./Module/Visual/web/javascripts/VisualDesign.json');
+    if (_Intervalid = 0) {
+        _Intervalid = setInterval(() => {
+            this.GetImmediatelyparameter()
+        }, 3000);
+    }
     res.render(path.resolve(__dirname, '../../web/view/visual/index'), { menulist: req.session.menu, vpath: vpath })
 }
 
@@ -30,9 +37,24 @@ function doCallback(fn, args, res) {
 
 //读取配置文件
 exports.ReadyFile = function(req, res) {
-    var vpath = req.query.path;
-    var method = post_argu.getpath(__filename, 'ReadyFile');
-    post_argu.post_argu(res, method, { path: vpath });
+
+    // var vpath = req.query.path;
+    // var method = post_argu.getpath(__filename, 'ReadyFile');
+    // post_argu.post_argu(res, method, { path: vpath });
+    //let VisualDesign = require('./Visual/web/javasripts/VisualDesign.json');
+    fs.readFile(path.resolve('./Module/Visual/web/javascripts/VisualDesign.json'), 'utf-8', (err, data) => {
+        if (err) {
+            return res.json({
+                Status: -9999
+            })
+        }
+        return res.json({
+            Status: 0,
+            Data: data
+        })
+    })
+
+
 }
 
 exports.GetStatus = function(req, res) {
@@ -140,4 +162,32 @@ exports.GetRobot = (req, res) => {
         })
     }
 
+}
+
+
+exports.GetImmediatelyparameterByZF = (req, res) => {
+
+    let method = global.Webservice + '/MachineParameters/Diagnosis.asmx/GetImmediatelyparameter';
+
+    // post_argu.post_argu(res, method, { machineIds: req.query.machineIds.split(',') });
+    request.post({
+        url: method,
+        json: true,
+        headers: {
+            "content-type": "application/json",
+        },
+        body: req.body
+    }, (err, res, body) => {
+        if (err) {
+            return;
+        } else {
+            if (body.d != undefined) {
+                global.machinepara = JSON.parse(body.d).Data;
+                res.json({
+                    Data: null,
+                    Status: 0
+                })
+            }
+        }
+    })
 }

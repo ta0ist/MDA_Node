@@ -62,11 +62,3 @@ exports.GetMachinePara = (req, res) => {
         })
     })
 }
-
-
-exports.GetImmediatelyparameterByZF = (req, res) => {
-
-    let method = global.Webservice + '/MachineParameters/Diagnosis.asmx/GetImmediatelyparameter';
-
-    post_common.post_argu(res, method, { machineIds: req.query.machineIds.split(',') });
-}

@@ -100,8 +100,10 @@ function GetSubMenu(data, pid, menu) {
             son.nbr = OrderSubMenu[i].MENU_NBR;
             if (session.language == 'cn.js')
                 son.pagename = OrderSubMenu[i].MENU_NAME;
-            else
+            else if (session.language == 'en.js')
                 son.pagename = OrderSubMenu[i].MENU_NAME_EN;
+            else
+                son.pagename = OrderSubMenu[i].MENU_NAME_JP;
             son.ico = OrderSubMenu[i].MENU_ICO;
             if (SubMenuChild.length > 0) {
                 son.submenu = [];

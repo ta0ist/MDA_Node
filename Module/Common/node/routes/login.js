@@ -24,4 +24,10 @@ module.exports = function(app) {
         session.language = 'en.js';
         res.redirect('/login');
     });
+    //设置日文
+    app.get('/set_lang_jp', function(req, res) {
+        session.language = 'jp.js';
+        res.redirect('/login');
+    });
+
 }

@@ -35,7 +35,7 @@ module.exports = {
         PleaseEnterThePassword: '请输入密码',
         PleaseEnterThePasswordAgain: '请再次输入密码',
         PasswordDoesNotMatch: '密码不匹配',
-        AlarmAnalysis: '报警分析',
+        AlarmAnalysis: '报警查询',
         ProcessingAnalysis: '加工率分析',
         AlarmReason: '报警原因',
         AlarmDate: '报警日期',
@@ -415,11 +415,11 @@ module.exports = {
         RunBeat: '每日产量运行节拍'
     },
     Efficiencystatistics: {
-        EfficiencyStatistical: '效率统计',
-        RateOGrainOrMove: '稼动率',
+        EfficiencyStatistical: '设备OEE',
+        RateOGrainOrMove: '设备OEE',
         EquipmentGroup: '设备组',
-        RateOGrainOrMove_: '[稼动率]',
-        SchematicDiagram: '稼动率分布示意图',
+        RateOGrainOrMove_: '[设备OEE]',
+        SchematicDiagram: '设备OEE分布示意图',
 
     },
     DNC: {

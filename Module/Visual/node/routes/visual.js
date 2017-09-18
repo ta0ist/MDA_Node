@@ -36,5 +36,8 @@ module.exports = function(app) {
 
     app.post('/visuals/r/GetRobot', visual.GetRobot);
 
+    //兆丰机电
+    app.get('/visuals/r/GetImmediatelyparameterByZF', visual.GetImmediatelyparameterByZF);
+
 
 }

@@ -15,12 +15,7 @@
                 "fill-opacity": 0.1
             }).data('id', 10).click(function() {
                 var path = this;
-                $.get('/diagnosis/r/GetImmediatelyparameterByZF', {
-                    machineIds: path.data().id
-                }, function(data) {
-                    if (data.Status == 0)
-                        showP(data.Data, path[0].getBBox().y, path[0].getBBox().x, path.data().id);
-                })
+
             }).hover(function() {
                 var path = this;
                 path.attr({
@@ -28,6 +23,12 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
+                $.get('/visuals/r/GetImmediatelyparameterByZF', {
+                    machineIds: path.data().id
+                }, function(data) {
+                    if (data.Status == 0)
+                        showP(data.Data, path[0].getBBox().y, path[0].getBBox().x, path.data().id);
+                })
             }, function() {
                 $("#ms").remove();
                 this.attr({
