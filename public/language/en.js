@@ -415,7 +415,42 @@ module.exports = {
         RateOGrainOrMove_: '[The running duration]',
         SchematicDiagram: 'The diagram of the running duration in effective cycle',
 
+    },
+    ProcessParameters: {
+        "RealMachineData": "StatusBoard",
+        "RealWorkorder": "StatusBoard(Order)",
+        "Trace": "traceback of production process",
+        "Trace.TraceBack": "Part trareback",
+        "PROGRAME_NAME": "Program Name",
+        "STATUS_NBR": "Machine Number",
+        "STATUS_NAME": "Machine Status",
+        "DURATION": " Machine Duration",
+        "WARNING_CODE": "Alarm Number",
+        "P_INT1": "Spindle Speed ",
+        "P_INT2": "Feedrate Speed",
+        "P_INT3": "Spindle Override",
+        "P_INT4": "Feedrate Override",
+        "P_FLOAT1": "X Axis",
+        "P_FLOAT2": "Y Axis",
+        "P_FLOAT3": "Z Axis",
+        "P_FLOAT4": "Overload",
+        "P_FLOAT5": "P_FLOAT5",
+        "P_FLOAT6": "P_FLOAT6",
+        "P_FLOAT7": "P_FLOAT7",
+        "P_FLOAT8": "P_FLOAT8",
+        "P_FLOAT9": "P_FLOAT9",
+        "P_FLOAT10": "P_FLOAT10",
+        "P_FLOAT11": "P_FLOAT11",
+        "P_FLOAT12": "P_FLOAT12",
+        "P_FLOAT13": "P_FLOAT13",
+        "P_FLOAT14": "P_FLOAT14",
+        "P_FLOAT15": "P_FLOAT15",
+        "P_FLOAT16": "P_FLOAT16",
+        "P_STR1": "Optimum Feedrate",
+        "P_STR2": "Automatic Return",
+        "P_STR3": "M01 Dimisson"
     }
+
 
 
 
