@@ -38,6 +38,7 @@ module.exports = function(app) {
 
     //兆丰机电
     app.get('/visuals/r/GetImmediatelyparameterByZF', visual.GetImmediatelyparameterByZF);
+    app.get('/visuals/r/ZFJD_getAttr', visual.ZFJD_getAttr);
 
 
 }

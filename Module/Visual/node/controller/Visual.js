@@ -9,9 +9,9 @@ let _Intervalid = 0;
 //加载页面
 exports.index = function(req, res) {
     var vpath = path.resolve('./Module/Visual/web/javascripts/VisualDesign.json');
-    if (_Intervalid = 0) {
+    if (_Intervalid == 0) {
         _Intervalid = setInterval(() => {
-            this.GetImmediatelyparameter()
+            exports.GetImmediatelyparameterByZF()
         }, 3000);
     }
     res.render(path.resolve(__dirname, '../../web/view/visual/index'), { menulist: req.session.menu, vpath: vpath })
@@ -167,7 +167,7 @@ exports.GetRobot = (req, res) => {
 
 exports.GetImmediatelyparameterByZF = (req, res) => {
 
-    let method = global.Webservice + '/MachineParameters/Diagnosis.asmx/GetImmediatelyparameter';
+    let method = global.Webservice + '/MachineParameters/Diagnosis.asmx/GetTempNow';
 
     // post_argu.post_argu(res, method, { machineIds: req.query.machineIds.split(',') });
     request.post({
@@ -176,18 +176,31 @@ exports.GetImmediatelyparameterByZF = (req, res) => {
         headers: {
             "content-type": "application/json",
         },
-        body: req.body
+        body: { MAC_NBR: '10,11,12,13,14,15,16,17,18' }
     }, (err, res, body) => {
         if (err) {
             return;
         } else {
             if (body.d != undefined) {
                 global.machinepara = JSON.parse(body.d).Data;
-                res.json({
-                    Data: null,
-                    Status: 0
-                })
             }
         }
     })
+}
+
+exports.ZFJD_getAttr = function(req, res) {
+    var mac_nbr = req.query.mac_nbr;
+    var result = { isEmpty: true };
+    if (global.machinepara) {
+        global.machinepara.forEach(function(v, i) {
+            if (v.Mac_nbr == mac_nbr) {
+                result = v;
+                result.isEmpty = false;
+            }
+
+        })
+
+
+    }
+    res.json(result)
 }

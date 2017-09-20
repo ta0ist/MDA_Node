@@ -15,7 +15,6 @@
                 "fill-opacity": 0.1
             }).data('id', 10).click(function() {
                 var path = this;
-
             }).hover(function() {
                 var path = this;
                 path.attr({
@@ -23,12 +22,13 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                $.get('/visuals/r/GetImmediatelyparameterByZF', {
-                    machineIds: path.data().id
-                }, function(data) {
-                    if (data.Status == 0)
-                        showP(data.Data, path[0].getBBox().y, path[0].getBBox().x, path.data().id);
-                })
+                ZFJD_getAttr(10, path)
+                    // $.get('/visuals/r/GetImmediatelyparameterByZF', {
+                    //     machineIds: path.data().id
+                    // }, function(data) {
+                    //     if (data.Status == 0)
+                    //showP(data.Data, path[0].getBBox().y, path[0].getBBox().x, path.data().id);
+                    // })
             }, function() {
                 $("#ms").remove();
                 this.attr({
@@ -38,29 +38,43 @@
             })
         },
         "B002": {
-            MAC: paper.path('M707.334,179.667h23.999v35h-23.999V179.667z').attr({
+            MAC: paper.path('M652,102.333v21.676h-14v-21.676H652z').attr({
                 "fill": "#B8BBBD", //B8BBBD
                 "stroke-width": 0,
                 "fill-opacity": 1,
                 "stroke": "#FFFFFF"
             }),
-            MACHINE: paper.path('M726.532,233.962l2.712,2.39l0.677,9.216l4.746-0.682v24.917l-6.44,3.072v13.313v5.803l-3.051,3.754  l-57.624,29.696l-35.931-8.533l-3.39-4.437l-0.338-5.461l-13.559-3.754v-58.367l35.252-15.019l18.304,4.096v-2.388l12.203-5.803  l6.102,1.366l2.712-1.366L726.532,233.962z').attr({
+            MACHINE: paper.path('M694.999,113.171V213.5L645,241l-59.334-47L582.5,90.5l49.5-25  L694.999,113.171z').attr({
                 "fill": "#000000",
                 "stroke-width": 0,
                 "stroke": "#ffffff",
                 "fill-opacity": 0.1
             }).data('id', 11).click(function() {
                 alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(11, path)
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
             })
         },
         "B003": {
-            MAC: paper.path('M884.667,211.333h25.667v38h-25.667V211.333z').attr({
+            MAC: paper.path('M813.332,211v24.339h-14.666V211H813.332z').attr({
                 "fill": "#B8BBBD", //B8BBBD
                 "stroke-width": 0,
                 "fill-opacity": 1,
                 "stroke": "#FFFFFF"
             }),
-            MACHINE: paper.path('M904.239,271.161l2.81,2.502l0.701,9.649l4.917-0.714v26.087l-6.673,3.217v13.938v6.076l-3.16,3.93  l-52.155,34.922l-44.424-10.995l-3.857-6.414l-0.351-5.719L785.5,344.5l2.5-61.902l33-17.098l22.486,5.661v-2.5l11.014-6.076  l7.949,1.43l2.809-1.43L904.239,271.161z').attr({
+            MACHINE: paper.path('M855.5,218.501V320l-58.168,27.5L741,303l4.5-100.5l51.832-30  L855.5,218.501z').attr({
                 "fill": "#000000",
                 "stroke-width": 0,
                 "stroke": "#ffffff",
@@ -74,10 +88,193 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                $.post('/GetImmediateState', { Page: "cj01" }, function(data) {
-                    if (data.Status == 0)
-                        showP(data.Data, path[0].getBBox().y, path[0].getBBox().x, path.data().id);
-                })
+                ZFJD_getAttr(12, path)
+
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
+            })
+        },
+        "B004": {
+            MAC: paper.path('M883.51,263.822l-1.064,24.494l-15.623-0.679l1.063-24.493L883.51,263.822z').attr({
+                "fill": "#B8BBBD", //B8BBBD
+                "stroke-width": 0,
+                "fill-opacity": 1,
+                "stroke": "#FFFFFF"
+            }),
+            MACHINE: paper.path('M928.073,270.26l-11.5,89.334l-55,34.666l-56-37.5l7.5-100.5  l52.5-31.521L928.073,270.26z').attr({
+                "fill": "#000000",
+                "stroke-width": 0,
+                "stroke": "#ffffff",
+                "fill-opacity": 0.1
+            }).data('id', 13).click(function() {
+                alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(13, path)
+
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
+            })
+        },
+        "B005": {
+            MAC: paper.path('M904.487,288.877l-1.012,23.295l-15.936-0.692l1.013-23.294L904.487,288.877z').attr({
+                "fill": "#B8BBBD", //B8BBBD
+                "stroke-width": 0,
+                "fill-opacity": 1,
+                "stroke": "#FFFFFF"
+            }),
+            MACHINE: paper.path('M946.5,363.5l-17.5,98l-90.5,62L797.332,483V380.5L893,320  L946.5,363.5z').attr({
+                "fill": "#000000",
+                "stroke-width": 0,
+                "stroke": "#ffffff",
+                "fill-opacity": 0.1
+            }).data('id', 14).click(function() {
+                alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(14, path)
+
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
+            })
+        },
+        "B006": {
+            MAC: paper.path('M797.332,350.667v25.667h-16v-25.667H797.332z').attr({
+                "fill": "#B8BBBD", //B8BBBD
+                "stroke-width": 0,
+                "fill-opacity": 1,
+                "stroke": "#FFFFFF"
+            }),
+            MACHINE: paper.path('M841.5,427.5l-10,98.5l-70,49L714,527.5v-99l75.332-48L841.5,427.5  z').attr({
+                "fill": "#000000",
+                "stroke-width": 0,
+                "stroke": "#ffffff",
+                "fill-opacity": 0.1
+            }).data('id', 15).click(function() {
+                alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(15, path)
+
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
+            })
+        },
+        "B007": {
+            MAC: paper.path('d="M600,207.333v22.337h-14.334v-22.337H600z"').attr({
+                "fill": "#B8BBBD", //B8BBBD
+                "stroke-width": 0,
+                "fill-opacity": 1,
+                "stroke": "#FFFFFF"
+            }),
+            MACHINE: paper.path('M652,283v101.5l-55,32l-49.5-48l-11.002-103L597,235.339L652,283z').attr({
+                "fill": "#000000",
+                "stroke-width": 0,
+                "stroke": "#ffffff",
+                "fill-opacity": 0.1
+            }).data('id', 16).click(function() {
+                alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(16, path)
+
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
+            })
+        },
+        "B008": {
+            MAC: paper.path('M543.387,158.124l0.549,22.33l-14.326,0.354l-0.549-22.33L543.387,158.124z').attr({
+                "fill": "#B8BBBD", //B8BBBD
+                "stroke-width": 0,
+                "fill-opacity": 1,
+                "stroke": "#FFFFFF"
+            }),
+            MACHINE: paper.path('M590.5,229.482v102.275L537.285,364l-47.894-48.365  l-10.645-103.786l58.538-30.391L590.5,229.482z').attr({
+                "fill": "#000000",
+                "stroke-width": 0,
+                "stroke": "#ffffff",
+                "fill-opacity": 0.1
+            }).data('id', 17).click(function() {
+                alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(17, path)
+
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
+            })
+        },
+        "B009": {
+            MAC: paper.path('M516.664,97.624l0.654,21.323l-12.982,0.4l-0.654-21.323L516.664,97.624z').attr({
+                "fill": "#B8BBBD", //B8BBBD
+                "stroke-width": 0,
+                "fill-opacity": 1,
+                "stroke": "#FFFFFF"
+            }),
+            MACHINE: paper.path('M540,181.246v97.513L487.054,309.5l-47.651-46.113l-10.591-98.953  l58.242-28.976L540,181.246z').attr({
+                "fill": "#000000",
+                "stroke-width": 0,
+                "stroke": "#ffffff",
+                "fill-opacity": 0.1
+            }).data('id', 18).click(function() {
+                alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(18, path)
 
             }, function() {
                 $("#ms").remove();
@@ -87,79 +284,111 @@
                 });
             })
         }
+
     }
 
 }
 
 function showP(data, top, left, id) {
     let para = {};
-    for (let i = 0; i < data.MAC_DATA[id].DATAITEMS.length; i++) {
-        let temp = data.MAC_DATA[id].DATAITEMS[i];
-        if (temp == undefined) {
-            continue;
-        }
-        switch (temp.Name) {
+    // for (let i = 0; i < data.MAC_DATA[id].DATAITEMS.length; i++) {
+    //     let temp = data.MAC_DATA[id].DATAITEMS[i];
+    //     if (temp == undefined) {
+    //         continue;
+    //     }
+    //     switch (temp.Name) {
+    //         case 'STD::Status':
+    //             para.STATUS_NBR = temp.Value;
+    //             break;
+    //         case 'STD::DURATION':
+    //             para.DURATION = temp.Value;
+    //             break;
+    //         case 'STD::Program':
+    //             para.PROGRAME_NAME = temp.Value;
+    //             break;
+    //         case 'STD::AlarmNo':
+    //             para.WARNING_CODE = temp.Value;
+    //             break;
+    //         case 'STD::SpindleSpeed':
+    //             para.SPINDLESPEED = temp.Value;
+    //             break;
+    //         case 'STD::SpindleOverride':
+    //             para.SPINDLEOVERRIDE = temp.Value;
+    //             break;
+    //         case 'STD::FeedSpeed':
+    //             para.FEEDSPEED = temp.Value;
+    //             break;
+    //         case 'STD::FeedOverride':
+    //             para.FEEDOVRRIDE = temp.Value;
+    //             break;
+    //         case 'STD::YieldCounter':
+    //             para.YieldCounter = temp.Value;
+    //             break;
+    //     }
+    // }
+    data.forEach(function(v, i) {
+        switch (v.Name) {
             case 'STD::Status':
-                para.STATUS_NBR = temp.Value;
+                para.STATUS_NBR = v.Value;
                 break;
             case 'STD::DURATION':
-                para.DURATION = temp.Value;
+                para.DURATION = v.Value;
                 break;
             case 'STD::Program':
-                para.PROGRAME_NAME = temp.Value;
+                para.PROGRAME_NAME = v.Value;
                 break;
             case 'STD::AlarmNo':
-                para.WARNING_CODE = temp.Value;
+                para.WARNING_CODE = v.Value;
                 break;
             case 'STD::SpindleSpeed':
-                para.SPINDLESPEED = temp.Value;
+                para.SPINDLESPEED = v.Value;
                 break;
             case 'STD::SpindleOverride':
-                para.SPINDLEOVERRIDE = temp.Value;
+                para.SPINDLEOVERRIDE = v.Value;
                 break;
             case 'STD::FeedSpeed':
-                para.FEEDSPEED = temp.Value;
+                para.FEEDSPEED = v.Value;
                 break;
             case 'STD::FeedOverride':
-                para.FEEDOVRRIDE = temp.Value;
+                para.FEEDOVRRIDE = v.Value;
                 break;
             case 'STD::YieldCounter':
-                para.YieldCounter = temp.Value;
+                para.YieldCounter = v.Value;
                 break;
         }
-    }
-    var message = ' <form class="form-horizontal" style="min-width: 260px;padding-top:0px;">' +
-        '<div class="control-group" style="margin-bottom: 0px;">' +
-        '<label class="control-label callout-control-label">' + "状态名称:" + '</label>' +
-        '<div class="controls controls-control-label">' +
+    })
+    var message = ' <form class="form-horizontal" style="min-width: 260px;padding:10px;">' +
+        '<div class="control-group clearfix" style="margin-bottom: 10px;">' +
+        '<label class="control-label callout-control-label pull-left">' + "状态名称:" + '</label>' +
+        '<div class="controls  pull-left" style="margin-left:20px;">' +
         '<span>' + para.STATUS_NAME + '</span>' +
-        '</div>' + '</div>' + '<div class="control-group" style="margin-bottom: 0px;">' +
-        '<label class="control-label callout-control-label">' + "持续时间:" + '</label>' +
-        '<div class="controls controls-control-label">' +
+        '</div>' + '</div>' + '<div class="control-group clearfix" style="margin-bottom: 10px;">' +
+        '<label class="control-label callout-control-label pull-left"">' + "持续时间:" + '</label>' +
+        '<div class="controls pull-left" style="margin-left:20px;">' +
         '<span>' + para.DURATION + '</span>' +
-        '</div>' + '</div>' + '<div class="control-group" style="margin-bottom: 0px;">' +
-        '<label class="control-label callout-control-label">' + "程序号:" + '</label>' +
-        '<div class="controls controls-control-label">' +
+        '</div>' + '</div>' + '<div class="control-group clearfix" style="margin-bottom: 10px;">' +
+        '<label class="control-label callout-control-label pull-left"">' + "程序号:" + '</label>' +
+        '<div class="controls pull-left" style="margin-left:20px;">' +
         '<span>' + para.PROGRAME_NAME + '</span>' +
         '</div>' + '</div>' +
-        '<div class="control-group" style="margin-bottom: 0px;">' +
-        '<label class="control-label callout-control-label">' + "主轴倍率:" + '</label>' +
-        '<div class="controls controls-control-label">' +
+        '<div class="control-group clearfix" style="margin-bottom: 10px;">' +
+        '<label class="control-label callout-control-label pull-left"">' + "主轴倍率:" + '</label>' +
+        '<div class="controls pull-left" style="margin-left:20px;">' +
         '<span>' + para.SPINDLEOVERRIDE + '</span>' +
         '</div>' + '</div>' +
-        '<div class="control-group" style="margin-bottom: 0px;">' +
-        '<label class="control-label callout-control-label">' + "主轴倍率:" + '</label>' +
-        '<div class="controls controls-control-label">' +
+        '<div class="control-group clearfix" style="margin-bottom: 10px;">' +
+        '<label class="control-label callout-control-label pull-left"">' + "主轴倍率:" + '</label>' +
+        '<div class="controls pull-left " style="margin-left:20px;">' +
         '<span>' + para.SPINDLEOVERRIDE + '</span>' +
         '</div>' + '</div>' +
-        '<div class="control-group" style="margin-bottom: 0px;">' +
-        '<label class="control-label callout-control-label">' + "进给倍率:" + '</label>' +
-        '<div class="controls controls-control-label">' +
+        '<div class="control-group clearfix" style="margin-bottom: 10px;">' +
+        '<label class="control-label callout-control-label pull-left"">' + "进给倍率:" + '</label>' +
+        '<div class="controls pull-left" style="margin-left:20px;">' +
         '<span>' + para.FEEDOVRRIDE + '</span>' +
         '</div>' + '</div>' +
-        '<div class="control-group" style="margin-bottom: 0px;">' +
-        '<label class="control-label callout-control-label">' + "进给速度:" + '</label>' +
-        '<div class="controls controls-control-label">' +
+        '<div class="control-group clearfix" style="margin-bottom: 10px;">' +
+        '<label class="control-label callout-control-label pull-left"">' + "进给速度:" + '</label>' +
+        '<div class="controls pull-left" style="margin-left:20px;">' +
         '<span>' + para.FEEDSPEED + '</span>' +
         '</div>' + '</div>' + '</form>';
     $("#display").jCallout({
@@ -172,6 +401,21 @@ function showP(data, top, left, id) {
         "position": "relative",
         "z-index": 50,
         "top": "-500px",
-        "left": "355px"
+        "left": "355px",
+        width: '250px',
+        borderRadius: '5px'
     });
+    // $("#ms .control-group").css({
+    //     float: 'left'
+    // })
+}
+
+
+function ZFJD_getAttr(mac_nbr, path) {
+    var url = "/visuals/r/ZFJD_getAttr?mac_nbr=" + mac_nbr;
+    $.get(url, function(data) {
+        if (!data.isEmpty) {
+            showP(data.machineitems, path[0].getBBox().y, path[0].getBBox().x, path.data().id)
+        }
+    })
 }
