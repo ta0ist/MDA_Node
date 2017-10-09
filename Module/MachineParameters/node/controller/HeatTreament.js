@@ -121,16 +121,26 @@ function Line_Temp(res, args) {
     var MachineId = args.machineId;
     var templist = _.where(global.temp, { Mac_nbr: MachineId });
     if (templist.length > 0) {
-        res.json({
-            Data: { pv: templist[0].machineitems[1].Value, Date: Date.now() },
-            Status: 0
-        })
+        let pvlist = _.where(templist[0].machineitems, { 'Name': 'PV' });
+        if (pvlist.length > 0)
+            res.json({
+                Data: { pv: pvlist[0].value, Date: Date.now() },
+                Status: 0
+            })
+        else {
+            res.json({
+                Data: null,
+                Status: 0
+            })
+        }
     } else {
         res.json({
             Data: null,
             Status: 0
         })
     }
+
+
 }
 
 //设置sv的值

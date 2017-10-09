@@ -8,14 +8,21 @@ app.controller('HeatTreamentCtrl', function($scope, $http) {
         WORK_ORDER: "",
         YEILD: ""
     }
-    $.post("/HeatTreatment/GetMachinesByGourpId", { GroupId: 23 }, function(data) {
+    $.post("/HeatTreatment/GetMachinesByGourpId", { GroupId: 10 }, function(data) {
         if (data.Status == 0) {
             if (data.Data.length > 0) {
                 $scope.machinesItem = data.Data;
             }
             $http.post('/HeatTreatment/GetTempNow', { GroupId: data.Data[0].GP_NBR }).success(function(result) {
                 if (result.Status == 0) {
-                    $scope.AreaList = result.Data;
+                    if (result.Data.length > 0) {
+                        if (result.Data[0].machineitems.length > 0) {
+                            $scope.AreaList.push(_.where(result.Data[0].machineitems, { 'Name': 'PV' }));
+                            $scope.AreaList.push(_.where(result.Data[0].machineitems, { 'Name': 'SV' }));
+                        }
+                    }
+
+                    // $scope.AreaList = result.Data;
                     $scope.$apply();
                     $scope.drawLine(result.Data);
                     $scope.mac_temp_Timeout = setInterval($scope.getImmidateData(data.Data[0].GP_NBR), 3000);
@@ -41,7 +48,12 @@ app.controller('HeatTreamentCtrl', function($scope, $http) {
         $scope.AreaList = [];
         $http.post('/HeatTreatment/GetTempNow', { GroupId: $scope.machinesItem[index].GP_NBR }).success(function(result) {
             if (result.Status == 0) {
-                $scope.AreaList = result.Data;
+                if (result.Data.length > 0) {
+                    if (result.Data[0].machineitems.length > 0) {
+                        $scope.AreaList.push(_.where(result.Data[0].machineitems, { 'Name': 'PV' }));
+                        $scope.AreaList.push(_.where(result.Data[0].machineitems, { 'Name': 'SV' }));
+                    }
+                }
                 $scope.drawLine(result.Data);
                 $scope.mac_temp_Timeout = setInterval($scope.getImmidateData($scope.machinesItem[index].GP_NBR), 10000);
             }

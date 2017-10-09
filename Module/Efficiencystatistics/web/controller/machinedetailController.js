@@ -185,7 +185,7 @@ angular.module('app', [])
                             // for (var pp = 0; pp < data[i].SHIFTS.length; pp++) {
                             data[i]["NO"] = i + 1;
                             data[i]["MAC_NAME"] = data[i].NAME;
-                            data[i]["TYPE"] = $.Translate("MachineStatus.SGIFT");
+                            data[i]["TYPE"] = lang.EmployeePerformance.Shift;
                             data[i]["DATE"] = moment(data[i].DATE).format("YYYY-MM-DD");
                             data[i]["SHIFT"] = data[i].SHIFT;
                             data[i]["VALUE"] = parseFloat(data[i].VALUE.toFixed(1));
@@ -196,28 +196,28 @@ angular.module('app', [])
                         case 2:
                             data[i]["NO"] = i + 1;
                             data[i]["MAC_NAME"] = data[i].NAME;
-                            data[i]["TYPE"] = $.Translate("MachineStatus.DAY");
+                            data[i]["TYPE"] = lang.EmployeePerformance.Day;
                             data[i]["DATE"] = moment(data[i].DATE).format("YYYY-MM-DD");
                             data[i]["VALUE"] = parseFloat(data[i].VALUE.toFixed(1));
                             break;
                         case 3:
                             data[i]["NO"] = i + 1;
                             data[i]["MAC_NAME"] = data[i].NAME;
-                            data[i]["TYPE"] = $.Translate("MachineStatus.WEEK");
+                            data[i]["TYPE"] = lang.EmployeePerformance.Weeks;
                             data[i]["DATE"] = moment(data[i].DATE).format("YYYY") + "第" + data[i].WEEK + "周";
                             data[i]["VALUE"] = parseFloat(data[i].VALUE.toFixed(1));
                             break;
                         case 4:
                             data[i]["NO"] = i + 1;
                             data[i]["MAC_NAME"] = data[i].NAME;
-                            data[i]["TYPE"] = $.Translate("MachineStatus.MONTH");
+                            data[i]["TYPE"] = lang.EmployeePerformance.Month;
                             data[i]["DATE"] = moment(data[i].DATE).format("YYYY-MM") + "月";
                             data[i]["VALUE"] = parseFloat(data[i].VALUE.toFixed(1));
                             break;
                         case 5:
                             data[i]["NO"] = i + 1;
                             data[i]["MAC_NAME"] = data[i].NAME;
-                            data[i]["TYPE"] = $.Translate("MachineStatus.YEAR");
+                            data[i]["TYPE"] = lang.EmployeePerformance.Years;
                             data[i]["DATE"] = moment(data[i].DATE).format("YYYY");
                             data[i]["VALUE"] = parseFloat(data[i].VALUE.toFixed(1));
                             break;

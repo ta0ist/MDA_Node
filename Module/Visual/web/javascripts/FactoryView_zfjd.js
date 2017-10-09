@@ -1,6 +1,36 @@
 ﻿var drawFactoryView = function(paper, id) {
     paper.image("./Visual/web/image/兆丰机电.png", 0, 0, 1360, 680);
     return {
+        "B006": {
+            MAC: paper.path('M797.332,350.667v25.667h-16v-25.667H797.332z').attr({
+                "fill": "#B8BBBD", //B8BBBD
+                "stroke-width": 0,
+                "fill-opacity": 1,
+                "stroke": "#FFFFFF"
+            }),
+            MACHINE: paper.path('M841.5,427.5l-10,98.5l-70,49L714,527.5v-99l75.332-48L841.5,427.5  z').attr({
+                "fill": "#000000",
+                "stroke-width": 0,
+                "stroke": "#ffffff",
+                "fill-opacity": 0.1
+            }).data('id', 15).click(function() {
+                alert(this.data().id);
+            }).hover(function() {
+                var path = this;
+                path.attr({
+                    "fill": "#FFFFFF",
+                    "fill-opacity": 1
+                });
+                $("#ms").remove();
+                ZFJD_getAttr(15, path, -200, 100)
+            }, function() {
+                $("#ms").remove();
+                this.attr({
+                    "fill": "#B8BBBD",
+                    "fill-opacity": 0
+                });
+            })
+        },
         "B001": {
             MAC: paper.path('M480.295,47.189l0.652,21.323l-13.646,0.42l-0.654-21.323L480.295,47.189z').attr({
                 "fill": "#B8BBBD", //B8BBBD
@@ -22,13 +52,13 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(10, path)
-                    // $.get('/visuals/r/GetImmediatelyparameterByZF', {
-                    //     machineIds: path.data().id
-                    // }, function(data) {
-                    //     if (data.Status == 0)
-                    //showP(data.Data, path[0].getBBox().y, path[0].getBBox().x, path.data().id);
-                    // })
+                ZFJD_getAttr(10, path, 0, -400);
+                // $.get('/visuals/r/GetImmediatelyparameterByZF', {
+                //     machineIds: path.data().id
+                // }, function(data) {
+                //     if (data.Status == 0)
+                //showP(data.Data, path[0].getBBox().y, path[0].getBBox().x, path.data().id);
+                // })
             }, function() {
                 $("#ms").remove();
                 this.attr({
@@ -58,7 +88,7 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(11, path)
+                ZFJD_getAttr(11, path, -300, -360)
             }, function() {
                 $("#ms").remove();
                 this.attr({
@@ -88,7 +118,7 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(12, path)
+                ZFJD_getAttr(12, path, -300, -260);
 
             }, function() {
                 $("#ms").remove();
@@ -119,7 +149,7 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(13, path)
+                ZFJD_getAttr(13, path, -300, -160)
 
             }, function() {
                 $("#ms").remove();
@@ -150,7 +180,7 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(14, path)
+                ZFJD_getAttr(14, path, -300, 0)
 
             }, function() {
                 $("#ms").remove();
@@ -160,39 +190,9 @@
                 });
             })
         },
-        "B006": {
-            MAC: paper.path('M797.332,350.667v25.667h-16v-25.667H797.332z').attr({
-                "fill": "#B8BBBD", //B8BBBD
-                "stroke-width": 0,
-                "fill-opacity": 1,
-                "stroke": "#FFFFFF"
-            }),
-            MACHINE: paper.path('M841.5,427.5l-10,98.5l-70,49L714,527.5v-99l75.332-48L841.5,427.5  z').attr({
-                "fill": "#000000",
-                "stroke-width": 0,
-                "stroke": "#ffffff",
-                "fill-opacity": 0.1
-            }).data('id', 15).click(function() {
-                alert(this.data().id);
-            }).hover(function() {
-                var path = this;
-                path.attr({
-                    "fill": "#FFFFFF",
-                    "fill-opacity": 1
-                });
-                $("#ms").remove();
-                ZFJD_getAttr(15, path)
 
-            }, function() {
-                $("#ms").remove();
-                this.attr({
-                    "fill": "#B8BBBD",
-                    "fill-opacity": 0
-                });
-            })
-        },
         "B007": {
-            MAC: paper.path('d="M600,207.333v22.337h-14.334v-22.337H600z"').attr({
+            MAC: paper.path('M600,207.333v22.337h-14.334v-22.337H600z').attr({
                 "fill": "#B8BBBD", //B8BBBD
                 "stroke-width": 0,
                 "fill-opacity": 1,
@@ -212,7 +212,7 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(16, path)
+                ZFJD_getAttr(16, path, -200, 100)
 
             }, function() {
                 $("#ms").remove();
@@ -243,7 +243,7 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(17, path)
+                ZFJD_getAttr(17, path, 0, -200);
 
             }, function() {
                 $("#ms").remove();
@@ -274,7 +274,7 @@
                     "fill-opacity": 1
                 });
                 $("#ms").remove();
-                ZFJD_getAttr(18, path)
+                ZFJD_getAttr(18, path, 0, -200)
 
             }, function() {
                 $("#ms").remove();
@@ -291,41 +291,6 @@
 
 function showP(data, top, left, id) {
     let para = {};
-    // for (let i = 0; i < data.MAC_DATA[id].DATAITEMS.length; i++) {
-    //     let temp = data.MAC_DATA[id].DATAITEMS[i];
-    //     if (temp == undefined) {
-    //         continue;
-    //     }
-    //     switch (temp.Name) {
-    //         case 'STD::Status':
-    //             para.STATUS_NBR = temp.Value;
-    //             break;
-    //         case 'STD::DURATION':
-    //             para.DURATION = temp.Value;
-    //             break;
-    //         case 'STD::Program':
-    //             para.PROGRAME_NAME = temp.Value;
-    //             break;
-    //         case 'STD::AlarmNo':
-    //             para.WARNING_CODE = temp.Value;
-    //             break;
-    //         case 'STD::SpindleSpeed':
-    //             para.SPINDLESPEED = temp.Value;
-    //             break;
-    //         case 'STD::SpindleOverride':
-    //             para.SPINDLEOVERRIDE = temp.Value;
-    //             break;
-    //         case 'STD::FeedSpeed':
-    //             para.FEEDSPEED = temp.Value;
-    //             break;
-    //         case 'STD::FeedOverride':
-    //             para.FEEDOVRRIDE = temp.Value;
-    //             break;
-    //         case 'STD::YieldCounter':
-    //             para.YieldCounter = temp.Value;
-    //             break;
-    //     }
-    // }
     data.forEach(function(v, i) {
         switch (v.Name) {
             case 'STD::Status':
@@ -400,8 +365,8 @@ function showP(data, top, left, id) {
     $("#ms").css({
         "position": "relative",
         "z-index": 50,
-        "top": "-500px",
-        "left": "355px",
+        "top": -500 - top + "px",
+        "left": left + 'px',
         width: '250px',
         borderRadius: '5px'
     });
@@ -411,11 +376,11 @@ function showP(data, top, left, id) {
 }
 
 
-function ZFJD_getAttr(mac_nbr, path) {
+function ZFJD_getAttr(mac_nbr, path, x, y) {
     var url = "/visuals/r/ZFJD_getAttr?mac_nbr=" + mac_nbr;
     $.get(url, function(data) {
         if (!data.isEmpty) {
-            showP(data.machineitems, path[0].getBBox().y, path[0].getBBox().x, path.data().id)
+            showP(data.machineitems, path[0].getBBox().y - y, path[0].getBBox().x - x, path.data().id)
         }
     })
 }

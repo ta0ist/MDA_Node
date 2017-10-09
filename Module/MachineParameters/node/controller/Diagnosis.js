@@ -5,7 +5,7 @@ var post_common = require('../../../../routes/post_argu.js');
 var db = require('../../../../routes/db.js')
 var _ = require('underscore');
 exports.diagnosispage = function(req, res) {
-    post_common.permission(req, res, '/diagnosis', 'view', path.resolve(__dirname, '../../web/view/diagnosisview/index'));
+    post_common.permission(req, res, '/diagnosis', 'view', path.resolve(__dirname, '../../web/view/diagnosisview/newindex'));
 }
 exports.diagnosisdetailpage = function(req, res) {
     if (!req.session.user)
@@ -59,6 +59,88 @@ exports.GetMachinePara = (req, res) => {
         return res.json({
             Status: 0,
             Data: _.sortBy(result, 'RUNNING_DATE')
+        })
+    })
+}
+
+//获取所有设备参数
+exports.GetAllMachinePara = (req, res) => {
+    let sql = 'Select mac_nbr from machine_info';
+    let method = post_common.getpath(__filename, 'GetTempNow');
+    db.sql(sql, (err, result) => {
+        if (err) {
+            res.json({
+                Status: -9999,
+                Data: null
+            })
+        } else {
+            let mac_list = '';
+            for (let i = 0; i < result.length; i++) {
+                mac_list = mac_list + ',' + result[i].mac_nbr;
+            }
+            request.post({
+                url: method,
+                json: true,
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: { 'MAC_NBR': mac_list },
+            }, (err, response, body) => {
+                if (err) {
+                    res.json({
+                        Status: -9999,
+                        Data: null
+                    })
+                }
+                global.para = JSON.parse(body.d);
+                return res.json({
+                    Status: 0,
+                })
+            })
+        }
+    })
+}
+
+
+exports.GetGroupPara = (req, res) => {
+    let mac_list = [];
+    for (let i = 0; i < req.body['MacList[]'].length; i++) {
+        let temp = _.where(global.para.Data, { 'Mac_nbr': req.body['MacList[]'][i] });
+        if (temp.length > 0) {
+            mac_list.push(temp);
+        }
+    }
+    res.json(mac_list);
+}
+
+exports.getAllMac = function(req, res) {
+    if (global.para) {
+        res.json({
+            Status: 0,
+            Data: global.para.Data
+        })
+    } else {
+        res.json({
+            Status: -9999,
+            Data: null
+        })
+    }
+}
+
+
+exports.mac = function(req, res) {
+    var sql = "SELECT MAC_NAME,MAC_NBR,MAC_NO,PHOTO FROM dbo.MACHINE_INFO";
+    db.sql(sql, function(err, result) {
+        if (err) {
+            res.json({
+                Status: -9999,
+                Data: null
+            })
+            return false
+        }
+        res.json({
+            Status: 0,
+            Data: result
         })
     })
 }

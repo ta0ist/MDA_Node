@@ -1,0 +1,214 @@
+extends ../../../../../views/layout
+append headcss
+  style(type='text/css').
+    .machineLabel {
+      width: 200px;
+      border-radius: 5px !important;
+      border: 2px solid;
+      display: inline-table;
+      margin: 0px 20px 20px 0px;
+    }
+    .machineLabel1 {
+      border-bottom: 1px solid;
+      /*background-color: ;*/
+      height: 52px;
+    }
+    .machineImage {
+      width: 60px;
+      height: 45px;
+      margin-left: 3px;
+      border-radius: 3px !important;
+      float: left;
+      margin-top: 3px;
+    }
+    .machineName {
+      color: rgb(255, 255, 255);
+      margin-left: 70px;
+      padding-top: 7px;
+    }
+    .machineName p:first-child {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    .machineName p:last-child {
+      font-size: 14px;
+      margin-bottom: 0px;
+      margin-left: 1px;
+    }
+    .machinePars {
+      height: 30px;
+      border-bottom: 1px dashed rgb(206, 206, 206);
+      display: table;
+      width: 100%;
+    }
+    .machinePars label {
+      width: 80px;
+      float: left;
+      text-align: right;
+      margin-bottom: 0px;
+      margin-top: 6px;
+    }
+    .machinePars div {
+      margin-left: 85px;
+      margin-top: 6px;
+    }
+    .machineView {
+      margin-left: 180px;
+      font-size: 16px;
+      margin-top: 2px;
+      padding-top: 0px;
+    }
+    #wrap {
+      overflow: hidden;
+      *zoom: 1;
+    }
+    #sidebar {
+      float: left;
+      width: 300px;
+    }
+    #content {
+     margin-left: 305px;
+    }
+    .k-pager-wrap {
+     clear: none !important;
+    }
+    .tingji{
+      color:#fff;
+      background:rgb(245, 40, 12);
+      border:1px solid rgb(245, 40, 12);
+      padding:10px 20px;
+      margin-left:20px;
+    }
+
+    .yunxing{
+      color:#fff;
+      background:rgb(78, 207, 31);
+      border:1px solid rgb(78, 207, 31);
+      padding:10px 20px;
+      margin-left:20px;
+    }
+    .kongxian{
+      color:#fff;
+      background:rgb(230, 210, 21);
+      border:1px solid rgb(230, 210, 21);
+      padding:10px 20px;
+      margin-left:20px;
+    }
+    .guanji{
+      color:#fff;
+      background:rgb(96, 103, 101);
+      border:1px solid rgb(96, 103, 101);
+      padding:10px 20px;
+      margin-left:20px;
+    }
+    .tiaosi{
+      color:#fff;
+      background:rgb(35, 43, 232);
+      border:1px solid rgb(35, 43, 232);
+      padding:10px 20px;
+      margin-left:20px;
+    }
+    #sidebar>div{
+      position:relative;
+       margin-bottom:3px;
+    }
+    .qiu{
+      display:inline-block;
+      width:10px;
+      height:10px;
+      background:#1E9FFF;
+      border-radius:100%;
+      vertical-align:middle;
+      position:absolute;
+      top:15px;
+      left:0;
+      
+    }
+append headjavascript 
+  script(type='text/javascript',src='./MachineParameters/web/controller/newIndexController.js') 
+block content
+ .row-fluid(ng-controller='diagnosisctrl')
+  .span12
+    h3.page-title(data-lang='AccountManage')
+      | #{lang.MachineParameters.AssistDiagnosis}
+    ul.breadcrumb
+      li
+        i.icon-home
+        a(href='/') #{lang.EmployeePerformance.Home}
+        i.icon-angle-right
+      li
+        a(href='javascript:;', data-lang='AccountManage') #{lang.MachineParameters.AssistDiagnosis}
+    ul#myTab.nav.nav-tabs
+      li.active
+        a(href='#home', data-toggle='tab')
+          | 按设备查看
+      li
+        a(href='#ios', data-toggle='tab') 按组查看
+    #myTabContent.tab-content
+      #home.tab-pane.fade.in.active
+
+        #sidebar
+          div
+            i.qiu(ng-show="1==flag")
+            button.tingji(ng-click="refreshMac(1)") 停机           
+          div
+            i.qiu(ng-show="2==flag")
+            button.yunxing(ng-click="refreshMac(2)") 运行
+          div
+            i.qiu(ng-show="3==flag")
+            button.kongxian(ng-click="refreshMac(3)") 空闲
+          div
+            i.qiu(ng-show="4==flag")
+            button.guanji(ng-click="refreshMac(4)") 关机
+          div
+            i.qiu(ng-show="5==flag")
+            button.tiaosi(ng-click="refreshMac(5)") 调试
+          #machine_status
+        #content
+          #grid
+            .machineLabel(ng-repeat='item in macList', ng-style="{'border-color':item.color}")
+                  .machineLabel1(ng-style="{'border-color':item.color,'background-color':item.color}")
+                    img.machineImage(ng-src='{{item.PHOTO}}')
+                    .machineName
+                      p
+                        | {{item.MAC_NAME.length > 6 ? (item.MAC_NAME.substring(0,5)+"..."):item.MAC_NAME}}
+                      p
+                        | NO:
+                        span {{item.MAC_NO}}
+                  .machinePars
+                    label 设备名称:
+                    div {{item.MAC_NAME}}
+                  div(ng-repeat='par in item.items')
+                    .machinePars
+                      label {{par.name}}:
+                      div {{par.value + " " + par.UNIT}}
+                  .machineView
+                    i.icon-circle-arrow-right(ng-click='showDetail($index)')
+          
+      #ios.tab-pane.fade
+         #wrap
+          #sidebar
+            #orgnizetree
+          #content
+            #grid
+              .machineLabel(ng-repeat='item in items', ng-style="{'border-color':item.color}")
+                .machineLabel1(ng-style="{'border-color':item.color,'background-color':item.color}")
+                  img.machineImage(ng-src='{{item.photo}}')
+                  .machineName
+                    p
+                      | {{item.MAC_NAME.length > 6 ? (item.MAC_NAME.substring(0,5)+"..."):item.MAC_NAME}}
+                    p
+                      | NO:
+                      span {{item.MAC_NO}}
+                .machinePars
+                  label 设备名称:
+                  div {{item.MAC_NAME}}
+                div(ng-repeat='par in item.pars')
+                  .machinePars
+                    label {{par.NAME}}:
+                    div {{par.VALUE + " " + par.UNIT}}
+                .machineView
+                  i.icon-circle-arrow-right(ng-click='showDetail($index)')
+  script#treeview-template(type='text/kendo-ui-template').
+      <i class="#:item.icon#"></i>
+      <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode">#:item.text#</span>

@@ -25,6 +25,13 @@ module.exports = function(app) {
 
     app.post('/diagnosis/r/GetMachinePara', diagnosisctrl.GetMachinePara);
 
+    app.post('/diagnosis/r/getallpara', diagnosisctrl.GetAllMachinePara);
+
+    app.post('/diagnosis/r/GetGroupPara', diagnosisctrl.GetGroupPara);
+
+    app.post('/diagnosis/r/getAllMac', diagnosisctrl.getAllMac);
+
+    app.get('/diagnosis/r/mac', diagnosisctrl.mac);
 
 
 }

@@ -40,6 +40,13 @@ $(function() {
                 var tday = a.add('day', 1).format('YYYY-MM-DD');
                 dataSource.push({ value: tday, text: tday });
             }
+            var machines = [];
+            for (var m in groupOrMachine.dataAarry) {
+                machines.push(parseInt(m));
+            }
+            if (machines.length == 0) {
+                return;
+            }
             $("#filter").kendoComboBox({
                 dataTextField: "text",
                 dataValueField: "value",
@@ -67,13 +74,7 @@ $(function() {
                     GetMachineStatusRatio(data.StartTime, data.StartTime, data.ObjectIDs[0], 'chartRato2', data.StartTime + "(" + groupOrMachine.dataAarry[machines[0]] + ")" + lang.MachineStatus.EquipmentStateScaleMap, data.ShowDetails);
                 }
             });
-            var machines = [];
-            for (var m in groupOrMachine.dataAarry) {
-                machines.push(parseInt(m));
-            }
-            if (machines.length == 0) {
-                return;
-            }
+
 
             $("#loading").show();
             $("#table_status").empty();
@@ -211,7 +212,7 @@ function GetMachineStatusListByDate(data) {
                     var tr2 = "<tr>";
                     if (data.Data[i].StatusData[j].MyRateStatusList != null) {
                         for (var k = 0; k < data.Data[i].StatusData[j].MyRateStatusList.length; k++) {
-                            tr1 = tr1 + '<th colspan="2" style="background-color:' + data.Data[i].StatusData[j].MyRateStatusList[k].COLOR + '">' + data.Data[i].StatusData[j].MyRateStatusList[k].STATUS_NAME + '</th>';
+                            tr1 = tr1 + '<th colspan="2" style="background-color:#' + data.Data[i].StatusData[j].MyRateStatusList[k].COLOR.Name + '">' + data.Data[i].StatusData[j].MyRateStatusList[k].STATUS_NAME + '</th>';
                             tr2 = tr2 + '<td align="center">' + data.Data[i].StatusData[j].MyRateStatusList[k].TIME + 'h</td><td align="center">' + (data.Data[i].StatusData[j].MyRateStatusList[k].RATE).toFixed(1) + '%</td>';
                         }
                         shtml = shtml + tr1 + tr2 + "</table></div>";
@@ -306,7 +307,7 @@ function GetMachineStatusListByDate(data) {
                                         var tr2 = "<tr>";
                                         if (data.Data[mm].MyRateStatusList != null) {
                                             for (var k = 0; k < data.Data[mm].MyRateStatusList.length; k++) {
-                                                tr1 = tr1 + '<th colspan="2" style="background-color:' + data.Data[mm].MyRateStatusList[k].COLOR + '">' + data.Data[mm].MyRateStatusList[k].STATUS_NAME + '</th>';
+                                                tr1 = tr1 + '<th colspan="2" style="background-color:#' + data.Data[mm].MyRateStatusList[k].COLOR.Name + '">' + data.Data[mm].MyRateStatusList[k].STATUS_NAME + '</th>';
                                                 tr2 = tr2 + '<td align="center">' + data.Data[mm].MyRateStatusList[k].TIME + 'h</td><td align="center">' + (data.Data[mm].MyRateStatusList[k].RATE).toFixed(1) + '%</td>';
                                             }
                                             shtml = shtml + tr1 + tr2 + "</table></div>";
@@ -373,7 +374,7 @@ function GetMachineStatusListByName(data) {
                     var tr2 = "<tr>";
                     if (data.Data[i].StatusData[j].MyRateStatusList != null) {
                         for (var k = 0; k < data.Data[i].StatusData[j].MyRateStatusList.length; k++) {
-                            tr1 = tr1 + '<th colspan="2" style="background-color:' + data.Data[i].StatusData[j].MyRateStatusList[k].COLOR + '">' + data.Data[i].StatusData[j].MyRateStatusList[k].STATUS_NAME + '</th>';
+                            tr1 = tr1 + '<th colspan="2" style="background-color:#' + data.Data[i].StatusData[j].MyRateStatusList[k].COLOR.Name + '">' + data.Data[i].StatusData[j].MyRateStatusList[k].STATUS_NAME + '</th>';
                             tr2 = tr2 + '<td align="center">' + data.Data[i].StatusData[j].MyRateStatusList[k].TIME + 'h</td><td align="center">' + (data.Data[i].StatusData[j].MyRateStatusList[k].RATE).toFixed(1) + '%</td>';
                         }
                         shtml = shtml + tr1 + tr2 + "</table></div>";
@@ -453,7 +454,7 @@ function GetMachineStatusListByName(data) {
                                         var tr2 = "<tr>";
                                         if (data.Data[mm].MyRateStatusList != null) {
                                             for (var k = 0; k < data.Data[mm].MyRateStatusList.length; k++) {
-                                                tr1 = tr1 + '<th colspan="2" style="background-color:' + data.Data[mm].MyRateStatusList[k].COLOR + '">' + data.Data[mm].MyRateStatusList[k].STATUS_NAME + '</th>';
+                                                tr1 = tr1 + '<th colspan="2" style="background-color:#' + data.Data[mm].MyRateStatusList[k].COLOR.Name + '">' + data.Data[mm].MyRateStatusList[k].STATUS_NAME + '</th>';
                                                 tr2 = tr2 + '<td align="center">' + data.Data[mm].MyRateStatusList[k].TIME + 'h</td><td align="center">' + (data.Data[mm].MyRateStatusList[k].RATE).toFixed(1) + '%</td>';
                                             }
                                             shtml = shtml + tr1 + tr2 + "</table></div>";

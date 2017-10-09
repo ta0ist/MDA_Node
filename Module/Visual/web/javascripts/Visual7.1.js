@@ -589,6 +589,7 @@
                         "农机阀座01": "A002"
                     }
                     //svg布局图
+                let width = screen.width;
                 $.VisualConfig.paper = Raphael("context", 1360, 680);
                 this.MAC = drawFactoryView($.VisualConfig.paper, $.VisualConfig.url.wid);
                 //渲染页面

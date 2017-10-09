@@ -35,7 +35,7 @@ block content
                             | #{lang.Common.EquipmentRealTimeStateNumber}
                     tr
                         td
-                            .span25.responsive(ng-repeat='item in status')
+                            .span25.responsive(ng-repeat='item in status' style='float:left;margin-left:10px;')
                                 .dashboard-stat.black(ng-style="{'background-color':item.color}")
                                     .visual
                                         i(ng-class='item.Icon')
