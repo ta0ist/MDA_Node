@@ -1010,65 +1010,90 @@
                             $("#" + ele).find("#chart2").empty();
                         } catch (e) {}
 
+                        var onePie = data.length > 0 ? 1 : 0;
+                        var twoPie = data.length > 1 ? 1 : 0;
                         var data1 = {};
-                        data1.title = "前一班次(" + moment(data[0].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[0].SHIFT_NAME + ")";
-                        data1.data = [];
-                        for (var k = 0; k < data[0].StatuRates.length; k++) {
-                            var tjson = {};
-                            tjson.name = data[0].StatuRates[k].STATU_NAME;
-                            tjson.color = data[0].StatuRates[k].COLOR;
-                            tjson.y = parseInt((data[0].StatuRates[k].STATU_RATE * 100).toFixed(1));
-                            data1.data.push(tjson);
+                        if (data.length > 0) {
+                            data1.title = (twoPie == 1 ? "前一班次(" : "") + moment(data[0].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[0].SHIFT_NAME + (twoPie == 1 ? ")" : "");
+                            data1.data = [];
+                            for (var k = 0; k < data[0].StatuRates.length; k++) {
+                                var tjson = {};
+                                tjson.name = data[0].StatuRates[k].STATU_NAME;
+                                tjson.color = data[0].StatuRates[k].COLOR;
+                                tjson.y = parseInt((data[0].StatuRates[k].STATU_RATE * 100).toFixed(1));
+                                data1.data.push(tjson);
+                            }
                         }
 
                         var data2 = {};
-                        data2.title = "当前班次(" + moment(data[1].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[1].SHIFT_NAME + ")";
-                        data2.data = [];
-                        for (var k = 0; k < data[1].StatuRates.length; k++) {
-                            var tjson = {};
-                            tjson.name = data[1].StatuRates[k].STATU_NAME;
-                            tjson.color = data[1].StatuRates[k].COLOR;
-                            tjson.y = parseInt((data[1].StatuRates[k].STATU_RATE * 100).toFixed(1));
-                            data2.data.push(tjson);
+                        if (data.length > 1) {
+                            data2.title = "当前班次(" + moment(data[1].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[1].SHIFT_NAME + ")";
+                            data2.data = [];
+                            for (var k = 0; k < data[1].StatuRates.length; k++) {
+                                var tjson = {};
+                                tjson.name = data[1].StatuRates[k].STATU_NAME;
+                                tjson.color = data[1].StatuRates[k].COLOR;
+                                tjson.y = parseInt((data[1].StatuRates[k].STATU_RATE * 100).toFixed(1));
+                                data2.data.push(tjson);
+                            }
+                        }
+                        var char2PieTag = '',
+                            char2LendTag = '';
+                        if (twoPie == 1) {
+                            char2PieTag = '<td align="center" width="50%"><div id="chart2"></div></td>';
+                            char2LendTag = '<td align="center" id="square2"></td>';
                         }
 
-                        this.drawChart("#chart1", data1, "Chart1");
-                        this.drawChart("#chart2", data2, "Chart2");
+                        $("#context").append('<table style="width:100%;height: 100%;">' +
+                            '<tr><td colspan="2" height="50" align="center" style="font-size: 25px;color: #fff;font-family: Microsoft YaHei">设备班次效率汇总</td></tr>' +
+                            '<tr><td align="center" width="50%"><div id="chart1"></div></td>' + char2PieTag + '</tr>' +
+                            '<tr><td height="150" align="center" id="square1"></td>' + char2LendTag + '</tr>' +
+                            '</table>');
+                        if (onePie == 1)
+                            this.drawChart("#chart1", data1, "Chart1");
+                        if (twoPie == 1)
+                            this.drawChart("#chart2", data2, "Chart2");
 
                         var shtml1 = "<table style='color:#fff;font-size:18px;'>";
-                        for (var i = 0; i < 3; i++) {
-                            shtml1 = shtml1 + "<tr>";
-                            for (var j = 0; j < data[0].StatuRates.length; j++) {
-                                if (i == 0) {
-                                    shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[0].StatuRates[j].STATU_NAME + '</td>';
-                                } else if (i == 1) {
-                                    shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[0].StatuRates[j].COLOR + '"></div></td>';
-                                } else if (i == 2) {
-                                    shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[0].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
+
+                        if (onePie == 1) {
+                            for (var i = 0; i < 3; i++) {
+                                shtml1 = shtml1 + "<tr>";
+                                for (var j = 0; j < data[0].StatuRates.length; j++) {
+                                    if (i == 0) {
+                                        shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[0].StatuRates[j].STATU_NAME + '</td>';
+                                    } else if (i == 1) {
+                                        shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[0].StatuRates[j].COLOR + '"></div></td>';
+                                    } else if (i == 2) {
+                                        shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[0].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
+                                    }
                                 }
+                                shtml1 = shtml1 + "</tr>";
                             }
-                            shtml1 = shtml1 + "</tr>";
                         }
                         shtml1 = shtml1 + "</table>";
 
                         var shtml2 = "<table style='color:#fff;font-size:18px;'>";
-                        for (var i = 0; i < 3; i++) {
-                            shtml2 = shtml2 + "<tr>";
-                            for (var j = 0; j < data[1].StatuRates.length; j++) {
-                                if (i == 0) {
-                                    shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[1].StatuRates[j].STATU_NAME + '</td>';
-                                } else if (i == 1) {
-                                    shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[1].StatuRates[j].COLOR + '"></div></td>';
-                                } else if (i == 2) {
-                                    shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[1].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
+                        if (twoPie == 1) {
+                            for (var i = 0; i < 3; i++) {
+                                shtml2 = shtml2 + "<tr>";
+                                for (var j = 0; j < data[1].StatuRates.length; j++) {
+                                    if (i == 0) {
+                                        shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[1].StatuRates[j].STATU_NAME + '</td>';
+                                    } else if (i == 1) {
+                                        shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[1].StatuRates[j].COLOR + '"></div></td>';
+                                    } else if (i == 2) {
+                                        shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[1].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
+                                    }
                                 }
+                                shtml2 = shtml2 + "</tr>";
                             }
-                            shtml2 = shtml2 + "</tr>";
                         }
                         shtml2 = shtml2 + "</table>";
-                        $('#square1').append(shtml1);
-                        $('#square2').append(shtml2);
-
+                        if (onePie == 1)
+                            $('#square1').append(shtml1);
+                        if (twoPie == 1)
+                            $('#square2').append(shtml2);
 
                         m++
                         setTimeout(this._showdataStatus(data, m, pages), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);

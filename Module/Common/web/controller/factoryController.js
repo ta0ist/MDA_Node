@@ -157,7 +157,7 @@ app.controller("myCtrl", function($scope, $http) {
     $scope.isSelect = 0;
     $scope.showBigImg = function(obj, index) {
         $scope.isSelect = index;
-        bigIMG.src = obj;
+        //bigIMG.src = obj;
     };
 
     // //读取机床数据

@@ -78,7 +78,6 @@ exports.checkuser = function(req, res) {
                 })
             } else {
                 req.session.user = JSON.parse(body);
-                session.user = JSON.parse(body);
                 res.json({
                     Status: 0,
                     Message: "登录成功！"

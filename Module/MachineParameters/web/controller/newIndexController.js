@@ -153,7 +153,7 @@ app.controller('diagnosisctrl', function($scope, $http) {
                             if (v.Mac_nbr == j.MAC_NBR) {
                                 v.MAC_NAME = j.MAC_NAME;
                                 v.MAC_NO = j.MAC_NO;
-                                v.PHOTO = j.PHOTO;
+                                v.PHOTO = "/images/machine/NoDefault/" + j.PHOTO;
                                 v.color = color[n];
                             }
                         })

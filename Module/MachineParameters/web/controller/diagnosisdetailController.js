@@ -10,9 +10,9 @@ $(function() {
     // 检查插件是否已经安装过
     var iRet = WebVideoCtrl.I_CheckPluginInstall();
     if (-2 == iRet) {
-        alert(lang.MachineParameters.Alert_1);
+       // alert(lang.MachineParameters.Alert_1);
     } else if (-1 == iRet) {
-        alert(lang.MachineParameters.Alert_2);
+       // alert(lang.MachineParameters.Alert_2);
     } else {
         var oPlugin = {
             iWidth: 600, // plugin width
@@ -32,7 +32,7 @@ $(function() {
 
         // 检查插件是否最新
         if (-1 == WebVideoCtrl.I_CheckPluginVersion()) {
-            alert(lang.MachineParameters.Alert_3);
+           // alert(lang.MachineParameters.Alert_3);
             return;
         }
 
@@ -67,12 +67,14 @@ $(function() {
 
 
     var seriesdata = [];
+	var curveColors=['red','green','blue','yellow']
     var type = $.getparam("type");
     //$.each(parameter[type], function (item, k) {$.getparam("no")
     $.post(baseUrl + "GetImmediatelyparameter", { machineIds: $.getparam("no") }, function(data) {
         if (data.Status == 0) {
             //选择图标类型
             var type;
+			var colorIndex=0;
             $.each(data.Data.MAC_DATA, function(a, b) {
 
                 for (var m = 0; m < b.DATAITEMS.length; m++) {
@@ -97,9 +99,10 @@ $(function() {
                             $(".chart4").append('<div style="margin-bottom: 10px;"><div class="chart4_flagLabel">' + b.DATAITEMS[m].Description + ':</div><div class="chart4_value" id="' + item + '_chart"></div></div>');
                             chartObj.chart4[item] = item + "_chart";
                             break;
-                        case "chart5": //实时曲线
+                        case "chart5": //实时曲线							
                             var tjson = {
                                 name: b.DATAITEMS[m].Description,
+								color : "green",
                                 type: 'line',
                                 yAxis: 0,
                                 //data: intivalue.FD_WindSpeed_3s,
@@ -119,7 +122,11 @@ $(function() {
                                 marker: {
                                     enabled: false
                                 }
-                            }
+                            };
+							if(colorIndex<curveColors.length)
+							{
+								tjson.color= curveColors[colorIndex++];
+							}
                             seriesdata.push(tjson);
                             chartObj.chart5[item] = seriesdata.length - 1;
                             break;
@@ -128,7 +135,7 @@ $(function() {
             });
 
             if (seriesdata.length > 0) {
-                drawRealCurve($.Translate("MachineParameters.MACHINE_PARS_REAL_CURVE"), "curves", seriesdata);
+                drawRealCurve(lang.MACHINE_PARS_REAL_CURVE, "curves", seriesdata);
                 resizeChart();
             }
             $("#contextPage").resize(function() {
@@ -152,58 +159,36 @@ function GetImmediatelyparameter() {
                 //
                 for (var n = 0; n < b.DATAITEMS.length; n++) {
                     if (b.DATAITEMS[n].ChartType != "") {
+                    //chart1--转速表
+                    //chart2--进度条
+                    //chart3--温度/压力
+                    //chart4--文本框
+                    //chart5--曲线图
+					var val=b.DATAITEMS[n].Value;
+					if(b.DATAITEMS[n].DataType==8)
+						val=moment(b.DATAITEMS[n].Value).format('YYYY-MM-DD HH:mm:ss');
                         switch (b.DATAITEMS[n].ChartType) {
                             case "chart1":
                             case "chart2":
                             case "chart3":
-                                chartObj[b.DATAITEMS[n].ChartType]['par' + n].SetValue(b.DATAITEMS[n].Value);
+                                chartObj[b.DATAITEMS[n].ChartType]['par' + n].SetValue(val);
                                 if (b.DATAITEMS[n].ChartType == "chart2") {
-                                    $("#par" + n + "_chartValue").html("----" + b.DATAITEMS[n].Value + "%");
+                                    $("#par" + n + "_chartValue").html("----" + val + "%");
                                 }
                                 break;
                             case "chart4":
-                                $("#par" + n + "_chart").html(b.DATAITEMS[n].Value);
+								 $("#par" + n + "_chart").html(val);
                                 break;
                             case "chart5":
                                 var x = (new Date()).getTime();
                                 for (var k in chartObj[b.DATAITEMS[n].ChartType]) {
-                                    var y = b.DATAITEMS[n].Value;
+                                    var y = val;
                                     chart.series[chartObj[b.DATAITEMS[n].ChartType]['par' + n]].addPoint([x, y], true, true);
                                 }
                                 break;
                         }
 
                     }
-                    //for (var m in chartObj) {
-                    //    switch (m) {
-                    //        //type:
-                    //        //chart1--转速表
-                    //        //chart2--进度条
-                    //        //chart3--温度/压力
-                    //        //chart4--文本框
-                    //        //chart5--曲线图
-                    //        case "chart1": case "chart2": case "chart3":
-                    //            for (var k in chartObj[m]) {
-                    //                chartObj[m][k].SetValue(b.DATAITEMS[n].Value);
-                    //                if (m == "chart2") {
-                    //                    $("#" + k + "_chartValue").html("----" + b.DATAITEMS[n].Value + "%");
-                    //                }
-                    //            }
-                    //            break;
-                    //        case "chart4":
-                    //            for (var k in chartObj[m]) {
-                    //                $("#" + chartObj[m][k]).html(data.Data[0][k]);
-                    //            }
-                    //            break;
-                    //        case "chart5":
-                    //            var x = (new Date()).getTime();
-                    //            for (var k in chartObj[m]) {
-                    //                var y = data.Data[0][k];
-                    //                chart.series[chartObj[m][k]].addPoint([x, y], true, true);
-                    //            }
-                    //            break;
-                    //    }
-                    //}
                 }
             })
             setTimeout("GetImmediatelyparameter()", 5000);
@@ -219,7 +204,7 @@ function resizeChart() {
 }
 
 function drawSpeedChart(Container, width, height, unit) {
-    return new zyGH.CGauge(Container, width, height).StartAngleSet(0).EndAngleSet(270).LargeTickSet(10).SmallTickSet(5).MinValueSet(0).MaxValueSet(10000).DialRadiusSet(113).ltlenSet(10).stlenSet(8).SetName(unit).Create(130, 130);
+    return new zyGH.CGauge(Container, width, height).StartAngleSet(90).EndAngleSet(270).LargeTickSet(10).SmallTickSet(5).MinValueSet(0).MaxValueSet(150).DialRadiusSet(113).ltlenSet(14).stlenSet(8).SetName(unit).Create(130, 130);
 }
 
 function drawProgressBar(Container, width, height) {
@@ -307,7 +292,7 @@ function drawRealCurve(title, contains, seriesdata) {
                 tickWidth: 1,
                 tickColor: '#FFFFFF',
                 gridlinewidth: 0,
-                tickInterval: 2000,
+                tickInterval: 500,
                 //minorTickInterval: 'auto',
                 maxPadding: 0,
                 minPadding: 0,
@@ -325,8 +310,8 @@ function drawRealCurve(title, contains, seriesdata) {
                     text: ''
                 },
                 opposite: false, //Y轴靠左
-                min: 0,
-                max: 10000 //
+                min: -5000,
+                max: 5000 //
             }
             //, {
             //    //minorTickInterval: 4,

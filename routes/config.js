@@ -21,8 +21,8 @@
     }],
     // webIP: 'localhost',
     // webPort: 27516,
-    webIP: '192.168.0.96',
-    webPort: 8015,
+    webIP: '192.168.0.227',
+    webPort: 8080,
     model: 'HGFH',
     DNCPath: 'D:\\DNC\\'
 }

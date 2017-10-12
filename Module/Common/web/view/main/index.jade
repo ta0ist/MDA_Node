@@ -43,7 +43,7 @@ block content
                                         .number
                                             | {{item.MacCount}}
                                         .desc {{item.name}}
-                                    a#move-handle.more(href='/statusrate', style='height: 13px; background-color: rgb(33, 33, 33);')
+                                    a#move-handle.more(href='/diagnosis?status={{$index+1}}', style='height: 13px; background-color: rgb(33, 33, 33);')
                                         i.m-icon-swapright.m-icon-white(style='margin-top: 0px;')
                                     .statusDetial(style='height: 50px; position: absolute; ')
             .row-fluid
