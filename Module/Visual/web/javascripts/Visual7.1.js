@@ -1,4 +1,7 @@
-﻿(function($, undefined) {
+﻿/// <reference path="../WebMethod/GetDemoMethod.asmx" />k
+/// <reference path="../WebMethod/GetDemoMethod.asmx" />
+/// <reference path="jquery-ui-1.10.0.custom.js" />
+(function($, undefined) {
     $.widget("BZ.VisualConfig", {
         options: {
             headShow: true, //head区域是否显示
@@ -112,8 +115,7 @@
                         3: { name: "yieldTrend", type: "chart" },
                         4: { name: "shiftRatio", type: "table" },
                         5: { name: "activation", type: "chart" },
-                        6: { name: "statusRatio", type: "chart" },
-                        7: { name: "camera", type: "chart" }
+                        6: { name: "statusRatio", type: "chart" }
                     }
                     for (var i = 0; i < rdata.page_body.pages.length; i++) {
                         var tjson = {
@@ -241,7 +243,7 @@
                 '<tr>' +
                 '<td id="head"><div style="padding-left: 5px;display: inline-flex;">' +
                 '<img id="logo" src="./Visual/web/image/' + logimg + '" style="position: relative;top: 5px;height:45px;"/>' +
-                '<div><span id="title" style="  position: relative;top: 5px;left: 5px;font-size:' + self.options.setting.page_head.fontSize + ';font-family:' + self.options.setting.page_head.fontFamily + ';color:' + self.options.setting.page_head.color + '">' + self.options.setting.page_head.title + '</span><span>Nantong Guandong Mould & Plastic Co.,Ltd</span></div><div id="imgtest"><ul><li style="list-style-type:none;"><img id="barcode" src="./Visual/web/image/bandexsoft.jpg" style="width: 60px; height: 60px;margin-left: 10;" /><--放大</li></ul></div></div></td>' +
+                '<span id="title" style="  position: relative;top: 5px;left: 5px;font-size:' + self.options.setting.page_head.fontSize + ';font-family:' + self.options.setting.page_head.fontFamily + ';color:' + self.options.setting.page_head.color + '">' + self.options.setting.page_head.title + '</span></div></td>' +
                 '</tr>' +
                 '<tr>' +
                 '<td valign="top" align="center" valign="top" style="border:0px solid yellow;">' +
@@ -258,27 +260,6 @@
                 '</td>' +
                 '</tr>' +
                 '</table>');
-            var offsetX = 20 - $("#barcode").offset().left;
-            var offsetY = 20 - $("#barcode").offset().top;
-            var size = 4 * $('#imgtest ul li img').width();
-            $("#barcode").mouseover(function(event) {
-                var $target = $(event.target);
-                if ($target.is('img')) {
-                    $("<img id='tip' src='" + $target.attr("src") + "'>").css({
-                        "height": size,
-                        "width": size,
-                        "top": event.pageX + offsetX,
-                        "left": event.pageY + offsetY,
-                    }).appendTo($("#imgtest"));
-                }
-            }).mouseout(function() {
-                $("#tip").remove();
-            }).mousemove(function() {
-                $("#tip").css({
-                    "left": event.pageX + offsetX,
-                    "top": event.pageY + offsetY
-                });
-            });
             this.element.append('<ul id="menu" style="display:none;" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">' +
                 //'<li role="presentation" data-attr="wid"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.MAC_GROUP") + '</a></li>' +
                 //'<li role="presentation" data-attr="page"><a role="menuitem" tabindex="-1" href="#">' + $.Translate("Visual.SELEC_PAGE") + '</a></li>' +
@@ -358,24 +339,18 @@
                         break;
                 }
             }
-            // if (self.options.notice) { //建立后台推送机制
-            //     var MessagesHub = $.connection.messagesHub;
-            //     MessagesHub.client.showMessage = function (perc) {
-            //         var reList = JSON.parse(perc);
-            //         var mes;
-            //         if (reList.length > 0) {
-            //             mes = "公告信息--";
-            //         }
-            //         else {
-            //             mes = "";
-            //         }
-            //         for (var i = 0; i < reList.length; i++) {
-            //             mes = mes + reList[i].CONTENT + ";   ";
-            //         }
-            //         $("#accountmesg").html(mes);
-            //         //处理接收数据
-
-            //     };
+           //建立推送机制
+            $.get('/visuals/r/GetNoticeActive', (data) => {
+                if (data.Status == 0) {
+                    if (data.Data.length > 0)
+                        $("#accountmesg").html(data.Data[0].CONTENT);
+                }
+            })
+            var wsServer = new WebSocket('ws://192.168.18.18:8883');
+            wsServer.onmessage = (e) => {
+                    $("#accountmesg").empty();
+                    $("#accountmesg").html(e.data);
+                }
             //     MessagesHub.client.GetNoBeginApplay = function (perc) {
             //         var reList = JSON.parse(perc);
             //         var dd = [];
@@ -421,7 +396,7 @@
                 self.url.wid = "cj01";
             }
             if (self.url.wid == null || self.url.wid == "cj01")
-                $("#title").eq(0).text("上海斑彰信息技术有限公司");
+                $("#title").eq(0).text("昆山旭正数字化管理系统");
             else
                 $("#title").eq(0).text("2");
             //初始加载维修单号信息
@@ -589,7 +564,6 @@
                         "农机阀座01": "A002"
                     }
                     //svg布局图
-                let width = screen.width;
                 $.VisualConfig.paper = Raphael("context", 1360, 680);
                 this.MAC = drawFactoryView($.VisualConfig.paper, $.VisualConfig.url.wid);
                 //渲染页面
@@ -604,8 +578,6 @@
                             'font-size: 12px;position:relative;top:-8px;">' + data.Data[i].NAME + '</span></li>';
                     }
                     html = html + '</ul>';
-                    //兆丰机电增加
-                    html = html + '<div id="display" style="width:200px;"></div>'
                     $('body').append(html);
                 });
                 //alert($(window).height() + "," + $(window).width());
@@ -1010,90 +982,65 @@
                             $("#" + ele).find("#chart2").empty();
                         } catch (e) {}
 
-                        var onePie = data.length > 0 ? 1 : 0;
-                        var twoPie = data.length > 1 ? 1 : 0;
                         var data1 = {};
-                        if (data.length > 0) {
-                            data1.title = (twoPie == 1 ? "前一班次(" : "") + moment(data[0].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[0].SHIFT_NAME + (twoPie == 1 ? ")" : "");
-                            data1.data = [];
-                            for (var k = 0; k < data[0].StatuRates.length; k++) {
-                                var tjson = {};
-                                tjson.name = data[0].StatuRates[k].STATU_NAME;
-                                tjson.color = data[0].StatuRates[k].COLOR;
-                                tjson.y = parseInt((data[0].StatuRates[k].STATU_RATE * 100).toFixed(1));
-                                data1.data.push(tjson);
-                            }
+                        data1.title = "前一班次(" + moment(data[0].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[0].SHIFT_NAME + ")";
+                        data1.data = [];
+                        for (var k = 0; k < data[0].StatuRates.length; k++) {
+                            var tjson = {};
+                            tjson.name = data[0].StatuRates[k].STATU_NAME;
+                            tjson.color = data[0].StatuRates[k].COLOR;
+                            tjson.y = parseInt((data[0].StatuRates[k].STATU_RATE * 100).toFixed(1));
+                            data1.data.push(tjson);
                         }
 
                         var data2 = {};
-                        if (data.length > 1) {
-                            data2.title = "当前班次(" + moment(data[1].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[1].SHIFT_NAME + ")";
-                            data2.data = [];
-                            for (var k = 0; k < data[1].StatuRates.length; k++) {
-                                var tjson = {};
-                                tjson.name = data[1].StatuRates[k].STATU_NAME;
-                                tjson.color = data[1].StatuRates[k].COLOR;
-                                tjson.y = parseInt((data[1].StatuRates[k].STATU_RATE * 100).toFixed(1));
-                                data2.data.push(tjson);
-                            }
-                        }
-                        var char2PieTag = '',
-                            char2LendTag = '';
-                        if (twoPie == 1) {
-                            char2PieTag = '<td align="center" width="50%"><div id="chart2"></div></td>';
-                            char2LendTag = '<td align="center" id="square2"></td>';
+                        data2.title = "当前班次(" + moment(data[1].SHIFT_DAY).format('YYYY-MM-DD') + " " + data[1].SHIFT_NAME + ")";
+                        data2.data = [];
+                        for (var k = 0; k < data[1].StatuRates.length; k++) {
+                            var tjson = {};
+                            tjson.name = data[1].StatuRates[k].STATU_NAME;
+                            tjson.color = data[1].StatuRates[k].COLOR;
+                            tjson.y = parseInt((data[1].StatuRates[k].STATU_RATE * 100).toFixed(1));
+                            data2.data.push(tjson);
                         }
 
-                        $("#context").append('<table style="width:100%;height: 100%;">' +
-                            '<tr><td colspan="2" height="50" align="center" style="font-size: 25px;color: #fff;font-family: Microsoft YaHei">设备班次效率汇总</td></tr>' +
-                            '<tr><td align="center" width="50%"><div id="chart1"></div></td>' + char2PieTag + '</tr>' +
-                            '<tr><td height="150" align="center" id="square1"></td>' + char2LendTag + '</tr>' +
-                            '</table>');
-                        if (onePie == 1)
-                            this.drawChart("#chart1", data1, "Chart1");
-                        if (twoPie == 1)
-                            this.drawChart("#chart2", data2, "Chart2");
+                        this.drawChart("#chart1", data1, "Chart1");
+                        this.drawChart("#chart2", data2, "Chart2");
 
                         var shtml1 = "<table style='color:#fff;font-size:18px;'>";
-
-                        if (onePie == 1) {
-                            for (var i = 0; i < 3; i++) {
-                                shtml1 = shtml1 + "<tr>";
-                                for (var j = 0; j < data[0].StatuRates.length; j++) {
-                                    if (i == 0) {
-                                        shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[0].StatuRates[j].STATU_NAME + '</td>';
-                                    } else if (i == 1) {
-                                        shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[0].StatuRates[j].COLOR + '"></div></td>';
-                                    } else if (i == 2) {
-                                        shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[0].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
-                                    }
+                        for (var i = 0; i < 3; i++) {
+                            shtml1 = shtml1 + "<tr>";
+                            for (var j = 0; j < data[0].StatuRates.length; j++) {
+                                if (i == 0) {
+                                    shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[0].StatuRates[j].STATU_NAME + '</td>';
+                                } else if (i == 1) {
+                                    shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[0].StatuRates[j].COLOR + '"></div></td>';
+                                } else if (i == 2) {
+                                    shtml1 = shtml1 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[0].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
                                 }
-                                shtml1 = shtml1 + "</tr>";
                             }
+                            shtml1 = shtml1 + "</tr>";
                         }
                         shtml1 = shtml1 + "</table>";
 
                         var shtml2 = "<table style='color:#fff;font-size:18px;'>";
-                        if (twoPie == 1) {
-                            for (var i = 0; i < 3; i++) {
-                                shtml2 = shtml2 + "<tr>";
-                                for (var j = 0; j < data[1].StatuRates.length; j++) {
-                                    if (i == 0) {
-                                        shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[1].StatuRates[j].STATU_NAME + '</td>';
-                                    } else if (i == 1) {
-                                        shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[1].StatuRates[j].COLOR + '"></div></td>';
-                                    } else if (i == 2) {
-                                        shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[1].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
-                                    }
+                        for (var i = 0; i < 3; i++) {
+                            shtml2 = shtml2 + "<tr>";
+                            for (var j = 0; j < data[1].StatuRates.length; j++) {
+                                if (i == 0) {
+                                    shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + data[1].StatuRates[j].STATU_NAME + '</td>';
+                                } else if (i == 1) {
+                                    shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;"><div style="width: 80%;height: 20px; background-color: ' + data[1].StatuRates[j].COLOR + '"></div></td>';
+                                } else if (i == 2) {
+                                    shtml2 = shtml2 + '<td width="80" height="30" align="center" style="border: 1px solid #fff;">' + (data[1].StatuRates[j].STATU_RATE * 100).toFixed(0) + '%</td>';
                                 }
-                                shtml2 = shtml2 + "</tr>";
                             }
+                            shtml2 = shtml2 + "</tr>";
                         }
                         shtml2 = shtml2 + "</table>";
-                        if (onePie == 1)
-                            $('#square1').append(shtml1);
-                        if (twoPie == 1)
-                            $('#square2').append(shtml2);
+                        $('#square1').append(shtml1);
+                        $('#square2').append(shtml2);
+
 
                         m++
                         setTimeout(this._showdataStatus(data, m, pages), $.VisualConfig.options.pagePar[$.VisualConfig.pg[$.VisualConfig.Index]].time);
@@ -1337,7 +1284,30 @@
                     var result = {
                         Status: 0,
                         Message: "OK",
-                        Data: 0
+                        Data: [
+                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
+                            { MAC_NAME: "B002", LIFE_FLAG: 1, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 1, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
+                            { MAC_NAME: "B001", LIFE_FLAG: 2, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
+                            { MAC_NAME: "B002", LIFE_FLAG: 2, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
+                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
+                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 2, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
+                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
+                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 1, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
+                            { MAC_NAME: "B001", LIFE_FLAG: 1, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
+                            { MAC_NAME: "B002", LIFE_FLAG: 1, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
+                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
+                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 },
+                            { MAC_NAME: "B001", LIFE_FLAG: 0, TL_NO: "111", INITIAL_LIFE: 100, LIFE: 50, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.56 },
+                            { MAC_NAME: "B002", LIFE_FLAG: 0, TL_NO: "222", INITIAL_LIFE: 200, LIFE: 60, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.87 },
+                            { MAC_NAME: "B003", LIFE_FLAG: 0, TL_NO: "333", INITIAL_LIFE: 300, LIFE: 70, MAX_LIFE: 200, WARNING_LIFE: 50, TL_PERCENTAGE: 0.93 }
+                        ]
                     }
                     if (result.Status == 0) {
                         self.toollife.UpdateTableView(result.Data, columns);
@@ -1540,26 +1510,6 @@
                     //切换页面
                     $.VisualConfig.chageshowPage()
                 }
-            }
-        },
-        camera: {
-            init: function(npage) {
-                var html = ` <div>
-        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe>
-        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe></div>
-    <div>
-        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe>
-        <iframe src="./iframe.html" frameborder="0" onload="iframeLoaded();"></iframe>
-    </div>`;
-                $("#context").append(html);
-                $.VisualConfig._dd();
-                setTimeout(this.pageout, 20000);
-            },
-            updatedata: function(self, pobj) {
-                //$.VisualConfig.chageshowPage();
-            },
-            pageout: function() {
-                $.VisualConfig.chageshowPage();
             }
         },
         chageshowPage: function() {

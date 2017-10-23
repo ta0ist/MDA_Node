@@ -1,0 +1,50 @@
+extends ../../../../../views/layout
+append headjavascript
+  script(type='text/javascript',src='./Visual/web/controller/noticeCtrl.js')
+
+block content
+  .row-fluid
+    .span12
+      h3.page-title(data-lang='AccountManage')
+        | #{lang.Visual.Content}
+      ul.breadcrumb
+        li
+          i.icon-home
+          a(href='/') #{lang.EmployeePerformance.Home}
+          i.icon-angle-right
+        li
+          a(href='javascript:;', data-lang='System') Visual
+          i.icon-angle-right 
+        li
+          a(href='javascript:;', data-lang='AccountManage') #{lang.Visual.Content}
+  .row-fluid(ng-controller='noticeCtrl')
+    .control-group(style='height: 34px;')
+      .controls
+        button.btn.blue(ng-click='grid_add()')
+          | #{lang.EmployeePerformance.Add}
+          i.icon-plus-sign
+        button.btn.red(ng-click='grid_delete()')
+          | #{lang.Common.Delete}
+          i.icon-remove-sign
+    #grid
+    script#template_ACTIVE(type='text/x-kendo-template').
+      # if ( data.ACTIVE == 1) { #
+      <div><img src="./Common/web/images/buttonON.png" value="1" alt="sss" style="cursor:pointer;" onclick="f_Enable(this)" /></div>
+      # } else { #
+      <div><img src="./Common/web/images/buttonOFF.png" value="0" alt="sss" style="cursor:pointer;" onclick="f_Enable(this)" /></div>
+      # } #
+    script#popup-add(type='text/x-kendo-template').
+      <form class="form-horizontal" id="memberviewmodel" style="width:750px;">
+      </div>
+      <div class="control-group">
+      <label class="control-label" data-lang="Common.CONTENT">#{lang.Visual.Content}</label>
+      <div class="controls">
+      <textarea rows="5" cols="15" id="CONTENT" style="width:500px;"></textarea>
+      </div>
+      </div>
+      <div class="form-actions">
+      <div id="Win_Submit" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+      <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+      </div>
+      </form>
+

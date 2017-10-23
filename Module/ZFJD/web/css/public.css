@@ -1,0 +1,184 @@
+/*公共开始*/
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #404040 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    padding: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #f88324
+}
+
+em {
+    font-style: normal;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+p {
+    word-wrap: break-word;
+}
+
+.undis {
+    display: none;
+}
+
+.dis {
+    display: block;
+}
+
+.cf:after,
+.layout:after,
+.hd:after,
+.bd:after,
+.ft:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.cf,
+.layout,
+.hd,
+.bd,
+.ft {
+    *zoom: 1;
+}
+
+.layout {
+    width: 1000px;
+    margin: 0 auto
+}
+
+.fl {
+    float: left;
+    _display: inline
+}
+
+.fr {
+    float: right;
+    _display: inline
+}
+
+.yh {
+    font-family: "微软雅黑";
+    font-weight: normal;
+}
+
+.bgf {
+    background: #fff;
+}
+
+.posr {
+    position: relative;
+    zoom: 1
+}
+
+.mt {
+    margin-top: 20px;
+}
+
+.borf {
+    border: 1px solid #c7d8e0;
+    border-top: 0px;
+    background: #fff;
+}
+
+.bor {
+    border: 1px solid #c7d8e0;
+    background: #fff;
+}
+
+.left {
+    width: 70%;
+    height: 100%;
+    float: left;
+}
+
+.left-child-top {
+    background: #ffffff;
+    border-radius: 3%;
+    height: 90%;
+}
+
+.left-child-bottom {
+    width: 90%;
+    margin: 0 auto;
+    height: 10%;
+}
+
+.left-child-bottom>a {
+    height: 90%;
+    width: 18%;
+    display: inline-block;
+    margin: 0 1%;
+}
+
+.left-child-bottom button {
+    height: 100%;
+    font-size: 2em;
+    width: 100%;
+}
+
+.btn-active {
+    color: #fff;
+    background: red;
+}
+
+.right {
+    width: 28%;
+    height: 100%;
+    margin-left: 2%;
+    background: #7F7F7F;
+    border-radius: 3%;
+    float: left;
+}

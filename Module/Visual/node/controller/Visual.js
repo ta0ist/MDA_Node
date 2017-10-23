@@ -4,18 +4,21 @@ var request = require('request');
 var logger = require('../../../../routes/logger.js');
 var config = require('../../../../routes/config.js');
 var post_argu = require('../../../../routes/post_argu.js');
+var db = require('../../../../routes/db.js');
 var _ = require('underscore');
+var moment = require('moment');
 let _Intervalid = 0;
 //加载页面
 exports.index = function(req, res) {
     var vpath = path.resolve('./Module/Visual/web/javascripts/VisualDesign.json');
-    if (_Intervalid == 0) {
-        _Intervalid = setInterval(() => {
-            exports.GetImmediatelyparameterByZF()
-        }, 3000);
-    }
-    res.render(path.resolve(__dirname, '../../web/view/visual/index'), { menulist: req.session.menu, vpath: vpath })
+    // if (_Intervalid == 0) {
+    //     _Intervalid = setInterval(() => {
+    //         exports.GetImmediatelyparameterByZF()
+    //     }, 3000);
+    // }
+    res.render(path.resolve(__dirname, '../../web/view/visual/index'), { menulist: req.session.menu, vpath: vpath, notice: config.Notice })
 }
+
 
 exports.board = function(req, res) {
     res.render(path.resolve(__dirname, '../../web/view/board/index'))
@@ -203,4 +206,103 @@ exports.ZFJD_getAttr = function(req, res) {
 
     }
     res.json(result)
+}
+
+
+exports.noticeindex = (req, res) => {
+    post_argu.permission(req, res, '/notice', 'view', path.resolve(__dirname, '../../web/view/notice/index'));
+}
+
+function GetAllAutoNewsList(res, method, args) {
+    let pagemodel = {
+        pagemodel: args
+    };
+    post_argu.post_argu(res, method, pagemodel);
+}
+
+exports.DeleteNews = (req, res) => {
+    db.sql('delete from NEWS where NEWS_NBR in(' + req.body.news_nbrlist + ')', (err, result) => {
+        if (err) {
+            return res.json({
+                Status: -9999
+            })
+        } else {
+            return res.json({
+                Status: 0,
+                Message: '删除成功!'
+            })
+        }
+    })
+}
+
+exports.AddNews = (req, res) => {
+    let sql_addNews = `INSERT INTO [NEWS]
+([GP_NBR]
+,[CONTENT]
+,[RELEASE_DATE]
+,[MEM_NBR]
+,[ACTIVE])
+VALUES
+(1,'${req.body.Content}','${moment(Date.now()).format('YYYY-MM-DD hh:mm:ss')}',${req.session.user.UserId},0
+)`;
+    db.sql(sql_addNews, (err, result) => {
+        if (err) {
+            return res.json({
+                Status: -9999
+            })
+        } else {
+            return res.json({
+                Status: 0,
+                Message: '新增成功!'
+            })
+        }
+    })
+}
+
+exports.ModifyNews = (req, res) => {
+    if (req.body.ACTIVE == 1) {
+        db.sql(`update NEWS set Active=0`, (err, result) => {
+            db.sql(`update NEWS set Active=${req.body.ACTIVE} where NEWS_NBR=${req.body.NEWS_NBR}`, (err, result) => {
+                if (err) {
+                    return res.json({
+                        Status: -9999
+                    })
+                } else {
+                    return res.json({
+                        Status: 0,
+                        Message: '修改成功!'
+                    })
+                }
+            })
+        })
+    } else {
+        db.sql(`update NEWS set Active=${req.body.ACTIVE} where NEWS_NBR=${req.body.NEWS_NBR}`, (err, result) => {
+            if (err) {
+                return res.json({
+                    Status: -9999
+                })
+            } else {
+                return res.json({
+                    Status: 0,
+                    Message: '修改成功!'
+                })
+            }
+        })
+    }
+
+}
+
+exports.GetNoticeActive = (req, res) => {
+    db.sql('select CONTENT from NEWS where Active=1', (err, result) => {
+        if (err) {
+            return res.json({
+                Status: -9999
+            })
+        } else {
+            return res.json({
+                Status: 0,
+                Data: result
+            })
+        }
+    })
 }

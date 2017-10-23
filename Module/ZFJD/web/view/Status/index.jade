@@ -1,0 +1,58 @@
+doctype html
+html
+  head
+    title
+    meta(charset='utf-8')
+    link(href="/ZFJD/web/css/public.css", rel="stylesheet")
+    link(href="/ZFJD/web/UI/Bootstrap-3.3.5-dist/bootstrap-3.3.5-dist/css/bootstrap.css", rel="stylesheet")   
+    link(href="/ZFJD/web/css/status.css", rel="stylesheet")  
+    
+  body#body
+    #con
+        .left
+            .left-child-top
+                .left-content
+                    .text-center.c1.pointer#mac
+                    .text-center.c1#status 
+                    .text-center.c2 
+                        p
+                        p
+                    .text-center.c2 
+                        p
+                        p
+                    .text-center.c2 
+                        p
+                        p
+                    .text-center.c2 
+                        p
+                        p
+                    
+            .left-child-bottom
+                a(href="/ZFJD/status")              
+                    button.btn.btn-danger
+                        span.glyphicon.glyphicon-home
+                a(href="/ZFJD/alarm")  
+                    button.btn
+                        span.glyphicon.glyphicon-info-sign
+                a
+                    button.btn
+                        span.glyphicon.glyphicon-stats
+                a
+                    button.btn
+                        span.glyphicon.glyphicon-wrench
+                a
+                    button.btn
+                        span.glyphicon.glyphicon-import
+
+        .right
+            .chartsBox#zp3
+            //- .chartsBox#zp4
+            .chartsBox#zp1
+            .chartsBox#zp2
+        script(src="/ZFJD/web/js/jquery-1.11.3.js")
+        script(src="/ZFJD/web/js/public.js")
+        script(src="/ZFJD/web/js/HConbobox.js")
+        script(src="/ZFJD/web/js/echarts.js")
+        script(src="/ZFJD/web/controller/status.js")
+    
+

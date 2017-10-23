@@ -1,0 +1,46 @@
+.left-content {
+    height: 100%;
+    padding: 15px;
+    background: url(/Visual/web/image/兆丰机电.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.c1 {
+    width: 30%;
+    background: #696969;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 2em;
+    margin-bottom: 1%;
+}
+
+.c2 {
+    width: 20%;
+    background: #404040;
+    color: #fff;
+    border-radius: 5px;
+    margin-bottom: 1%;
+}
+
+.pointer {
+    cursor: pointer;
+    position: relative;
+}
+
+.c2>p:last-child {
+    font-size: 2em;
+}
+
+.c2>p:first-child {
+    font-size: 1em !important;
+}
+
+.chartsBox {
+    height: 50%;
+    width: 50%;
+    float: left;
+}
+
+#zp3 {
+    width: 100%;
+}

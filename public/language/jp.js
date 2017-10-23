@@ -24,6 +24,7 @@ module.exports = {
         Reset: 'リセット',
         NotEmpty: '空欄ではいけません！',
         Added: '新規',
+        Delete: '削除',
         UserNamePasswordCannotBeEmpty: 'ユーザ名とパスワードは空欄ではいけません！',
         OperationFailure: '操作に失敗！',
         PleaseSelectANode: 'ノードを選択してください',

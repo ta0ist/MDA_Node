@@ -25,6 +25,7 @@ module.exports = {
         Reset: 'Reset',
         NotEmpty: 'No Empty！',
         Added: 'Add',
+        Delete: 'Detele',
         UserNamePasswordCannotBeEmpty: 'User Name Or password Can Not Be Empty！',
         OperationFailure: 'Operation failed！',
         PleaseSelectANode: 'Please Select Node',

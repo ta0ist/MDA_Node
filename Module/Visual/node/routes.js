@@ -1,6 +1,7 @@
-
 var visual = {};
 visual.visual = require('./routes/visual.js');
-module.exports = function (app) {
+visual.notice = require('./routes/notice.js');
+module.exports = function(app) {
     visual.visual(app);
+    visual.notice(app);
 }
