@@ -1,0 +1,62 @@
+#wrap {
+    overflow: hidden;
+    *zoom: 1;
+}
+
+#sidebar {
+    float: left;
+    width: 270px;
+}
+
+#content {
+    margin-left: 275px;
+}
+
+#grid {
+    height: 313px !important;
+}
+
+#header {
+    border: 1px solid rgb(206, 206, 206);
+    color: rgb(46, 46, 46);
+    height: 32px;
+    line-height: 32px;
+    margin-top: 44px;
+    padding-left: 10px;
+}
+
+#treebody {
+    border-color: #cecece;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    height: 667px;
+    overflow-y: auto;
+    padding-left: 5px;
+    padding-top: 5px;
+    position: absolute;
+    width: 263px;
+}
+
+.table th,
+.table td {
+    border-top: 1px solid #ddd;
+    line-height: 20px;
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle !important;
+}
+
+.number {
+    border: 1px solid #cdcdcd;
+    width: 50px;
+}
+
+.partListDetail tr:hover {
+    background-color: #F46819;
+    color: #FFFFFF;
+}
+
+#allcheck_APPLAY_NO {
+    margin-top: -2px !important;
+    margin-right: 2px !important;
+}

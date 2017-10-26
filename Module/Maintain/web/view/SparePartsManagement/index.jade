@@ -1,0 +1,521 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Maintain/web/css/SparePartsManagement.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Maintain/web/javascripts/dist.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./Maintain/web/controller/SparePartsManagement.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 配件管理
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 设备配件管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 配件管理
+    .row-fluid
+        .control-group(style='height: 34px;')
+            .controls
+                .input-icon.left(style='width: 250px; display: inline;')
+                    i.icon-search
+                    input#filter.m-wrap(type='text', placeholder='配件名称或配件编号')
+                button.btn.blue(data-bind='click:grid_add', title='@LanguageService.Translate(')
+                    | 新增
+                    i.icon-plus-sign
+                button.btn.purple(data-bind='click:order_edit', title='@LanguageService.Translate(')
+                    | 单号规则
+                    i.icon-plus-sign
+                button.btn.green(data-bind='click:order_notice', title='@LanguageService.Translate(')
+                    | 库存通知
+                    i.icon-bullhorn
+    div
+        #grid
+        .tabbable.tabbable-custom(style='margin-top: 5px;')
+            ul.nav.nav-tabs
+                li.active
+                    a(data-toggle='tab', href='#tab_1_2') 配件出入库记录
+            .tab-content
+                #tab_1_2.tab-pane.active
+                    #grid_2
+    script#treeview-template(type='text/kendo-ui-template').
+        <span type="#:item.type#" attr="treenode">#:item.text#</span>
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+        注意:单号规则字母前缀+日期前缀+数字前缀,日期前缀中的yyyy为年,mm为月,dd为日,数字前缀中000为当日自增序号位数为3位
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">保养单号生成规则:</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">字母前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 日期前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 数字前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <button data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></button>
+        <button id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></button>
+        </div>
+        </form>
+    script#popup-add(type='text/x-kendo-template').
+        <form class="form-horizontal" id="memberviewmodel" style="width:750px;">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td width="354">
+        <label class="control-label" data-lang="Common.MEMBER_NO"><span class="required">*</span>配件名称</label>
+        <div class="controls">
+        <input type="text" id="PART_NAME" name="PART_NAME" data-bind="value:PART_NAME" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME"><span class="required">*</span>配件编号</label>
+        <div class="controls">
+        <input type="text" id="PART_NO" name="PART_NO" data-bind="value:PART_NO" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.RANK_NUM"><span class="required">*</span>规格型号</label>
+        <div class="controls">
+        <input type="text" id="SPECIFICATION" name="SPECIFICATION" data-bind="value:SPECIFICATION" data-required="1" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.TEL"><span class="required">*</span>规格类型</label>
+        <div class="controls">
+        <input type="text" id="PART_TYPE" name="PART_TYPE" data-bind="value:PART_TYPE" data-required="1" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.RANK_NUM">单价</label>
+        <div class="controls">
+        <input type="text" id="PRICE" name="PRICE" data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.TEL">单位</label>
+        <div class="controls">
+        <input type="text" id="UNIT" name="UNIT" data-bind="value:UNIT" data-required="1" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.BORN_DATE">最大库存</label>
+        <div class="controls">
+        <input type="text" id="MIN_INVENTORY" name="MIN_INVENTORY" data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.IDENTITY_NO">最小库存</label>
+        <div class="controls">
+        <input type="text" id="MAX_INVENTORY" name="MAX_INVENTORY" data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.BORN_DATE">当前库存</label>
+        <div class="controls">
+        <input type="text" id="INVENTORY" name="INVENTORY" data-required="1" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.IDENTITY_NO">生产厂商</label>
+        <div class="controls">
+        <input type="text" id="MANUFACTUER" name="MANUFACTUER" data-bind="value:MANUFACTUER" data-required="1" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.SERIAL_NO">描述</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" style="width: 555px;" />
+        </div>
+        </td>
+        <td></td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <button data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></button>
+        <button id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></button>
+        </div>
+        </form>
+    script#out-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="Inoutviewmodel" style="min-width:750px;" autocomplete="off" data-bind="click:formclick">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.ADDRESS">出库类型</label>
+        <div class="controls">
+        <input type="text" id="OUT_TYPE" name="OUT_TYPE" data-required="1" class="span6 m-wrap" style="width: 210px; margin-left: 0px; " />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.ADDRESS" data-bind="visible:(maintainOrRepair()==1)?true:false">保养报告单号</label>
+        <div class="controls" data-bind="visible:(maintainOrRepair()==1)?true:false">
+        <input type="text" id="MAINTAIN_NO" name="MAINTAIN_NO" data-required="1" class="span6 m-wrap" style="width: 210px; margin-left: 0px; " />
+        </div>
+        <label class="control-label" data-lang="Common.ADDRESS" data-bind="visible:(maintainOrRepair()==2)?true:false">维修申请单号</label>
+        <div class="controls" data-bind="visible:(maintainOrRepair()==2)?true:false">
+        <input type="text" id="APPLAY_NO" name="APPLAY_NO" class="span6 m-wrap" style="width: 210px; margin-left: 0px; " />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.RANK_NUM"><span class="required">*</span>使用设备</label>
+        <div class="controls">
+        <input type="text" id="MAC_NBR" name="MAC_NBR" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.TEL"><span class="required">*</span>领用人员</label>
+        <div class="controls">
+        <input type="text" id="OPERATOR" name="OPERATOR" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.ADDRESS">描述</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" class="span6 m-wrap" style="width: 548px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group" style="padding-left: 20px;">
+        <table width="100%" class="table">
+        <thead>
+        <tr>
+        <th>配件编号</th>
+        <th>配件名称</th>
+        <th>配件类型</th>
+        <th>出库数</th>
+        <th>单价</th>
+        <th>金额</th>
+        <th>期初库存</th>
+        <th>期末库存</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach:parts">
+        <tr>
+        <td data-bind="click:$root.searchPart,attr:{index:$index}">
+        <span data-bind="visible:!partnoshow(),text:PART_NO"></span>
+        <input class="number" data-bind="event:{blur:$root.partNoRemoveFouse},visible:partnoshow,value:PART_NO" />
+        </td>
+        <td data-bind="text:PART_NAME"></td>
+        <td data-bind="text:PART_TYPE"></td>
+        <td data-bind="click:$root.coutnum">
+        <span data-bind="visible:!outnumshow(),text:OUT_NUM"></span>
+        <input class="number" data-bind="event:{blur:$root.ml},visible:outnumshow,value:OUT_NUM" />
+        </td>
+        <td data-bind="text:formatPrice(PRICE())"></td>
+        <td data-bind="text:formatPrice(TOTAL_PRICE())"></td>
+        <td data-bind="text:INVENTORY_INIT"></td>
+        <td data-bind="text:INVENTORY_FINAL"></td>
+        <td><a data-bind="click:$root.deleteItem">删除</a></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>总额</th>
+        <th data-bind="text:formatPrice(totalPrice())"></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </tfoot>
+        </table>
+        <div id="partList" style="position: absolute;display:none; border: 1px solid rgb(206, 206, 206); top: 350px; background-color:\\#FFFFFF;">
+        <table class="table" style="margin-bottom: 0px; border-bottom-width: 1px; background-color: rgb(205, 205, 205);">
+        <thead>
+        <tr><th width="150" style="padding:5px;">配件编号</th><th width="150" style="padding:5px;">配件名称</th><th width="150" style="padding:5px;">配件类型</th></tr>
+        </thead>
+        </table>
+        <div style="overflow-y: auto; border-top: 1px solid rgb(206, 206, 206); max-height: 100px;">
+        <table class="table" style="margin-bottom: 0px;">
+        <tbody data-bind="foreach:allparts" class="partListDetail">
+        <tr data-bind="click:$root.selectPart">
+        <td data-bind="text:PART_NO" width="150" style="padding:5px;"></td>
+        <td data-bind="text:PART_NAME" width="150" style="padding:5px;"></td>
+        <td data-bind="text:PART_TYPE" width="150" style="padding:5px;"></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <a data-bind="click:$root.addItem">新增配件</a>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#in-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="Inoutviewmodel" style="min-width:750px;" autocomplete="off" data-bind="click:formclick">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.ADDRESS">入库类型</label>
+        <div class="controls">
+        <input type="text" id="IN_TYPE" name="IN_TYPE" data-required="1" class="span6 m-wrap" style="width: 210px; margin-left: 0px; " />
+        </div>
+        </td>
+        <td></td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.RANK_NUM">供应商</label>
+        <div class="controls">
+        <input type="text" id="SUPPLIER" name="SUPPLIER" data-bind="value:SUPPLIER" data-required="1" class="span6 m-wrap" style="width:196px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.TEL"><span class="required">*</span>入库人员</label>
+        <div class="controls">
+        <input type="text" id="OPERATOR" name="OPERATOR" data-required="1" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.ADDRESS">描述</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" class="span6 m-wrap" style="width: 548px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group" style="padding-left: 20px;">
+        <table width="100%" class="table">
+        <thead>
+        <tr>
+        <th>配件编号</th>
+        <th>配件名称</th>
+        <th>配件类型</th>
+        <th>入库数</th>
+        <th>单价</th>
+        <th>金额</th>
+        <th>期初库存</th>
+        <th>期末库存</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach:parts">
+        <tr>
+        <td data-bind="click:$root.searchPart,attr:{index:$index}">
+        <span data-bind="visible:!partnoshow(),text:PART_NO"></span>
+        <input class="number" data-bind="event:{blur:$root.partNoRemoveFouse},visible:partnoshow,value:PART_NO" />
+        </td>
+        <td data-bind="text:PART_NAME"></td>
+        <td data-bind="text:PART_TYPE"></td>
+        <td data-bind="click:$root.coutnum">
+        <span data-bind="visible:!outnumshow(),text:OUT_NUM"></span>
+        <input class="number" data-bind="event:{blur:$root.ml},visible:outnumshow,value:OUT_NUM" />
+        </td>
+        <td data-bind="text:formatPrice(PRICE())"></td>
+        <td data-bind="text:formatPrice(TOTAL_PRICE())"></td>
+        <td data-bind="text:INVENTORY_INIT"></td>
+        <td data-bind="text:INVENTORY_FINAL"></td>
+        <td><a data-bind="click:$root.deleteItem">删除</a></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>总额</th>
+        <th data-bind="text:formatPrice(totalPrice())"></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </tfoot>
+        </table>
+        <div id="partList" style="position: absolute;display:none; border: 1px solid rgb(206, 206, 206); top: 350px; background-color:\\#FFFFFF;">
+        <table class="table" style="margin-bottom: 0px; border-bottom-width: 1px; background-color: rgb(205, 205, 205);">
+        <thead>
+        <tr><th width="150" style="padding:5px;">配件编号</th><th width="150" style="padding:5px;">配件名称</th><th width="150" style="padding:5px;">配件类型</th></tr>
+        </thead>
+        </table>
+        <div style="overflow-y: auto; border-top: 1px solid rgb(206, 206, 206); max-height: 100px;">
+        <table class="table" style="margin-bottom: 0px;">
+        <tbody data-bind="foreach:allparts" class="partListDetail">
+        <tr data-bind="click:$root.selectPart">
+        <td data-bind="text:PART_NO" width="150" style="padding:5px;"></td>
+        <td data-bind="text:PART_NAME" width="150" style="padding:5px;"></td>
+        <td data-bind="text:PART_TYPE" width="150" style="padding:5px;"></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <a data-bind="click:$root.addItem">新增配件</a>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#popup-notice(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="nviewmodel" style="width:750px;">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.MEM_NAME">添加发送人员</label>
+        <div class="controls">
+        <input type="text" id="SEND_MEMBER" name="SEND_MEMBER" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group" style="padding-left: 20px;">
+        <label class="control-label"></label>
+        <div class="controls" style="padding-right: 40px;">
+        <table width="100%" class="table" style="margin-bottom: 0px;">
+        <thead>
+        <tr>
+        <th>姓名</th>
+        <th><div class="checker"><span data-bind="css:{checked:allUSE_PAGE},click:$root.allusepage"><input type="checkbox" value="1" name="allUSE_PAGE"></span></div>邮件</th>
+        <th><div class="checker"><span data-bind="css:{checked:allEMAIL},click:$root.allemail"><input type="checkbox" value="1" name="allEMAIL"></span></div>页面通知</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach:MEMBERS">
+        <tr>
+        <td data-bind="text:MEMBER_NAME"></td>
+        <td>
+        <div class="checker"><span data-bind="css:{checked:USE_PAGE},click:$root.usepage"><input type="checkbox" value="1" name="USE_PAGE"></span></div>
+        </td>
+        <td>
+        <div class="checker"><span data-bind="css:{checked:EMAIL},click:$root.email"><input type="checkbox" value="1" name="EMAIL"></span></div>
+        </td>
+        <td><a data-bind="click:$root.deleteItem">删除</a></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#template_INOUT(type='x-kendo-template').
+        # if ( data.STOCK_TYPE ==1) { #
+        入库
+        # } else if(data.STOCK_TYPE == 2) { #
+        出库
+        # } #
+    script#template_IN(type='text/x-kendo-template').
+        # if ( data.STOCK_TYPE ==1) { #
+        # if ( data.INOUT_TYPE == 1) { #
+        采购入库
+        # } else if(data.INOUT_TYPE == 2) { #
+        生产入库
+        # }else if(data.INOUT_TYPE == 3) { #
+        保养入库
+        # }else if(data.INOUT_TYPE == 4) { #
+        维修入库
+        # }else if(data.INOUT_TYPE == 5) { #
+        对账入库
+        # } #
+        # } else if(data.STOCK_TYPE == 2) { #
+        # if ( data.INOUT_TYPE == 1) { #
+        采购退货出库
+        # } else if(data.INOUT_TYPE == 2) { #
+        销售提货出库
+        # }else if(data.INOUT_TYPE == 3) { #
+        保养出库
+        # }else if(data.INOUT_TYPE == 4) { #
+        维修出库
+        # }else if(data.INOUT_TYPE == 5) { #
+        对账出库
+        # } #
+        # } #

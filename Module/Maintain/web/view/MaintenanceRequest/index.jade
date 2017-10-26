@@ -1,0 +1,127 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Maintain/web/css/MaintenanceRequest.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Maintain/web/javascripts/dist.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./Maintain/web/controller/maintenanceRequest.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 维修申请
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 设备维修保养
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 维修申请
+    .row-fluid
+        #content
+            .control-group(style='height: 34px;')
+                .controls
+                    .input-icon.left(style='width: 250px; display: inline;')
+                        i.icon-search
+                        input#filter.m-wrap(type='text', placeholder='单号')
+                    button.btn.blue(data-bind='click:grid_add')
+                        | 新增
+                        i.icon-plus-sign
+                    button.btn.purple(data-bind='click:order_edit')
+                        | 单号规则
+                        i.icon-plus-sign                
+            div
+                #grid
+    script#REPAIR_STATE(type='x-kendo-template').
+        # if ( data.REPAIR_STATE ==0) { #
+        <div><div class="REPAIR_STATE NO"></div><span>未开始</span></div>
+        # } else if(data.REPAIR_STATE == 1) { #
+        <div><div class="REPAIR_STATE MAINNING"></div><span>进行中</span></div>
+        # } else if(data.REPAIR_STATE == 2) { #
+        <div><div class="REPAIR_STATE DONE"></div><span>完成</span></div>
+        # } #
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#URGENCY(type='x-kendo-template').
+        # if ( data.URGENCY ==0) { #
+        紧急
+        # } else if(data.URGENCY == 1) { #
+        重大
+        # } else if(data.URGENCY == 2) { #
+        一般
+        # } #
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+         注意:单号规则字母前缀+日期前缀+数字前缀,日期前缀中的yyyy为年,mm为月,dd为日,数字前缀中000为当日自增序号位数为3位
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">保养单号生成规则</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">字母前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 日期前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 数字前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#popup-add(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="addviewmodel" style="min-width:750px;" autocomplete="off" >
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">设备名称</label>
+        <div class="controls">
+        <input type="text" id="MAC_NBR" name="MAC_NBR" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">紧急程度</label>
+        <div class="controls">
+        <input type="text" id="URGENCY_TEXT" name="URGENCY_TEXT" class="span6 m-wrap" style="width: 210px; margin-left: 0px;" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD"><span class="required">*</span>问题描述</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>

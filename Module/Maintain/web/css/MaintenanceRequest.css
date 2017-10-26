@@ -1,0 +1,38 @@
+    .devices li {
+        height: 25px;
+        line-height: 25px;
+        padding-left: 5px;
+    }
+    
+    .devices li:hover {
+        background-color: #F56D20;
+        color: #FFFFFF;
+    }
+    
+    #input_MAC_NBR {
+        height: 20px !important;
+    }
+    
+    .REPAIR_STATE {
+        float: left;
+        margin-top: 4px;
+        margin-right: 2px;
+        height: 12px;
+        width: 12px;
+        border-radius: 6px !important;
+    }
+    
+    .NO {
+        border: 0px solid #414240;
+        background-color: #414240;
+    }
+    
+    .MAINNING {
+        border: 0px solid #F4B522;
+        background-color: #F4B522;
+    }
+    
+    .DONE {
+        border: 0px solid green;
+        background-color: green;
+    }

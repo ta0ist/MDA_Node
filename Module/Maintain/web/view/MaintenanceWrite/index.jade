@@ -1,0 +1,335 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Maintain/web/css/MaintenanceWrite.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./Maintain/web/javascripts/dist.js')    
+    script(type='text/javascript',src='./Maintain/web/controller/maintenanceWrite.js')
+
+
+//-     <script src="~/UI/Scripts/jquery-1.10.2.min.js"></script>
+//- <script src="~/UI/Scripts/media/js/jquery-ui-1.10.1.custom.min.js"></script>
+//- <script src="~/UI/Scripts/kendo/2014.3.1119/kendo.web.min.js"></script>
+//- <script src="~/UI/Scripts/kendo/2014.1.318/cultures/kendo.culture.zh-CN.min.js"></script>
+
+//- <script src="~/UI/Scripts/LanguageService.js"></script>
+//- <script src="~/UI/Scripts/Bandex.js"></script>
+//- <script src="~/UI/Scripts/Angular/angular.min.js"></script>
+
+//- <script src="~/UI/Scripts/moment.js"></script>
+//- <script src="~/UI/Scripts/underscore-min.js"></script>
+
+
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 维修记录
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 设备维修保养
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 维修记录
+    .row-fluid
+        .control-group(style='height: 34px;')
+            .controls
+                .input-icon.left(style='width: 250px; display: inline;')
+                    i.icon-search
+                    input#filter.m-wrap(type='text', placeholder='单号')
+                button.btn.purple(data-bind='click:order_edit')
+                    | 单号规则
+                    i.icon-plus-sign
+        div
+            #grid
+            #grid_1(style='margin: 5px 0px 10px 0px;')
+    script#UPLOAD_FILE(type='text/x-kendo-template').
+        <form class="form-horizontal" id="UPLOAD_FILE" class="form-horizontal" enctype="multipart/form-data">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">设备编号：</label>
+        <div class="controls">
+        <label id="MAC_NO" name="USER_NAME" data-required="1" class="">    </lable>
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">维修人员：</label>
+        <div class="controls">
+        <label id="REPAIR_NAME" data-required="1" class=""> </lable>
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">选择文件：</label>
+        <div class="controls">
+        <input type="file" id="files_name" name="files_name" class="files_name" />
+        </div>
+        </div>
+        <div class="form-actions">
+        <div id="up_file" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#TAG_LIST(type='x-kendo-template').
+        <i class="icon-tag" onclick="addTag('#:data.REPAIR_NBR#',this)"></i>
+        # for(var i=0;i < data.TAG_LIST.length;i++) {#
+        <span class="badge badge-success" style="cursor: pointer;  padding-right: 16px; ">
+        <span>#:data.TAG_LIST[i]#</span>
+        <i class="k-icon k-delete" onclick="removeTag('#:data.REPAIR_NBR#',this)"></i>
+        </span>
+        # } #
+    script#REPAIR_STATE(type='x-kendo-template').
+        # if ( data.REPAIR_STATE ==0) { #
+        <div><div class="REPAIR_STATE NO"></div><span>未维修</span></div>
+        # } else if(data.REPAIR_STATE == 1) { #
+        <div><div class="REPAIR_STATE MAINNING"></div><span>正在维修</span></div>
+        # } else if(data.REPAIR_STATE == 2) { #
+        <div><div class="REPAIR_STATE DONE"></div><span>维修完成</span></div>
+        # } #
+    script#DownLoadFile(type='x-kendo-template').
+        #if(data.DOCUMENT_PATH!=undefined){#
+        <a  href="/Maintain/MaintenanceWrite-uploads/#:data.DOCUMENT_PATH#" download="#:data.DOCUMENT_PATH#">#:data.DOCUMENT_PATH#</a>
+        #}#
+    script#OPERATOR_REPAIR_STATE(type='x-kendo-template').
+        <div class="k-button-icontext btn green  k-grid-aa" onclick="f_complete('#:data.APPLAY_NO#')">报告单</div>
+    script#MAINTAIN_STATE(type='x-kendo-template').
+        # if ( data.MAINTAIN_STATE ==0) { #
+        <div><div class="MAINTAIN_STATUS NO"></div><span>未保养</span></div>
+        # } else if(data.MAINTAIN_STATE == 1) { #
+        <div><div class="MAINTAIN_STATUS MAINNING"></div><span>正在进行</span></div>
+        # } else if(data.MAINTAIN_STATE == 2) { #
+        <div><div class="MAINTAIN_STATUS DONE"></div><span>保养完成</span></div>
+        # } #
+    script#DEGREE(type='x-kendo-template').
+        # if ( data.DEGREE ==0) { #
+        紧急
+        # } else if(data.DEGREE == 1) { #
+        重大
+        # } else if(data.DEGREE == 2) { #
+        一般
+        # } #
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+        注意:单号规则字母前缀+日期前缀+数字前缀,日期前缀中的yyyy为年,mm为月,dd为日,数字前缀中000为当日自增序号位数为3位
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">保养单号生成规则</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">字母前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 日期前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 数字前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#in-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="updateViewModel" style="min-width:750px;" autocomplete="off">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">维修商</label>
+        <div class="controls">
+        <input type="text" id="REPAIR_UNIT" name="REPAIR_UNIT" data-bind="value:REPAIR_UNIT" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">维修用时</label>
+        <div class="controls">
+        <input type="text" id="REPAIR_TIMESPAN" name="REPAIR_TIMESPAN" data-bind="value:REPAIR_TIMESPAN" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">故障原因</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" class="span6 m-wrap" style="width: 548px;" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">方法及过程</label>
+        <div class="controls">
+        <input type="text" id="PROCESS_METHOD" name="PROCESS_METHOD" data-bind="value:PROCESS_METHOD" class="span6 m-wrap" style="width: 548px;" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">预防措施</label>
+        <div class="controls">
+        <input type="text" id="PREVENTIVE_MEASURE" name="PREVENTIVE_MEASURE" data-bind="value:PREVENTIVE_MEASURE" class="span6 m-wrap" style="width: 548px;" />
+        </div>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#REPAIR_RECODE_template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="maintainviewmodel" style="width:800px;">
+        <table class="table table-bordered">
+        <tr>
+        <td><span class="title">资产编号：</span></td>
+        <td id="MAC_NO" style="width: 120px;"></td>
+        <td><span class="title">设备名称：</span></td>
+        <td id="MAC_NBR" style="width: 120px;"></td>
+        <td style="width: 120px;"><span class="title">型号规格：</span></td>
+        <td id="MAC_NAME" style="width: 100px;"></td>
+        </tr>
+        <tr>
+        <td><span class="title">维修时间：</span></td>
+        <td id="REPORT_DATE"></td>
+        <td><span class="title">恢复时间：</span></td>
+        <td id="FINISH_DATE"></td>
+        <td><span class="title">报修人：</span></td>
+        <td id="APP_MEM_NAME"></td>
+        </tr>
+        <tr>
+        <td><span class="title">试切件送检时间：</span></td>
+        <td id="CUT_TEST_DATE"></td>
+        <td><span class="title">结果检出时间：</span></td>
+        <td id="TEST_OUT_DATE"></td>
+        <td><span class="title">主修人：</span></td>
+        <td id="REPAIR_NAME"></td>
+        </tr>
+        <tr>
+        <td><span class="title">备件领取时间：</span></td>
+        <td id="BORROW_DATE"></td>
+        <td><span class="title">备件领出时间：</span></td>
+        <td id="RECEIVE_DATE"></td>
+        <td><span class="title">生产班长效果确认：</span></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td><span class="title">总维修时间:</span></td>
+        <td id="REPAIR_TIMESPAN"></td>
+        <td><span class="title">维修班长：</span></td>
+        <td id="SQUAD_MEM_NAME"></td>
+        <td colspan="2"></td>
+        </tr>
+        <tr>
+        <td colspan="4" rowspan="2"><span class="title">故障现象描述（操作工填写）:</span><span id="APP_MEMO"></span></td>
+        <td colspan="2"><span class="title">故障类型（维修工填写）:</span></td>
+        </tr>
+        <tr>
+        <td style="width: 40px;">
+        <div>
+        <input type="radio" name="errortype" value="机械" style="margin-top: -4px; margin-right: 3px;" />机械
+        </div>
+        <div><input type="radio" name="errortype" value="液压" style="margin-top: -2px; margin-right: 3px;" />液压</div>
+        <div><input type="radio" name="errortype" value="润滑" style="margin-top: -2px; margin-right: 3px;" />润滑</div>
+        <div><input type="radio" name="errortype" value="机电" style="margin-top: -2px; margin-right: 3px;" />机电</div>
+        </td>
+        <td style="width: 55px;">
+        <div>
+        <input type="radio" name="errortype" value="电气" style="margin-top: -2px; margin-right: 3px;" />电气
+        </div>
+        <div>
+        <input type="radio" name="errortype" value="切削液" style="margin-top: -2px; margin-right: 3px;" />切削液
+        </div>
+        <div>
+        <input type="radio" name="errortype" value="气动" style="margin-top: -2px; margin-right: 3px;" />气动
+        </div>
+        <div> <input type="radio" name="errortype" value="其它" style="margin-top: -2px; margin-right: 3px;" />其它</div>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="6" style="height: 60px;"><span class="title">故障原因分析（维修工填写）:</span><span id="RE_MEMO"></span></td>
+        </tr>
+        <tr>
+        <td colspan="6" style="height: 60px;"><span class="title">维修方法及过程（维修工填写）:</span><span id="PROCESS_METHOD"></span></td>
+        </tr>
+        <tr>
+        <td colspan="6" style="height: 60px;"><span class="title">更换备件清单（维修工填写）:</span><span id="inoutStocks"></span></td>
+        </tr>
+        <tr>
+        <td colspan="6" style="height: 60px;"><span class="title">防止再发生措施:</span><span id="PREVENTIVE_MEASURE"></span></td>
+        </tr>
+        <tr>
+        <td rowspan="2" colspan="4" style="height: 60px;"><span class="title">设备停机故障维修评价：</span><span id="EVALUATION"></span></td>
+        <td colspan="2"><span class="title">设备管理部门</span></td>
+        </tr>
+        <tr><td colspan="2" style="height: 20px;"></td></tr>
+        </table>
+        </form>
+    script#REPAIR_EDIT-template_spsk(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="maintainviewmodels" style="width:920px;">
+        <table class="table table-bordered">
+        <tr>
+        <td colspan="4" style="height: 55px; text-align: center; font-weight: bold; font-size: 20px; position: relative;" id="first_td">
+        <div id="image" style="position:absolute;top:0px;left:0px;width:164px;height:55px;">
+        <img src="/Maintain/web/images/WXBGD_logo.png" alt="spirax sarco" />
+        </div>
+        <span style="font-size:25px;line-height:55px;">维修报告单</span>
+        </td>
+        </tr>
+        <tr>
+        <td><span class="title">申请单号：</span></td>
+        <td  colspan="3" id="APPLAY_NO"></td>
+        </tr>
+        <tr>
+        <td><span class="title">资产编号：</span></td>
+        <td id="MAC_NO" style="width: 140px;"></td>
+        <td><span class="title">设备名称：</span></td>
+        <td id="MAC_NAME" style="width: 120px;"></td>
+        </tr>
+        <tr>
+        <td><span class="title">开始维修时间：</span></td>
+        <td id="REPORT_DATE"></td>
+        <td><span class="title">结束维修时间：</span></td>
+        <td id="FINISH_DATE"></td>
+        </tr>
+        <tr>
+        <td><span class="title">报修时间：</span></td>
+        <td id="APPLAY_DATE"></td>
+        <td><span class="title">维修人员：</span></td>
+        <td id="REPAIR_NAME"></td>
+        </tr>
+        <tr>
+        <td><span class="title">维修金额:</span></td>
+        <td colspan="3"><input type="text" id="MEMO" name="MEMO" class="span6 m-wrap rank-num" style="width: 195px; margin-left: 0px;" /></td>
+        </tr>
+        <tr>
+        <td colspan="6"><span class="title">故障现象描述:</span><span id="APP_MEMO"></span></td>
+        </tr>
+        <tr>
+        <td colspan="6" style="height: 60px;"><span class="title">维修方法及过程:</span><span><textarea rows="2" name="PROCESS_METHOD" id="PROCESS_METHOD" data-bind="value:PROCESS_METHOD" style="width: 890px; height: 49px; "></textarea></span></td>
+        </tr>
+        <tr>
+        <td colspan="6" style="height: 60px;"><span class="title">更换备件清单:</span><span id="inoutStocks"></span></td>
+        </tr>
+        </table>
+        <div class="form-actions">
+        <div id="Server_YL" onclick="f_yulan()" class="btn purple">预览<i class="icon-search"></i></div>
+        <div data-bind="click:saves" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>

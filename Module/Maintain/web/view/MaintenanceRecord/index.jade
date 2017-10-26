@@ -1,0 +1,254 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Maintain/web/css/MaintenanceRecord.css',rel='stylesheet')
+block append headjavascript
+    //- script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.js')
+    //- script(type='text/javascript',src='./javascripts/UI/Scripts/bootstrap/dist/js/ui-bootstrap-tpls-0.12.0.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    //- script(type='text/javascript',src='./javascripts/UI/Scripts/kendo/2014.3.1119/kendo.web.min.js')  
+    script(type='text/javascript',src='./Maintain/web/javascripts/dist.js')
+    script(type='text/javascript',src='./Maintain/web/controller/maintenanceRecordcontroller.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 保养记录
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 设备维修保养
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 保养记录
+    .row-fluid
+        .control-group(style='height: 34px;')
+            .controls
+                .input-icon.left(style='width: 250px; display: inline;')
+                    i.icon-search
+                    input#filter.m-wrap(type='text', placeholder='单号')
+
+                button.btn.purple(data-bind='click:order_edit')
+                    | 单号规则
+                    i.icon-plus-sign
+
+        div
+            #grid
+            #grid_1(style='margin: 5px 0px 10px 0px;')
+    script#DownLoadFile(type='x-kendo-template').
+        #if(data.DOCUMENT_PATH!=""&&data.DOCUMENT_PATH!=null&&data.DOCUMENT_PATH!=undefined){#
+        <a  class="DownLoadFile" href="/Maintain/my-uploads/#:data.DOCUMENT_PATH#" download="#:data.DOCUMENT_PATH#">#:data.DOCUMENT_PATH#</a>
+        #}#
+    script#UPLOAD_FILE(type='text/x-kendo-template').
+        <form class="form-horizontal" id="UPLOAD_FILE" class="form-horizontal" enctype="multipart/form-data">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">保养项目名称：</label>
+        <div class="controls">
+        <label  id="PROJECT_NAME" name="PROJECT_NAME" data-required="1" class="" >    </lable>
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.USER_NAME">设备编号：</label>
+        <div class="controls">
+        <label  id="MAC_NO" name="MAC_NO" data-required="1" class="" >    </lable>
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">保养人员：</label>
+        <div class="controls">
+        <label  id="MEM_NAME"  data-required="1" class="" > </lable>
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD">选择文件：</label>
+        <div class="controls">
+        <input  type="file" id="files_name" name="files_name"  class="files_name" />
+        </div>
+        </div>
+        <div class="form-actions">
+        <div id="up_file"   class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#MAINTAIN_NO_TAG(type='x-kendo-template').
+        @*<span class="badge badge-success" style="cursor: pointer;  padding-right: 16px; " data-bind="event:{mouseenter:$root.mouseover,mouseleave:$root.mouseout}">
+        <span data-bind="text:TagName"></span>
+        <i class="k-icon k-delete" data-bind="click:$root.removeTag"></i>
+        </span>*@
+    script#OPERATOR_MAINTAIN_STATE(type='x-kendo-template').
+        # if(data.MAINTAIN_STATE !=2) { #
+        <div class="btn green" style="padding: 3px 8px 3px 14px;" onclick="f_ok('#:data.MAINTAIN_NO#')">完成<i class="icon-ok-sign"></i></div>
+        # } #
+        <div class="btn green" style="padding: 3px 8px 3px 14px;" onclick="upload_file('#:data.RECORD_NBR#')">上传文件<i class="icon-ok-sign"></i></div>
+    script#MAINTAIN_STATE(type='x-kendo-template').
+        # if ( data.MAINTAIN_STATE ==0) { #
+        <div><div class="MAINTAIN_STATUS NO"></div><span>未开始</span></div>
+        # } else if(data.MAINTAIN_STATE == 1) { #
+        <div><div class="MAINTAIN_STATUS MAINNING"></div><span>进行中</span></div>
+        # } else if(data.MAINTAIN_STATE == 2) { #
+        <div><div class="MAINTAIN_STATUS DONE"></div><span>完成</span></div>
+        # } #
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+        注意:单号规则字母前缀+日期前缀+数字前缀,日期前缀中的yyyy为年,mm为月,dd为日,数字前缀中000为当日自增序号位数为3位
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">保养单号生成规则</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">字母前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 日期前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 数字前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#in-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="updateViewModel" style="min-width:750px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.RANK_NUM">开始时间</label>
+        <div class="controls">
+        <input type="text" id="BEGIN_DATE" name="BEGIN_DATE" class="span6 m-wrap" style="width: 210px; margin-left: 0px; " />
+        </div>
+        </td>
+        <td>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.TEL">结束时间</label>
+        <div class="controls">
+        <input type="text" id="END_DATE" name="END_DATE" class="span6 m-wrap" style="width: 210px; margin-left: 0px; " />
+        </div>
+        </td>
+        <td>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.ADDRESS">检查描述</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" class="span6 m-wrap" style="width: 548px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#popup-add(type='text/x-kendo-template').
+        <form class="form-horizontal" id="Maintainviewmodel" style="width:750px;">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td width="354">
+        <label class="control-label" data-lang="Common.MEMBER_NO"><span class="required">*</span>保养计划编号</label>
+        <div class="controls">
+        <input type="text" id="PLAN_NBR" name="PLAN_NBR" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME"><span class="required">*</span>保养负责人</label>
+        <div class="controls">
+        <input type="text" id="OPERATOR" name="OPERATOR" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.RANK_NUM">开始时间</label>
+        <div class="controls">
+        <input type="text" id="BEGIN_DATE" name="BEGIN_DATE" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.TEL">结束时间</label>
+        <div class="controls">
+        <input type="text" id="END_DATE" name="END_DATE" class="span6 m-wrap" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.SERIAL_NO">维保单位</label>
+        <div class="controls">
+        <input type="text" id="UNIT" name="UNIT" data-bind="value:UNIT" class="span6 m-wrap" style="width: 555px;" />
+        </div>
+        </td>
+        <td></td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.SERIAL_NO">检查描述</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" class="span6 m-wrap" style="width: 555px;" />
+        </div>
+        </td>
+        <td></td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <button data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></button>
+        <button id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></button>
+        </div>
+        </form>
