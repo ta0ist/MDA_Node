@@ -61,6 +61,7 @@ exports.main = function(req, res, next) {
 }
 
 exports.checkuser = function(req, res) {
+    var IP = post_argu.GetIP(req.ip);
     var md5 = crypto.createHash('md5'),
         pwd = 1;
     var pwd = md5.update(req.body.Pwd).digest('hex');
@@ -78,6 +79,12 @@ exports.checkuser = function(req, res) {
                 })
             } else {
                 req.session.user = JSON.parse(body);
+                checkIP(IP, req.session.user.UserId);
+                global.Client.push({
+                    IP: IP,
+                    UserID: req.session.user.UserId,
+                    ClientId: []
+                })
                 res.json({
                     Status: 0,
                     Message: "登录成功！"
@@ -156,5 +163,22 @@ exports.savemenu = function(req, res) {
     } else {
         global.pid = req.query.pid;
         global.sid = req.query.id;
+    }
+}
+
+//检测IP冲突
+function checkIP(IP, UserID) {
+    for (let i = 0; i < global.Client.length; i++) {
+        if (global.Client[i].UserID == UserID && global.Client[i].IP != IP) {
+            global.ws.clients.forEach(function each(client) {
+                if (_.indexOf(global.Client[i].ClientId, client._ultron.id) > -1) {
+                    client.send(JSON.stringify({
+                        msg: "你的账户已在其他地方登录!"
+                    }));
+                    global.Client.splice(i, 1);
+                    return;
+                }
+            })
+        }
     }
 }

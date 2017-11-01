@@ -143,10 +143,11 @@ function f_Enable(e) {
                     if (actvie == 1) {
                         Content = dd[0].CONTENT;
                     }
-                    var wsServer = new WebSocket('ws://192.168.18.18:8883');
+                    var wsServer = new WebSocket('ws://localhost:8883');
                     wsServer.onopen = (even) => {
                         wsServer.send(JSON.stringify({
-                            Type: 1,
+                            method: 'SetNotice',
+                            Type: 'Broad',
                             Data: Content
                         }));
                         wsServer.close();

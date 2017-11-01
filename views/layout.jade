@@ -110,11 +110,14 @@ body.page-header-fixed(lang='en',ng-app='layout',ng-controller='layoutctrl')
     span.go-top
       i.icon-angle-up
 block headjavascript
+  script(type='text/javascript').
+    var lang = !{JSON.stringify(lang)};
+    var user = !{JSON.stringify(user)};
   script(type='text/javascript', src='./javascripts/UI/Scripts/jquery-1.10.2.min.js')
   script(type='text/javascript', src='./dist/all.min.js')
   script(type='text/javascript',src='./start.js')
   script(type='text/javascript', src='./javascripts/UI/Scripts/media/js/app.js')
   script(type='text/javascript', src='./javascripts/UI/Scripts/Bandex.js')
-  script(type='text/javascript').
-    var lang = !{JSON.stringify(lang)};
+  
+    
 

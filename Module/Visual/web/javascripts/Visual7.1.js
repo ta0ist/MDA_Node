@@ -339,46 +339,46 @@
                         break;
                 }
             }
-           //建立推送机制
+            //建立推送机制
             $.get('/visuals/r/GetNoticeActive', (data) => {
                 if (data.Status == 0) {
                     if (data.Data.length > 0)
                         $("#accountmesg").html(data.Data[0].CONTENT);
                 }
             })
-            var wsServer = new WebSocket('ws://192.168.18.18:8883');
+            var wsServer = new WebSocket('ws://localhost:8883');
             wsServer.onmessage = (e) => {
                     $("#accountmesg").empty();
                     $("#accountmesg").html(e.data);
                 }
-            //     MessagesHub.client.GetNoBeginApplay = function (perc) {
-            //         var reList = JSON.parse(perc);
-            //         var dd = [];
-            //         for (var i = 0; i < reList.length; i++) {
-            //             if (reList[i].WORKSHOP_CODE == self.url.wid) {
-            //                 dd.push(reList[i]);
-            //             }
-            //         }
-            //         var mes;
-            //         if (dd.length > 0) {
-            //             mes = "维修信息--";
-            //         }
-            //         else {
-            //             mes = "";
-            //         }
-            //         for (var j = 0; j < dd.length; j++) {
-            //             mes = mes + dd[j].MAC_NAME + "申请维修;   ";
-            //         }
-            //         $("#servicemesg").html(mes);
-            //     };
-            //     MessagesHub.client.lactionurl = function () { //刷新客户端url
-            //         window.location.href = window.location;
-            //     }
-            //     $.connection.hub.start();
-            // }
-            //开始显示页面
-            //1、根据设定值显示页面；2、根据url设定的page参数来显示页面；
-            //获取所有的url参数
+                //     MessagesHub.client.GetNoBeginApplay = function (perc) {
+                //         var reList = JSON.parse(perc);
+                //         var dd = [];
+                //         for (var i = 0; i < reList.length; i++) {
+                //             if (reList[i].WORKSHOP_CODE == self.url.wid) {
+                //                 dd.push(reList[i]);
+                //             }
+                //         }
+                //         var mes;
+                //         if (dd.length > 0) {
+                //             mes = "维修信息--";
+                //         }
+                //         else {
+                //             mes = "";
+                //         }
+                //         for (var j = 0; j < dd.length; j++) {
+                //             mes = mes + dd[j].MAC_NAME + "申请维修;   ";
+                //         }
+                //         $("#servicemesg").html(mes);
+                //     };
+                //     MessagesHub.client.lactionurl = function () { //刷新客户端url
+                //         window.location.href = window.location;
+                //     }
+                //     $.connection.hub.start();
+                // }
+                //开始显示页面
+                //1、根据设定值显示页面；2、根据url设定的page参数来显示页面；
+                //获取所有的url参数
             self.url = {};
             self.url = {
                 wid: self._getparam("wid"),
