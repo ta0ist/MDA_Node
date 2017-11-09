@@ -234,3 +234,9 @@ exports.stringFormat = (args) => {
     }
     return result;
 }
+
+//获取IP
+exports.GetIP = (IP) => {
+    let ip = IP.split(':');
+    return ip[ip.length - 1] == 1 ? config.Notice.webscoketIP : ip[ip.length - 1];
+}

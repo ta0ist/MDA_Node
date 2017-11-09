@@ -1,0 +1,34 @@
+ .span {
+     float: left !important;
+     margin-left: 0px !important;
+     width: 300px !important;
+ }
+ 
+ .BZcontrols {
+     margin-left: 130px;
+ }
+ 
+ .BZcontrols>.radio,
+ .BZcontrols>.checkbox {
+     display: inline-block;
+     margin: 8px 15px 0 0 !important;
+     padding: 0 !important;
+ }
+ 
+ .pie {
+     width: 350px !important;
+     height: 300px;
+     float: left;
+     border-top: 1px dashed #cecece;
+ }
+ 
+ .statusdetail {
+     margin-right: 2px !important;
+     margin-top: -3px !important;
+     display: inline;
+ }
+ 
+ #statusdetail>div {
+     display: inline;
+     margin-left: 20px;
+ }

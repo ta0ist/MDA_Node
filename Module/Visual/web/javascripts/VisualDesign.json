@@ -218,14 +218,6 @@
                         "ctr_type": "text"
                     },
                     {
-                        "value": "PROG_PLAN_CNT",
-                        "text": "计划产量",
-                        "width": "15",
-                        "hide": false,
-                        "format": "null",
-                        "ctr_type": "text"
-                    },
-                    {
                         "value": "COUNT",
                         "text": "产量",
                         "width": "15",
@@ -236,72 +228,16 @@
                     {
                         "value": "AVG_TIME",
                         "text": "平均用时",
-                        "width": "20",
+                        "width": "15",
                         "hide": false,
                         "format": "null",
                         "ctr_type": "text"
-                    },
-                    {
-                        "value": "YIELD_RATIO",
-                        "text": "产量比例",
-                        "width": "20",
-                        "hide": false,
-                        "format": "function aa(d){ return d +  \"%\"; } eval_value = aa(eval_value)",
-                        "ctr_type": "percent"
                     }
                 ],
                 "bindData": [],
                 "pageid": 2
             },
-            {
-                "id": 3,
-                "text": "车间每小时产量",
-                "paperShow": false,
-                "url": "/visuals/r/GetMachineHourYield",
-                "demo": false,
-                "time": 5000,
-                "maps": [],
-                "default_filed": true,
-                "plot_value": 80,
-                "fileds": [{
-                        "value": "filed1",
-                        "text": "字段1",
-                        "width": "20",
-                        "hide": false,
-                        "ctr_type": "text"
-                    },
-                    {
-                        "value": "filed2",
-                        "text": "字段2",
-                        "width": "20",
-                        "hide": false,
-                        "ctr_type": "text"
-                    },
-                    {
-                        "value": "filed3",
-                        "text": "字段3",
-                        "width": "20",
-                        "hide": false,
-                        "ctr_type": "text"
-                    },
-                    {
-                        "value": "filed4",
-                        "text": "字段4",
-                        "width": "20",
-                        "hide": false,
-                        "ctr_type": "text"
-                    },
-                    {
-                        "value": "filed5",
-                        "text": "字段5",
-                        "width": "20",
-                        "hide": false,
-                        "ctr_type": "percent"
-                    }
-                ],
-                "bindData": [],
-                "pageid": 3
-            },
+           
             {
                 "id": 4,
                 "text": "设备班次状态效率",
@@ -385,35 +321,35 @@
                 "fileds": [{
                         "value": "filed1",
                         "text": "字段1",
-                        "width": "20",
+                        "width": "5",
                         "hide": false,
                         "ctr_type": "text"
                     },
                     {
                         "value": "filed2",
                         "text": "字段2",
-                        "width": "20",
+                        "width": "5",
                         "hide": false,
                         "ctr_type": "text"
                     },
                     {
                         "value": "filed3",
                         "text": "字段3",
-                        "width": "20",
+                        "width": "5",
                         "hide": false,
                         "ctr_type": "text"
                     },
                     {
                         "value": "filed4",
                         "text": "字段4",
-                        "width": "20",
+                        "width": "5",
                         "hide": false,
                         "ctr_type": "text"
                     },
                     {
                         "value": "filed5",
                         "text": "字段5",
-                        "width": "20",
+                        "width": "5",
                         "hide": false,
                         "ctr_type": "percent"
                     }
@@ -469,12 +405,6 @@
                 ],
                 "bindData": [],
                 "pageid": 6
-            }, {
-                "id": 1,
-                "text": "摄像机",
-                "demo": false,
-                "time": 10000,
-                "pageid": 7
             }
         ]
     },

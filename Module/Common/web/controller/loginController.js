@@ -33,6 +33,7 @@
                 }
                 $http.post('/checkuser', JSON.stringify($scope.User)).success(function(data) {
                     if (data.Status == 0) {
+
                         location.href = '/';
                     } else {
                         $scope.error = data.Message;

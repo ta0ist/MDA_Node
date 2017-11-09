@@ -1,0 +1,362 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Maintain/web/css/MaintenancePlan.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.js')
+    //- script(type='text/javascript',src='./javascripts/UI/Scripts/bootstrap/dist/js/ui-bootstrap-tpls-0.12.0.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/kendo/2014.3.1119/kendo.web.min.js')  
+    script(type='text/javascript',src='./Maintain/web/javascripts/dist.js')
+    script(type='text/javascript',src='./Maintain/web/controller/maintenancePlanController.js')
+    script(type='text/javascript',src='./Maintain/web/javascripts/MaintenancePlan.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 保养计划
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 设备维修保养
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 保养计划
+    .row-fluid
+        .control-group(style='height: 34px;')
+            .controls
+                .input-icon.left(style='width: 250px; display: inline;')
+                    i.icon-search
+                    input#filter.m-wrap(type='text', placeholder='保养计划名称')
+                button.btn.blue(data-bind='click:grid_add')
+                    | 新增
+                    i.icon-plus-sign
+                button.btn.purple(data-bind='click:order_edit')
+                    | 单号规则
+                    i.icon-plus-sign             
+        .tabbable.tabbable-custom(style='margin-top: 5px;')
+            ul.nav.nav-tabs
+                li.active
+                    a(data-toggle='tab', href='#tab_1_1') 综合模式
+                li
+                    a(data-toggle='tab', href='#tab_1_2') 日期模式
+            .tab-content
+                #tab_1_1.tab-pane.active
+                    #wrap
+                        #sidebar
+                            div(style='position: absolute; border: 1px solid rgb(206, 206, 206); width: 200px; height: 500px; overflow-y: auto;')
+                                .k-header(style='height: 30px; width: 190px; border-bottom: 1px solid rgb(206, 206, 206); line-height: 30px; padding-left: 10px;') 计划关联列表
+                           
+                                table.table
+                                    thead
+                                        tr
+                                            th 设备名称
+                                            th 保养状态
+                                    tbody(data-bind='foreach:MACS')
+                                        tr
+                                            td(data-bind='text:MAC_NAME')
+                                            td(data-bind='text:PLAN_STATE')
+                        #content
+                            div
+                                #grid
+                #tab_1_2.tab-pane(ng-app='bz.maintain.app')
+                    #grid_2(ng-controller='maintainCtrl')
+                        table.table.table-bordered.maintain(style='margin-bottom:0px;')
+                            tr
+                                td(rowspan='2') 设备编号
+                                td(rowspan='2') 设备名字
+                                td(rowspan='2', width='150') 周期
+                                td(rowspan='2', width='200') 上次检修日期
+                                td(colspan='12', align='center', style='text-align:center;')
+                                    | 月份
+                                    | （
+                                    img(src='./Maintain/web/images/rect.png', style='position:relative;top:-2px;')
+                                    | 一月检
+                                    img(src='./Maintain/web/images/diamond.png', style='position:relative;top:-2px;')
+                                    | 季检
+                                    img(src='./Maintain/web/images/Star.png', style='position:relative;top:-2px;')
+                                    | 半年检
+                                    img(src='./Maintain/web/images/Triangle.png', style='position:relative;top:-2px;')
+                                    | 年检）
+                      
+                            tr
+                                td.tdcenter(width='30') 1
+                                td.tdcenter(width='30') 2
+                                td.tdcenter(width='30') 3
+                                td.tdcenter(width='30') 4
+                                td.tdcenter(width='30') 5
+                                td.tdcenter(width='30') 6
+                                td.tdcenter(width='30') 7
+                                td.tdcenter(width='30') 8
+                                td.tdcenter(width='30') 9
+                                td.tdcenter(width='30') 10
+                                td.tdcenter(width='30') 11
+                                td.tdcenter(width='30') 12
+                            tr(ng-repeat='item in items')
+                                td {{item.MAC_NBR}}
+                                td {{item.MAC_NAME}}
+                                td(colspan='14', style='padding: 0px; border-left:0px;')
+                                    table.table.table-bordered(style='margin-bottom:0px;border:0px;')
+                                        tr(ng-repeat='dd in item.DATA')
+                                            td(width='150', style='height:20px;')                                              
+                                                | {{CycleType[dd.TYPE]}}
+                                            td(width='200')
+                                                | {{dd.LAST_DATE}}
+                                            td.tdcenter(width='30', ng-repeat='tt in dd.MONTHS')
+                                                img(ng-show='tt.SHOW', ng-src='{{tt.SRC}}')
+                        div(style='float:right;')
+                            pagination.pagination-sm(total-items='bigTotalItems', ng-model='bigCurrentPage', max-size='maxSize', boundary-links='true', ng-change='pageChanged()', items-per-page='5', previous-text='上一页', next-text='下一页', first-text='第一页', last-text='最后一页', num-pages='numPages')
+    script#CYCLE_INTERVAL(type='x-kendo-template').
+        # if ( data.CYCLE_INTERVAL ==1) { #
+        <img src="./Maintain/web/images/rect.png" style="position:relative;top:-2px;" />一月检
+        # } else if(data.CYCLE_INTERVAL == 2) { #
+        <img src="./Maintain/web/images/diamond.png" style="position:relative;top:-2px;" />季检
+        # } else if(data.CYCLE_INTERVAL == 3) { #
+        <img src="./Maintain/web/images/Star.png" style="position:relative;top:-2px;" />半年检
+        # } else if(data.CYCLE_INTERVAL == 4) { #
+        <img src="./Maintain/web/images/Triangle.png" style="position:relative;top:-2px;" />年检
+        # } #
+    script#ADD_TASK(type='x-kendo-template').
+        # if ( data.ADD_TASK ==0) { #
+        <a>否</a>
+        # } else if(data.ADD_TASK == 1) { #
+        <a>是</a>
+        # } #
+    script#CYCLE_TYPE1(type='x-kendo-template').
+        # if ( data.CYCLE_TYPE ==0) { #
+        时间:#:data.CYCLE_INTERVAL#h
+        # } else if(data.CYCLE_TYPE == 1) { #
+        产量:#:data.CYCLE_INTERVAL#个
+        # } else if(data.CYCLE_TYPE == 2) { #
+        运行时间:#:data.CYCLE_INTERVAL#h
+        # } #
+    script#DEGREE(type='x-kendo-template').
+        # if ( data.DEGREE ==0) { #
+        紧急
+        # } else if(data.DEGREE == 1) { #
+        重大
+        # } else if(data.DEGREE == 2) { #
+        一般
+        # } #
+    script#order-template(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="fixviewmodel" style="width:750px;" autocomplete="off">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td style="padding-left: 45px; padding-right: 200px; padding-bottom: 20px;" colspan="4">
+        <div style="color:\\#ff0000">
+        注意:单号规则字母前缀+日期前缀+数字前缀,日期前缀中的yyyy为年,mm为月,dd为日,数字前缀中000为当日自增序号位数为3位
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 160px;">保养单号生成规则</label>
+        <div class="controls">
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">字母前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="PREFIX1" name="PREFIX1" data-bind="value:PREFIX1" class="m-wrap" style="width:80px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 日期前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="INFIX1" name="INFIX1" data-bind="value:INFIX1" class="m-wrap" style="width:80px;" value="yyyyddmm" disabled />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME" style="width: 80px;">+ 数字前缀</label>
+        <div class="controls" style="margin-left: 85px;">
+        <input type="text" id="SUFFIX1" name="SUFFIX1" data-bind="value:SUFFIX1" class="m-wrap" style="width:80px;" value="000" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#popup-add(type='text/kendo-ui-template').
+        <form class="form-horizontal" id="maintainviewmodel" style="width:750px;">
+        <div class="control-group">
+        <table>
+        <tr>
+        <td width="354">
+        <label class="control-label" data-lang="Common.NAME"><span class="required">*</span>保养计划名称</label>
+        <div class="controls">
+        <input type="text" id="NAME" name="NAME" data-bind="value:NAME" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.DEGREES">保养级别</label>
+        <div class="controls">
+        <input type="text" id="DEGREES" name="DEGREES" class="span6 m-wrap" style="width: 214px; margin-left: 0px; left: -1px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME">负责人</label>
+        <div class="controls">
+        <input type="text" id="MEM_NBR" name="MEM_NBR" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_COUNT">人数</label>
+        <div class="controls">
+        <input type="text" id="MEM_COUNT" name="MEM_COUNT" class="span6 m-wrap" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_NAME">设备</label>
+        <div class="controls">
+        <input type="text" id="MAC_NBR" name="MAC_NBR" class="span6 m-wrap" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MEM_COUNT">设备状态</label>
+        <div class="controls">
+        <input type="text" id="STATUS_NBR" name="STATUS_NBR" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.TASK_NBR">预计用时</label>
+        <div class="controls">
+        <input type="text" id="DURATION" name="DURATION" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MAINTAIN_UNIT">维修商</label>
+        <div class="controls">
+        <input type="text" id="MAINTAIN_UNIT" name="MAINTAIN_UNIT" data-bind="value:MAINTAIN_UNIT" data-required="1" class="span6 m-wrap rank-num" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.SERIAL_NO">工作内容要求</label>
+        <div class="controls">
+        <input type="text" id="MEMO" name="MEMO" data-bind="value:MEMO" data-required="1" class="span6 m-wrap" style="width: 555px;" />
+        </div>
+        </td>
+        <td></td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.SERIAL_NO">上次检修日期</label>
+        <div class="controls">
+        <input type="text" id="LastCheckDate" name="LastCheckDate" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        <td></td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <table>
+        <tr>
+        <td>
+        <label class="control-label" data-lang="Common.TASK_NBR">周期</label>
+        <div class="controls">
+        <input type="text" id="CYCLE_TYPE" name="CYCLE_TYPE" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        <td>
+        <label class="control-label" data-lang="Common.MAINTAIN_UNIT">周期间隔</label>
+        <div class="controls" id="CYCLE_INTERVAL_TIMES">
+        <input type="text" id="CYCLE_INTERVAL_TIME" name="CYCLE_INTERVAL_TIME" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        <div class="controls" id="CYCLE_INTERVAL_YIELDS" style="display:none;">
+        <input type="text" id="CYCLE_INTERVAL_YIELD" name="CYCLE_INTERVAL_YIELD" class="span6 m-wrap rank-num" style="width: 214px; margin-left: 0px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+        <div class="control-group">
+        <label class="control-label">是否通知</label>
+        <div style="line-height: 32px;" class="controls">
+        <label style="margin-top: 7px; margin-bottom: 0px;" class="check">
+        <div class="checker"><span data-bind="css:{checked:NOTICE},click:notice"><input type="checkbox" value="1" name="Notice"></span></div>
+        </label>
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.MEM_NAME">添加发送人员</label>
+        <div class="controls">
+        <input type="text" id="SEND_MEMBER" name="SEND_MEMBER" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group" style="padding-left: 20px;">
+        <label class="control-label"></label>
+        <div class="controls" style="padding-right: 40px;">
+        <table width="100%" class="table" style="margin-bottom: 0px;">
+        <thead>
+        <tr>
+        <th>姓名</th>
+        
+        <th><div class="checker"><span data-bind="css:{checked:allUSE_PAGE},click:$root.allusepage"><input type="checkbox" value="1" name="allUSE_PAGE"></span></div>邮件</th>
+        <th><div class="checker"><span data-bind="css:{checked:allEMAIL},click:$root.allemail"><input type="checkbox" value="1" name="allEMAIL"></span></div>页面通知</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach:MEMBERS">
+        <tr>
+        <td data-bind="text:MEMBER_NAME"></td>
+        <td>
+        <div class="checker"><span data-bind="css:{checked:USE_PAGE},click:$root.usepage"><input type="checkbox" value="1" name="USE_PAGE"></span></div>
+        </td>
+        <td>
+        <div class="checker"><span data-bind="css:{checked:EMAIL},click:$root.email"><input type="checkbox" value="1" name="EMAIL"></span></div>
+        </td>
+        <td><a data-bind="click:$root.deleteItem">删除</a></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <div class="form-actions">
+        <div data-bind="click:save" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#treeview-template_out(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" attr="treenode" flag="#:item.flag#">#:item.text#</span>
+    script#OPERATOR_PLAN_STATE(type='x-kendo-template').
+        <div class="btn purple" style="padding: 3px 8px 3px 14px;" onclick="f_edit('#:data.PLAN_NBR#')">编辑<i class="icon-edit"></i></div>
+        <div class="btn red" style="padding: 3px 8px 3px 14px;" onclick="f_del('#:data.PLAN_NBR#')">删除<i class="icon-remove-sign"></i></div>
+        # if(data.PLAN_STATE ==0) { #
+        <div class="btn green" style="padding: 3px 8px 3px 14px;" onclick="f_goMaintain('#:data.PLAN_NBR#')">执行保养<i class="icon-circle-arrow-right"></i></div>
+        # } #

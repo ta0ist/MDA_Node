@@ -1,0 +1,47 @@
+    .number {
+        border: 1px solid #cdcdcd;
+        width: 50px;
+    }
+    
+    .MAINTAIN_STATUS {
+        float: left;
+        margin-top: 4px;
+        margin-right: 2px;
+        height: 12px;
+        width: 12px;
+        border-radius: 6px !important;
+    }
+    
+    .NO {
+        border: 0px solid #414240;
+        background-color: #414240;
+    }
+    
+    .MAINNING {
+        border: 0px solid #F4B522;
+        background-color: #F4B522;
+    }
+    
+    .DONE {
+        border: 0px solid green;
+        background-color: green;
+    }
+    
+    .controls>label {
+        line-height: 36px;
+    }
+    
+    #files_name {
+        line-height: 0;
+        height: 28px;
+        margin-top: 7px;
+    }
+    
+    .DownLoadFile {
+        cursor: pointer;
+    }
+    
+    .DownLoadFile:hover {
+        color: #66a4ef;
+        text-decoration: underline;
+    }

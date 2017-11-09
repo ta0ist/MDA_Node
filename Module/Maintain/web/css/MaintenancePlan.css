@@ -1,0 +1,96 @@
+    #wrap {
+        overflow: hidden;
+        *zoom: 1;
+    }
+    
+    #sidebar {
+        float: right;
+        width: 200px;
+    }
+    
+    #content {
+        margin-right: 205px;
+    }
+    
+    .devices li {
+        height: 25px;
+        line-height: 25px;
+        padding-left: 5px;
+    }
+    
+    .devices li:hover {
+        background-color: #F56D20;
+        color: #FFFFFF;
+    }
+    
+    #input_MAC_NBR {
+        height: 20px !important;
+    }
+    
+    #allcheck_MAC_NBR,
+    #allcheck_SEND_MEMBER {
+        margin: -2px 2px 0px 0px;
+    }
+    
+    .maintain td {
+        vertical-align: middle;
+    }
+    
+    .tdcenter {
+        text-align: center !important;
+    }
+    
+    .pagination {
+        display: inline-block;
+        padding-left: 0;
+        margin: 20px 0;
+        border-radius: 4px;
+    }
+    
+    .pagination>li {
+        display: inline;
+    }
+    
+    .pagination-sm>li:first-child>a,
+    .pagination-sm>li:first-child>span {
+        border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+    }
+    
+    .pagination>li:first-child>a,
+    .pagination>li:first-child>span {
+        margin-left: 0;
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+    }
+    
+    .pagination>.disabled>span,
+    .pagination>.disabled>span:hover,
+    .pagination>.disabled>span:focus,
+    .pagination>.disabled>a,
+    .pagination>.disabled>a:hover,
+    .pagination>.disabled>a:focus {
+        color: #999;
+        background-color: #fff;
+        border-color: #ddd;
+        cursor: not-allowed;
+    }
+    
+    .pagination-sm>li>a,
+    .pagination-sm>li>span {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    .pagination>li>a,
+    .pagination>li>span {
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        line-height: 1.42857143;
+        text-decoration: none;
+        color: #428bca;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-left: -1px;
+    }

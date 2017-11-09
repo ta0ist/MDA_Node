@@ -21,12 +21,12 @@
     }],
     webIP: 'localhost',
     webPort: 27516,
-    // webIP: '192.168.0.96',
-    // webPort: 8015,
+    // webIP: 'localhost',
+    // webPort: 8090,
     model: 'HGFH',
     DNCPath: 'D:\\DNC\\',
     Notice: {
-        webscoketIP: '127.0.0.1',
+        webscoketIP: '192.168.0.153',
         webscoketPort: 8883,
         open: true
     }

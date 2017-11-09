@@ -1,0 +1,64 @@
+link(type='text/css',href='/javascripts/UI/Scripts/media/css/bootstrap.min.css',rel='stylesheet')
+link(type='text/css',href='/javascripts/Content/Bandex.css',rel='stylesheet')
+link(type='text/css',href='/javascripts/Content/kendo/2014.1.318/kendo.common.min.css',rel='stylesheet')
+link(type='text/css',href='/javascripts/Content/kendo/2014.1.318/kendo.default.min.css',rel='stylesheet')
+link(type='text/css',href='/Maintain/web/css/yulan.css',rel='stylesheet')
+
+form(id='', style='width:60%;margin:0 auto;')
+	table.table.table-bordered
+		tr
+			td#first_td(colspan='4', style='height: 55px; text-align: center; font-weight: bold; font-size: 20px; position: relative;')
+				#image(style='position:absolute;top:1px;left:1px;width:164px;height:55px;')
+					img(src='/Maintain/web/images/WXBGD_logo.png', alt='spirax sarco')
+				span(style='font-size:25px;line-height:55px;') 维修报告单
+		tr
+			td
+				span.title 申请单号：
+			td#APPLAY_NO(colspan='3') 
+		tr
+			td
+				span.title 资产编号：
+			td#MAC_NO(style='width: 140px;')
+			td
+				span.title 设备名称：
+			td#MAC_NAME(style='width: 120px;')
+		tr
+			td
+				span.title 开始维修时间：
+			td#REPORT_DATE
+			td
+				span.title 结束维修时间：
+			td#FINISH_DATE
+		tr
+			td
+				span.title 报修时间：
+			td#APPLAY_DATE
+			td
+				span.title 维修人员：
+			td#REPAIR_NAME
+		tr
+			td
+				span.title 维修金额:
+			td#MEMO(colspan='3')
+		tr
+			td(colspan='6')
+				span.title 故障现象描述:
+				span#APP_MEMO
+		tr
+			td(colspan='6', style='height: 60px;')
+				span.title 维修方法及过程:
+				span
+					textarea#PROCESS_METHOD(rows='2', name='PROCESS_METHOD', data-bind='value:PROCESS_METHOD', readonly='readonly', style='width:99%; height: 49px; ')
+		tr
+			td(colspan='6', style='height: 60px;')
+				span.title 更换备件清单:
+				span#inoutStocks
+script(src="/jquery-1.7.1.min.js")
+script(src="/javascripts/UI/Scripts/media/js/jquery-ui-1.10.1.custom.min.js")
+script(src="/javascripts/UI/Scripts/kendo/2014.3.1119/kendo.web.min.js")
+script(src="/javascripts/UI/Scripts/kendo/2014.1.318/cultures/kendo.culture.zh-CN.min.js")
+script(src="/javascripts/UI/Scripts/LanguageService.js")
+script(src="/Bandex.js")
+script(src="/javascripts/moment.js")
+script(src="/javascripts/UI/Scripts/underscore-min.js")
+script(src="/Maintain/web/controller/yulan.js")
