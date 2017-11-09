@@ -358,52 +358,24 @@
                         break;
                 }
             }
-            // if (self.options.notice) { //建立后台推送机制
-            //     var MessagesHub = $.connection.messagesHub;
-            //     MessagesHub.client.showMessage = function (perc) {
-            //         var reList = JSON.parse(perc);
-            //         var mes;
-            //         if (reList.length > 0) {
-            //             mes = "公告信息--";
-            //         }
-            //         else {
-            //             mes = "";
-            //         }
-            //         for (var i = 0; i < reList.length; i++) {
-            //             mes = mes + reList[i].CONTENT + ";   ";
-            //         }
-            //         $("#accountmesg").html(mes);
-            //         //处理接收数据
-
-            //     };
-            //     MessagesHub.client.GetNoBeginApplay = function (perc) {
-            //         var reList = JSON.parse(perc);
-            //         var dd = [];
-            //         for (var i = 0; i < reList.length; i++) {
-            //             if (reList[i].WORKSHOP_CODE == self.url.wid) {
-            //                 dd.push(reList[i]);
-            //             }
-            //         }
-            //         var mes;
-            //         if (dd.length > 0) {
-            //             mes = "维修信息--";
-            //         }
-            //         else {
-            //             mes = "";
-            //         }
-            //         for (var j = 0; j < dd.length; j++) {
-            //             mes = mes + dd[j].MAC_NAME + "申请维修;   ";
-            //         }
-            //         $("#servicemesg").html(mes);
-            //     };
-            //     MessagesHub.client.lactionurl = function () { //刷新客户端url
-            //         window.location.href = window.location;
-            //     }
-            //     $.connection.hub.start();
-            // }
-            //开始显示页面
-            //1、根据设定值显示页面；2、根据url设定的page参数来显示页面；
-            //获取所有的url参数
+            //建立推送机制
+            $.get('/visuals/r/GetNoticeActive', (data) => {
+                if (data.Status == 0) {
+                    if (data.Data.length > 0)
+                        $("#accountmesg").html(data.Data[0].CONTENT);
+                }
+            })
+            var wsServer = new WebSocket('ws://localhost:8883');
+            wsServer.onmessage = (e) => {
+                    $("#accountmesg").empty();
+                    $("#accountmesg").html(e.data);
+                }
+                // $.get('/visual/r/getnotice', (data) => {
+                //         $("#accountmesg").html(data);
+                //     })
+                //开始显示页面
+                //1、根据设定值显示页面；2、根据url设定的page参数来显示页面；
+                //获取所有的url参数
             self.url = {};
             self.url = {
                 wid: self._getparam("wid"),

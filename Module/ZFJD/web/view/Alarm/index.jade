@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    title
+    meta(charset='utf-8')
+    link(href="/ZFJD/web/css/public.css", rel="stylesheet")
+    link(href="/ZFJD/web/UI/Bootstrap-3.3.5-dist/bootstrap-3.3.5-dist/css/bootstrap.css", rel="stylesheet")   
+    link(href="/ZFJD/web/UI/bootstrap-table/bootstrap-table.css", rel="stylesheet") 
+    link(href="/ZFJD/web/UI/datetimepicker/bootstrap-datetimepicker.css", rel="stylesheet")     
+    link(href="/ZFJD/web/css/alarm.css", rel="stylesheet")  
+    
+  body#body
+    #con
+        .left
+            .left-child-top
+                .left-content
+                    .left-title 设备报警
+                    .table-box
+                        table#table
+            .left-child-bottom
+                a(href="/ZFJD/status")              
+                    button.btn
+                        span.glyphicon.glyphicon-home
+                a(href="/ZFJD/alarm")  
+                    button.btn.btn-danger
+                        span.glyphicon.glyphicon-info-sign
+                a
+                    button.btn
+                        span.glyphicon.glyphicon-stats
+                a
+                    button.btn
+                        span.glyphicon.glyphicon-wrench
+                a
+                    button.btn
+                        span.glyphicon.glyphicon-import
+
+        .right
+            .right-content
+                .right-content-top
+                    .text-center.c1.pointer#mac 
+                    .text-center(style="margin-top:2%;")
+                        input.text-center#datetimepicker(readonly="readonly")                   
+                    h5.text-center.c2 设备当天报警总数
+                    #time.text-center
+                        span 
+                
+        script(src="/ZFJD/web/js/jquery-1.11.3.js")
+        script(src="/ZFJD/web/js/public.js")
+        script(src="/ZFJD/web/js/HConbobox.js")
+        script(src="/ZFJD/web/js/moment.js")
+        script(src="/ZFJD/web/UI/bootstrap-table/bootstrap-table.js")
+        script(src="/ZFJD/web/UI/datetimepicker/bootstrap-datetimepicker.js")
+        script(src="/ZFJD/web/UI/datetimepicker/bootstrap-datetimepicker.zh-CN.js")
+        script(src="/ZFJD/web/controller/alarm.js")
+    
+

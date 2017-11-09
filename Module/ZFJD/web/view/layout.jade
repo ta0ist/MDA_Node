@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    title
+    meta(charset='utf-8')
+    block headcss 
+        link(href="/ZFJD/web/css/public.css", rel="stylesheet")
+        link(href="/ZFJD/web/UI/Bootstrap-3.3.5-dist/bootstrap-3.3.5-dist/css/bootstrap.css", rel="stylesheet")      
+  body#body
+    #con
+        .left
+            .left-child-top
+              block left
+              
+            .left-child-bottom
+                button.btn
+                    span.glyphicon.glyphicon-home
+                button.btn
+                    span.glyphicon.glyphicon-info-sign
+                button.btn.btn-danger
+                    span.glyphicon.glyphicon-stats
+                button.btn
+                    span.glyphicon.glyphicon-wrench
+                button.btn
+                    span.glyphicon.glyphicon-import
+
+        .right
+          block content
+    block headscripts
+        script(src="/ZFJD/web/js/public.js")
+    
+    
+    
+

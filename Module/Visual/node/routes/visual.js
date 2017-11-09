@@ -5,6 +5,9 @@ module.exports = function(app) {
     //加载页面
     app.get('/visuals', visual.index);
 
+    //各种事件
+    app.post('/visuals/:method', visual.fun);
+
     //读取加载文件
     app.get('/visuals/r/ReadyFile', visual.ReadyFile);
     //获取状态
@@ -38,7 +41,7 @@ module.exports = function(app) {
 
     //兆丰机电
     app.get('/visuals/r/GetImmediatelyparameterByZF', visual.GetImmediatelyparameterByZF);
-    app.get('/visuals/r/ZFJD_getAttr', visual.ZFJD_getAttr);
 
+    app.get('/visuals/r/ZFJD_getAttr', visual.ZFJD_getAttr);
 
 }
