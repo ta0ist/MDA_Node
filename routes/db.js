@@ -2,9 +2,9 @@ const mssql = require('mssql');
 var db = {};
 const config = {
     user: 'sa',
-    password: 'jilong',
-    server: '192.168.0.227',
-    database: 'BZ2017',
+    password: '1`q',
+    server: '192.168.0.96',
+    database: 'BANDEX2017',
     port: 1433,
     option: {
         encrpt: true

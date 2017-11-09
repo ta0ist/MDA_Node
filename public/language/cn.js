@@ -14,6 +14,7 @@ module.exports = {
         NewAccount: '新增账户',
         RevDisable: '启/禁用',
         DeleteAccount: '删除账户',
+        Delete: '删除',
         User: '用户',
         Password: '密码',
         AssociatedWithTheName: '关联名称',
@@ -424,5 +425,13 @@ module.exports = {
     },
     DNC: {
         DNC: '程序传输'
+    },
+    Visual: {
+        Notice: '公告发布',
+        Content: '公告内容',
+        ReleaseDate: '发布日期',
+        ReleaseMem: '发布人员',
+        IsUse: '是否启用',
+        Operation: '操作'
     }
 }
