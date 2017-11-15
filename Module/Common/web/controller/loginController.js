@@ -25,8 +25,8 @@
                 return;
             } else {
                 if ($('#chkremember').attr("checked")) {
-                    $.cookie('name', $scope.User.Name);
-                    $.cookie('password', $scope.User.Pwd);
+                    $.cookie('name', $scope.User.Name, { expires: 7, path: '/' });
+                    $.cookie('password', $scope.User.Pwd, { expires: 7, path: '/' });
                 } else {
                     $.cookie('name', null);
                     $.cookie('password', null);

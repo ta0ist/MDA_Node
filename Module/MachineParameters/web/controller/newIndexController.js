@@ -76,15 +76,15 @@ app.controller('diagnosisctrl', function($scope, $http) {
                                 var tjson;
                                 if (b[0].machineitems[k].Name == "STD::Status") {
                                     tjson = {
-                                        NAME: b[0].machineitems[k].Description,
-                                        VALUE: b[0].machineitems[k].Value == 0 ? "-- -- " : b[0].machineitems[k].Value,
+                                        NAME: '状态',
+                                        VALUE: Status[b[0].machineitems[k].Value == 0 ? "-- -- " : b[0].machineitems[k].Value],
                                         UNIT: b[0].machineitems[k].UnitName
                                     }
                                     $scope.items[i].color = b[0].machineitems.Value == 0 ? "#CCCCCC" : color[b[0].machineitems[k].Value];
                                 } else if (b[0].machineitems[k].Name == "STD::SubStatus") {
                                     tjson = {
                                         NAME: b[0].machineitems[k].Description,
-                                        VALUE: b[0].machineitems[k].Value == 0 ? "-- -- " : data.Data.STATUS_DATA[b[0].machineitems[k].Value].NAME,
+                                        VALUE: b[0].machineitems[k].Value == 0 ? "-- -- " : b[0].machineitems[k].Value,
                                         UNIT: b[0].machineitems[k].UnitName
                                     }
 
@@ -161,17 +161,20 @@ app.controller('diagnosisctrl', function($scope, $http) {
                         v.machineitems.forEach(function(o, p) {
 
                             var obj = {}
-                            if (o.Name == "STD::Status") {
-                                obj.name = '状态';
-                                obj.value = Status[o.Value];
-                            } else if (o.DataType == 8) {
-                                obj.name = o.Description;
-                                obj.value = moment(o.Value).format('YYYY-MM-DD HH:mm:ss');
-                            } else {
-                                obj.name = o.Description;
-                                obj.value = o.Value;
+                            if (o.Hot) {
+                                if (o.Name == "STD::Status") {
+                                    obj.name = '状态';
+                                    obj.value = Status[o.Value];
+                                } else if (o.DataType == 8) {
+                                    obj.name = o.Description;
+                                    obj.value = moment(o.Value).format('YYYY-MM-DD HH:mm:ss');
+                                } else {
+                                    obj.name = o.Description;
+                                    obj.value = o.Value;
+                                }
+                                v.items.push(obj);
                             }
-                            v.items.push(obj);
+
                         })
 
 

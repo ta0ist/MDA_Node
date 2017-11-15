@@ -43,25 +43,59 @@ function deleteProductGroup(res, method, args) {
     post_argu.post_argu(res, method, args);
 }
 
-function addProduct(res, method, args) {
-    var arr = [];
-    var txt = 'BllCrafts[0][Bllprocess]';
-    var num;
-    for (var key in args) {
-        if (key.indexOf(txt) != -1) {
-            num = key
-        }
-    }
+function deleteProduct(res, method, args) {
+    post_argu.post_argu(res, method, args);
+}
 
-    var data = {
-        product: {
-            GP_NBR: args.GP_NBR,
-            MEMO: args.MEMO,
-            PROD_NAME: args.PROD_NAME,
-            PROD_NBR: args.PROD_NBR,
-            PROD_NO: args.PROD_NO,
-            BllCrafts: arr
-        }
-    }
-    post_argu.post_argu(res, method, data);
+function addCradt(res, method, args) {
+    post_argu.post_argu(res, method, { prod_nbr: args.prod_nbr, bllcrafts: JSON.parse(args.bllcrafts) });
+}
+
+function addprocess(res, method, args) {
+    post_argu.post_argu(res, method, { craft_nbr: args.craft_nbr, proc_list: JSON.parse(args.proc_list) });
+
+}
+
+function ModiftProcess(res, method, args) {
+    post_argu.post_argu(res, method, args);
+}
+
+function ModiftCraft(res, method, args) {
+    post_argu.post_argu(res, method, { craftmodel: args });
+}
+
+function deleteProcess(res, method, args) {
+    post_argu.post_argu(res, method, args);
+}
+
+function deleteCraft(res, method, args) {
+    post_argu.post_argu(res, method, args);
+}
+
+function addProduct(res, method, args) {
+    // var arr = [];
+    // var txt = 'BllCrafts[0][Bllprocess]';
+    // var num;
+    // for (var key in args) {
+    //     if (key.indexOf(txt) != -1) {
+    //         num = key
+    //     }
+    // }
+
+    // var data = {
+    //     product: {
+    //         GP_NBR: args.GP_NBR,
+    //         MEMO: args.MEMO,
+    //         PROD_NAME: args.PROD_NAME,
+    //         PROD_NBR: args.PROD_NBR,
+    //         PROD_NO: args.PROD_NO,
+    //         BllCrafts: arr
+    //     }
+    // }
+    args.BllCrafts = JSON.parse(args.BllCrafts);
+    post_argu.post_argu(res, method, { product: args });
+}
+
+function modifyProduct(res, method, args) {
+    post_argu.post_argu(res, method, { prodmodel: args });
 }

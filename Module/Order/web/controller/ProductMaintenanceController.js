@@ -361,7 +361,7 @@ function f_delete(e) { //删除工序
     var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
     BzConfirm(lang.Order.DeleteData, function(e) {
         if (e) {
-            $.post("/Order/ProductMaintenance/deleteProcess", JSON.stringify({ craft_nbr: dataItem.CRAFT_NBR, proc_nbr: dataItem.PROC_NBR }), function(data) {
+            $.post("/ProductMaintenance/deleteProcess", { craft_nbr: dataItem.CRAFT_NBR, proc_nbr: dataItem.PROC_NBR }, function(data) {
                 if (data.Status == 0) {
                     refreshGrid();
                     BzSuccess(data.Message);
@@ -387,7 +387,7 @@ function toolbar_deleteproduct(e) { //删除产品
                     prod_nbr = dataItem[i].PROD_NBR;
                 }
             }
-            $.post("/Order/ProductMaintenance/deleteProduct", JSON.stringify({ prod_nbr: prod_nbr }), function(data) {
+            $.post("/ProductMaintenance/deleteProduct", { prod_nbr: prod_nbr }, function(data) {
                 if (data.Status == 0) {
                     refreshGrid();
                     BzSuccess(data.Message);
@@ -410,7 +410,7 @@ function delete_craft(e) { //删除工艺
             for (var i = 0; i < dataItem.length; i++) {
                 var craft_nbr = dataItem[i].CRAFT_NBR;
                 if (ProductNO == dataItem[i].CRAFT_NO) {
-                    $.post("/Order/ProductMaintenance/deleteCraft", JSON.stringify({ craft_nbr: craft_nbr }), function(data) {
+                    $.post("/ProductMaintenance/deleteCraft", { craft_nbr: craft_nbr }, function(data) {
                         if (data.Status == 0) {
                             refreshGrid();
                             BzSuccess(data.Message);
@@ -692,12 +692,20 @@ function addOrEdit(dataItems) {
                 model.GP_NBR = parseInt($(treeobj.select()).find('.k-state-selected span').attr("nodeid"));
                 model.PROD_NBR = parseInt($(treeobj.select()).find('.k-state-selected span').attr("nodeid"));
                 model.BllCrafts = [];
+                if (addviewModel.CRAFT_LIST().length == 0) {
+                    BzAlert('工艺不能为空！');
+                    return;
+                }
                 for (var i = 0; i < addviewModel.CRAFT_LIST().length; i++) {
                     var tjson = {};
                     tjson.FLAG = addviewModel.CRAFT_LIST()[i].FLAG();
                     tjson.CRAFT_NO = addviewModel.CRAFT_LIST()[i].CRAFT_NO();
                     tjson.CRAFT_NAME = addviewModel.CRAFT_LIST()[i].CRAFT_NAME();
                     tjson.Bllprocess = [];
+                    if (addviewModel.CRAFT_LIST()[i].PROC_LIST().length == 0) {
+                        BzAlert('工序不能为空！');
+                        return;
+                    }
                     for (var j = 0; j < addviewModel.CRAFT_LIST()[i].PROC_LIST().length; j++) {
                         var tt = {};
                         tt.FLAG = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].FLAG();
@@ -705,7 +713,7 @@ function addOrEdit(dataItems) {
                         tt.CYCLE_RATE = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].CYCLE_RATE();
                         tt.MEMO = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].MEMO();
                         tt.PROC_NAME = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].PROC_NAME();
-                        tt.PROC_TYPE = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].PROC_TYPE();
+                        tt.PROC_TYPE = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].PROC_TYPE() == "" ? 0 : addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].PROC_TYPE();
                         tt.RANK_NUM = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].RANK_NUM();
                         tt.STD_TIME = addviewModel.CRAFT_LIST()[i].PROC_LIST()[j].STD_TIME();
                         tjson.Bllprocess.push(tt);
@@ -722,9 +730,10 @@ function addOrEdit(dataItems) {
                     }
                 }
                 var CRAFT_NBR, CRAFT_NO, len;
-                //model.BllCrafts.push(tjson);=
+                let addmodel = $.extend(true, {}, model);
+                addmodel.BllCrafts = JSON.stringify(addmodel.BllCrafts);
                 if (newCmd == cmd.addProduct) { //新增产品
-                    $.post("/ProductMaintenance/addProduct", model, function(data) {
+                    $.post("/ProductMaintenance/addProduct", addmodel, function(data) {
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
@@ -741,7 +750,7 @@ function addOrEdit(dataItems) {
                         PROD_NO: $('#PROD_NO').val(),
                         PROD_NBR: dataItems.PROD_NBR,
                     }
-                    $.post("/Order/ProductMaintenance/modifyProduct", JSON.stringify({ prodmodel: prodmodel }), function(data) {
+                    $.post("/ProductMaintenance/modifyProduct", prodmodel, function(data) {
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
@@ -751,7 +760,9 @@ function addOrEdit(dataItems) {
                         }
                     });
                 }
-
+                if (!dataItems) {
+                    return;
+                }
                 var bllcrafts = [],
                     craftmodel = {};
                 for (var i = 0; i < model.BllCrafts.length; i++) {
@@ -775,7 +786,7 @@ function addOrEdit(dataItems) {
                         var bllcrafts = [];
                         if (model.BllCrafts[i].FLAG == 0) {
                             bllcrafts.push(model.BllCrafts[i])
-                            $.post("/Order/ProductMaintenance/addCradt", JSON.stringify({ prod_nbr: dataItems.PROD_NBR, bllcrafts: bllcrafts }), function(data) {
+                            $.post("/ProductMaintenance/addCradt", { prod_nbr: dataItems.PROD_NBR, bllcrafts: JSON.stringify(bllcrafts) }, function(data) {
                                 if (data.Status == 0) {
                                     refreshGrid();
                                     $("#x5window").data("kendoWindow").close();
@@ -791,7 +802,7 @@ function addOrEdit(dataItems) {
 
 
                 } else if (model.BllCrafts.length == dataItems.CRAFT_LIST.length && newCmd == cmd.editCraft) { //编辑工艺
-                    $.post("/Order/ProductMaintenance/ModiftCraft", JSON.stringify({ craftmodel: craftmodel }), function(data) {
+                    $.post("/ProductMaintenance/ModiftCraft", craftmodel, function(data) {
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
@@ -835,7 +846,7 @@ function addOrEdit(dataItems) {
                                 PC_MEMO: model.BllCrafts[i].Bllprocess[j].MEMO,
                                 PROC_NAME: model.BllCrafts[i].Bllprocess[j].PROC_NAME,
                                 PROC_NO: model.BllCrafts[i].Bllprocess[j].PROC_NO,
-                                PROC_TYPE: model.BllCrafts[i].Bllprocess[j].PROC_TYPE,
+                                PROC_TYPE: model.BllCrafts[i].Bllprocess[j].PROC_TYPE == "" ? 0 : model.BllCrafts[i].Bllprocess[j].PROC_TYPE,
                                 RANK_NUM: model.BllCrafts[i].Bllprocess[j].RANK_NUM,
                                 STD_TIME: model.BllCrafts[i].Bllprocess[j].STD_TIME,
                                 TASK_NO: model.BllCrafts[i].Bllprocess[j].TASK_NO
@@ -858,7 +869,7 @@ function addOrEdit(dataItems) {
                                 PC_MEMO: model.BllCrafts[i].Bllprocess[j].MEMO,
                                 PROC_NAME: model.BllCrafts[i].Bllprocess[j].PROC_NAME,
                                 PROC_NO: model.BllCrafts[i].Bllprocess[j].PROC_NO,
-                                PROC_TYPE: model.BllCrafts[i].Bllprocess[j].PROC_TYPE,
+                                PROC_TYPE: model.BllCrafts[i].Bllprocess[j].PROC_TYPE == "" ? 0 : model.BllCrafts[i].Bllprocess[j].PROC_TYPE,
                                 RANK_NUM: model.BllCrafts[i].Bllprocess[j].RANK_NUM,
                                 STD_TIME: model.BllCrafts[i].Bllprocess[j].STD_TIME,
                                 TASK_NO: model.BllCrafts[i].Bllprocess[j].TASK_NO,
@@ -871,7 +882,7 @@ function addOrEdit(dataItems) {
                 }
 
                 if (newCmd == cmd.addProcess && len != len2) {
-                    $.post("/Order/ProductMaintenance/addprocess", JSON.stringify({ craft_nbr: CRAFT_NBR, proc_list: array }), function(data) { //新增工序
+                    $.post("/ProductMaintenance/addprocess", { craft_nbr: CRAFT_NBR, proc_list: JSON.stringify(array) }, function(data) { //新增工序
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
@@ -881,7 +892,7 @@ function addOrEdit(dataItems) {
                         }
                     });
                 } else if (newCmd == cmd.editProcess && len == len2) {
-                    $.post("/Order/ProductMaintenance/ModiftProcess", JSON.stringify({ procmodel: arr }), function(data) { //编辑工序
+                    $.post("/ProductMaintenance/ModiftProcess", { procmodel: arr }, function(data) { //编辑工序
                         if (data.Status == 0) {
                             $("#x5window").data("kendoWindow").close();
                             refreshGrid();
