@@ -70,6 +70,35 @@ $(function() {
         }
     });
 
+    $("#tree_addRootNode").click(function() {
+        var treeobj = $("#orgnizetree").data("kendoTreeView");
+        var GroupInfo = {
+            PID: 0,
+            LEVEL_NBR: 1,
+            GP_NAME: "新节点",
+            RANK_NUM: 0
+        }
+        $.post("member/AddGroup", (GroupInfo), function(data) {
+            if (data.Status == 0) {
+                var obj = treeobj.append({
+                    text: GroupInfo.GP_NAME,
+                    id: data.Data,
+                    icon: "icon-cogs",
+                    PID: 0,
+                    LEVEL_NBR: 1
+                }, null);
+                BzSuccess(data.Message);
+                //进入编辑
+                treeobj.select(obj);
+                $("#tree_edit").trigger('click');
+            } else {
+                BzAlert(data.Message);
+            }
+        });
+
+
+    });
+
 
     GetGrouplist(0, "/member/GetGrouplist", $("#treeview-template").html(), "icon-group");
     //对树的增删改查
