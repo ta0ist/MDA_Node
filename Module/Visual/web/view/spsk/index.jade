@@ -1,0 +1,59 @@
+doctype html
+head
+    //- link(href='./web/UI/bootstrap-3.3.5-dist/css/bootstrap.min.css', rel='stylesheet')
+    link(href='./web/css/spsk.css', rel='stylesheet')
+    link(rel="stylesheet", href="./web/css/iconfont.css")
+    
+    link(href='./web/image/logoico.ico', rel='shortcut icon', type='image/x-icon')
+    
+body(ng-app='spsk')
+    .container(ng-controller='spskCtrl')
+        //- img.leftup(src='./web/image/leftup.png')
+        //- img.leftdown(src='./web/image/leftdown.png')
+        //- img.rightup(src='./web/image/rightup.png')
+        //- img.rightdown(src='./web/image/rightdown.png')
+        header
+            h1 上海斑彰智能工厂管理系统           
+        .content-body
+            .box
+                .left-box 
+                    .layout-chart
+                        .title 昨日机床效率
+                        .left-chart_noline
+                            //- img.title-line(src='./web/image/line.png')
+                            #mac_acv
+                    .layout-chart
+                        .title 设备即时状态
+                        .left-chart_noline
+                            //- img.title-line(src='./web/image/line.png')
+                            .title_EN Machine Status
+                            .span25.responsive(ng-repeat='item in status' style='float:left;margin-left:10px;margin-top:40px;')
+                                .dashboard-stat.black(ng-style="{'background-color':item.color}")
+                                    .visual
+                                        i(ng-class='item.Icon')
+                                    .details
+                                        .number
+                                            | {{item.MacCount}}
+                                        .desc {{item.name}}
+                            .title_EN(style='float: right;margin-right:60px;') 今日物料异常数：5件
+                .right-box 
+                    .bread-chart
+                        .title 昨日人员效率
+                        .left-chart_noline
+                            //- img.title-line(src='./web/image/line.png')
+                            #people_acv
+                    .table-chart
+                        .title 本月机加工PPM
+                        .left-chart_noline
+                            //- img.title-line(src='./web/image/line.png')
+                            #mac_pro
+                            img.triangle(src='./web/image/triangle.png')  
+script(src='./web/javascripts/jquery-1.10.2.js')                            
+script(src='../../../javascripts/Angular/angular.min.js')
+script(src='../../../javascripts/UI/Scripts/Highcharts-4.0.3/js/highcharts.js')                         
+script(src='../../../javascripts/UI/Scripts/Raphael-2.1.2.js')
+script(src='../../../javascripts/UI/Scripts/moment.js')
+script(src='../../../javascripts/underscore-min.js')
+script(src='./web/javascripts/echarts.common.min.js')
+script(src='./web/javascripts/echart_option.js')
+script(src='./web/controller/spskCtrl.js')

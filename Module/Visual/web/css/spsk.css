@@ -1,0 +1,256 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #081132;
+    font-family: 'YouYuan';
+    overflow: hidden;
+}
+
+.container {
+    width: 1920px;
+    height: 100%;
+    position: relative;
+}
+
+header {
+    position: relative;
+}
+
+header>h1 {
+    color: #1D92FF;
+    text-align: center;
+    padding: 10px;
+}
+
+.leftup {
+    width: 120px;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+}
+
+.leftdown {
+    width: 120px;
+    position: absolute;
+    top: 91vmin;
+    left: 8px;
+}
+
+.rightup {
+    width: 120px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.rightdown {
+    width: 120px;
+    position: absolute;
+    right: 8px;
+    top: 91vmin;
+}
+
+.content-body {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    bottom: 20px;
+    right: 20px;
+}
+
+.box {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 40px;
+}
+
+.left-box {
+    padding: 0 .5rem 0 1rem;
+    width: 50%;
+    float: left;
+    height: 50%;
+    color: #fff;
+}
+
+.right-box {
+    padding: 0 1rem 0 .5rem;
+    width: 50%;
+    float: left;
+    height: 50%;
+    color: #fff;
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    height: 34.8px;
+    color: #ffd285;
+}
+
+.title_EN {
+    text-align: center;
+    height: 34.8px;
+    color: #ffd285;
+    font-size: 2rem;
+}
+
+.left-chart {
+    position: relative;
+    height: 34vmin;
+    border: 1px solid #4592f7;
+}
+
+.left-chart_noline {
+    position: relative;
+    height: 50vmin;
+    /* border: 1px solid #4592f7; */
+}
+
+.right-up-chart {
+    position: relative;
+    height: 42vmin;
+    border: 1px solid #4592f7;
+}
+
+.right-up-chart_noline {
+    position: relative;
+    height: 42vmin;
+    /* border: 1px solid #4592f7; */
+}
+
+.right-down-chart {
+    position: relative;
+    height: 34vmin;
+    border: 1px solid #4592f7;
+}
+
+.title-line {
+    position: absolute;
+    top: -7px;
+    left: -3px;
+}
+
+.triangle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.table {
+    width: 100%;
+}
+
+.table tr td {
+    width: 50%;
+    text-align: center;
+}
+
+.title-name {
+    color: #ffffff;
+    font-size: 1.3rem;
+    padding: .2rem;
+    background-color: #4592f7;
+}
+
+.item-name {
+    font-size: 1.3rem;
+}
+
+#status ul {
+    position: absolute;
+    top: 80px;
+    left: 92%;
+    list-style: none;
+}
+
+#status ul li {
+    margin-bottom: .5rem;
+}
+
+.status_flag {
+    width: 1rem;
+    height: 1rem;
+    border-radius: .5rem;
+    display: inline-block;
+    margin-right: .5rem;
+    margin-bottom: -.1rem;
+}
+
+#mac_acv {
+    height: 50vmin;
+}
+
+#people_acv {
+    height: 50vmin;
+}
+
+#mac_pro {
+    height: 35vmin;
+}
+
+.span25 {
+    width: 17.9%;
+}
+
+.dashboard-stat {
+    margin-bottom: 25px;
+}
+
+.dashboard-stat:before,
+.dashboard-stat:after {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+
+.dashboard-stat:after {
+    clear: both;
+}
+
+.dashboard-stat .visual {
+    width: 80px;
+    height: 80px;
+    display: block;
+    float: left;
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+.dashboard-stat .visual i {
+    font-size: 65px;
+    color: #fff;
+}
+
+.dashboard-stat .details {
+    float: right;
+    padding-right: 10px;
+}
+
+.dashboard-stat .details .number {
+    padding-top: 25px;
+    text-align: right;
+    font-size: 34px;
+    letter-spacing: -1px;
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 10px;
+}

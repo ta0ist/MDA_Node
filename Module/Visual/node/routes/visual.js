@@ -1,4 +1,5 @@
 var visual = require('../controller/Visual.js');
+var spsk = require('../controller/spsk.js');
 
 module.exports = function(app) {
 
@@ -43,5 +44,9 @@ module.exports = function(app) {
     app.get('/visuals/r/GetImmediatelyparameterByZF', visual.GetImmediatelyparameterByZF);
 
     app.get('/visuals/r/ZFJD_getAttr', visual.ZFJD_getAttr);
+
+    app.get('/visual/spsk', spsk.index);
+
+    app.get('/r/GetStatusColorAndCount', spsk.GetStatusColorAndCount);
 
 }

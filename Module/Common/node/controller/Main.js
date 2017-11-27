@@ -21,7 +21,7 @@ exports.main = function(req, res) {
 exports.fun = function(req, res) {
     var args = [];
     args.push(res);
-    method = post_common.getpath(__filename, req.params.method);;
+    method = post_common.getpath(__filename, req.params.method);
     args.push(method);
     args.push(req.body);
     args.push(req);

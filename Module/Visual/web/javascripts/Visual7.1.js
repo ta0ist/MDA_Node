@@ -902,7 +902,7 @@
                                 if (columns[j].format != "null") {
                                     var eval_value = tempdata[columns[j].value];
                                     eval(columns[j].format);
-                                    strhtml = strhtml + '<td width="' + columns[j].width + '%" align="Center" valign="middle" class="' + TableStatus + '">' + eval_value + '</td>';
+                                    strhtml = strhtml + '<td width="' + columns[j].width + '%" align="Center" valign="middle" class="' + TableStatus + '">' + eval_value + '%</td>';
                                 } else {
                                     strhtml = strhtml + '<td width="' + columns[j].width + '%" align="Center" valign="middle" class="' + TableStatus + '">' + tempdata[columns[j].value] + '</td>';
                                 }
