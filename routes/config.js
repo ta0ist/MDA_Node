@@ -26,7 +26,7 @@
     model: 'HGFH',
     DNCPath: 'D:\\DNC\\',
     Notice: {
-        webscoketIP: '192.168.0.152',
+        webscoketIP: '192.168.0.153',
         webscoketPort: 8883,
         open: true
     }
