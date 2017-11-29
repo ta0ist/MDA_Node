@@ -1,0 +1,44 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Message/web/UI/bootstrap-table/bootstrap-table.css',rel='stylesheet')
+    link(type='text/css',href='./Message/web/css/MessageNotification.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Message/web/UI/bootstrap-table/bootstrap-table.js')
+    script(type='text/javascript',src='./Message/web/controller/MessageNotification.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 消息通知配置
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页 
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 消息通知配置
+    .row-fluid
+        .control-group(style='height: 34px;')
+            .controls
+                .input-icon.left(style='width: 250px; display: inline;')
+                    i.icon-search
+                    input#filter.m-wrap(type='text', placeholder='方案名称')
+                button.btn.blue(data-bind='click:grid_add', title='')
+                    | 新增
+                    i.icon-plus-sign
+    .table-responsive
+        table.table.table-striped.table-hover.table-bordered
+            thead
+                tr
+                    th 编号
+                    th 发送类型
+                    th 发送内容
+                    th 触发条件
+                    th 启用状态
+                    th 操作
+            
+
+
+                
+
+        
