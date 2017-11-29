@@ -1,0 +1,304 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Quality/web/css/DefectiveReport.css',rel='stylesheet')
+    link(type='text/css',href='./Quality/web/css/jcallout.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    script(type='text/javascript',src='./Quality/web/controller/DefectiveReportController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | #{lang.Quality.DefectiveReport}
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.Quality.Quality}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MachineScheduling') #{lang.Quality.DefectiveReport}
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            div(style='float: left;margin-left:-40px;width:350px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label#groupOrMachine_text.control-label(data-lang='Common.PASSWORD') 设备 
+                    .BZcontrols
+                        input#groupOrMachine.m-wrap(type='text', name='groupOrMachine')
+            div(style='float: left;margin-left:-50px;width:350px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.START_TIME') 报工时间 
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime')
+            div(style='float: left;margin-left:-100px;width:350px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.END_TIME') 报工时间 
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='endTime')
+            div(style='float: left;margin-left:-100px;width:160px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.END_TIME') 是否返工 
+                    .BZcontrols
+                        select#isReturn(style='width:70px !important;')
+                            option(value='0') 否
+                            option(value='1') 是
+            div(style='float: left;margin-left:0px;width:160px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.END_TIME') 是否完工 
+                    .BZcontrols
+                        select#isFinish(style='width:70px !important;')
+                            option(value='0') 否
+                            option(value='1') 是
+            div(style='float: left;margin-left:40px;width:350px;')
+                .control-group(style='margin-bottom: 5px;')
+                    #search.btn.green
+                        | 查询
+                        i.icon-search
+    .row-fluid(style='margin-top:5px;margin-bottom:20px;min-height:300px;')
+        #grid
+    script#redact(type='text/x-kendo-template', style='margin-top: -200px; position: relative; left: 50%; margin-left: -350px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:900px;height:800px;">
+        <table class="control-group" style="margin-left:0px;" id="po">
+        <tr>
+        <td colspan="5" style="text-align: center;font-weight: bold;font-size: 20px;position:relative;" id="first_td">
+        <div id="image" style="position:absolute;top:0px;left:0px;width:164px;height:73px;">
+        <img src="./images/Quality/CCBGD_logo.png" alt="spirax sarco" />
+        </div>
+        <span>NON-CONFORMITY REPORT</span><br />
+        <span>不合格品处置单</span>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3" style="text-align: left;" id="GD_BH"></td>
+        <td colspan="2" style="text-align: right;" id="MEMO"></td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align:left;" id="MAC_NO">设备编号：</td>
+        </tr>
+        <tr>
+        <td style="text-align: left;" colspan="1">
+        <span>Part Code</span><br />
+        <span>零件编号</span>
+        </td>
+        <td colspan="1" id="PROD_NO" style="text-align:center;"></td>
+        <td style="text-align: left;" colspan="1">
+        <span>Part Description</span><br />
+        <span>零件名称</span>
+        </td>
+        <td colspan="1" id="PROD_NAME" style="text-align:center;"></td>
+        <td colspan="1" id="LJBHTM" style="text-align: center;min-width: 100px; height: 40px; ">
+        <div class="LJBHTM" style="margin: auto;"></div>
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align: left;" colspan="1">
+        <span>Defect Qty</span><br />
+        <span>不合格数量</span>
+        </td>
+        <td colspan="1" id="INFERIOR_NUM" style="text-align:center;"></td>
+        <td style="text-align: left;" colspan="1">
+        <span>Work Order</span><br />
+        <span>工单号</span>
+        </td>
+        <td colspan="2" id="TASK_NO" style="text-align:center;"></td>
+        </tr>
+        <tr>
+        <td style="text-align: left;" colspan="1">
+        <span>Date</span><br />
+        <span>日期</span>
+        </td>
+        <td colspan="1" id="REPORT_DATE" style="text-align:center;"></td>
+        <td style="text-align: left;" colspan="1">
+        <span>Supplier</span><br />
+        <span>供应商</span>
+        </td>
+        <td colspan="1" style="text-align:center;" id="SUPPLIER"></td>
+        <td colspan="1" style="text-align:center;">
+        <input type="text" name="DR_SUPPLIER" id="DR_SUPPLIER" style="width:90%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align: left;" colspan="1">
+        <span>Casting Code</span><br />
+        <span>料号</span>
+        </td>
+        <td colspan="1" style="text-align:center;" id="MATERIEL_NO">
+        </td>
+        <td style="text-align: left;" colspan="1">
+        <span>Casting Description</span><br />
+        <span>铸件名称</span>
+        </td>
+        <td colspan="1" style="text-align:center;" id="MATERIEL_NAME">
+        </td>
+        <td colspan="1" id="ZJBHTM" style="text-align:center;">
+        <div class="ZJBHTM" style="margin: auto;"></div>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">Description of the nonconformity/不合格描述：</td>
+        </tr>
+        <tr>
+        <td colspan="5" style="min-height: 40px;height:100px;border-bottom:none;border-top:none;" id="bhgms"></td>
+        </tr>
+        <tr>
+        <td colspan="3" style="text-align: left;" id="REPORT_PERSON">Report by/报告人:</td>
+        <td colspan="2" style="text-align: left;">
+        <input type="text" name="INSPECTOR" value="Inspector/检验员:" id="INSPECTOR" style="width:97%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">Cause Analysis/原因分析:</td>
+        </tr>
+        <tr>
+        <td colspan="5" style="min-height: 40px;height:50px;border-bottom:none;border-top:none;">
+        <div><input class="reasonfx" id="a" type="checkbox" value="工艺问题"><label for="a" style="display:inline-block">工艺问题</label></div>
+        <div><input class="reasonfx" id="b" type="checkbox" value="刀具问题"><label for="b" style="display:inline-block">刀具问题</label></div>
+        <div><input class="reasonfx" id="c" type="checkbox" value="夹具问题"><label for="c" style="display:inline-block">夹具问题</label></div>
+        <div><input class="reasonfx" id="d" type="checkbox" value="装夹问题"><label for="d" style="display:inline-block">装夹问题</label></div>
+        <div><input class="reasonfx" id="e" type="checkbox" value="操作不良"><label for="e" style="display:inline-block">操作不良</label></div>
+        <div><input class="reasonfx" id="f" type="checkbox" value="设备故障"><label for="f" style="display:inline-block">设备故障</label></div>
+        <div><input class="reasonfx" id="g" type="checkbox" value="首件调试"><label for="g" style="display:inline-block">首件调试</label></div>
+        <div><input class="reasonfx" id="h" type="checkbox" value="破坏检测"><label for="h" style="display:inline-block">破坏检测</label></div>
+        <div><input class="reasonfx" id="i" type="checkbox" value="原材料"><label for="i" style="display:inline-block">原材料</label></div>
+        <div><input class="reasonfx" id="j" type="checkbox" value="其它"><label for="j" style="display:inline-block">其它</label></div>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;border-top:none;">
+        <input type="text" name="XXSM" value="详细说明(如必要):"style="width:98.5%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3"></td>
+        <td colspan="2" style="text-align: left;">
+        <input type="text" name="PE_ENGINEER" value="PE/生产工程师:" id="PE_ENGINEER" style="width:97%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">
+        <input type="text" name="DISPOSITION_CONCLUSION" value="Disposition Conclusio/处置结论:" id="DISPOSITION_CONCLUSION" style="width:98.8%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">Return To Vendor 退货:
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">
+        <input type="text" name="SCRAP_NUM" value="Scrap 报废:" id="SCRAP_NUM" style="width:97%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">
+        <input type="text" name="REWORK_NUM" value="Rework 返工:" id="REWORK_NUM" style="width:97%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3"></td>
+        <td colspan="2" style="text-align: left;">
+        <input type="text" name="QE_NEGINEER" value="QE/质量工程师:" id="QE_NEGINEER" style="width:97%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3" style="text-align: left;" >Rework Proposal/返工方案（如需返工）:
+        </td>
+        <td colspan="2" style="text-align: left;">MBR移入IT单号:
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3" style="min-height: 60px;height: 60px;position:relative;border-top:none;">
+        <input type="text" name="REWORK_PROPOSAL" id="REWORK_PROPOSAL" value="" style="width:98%;height:60px;border:none;outline:none;" />
+        </td>
+        <td colspan="2" style="min-height: 60px;height: 60px;position:relative;border-top:none;">
+        <input type="text" name="MBR_IN_IT" id="MBR_IN_IT" value="" style="width:97%;height:60px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3" style="text-align: left;">
+        <input type="text" name="REWORK_MACHINE" value="Rework machine/返工机床:" id="REWORK_MACHINE" style="width:98%;height:40px;border:none;outline:none;" />
+        </td>
+        <td colspan="2" style="text-align: left;">
+        <input type="text" name="PE_ENGINNER2" value="PE/生产工程师:" id="PE_ENGINNER2" style="width:97%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3" style="text-align: left;">Rework Inspection/返工后重新检验:
+        </td>
+        <td colspan="1" style="text-align: left;">MBR移出IT单号:
+        </td>
+        <td colspan="1" style="text-align: left;">物料签收:
+        </td>
+        </tr>
+        <tr>
+        <td colspan="3" style="position:relative;border-top:none;">
+        <input type="text" name="REWORK_INSPECTION" id="REWORK_INSPECTION" value="" style="width:98%;height:40px;border:none;outline:none;" />
+        </td>
+        <td colspan="1" style="position:relative;border-top:none;">
+        <input type="text" name="MBR_OUT_IT" id="MBR_OUT_IT" value="" style="width:94%;height:40px;border:none;outline:none;" />
+        </td>
+        <td colspan="1" style="position:relative;border-top:none;">
+        <input type="text" name="MATETAIL_RECEIVING" id="" value="" style="width:94%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">
+        <input type="text" name="INSPECTOR2" value="Inspector/检验员:" id="INSPECTOR2" style="width:97%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        <tr>
+        <td colspan="5" style="text-align: left;">
+        <input type="text" name="SCRAP_APPROVE" value="Scrap Approve/报废批准:" id="SCRAP_APPROVE" style="width:98%;height:40px;border:none;outline:none;" />
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">#{lang.Common.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.Common.CANCEL}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#IsOK(type='x-kendo-template').
+        # if ( data.REPORT_STATE ==0) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
+        <div style="float: left;margin-left:4px">未确认</div>
+        </div>
+        # } else if(data.REPORT_STATE == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: green; float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">已确认</div>
+        </div>
+        # } #
+    script#IS_RETURN(type='x-kendo-template').
+        # if ( data.IS_RETURN == 0 || data.IS_RETURN == null) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
+        <div style="float: left;margin-left:4px">否</div>
+        </div>
+        # } else if(data.IS_RETURN == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: green; float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">是</div>
+        </div>
+        # } #
+    script#IS_FINISH(type='x-kendo-template').
+        # if ( data.IS_FINISH == 0 || data.IS_FINISH == null) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
+        <div style="float: left;margin-left:4px">否</div>
+        </div>
+        # } else if(data.IS_FINISH == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: green; float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">是</div>
+        </div>
+        # } #
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+html   
+block append headcss
+    link(type='text/css',href='./Measure/web/css/MeasureOutInput.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/Content/Bandex.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/Content/kendo/2014.1.318/kendo.common.min.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/Content/kendo/2014.1.318/kendo.default.min.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-1.10.2.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts//media/js/jquery-ui-1.10.1.custom.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts//kendo/2014.3.1119/kendo.web.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/kendo/2014.1.318/cultures/kendo.culture.zh-CN.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/LanguageService.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Bandex.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/moment.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/underscore-min.js')
+    script(type='text/javascript',src='./Measure/web/controller/MeasureOutinPutController.js')
+block content
+    div(ng-app='app', ng-controller='appCtrl')
+        label(style='font-size:18px;') [量具管理]
+        #grid
+    script#MEASURE_STATE(type='x-kendo-template').
+        # if ( data.MEASURE_STATE == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: rgb(141, 180, 226); float: left; margin-top: 2px"></div>
+        <div style="float: left;margin-left:4px">封存</div>
+        </div>
+        # } else if(data.MEASURE_STATE == 2) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: rgb(0, 176, 80); float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">完好</div>
+        </div>
+        # } else if(data.MEASURE_STATE == 3) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: rgb(254, 254, 0); float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">预校准</div>
+        </div>
+        # } else if(data.MEASURE_STATE == 4) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: rgb(218, 150, 148); float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">到期</div>
+        </div>
+        # } #
+    script#CALIBRATION_TYPE(type='x-kendo-template').
+        # if ( data.CALIBRATION_TYPE == 0) { #
+        <div>
+        <div style="float: left;margin-left:4px">外校</div>
+        </div>
+        # } else if(data.CALIBRATION_TYPE == 1) { #
+        <div>
+        <div style="float: left;margin-left:4px">自校</div>
+        </div>
+        # } #
+
+

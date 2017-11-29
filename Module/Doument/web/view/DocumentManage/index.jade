@@ -1,0 +1,150 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Doument/web/css/DocumentManage.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/knockout-3.1.0.js')
+    script(type='text/javascript',src='./Doument/web/controller/Doument.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | 文档管理
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') 主页
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') 知识库管理
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') 文档管理
+    .row-fluid
+        table(width='100%', cellpadding='0', cellspacing='0')
+            tr
+                td(style='width: 240px;')
+                    .control-group
+                        .controls
+                            button#tree_add.btn.blue(data-bind='click:tree_add')
+                                | 新增
+                                i.icon-plus-sign
+                            button#tree_edit.btn.purple(data-bind='click:tree_edit')
+                                | 编辑
+                                i.icon-edit
+                            button#tree_delete.btn.red(data-bind='click:tree_delete')
+                                | 删除
+                                i.icon-remove-sign
+                    table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                        tr
+                            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                                a.k-link(tabindex='-1', href='#') 文档分类
+                                i#tree_expand.icon-sitemap(style=' cursor: pointer; float: right; margin-top: 3px;')
+                        tr
+                            td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
+                                div(style='height: 424px; overflow-y: auto; padding-top :5px; padding-left: 4px; padding-bottom: 5px;')
+                                    #orgnizetree
+                                    i#tree_addRootNode.icon-plus-sign(data-bind='click:tree_addRootNode', style='margin-left:20px;font-size:14px;display:none;')
+                td(valign='top', style='padding-left:5px;')
+                    .control-group(style='height: 34px;')
+                        .controls
+                            .input-icon.left(style='width: 250px; display: inline;')
+                                i.icon-search
+                                input#filter.m-wrap(type='text', placeholder='名称')
+                            span.btn.green.fileinput-button
+                                span 上传
+                                i.icon-cloud-upload
+                                input#fileupload(type='file', name='files_name', multiple='')
+                            button.btn.purple(data-bind='click:grid_rename')
+                                | 重命名
+                                i.icon-pencil
+                            button.btn.red(data-bind='click:grid_delete', title='@LanguageService.Translate(')
+                                | 删除
+                                i.icon-remove-sign
+                    table.table.table-bordered.table-condensed(style='border-color:#C5C5C5;', cellpadding='0', cellspacing='0', border='0', width='100%', height='100%')
+                        tr
+                            td.k-header(style='border-color: rgb(197, 197, 197); padding: 6px 7px 5px;')
+                                a.k-link(tabindex='-1', href='#') 文件列表
+                                .btn-group(style='float: right;')
+                                    a.btn.dropdown-toggle(data-toggle='dropdown', href='#', style='padding-bottom: 0px; padding-top: 0px; border-radius: 0px ! important; background-color: transparent;')
+                                        | 浏览模式
+                                        i.icon-angle-down
+                                    ul.dropdown-menu(style='min-width:100px;')
+                                        li
+                                            a(href='#', data-bind='click:detail') 详细信息
+                                        li
+                                            a(href='#', data-bind='click:imgview') 大图标
+                        tr
+                            td(style='border-color: rgb(197, 197, 197); height: 468px; padding: 0px;')
+                                div(style='overflow-y:auto;height:467px;')
+                                    table.list(width='100%', data-bind='visible:viewStyle')
+                                        thead
+                                            tr
+                                                th(width='20')
+                                                    input#allCheck(type='checkbox')
+                                                th 名称
+                                                th
+                                                th
+                                                th 创建日期
+                                                th 创建人
+                                                th 文件类型
+                                                th 文件大小
+                                                th
+                                        tbody(data-bind='foreach: list')
+                                            tr
+                                                td
+                                                    input(type='checkbox', data-bind='checked:checkedDocument')
+                                                td
+                                                    img(data-bind='attr:{src:"./images/16X16/"+ refeshImage(FileType()) +".png"}', src='./images/16X16/Default.png')
+                                                    span(data-bind='text:DirectoryName')
+                                                td
+                                                    i.icon-tag(data-bind='click:$root.addTag', title='添加标签')
+                                                td(data-bind='foreach:TagList')
+                                                    span.badge.badge-success(style='cursor: pointer;  padding-right: 16px; ', data-bind='event:{mouseenter:$root.mouseover,mouseleave:$root.mouseout}')
+                                                        span(data-bind='text:TagName')
+                                                        i.k-icon.k-delete(data-bind='click:$root.removeTag')
+                                                td
+                                                    span(data-bind='text:CreateDate')
+                                                td
+                                                    span(data-bind='text:UserAddName')
+                                                td
+                                                    span(data-bind='text:FileType')
+                                                td
+                                                    span(data-bind='text:FileSize()+"KB"')
+                                                td
+                                                    a.icon-download-alt(data-bind='click:$root.download')
+                                    ul.image(style='display:none;', data-bind='foreach: list,visible:!viewStyle()')
+                                        li
+                                            img(data-bind='attr:{src:"./images/48X48/"+ refeshImage(FileType()) +".png"}', src='./images/48X48/Default.png')
+                                            div(style='display:inline;')
+                                                div
+                                                    | 名称
+                                                    span(data-bind='text:DirectoryName')
+                                                div
+                                                    | 文件大小:
+                                                    span(data-bind='text:FileSize()')
+                                                    | KB
+                                                div
+                                                    input(type='checkbox', data-bind='checked:checkedDocument', style='margin-top: -1px;')
+                                                    a(style='margin-left: 2px; cursor: pointer;', data-bind='click:$root.download') 下载
+    script#treeview-template(type='text/kendo-ui-template').
+        <i class="#:item.icon#"></i>
+        <span nodeid="#:item.id#" pid="#:item.PID#" attr="treenode">#:item.text#</span>
+    script#popup-rename(type='text/x-kendo-template').
+        <form id="signupForm" class="form-horizontal">
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.PASSWORD"><span class="required">*</span>文件原名称</label>
+        <div class="controls">
+        <input type="text" id="DirectoryName" name="DirectoryName" disabled class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="control-group">
+        <label class="control-label" data-lang="Common.CONFIRM_PASSWORD"><span class="required">*</span>文件新名称</label>
+        <div class="controls">
+        <input type="text" id="DirectoryName_new" name="DirectoryName_new" class="span6 m-wrap" />
+        </div>
+        </div>
+        <div class="form-actions">
+        <div id="Win_Submit" class="btn green">确定<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">取消<i class="icon-remove"></i></div>
+        </div>
+        </form>

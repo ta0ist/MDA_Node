@@ -1,0 +1,229 @@
+﻿.btn i {
+    margin-left: 2px;
+}
+.k-grid-aa {
+    background-image:none;
+    border-color:none;
+    padding-top: 3px; padding-bottom: 3px; margin-left: 5px;
+}
+.k-grid-bb {
+    background-image:none;
+    border-color:none;
+    padding-top: 3px; padding-bottom: 3px; margin-left: 5px;
+}
+.k-grid-cc {
+    background-image:none;
+    border-color:none;
+    padding-top: 3px; padding-bottom: 3px; margin-left: 5px;
+}
+.form-horizontal .control-label {
+    width: 120px;
+}
+.form-horizontal .controls {
+    margin-left: 140px;
+}
+input.m-wrap[class*="span"] {
+    float: none;
+    height: 20px !important;
+    margin-left: 0;
+}
+#alertify-cancel {
+    margin-left:5px;
+}
+input.error {
+    border: 1px dashed red !important;
+}
+.add-on.error {
+    border-bottom: 1px dashed red !important;
+    border-right: 1px dashed red !important;
+    border-top: 1px dashed red !important;
+}
+label[class="error"] {
+    color: #ff0000;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 2px;
+    padding-top: 5px;
+}
+.controls input {
+    width:200px;
+}
+.k-window-titlebar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    min-height: 16.43px;
+    padding: 15px 0;
+}
+.k-window{
+    box-shadow:0 5px 15px rgba(0, 0, 0, 0.5) !important;
+    border:1px solid #ffffff !important;
+}
+div.k-window-content {
+    height: 100%;
+    outline: 0 none;
+    overflow: auto;
+    padding: 0px !important;
+    position: relative;
+}
+.form-horizontal {
+    padding-top: 20px;
+    margin-bottom: 0px;
+    min-width:550px;
+    padding-right:5px;
+}
+.Memo {
+    color: rgb(204, 204, 204);
+}
+.form-actions {
+    background-color: #ffffff;
+    border-top: 1px solid #e5e5e5;
+    min-height: 16.43px;
+    padding: 15px 15px 15px 0px;
+    margin-bottom: 0px;
+    text-align: right; 
+}
+.form-actions button {margin-left: 10px;}
+.k-window-title{font-weight: bold;}
+.k-window-titlebar .k-window-actions{padding-top: 12px;}
+
+.btn{font-family:Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif !important;}
+.photo{background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    height: 150px;
+    position: relative;
+    width: 200px;}
+.gallery{ background-position: center center;
+    background-size: cover;
+    height: 48px;
+    width: 97px;}
+.galleryli{
+     color: #808080;
+    float: left;
+    height: 75px;
+    margin: 2px 0 0 2px;
+    position: relative;
+    width: 96.6px;
+    line-height: 20px;
+    list-style: none outside none !important;
+}
+.rank-num{background-color:#FFF !important;}
+.k-numeric-wrap,.k-picker-wrap{background-color:#FFF !important;border-color:#E5E5E5;}
+.k-state-default > .k-select {
+    border-color: #E5E5E5 !important;
+}
+.k-autocomplete.k-state-default, .k-picker-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-dropdown-wrap.k-state-default {
+    border-color: #E5E5E5;
+}
+.k-state-focused{border-color:#999999 !important;box-shadow:none !important;background-image:none !important;}
+
+.galleryli .icon-ok-sign {
+    background: none repeat scroll 0 0 #0089ce;
+    border-radius: 10px;
+    color: #29b7f2;
+    display: none;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    right: 2px;
+    text-align: center;
+    top: 28px;
+    width: 20px;
+}
+.input-append .add-on, .input-prepend .add-on {
+    background-color: #fff !important;
+}
+.add-on i{margin-top: 5px; position: relative; top: -4px; color: rgb(87, 67, 63);}
+.inputtree_focus{border-top:1px solid #999999 !important;border-bottom:1px solid #999999 !important;border-left:1px solid #999999 !important;}
+.inputtree_focus_add{border-top:1px solid #999999 !important;border-bottom:1px solid #999999 !important;border-right:1px solid #999999 !important;}
+.Combox_orgnizetree{ -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #ffffff;
+    border-color: #999999;
+    border-image: none;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    z-index: 999999;}
+
+.k-multiselect.k-header {
+    border-color: #e5e5e5;
+}
+.k-multiselect-wrap {height:32px;}
+.k-autocomplete.k-state-focused, .k-picker-wrap.k-state-focused, .k-numeric-wrap.k-state-focused, .k-dropdown-wrap.k-state-focused, .k-multiselect.k-header.k-state-focused {
+    background-color: #bcb4b0;
+    background-image: none, linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0px, rgba(255, 255, 255, 0) 100%);
+    background-position: 50% 50%;
+    border-color: #999999;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+}
+.k-block, .k-button, .k-textbox, .k-drag-clue, .k-touch-scrollbar, .k-window, .k-window-titleless .k-window-content, .k-window-action, .k-inline-block, .k-grid .k-filter-options, .k-grouping-header .k-group-indicator, .k-autocomplete, .k-multiselect, .k-combobox, .k-dropdown, .k-dropdown-wrap, .k-datepicker, .k-timepicker, .k-colorpicker, .k-datetimepicker, .k-notification, .k-numerictextbox, .k-picker-wrap, .k-numeric-wrap, .k-colorpicker, .k-list-container, .k-calendar-container, .k-calendar td, .k-calendar .k-link, .k-treeview .k-in, .k-editor-inline, .k-tooltip, .k-tile, .k-slider-track, .k-slider-selection, .k-upload {
+    border-radius: 0px;
+}
+.k-popup, .k-menu .k-group, .k-grid .k-filter-options, .k-time-popup, .k-datepicker-calendar, .k-autocomplete.k-state-border-down, .k-autocomplete.k-state-border-up, .k-dropdown-wrap.k-state-active, .k-picker-wrap.k-state-active, .k-multiselect.k-state-focused, .k-imagebrowser .k-image, .k-tooltip {
+    box-shadow: none !important;
+}
+.k-popup.k-list-container, .k-popup.k-calendar-container {
+    border-style: solid;
+    border-width: 1px;
+    padding: 1px;
+}
+.k-list-container {
+    background-color: #ffffff;
+    border-color: #999999;
+}
+.table-condensed1 > thead > tr > th,
+.table-condensed1 > tbody > tr > th,
+.table-condensed1 > tfoot > tr > th,
+.table-condensed1 > thead > tr > td,
+.table-condensed1 > tbody > tr > td,
+.table-condensed1 > tfoot > tr > td{
+    padding:0px;
+}
+
+.k-autocomplete.k-state-default, .k-picker-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-dropdown-wrap.k-state-default {
+    background-color: #ffffff;
+    background-image: none, linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0px, rgba(255, 255, 255, 0) 100%);
+    background-position: 50% 50%;
+    /*border-color: #c5c5c5;*/
+}
+.k-autocomplete.k-state-hover, .k-picker-wrap.k-state-hover, .k-numeric-wrap.k-state-hover, .k-dropdown-wrap.k-state-hover {
+    background-color: #ffffff;
+    background-image: none, linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0px, rgba(255, 255, 255, 0) 100%);
+    background-position: 50% 50%;
+    /*border-color: #c5c5c5;*/
+}
+.k-pager-numbers span{
+    padding-top: 3px; height: 23px;
+}
+    div[id|=uniform-allcheck] {
+        top: -1px;
+        margin-right: 2px;
+    }
+
+    .btn {
+    border-radius: 3px !important;
+}
+    .k-grid-filter.k-state-active {
+    background-color: #F57024;
+}
+    div.checker {
+    margin-right: 2px !important;
+    margin-top: -2px !important;
+}
+
+    .inbox-nav li {
+        float: right;
+        top: -8px;
+    }
+    .span {
+        float: left !important;
+        margin-left: 0px !important;
+    }
+    .inbox-nav li a.btn {
+        border-radius: 0px !important;
+    }

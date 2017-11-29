@@ -1,0 +1,181 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Quality/web/css/DefectiveOutOfTask.css',rel='stylesheet')
+    link(type='text/css',href='./Quality/web/css/jcallout.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    script(type='text/javascript',src='./Quality/web/controller/DefectiveOutOfTaskController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | #{lang.Quality.DefectiveOutOfTask}
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.Quality.Quality}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.Quality.DefectiveOutOfTask}
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            div(style='float: left;margin-left:0px;width:250px;')
+                .control-group(style='margin-bottom: 5px;')
+                    .input-icon.left(style='width: 250px; display: inline;')
+                        i.icon-search
+                        input#MATERIAL_NOS.m-wrap(type='text', placeholder='物料号')
+            div(style='float: left;margin-left:0px;width:260px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.START_TIME', style='width:70px !important;') 开始时间 
+                    .BZcontrols
+                        input#startTime.m-wrap(type='text', name='startTime')
+            div(style='float: left;margin-left:0px;width:250px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.END_TIME', style='width:70px !important;') 结束时间 
+                    .BZcontrols
+                        input#endTime.m-wrap(type='text', name='endTime')
+        .row-fluid
+            div(style='float: left;margin-left:0px;width:200px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.END_TIME', style='width:70px !important;') 是否返工 
+                    .BZcontrols
+                        select#isReturn(style='width:100px !important;')
+                            option(value='0') 否
+                            option(value='1') 是
+            div(style='float: left;margin-left:50px;width:200px;')
+                .control-group(style='margin-bottom: 5px;')
+                    label.control-label(data-lang='Common.END_TIME', style='width:70px !important;') 是否完工 
+                    .BZcontrols
+                        select#isFinish(style='width:100px !important;')
+                            option(value='0') 否
+                            option(value='1') 是
+            div(style='float: left;margin-left:70px;width:80px;')
+                .control-group(style='margin-bottom: 5px;')
+                    #output.btn.green
+                        | 查询
+                        i.icon-search
+            div(style='float: left;margin-left:0px;width:100px;')
+                .control-group(style='margin-bottom: 5px;')
+                    #error_a.btn.btn-sm.blue
+                        | 新增
+                        i.icon-plus-sign
+    #grid
+    script#add(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:800px;" method="get">
+        <table class="control-group" style="margin-left:-20px;" id="po">
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">类型：</label>
+        <div class="controls" id="span">
+        <input class="TASK_TYPE" name="TASK_TYPE" id="TYPE1" type="radio" value="" style="width:15px;height:15px;margin-right:5px;margin-bottom:5px;"><label for="TYPE1" style="display:inline-block;font-size:14px;margin-top:6px;margin-right:10px;">零件</label>
+        <input class="TASK_TYPE" name="TASK_TYPE" id="TYPE2" type="radio" value="" style="width:15px;height:15px;margin-right:5px;margin-bottom:5px;"><label for="TYPE2" style="display:inline-block;font-size:14px;margin-top:6px;">原材料</label>
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">工位：</label>
+        <div class="controls" id="span" style="width:90%">
+        <input class="TASK_GW" name="TASK_GW" id="GW1" type="radio" value="" style="width:15px;height:15px;margin-right:5px;margin-bottom:5px;"><label for="GW1" style="display:inline-block;font-size:14px;margin-top:6px;margin-right:10px;">进料</label>
+        <input class="TASK_GW" name="TASK_GW" id="GW2" type="radio" value="" style="width:15px;height:15px;margin-right:5px;margin-bottom:5px;"><label for="GW2" style="display:inline-block;font-size:14px;margin-top:6px;margin-right:10px;">机加工</label>
+        <input class="TASK_GW" name="TASK_GW" id="GW3" type="radio" value="" style="width:15px;height:15px;margin-right:5px;margin-bottom:5px;"><label for="GW3" style="display:inline-block;font-size:14px;margin-top:6px;margin-right:10px;">装配</label>
+        <input class="TASK_GW" name="TASK_GW" id="GW4" type="radio" value="" style="width:15px;height:15px;margin-right:5px;margin-bottom:5px;"><label for="GW4" style="display:inline-block;font-size:14px;margin-top:6px;margin-right:10px;">ESMU</label>
+        <input class="TASK_GW" name="TASK_GW" id="GW5" type="radio" value="" style="width:15px;height:15px;margin-right:5px;margin-bottom:5px;"><label for="GW5" style="display:inline-block;font-size:14px;margin-top:6px;">成品</label>
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">型号：</label>
+        <div class="controls" id="span">
+        <input type="text" id="WORK_OUT_NO" name="" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">物料号：</label>
+        <div class="controls" id="span">
+        <input type="text" id="MATERIAL_NO" name="" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">操作员：</label>
+        <div class="controls" id="span">
+        <input type="text" id="OPERATOR" name="" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">工单号：</label>
+        <div class="controls" id="span">
+        <input type="text" id="WORK_OUT_SUPPLIER" name="" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">供应商：</label>
+        <div class="controls" id="span">
+        <input type="text" id="SUPPLIEF" name="" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left: 10px;">
+        <label class="control-label" data-lang="">不合格数量：</label>
+        <div class="controls" id="span">
+        <input type="number" id="WORK_OUT_NUM" min="0" name="" class="span6 m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;" id="miaoshu">
+        <label class="control-label" data-lang="">描述：</label>
+        <div class="controls" style="min-height: 40px;height:50px;border-bottom:none;border-top:none;" id="cpyy">
+        </div>
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">#{lang.Common.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.Common.CANCEL}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#IS_RETURN(type='x-kendo-template').
+        # if ( data.IS_RETURN == 0 || data.IS_RETURN == null) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
+        <div style="float: left;margin-left:4px">否</div>
+        </div>
+        # } else if(data.IS_RETURN == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: green; float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">是</div>
+        </div>
+        # } #
+    script#IS_FINISH(type='x-kendo-template').
+        # if ( data.IS_FINISH == 0 || data.IS_FINISH == null) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: red; float: left;margin-top:2px"></div>
+        <div style="float: left;margin-left:4px">否</div>
+        </div>
+        # } else if(data.IS_FINISH == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: green; float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">是</div>
+        </div>
+        # } #
+
+
+
+
+

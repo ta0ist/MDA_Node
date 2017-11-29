@@ -1,0 +1,260 @@
+html
+block append headcss
+    link(type='text/css',href='./javascripts/UI/Scripts/media/css/bootstrap.min.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/Content/Bandex.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/Content/kendo/2014.1.318/kendo.common.min.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/Content/kendo/2014.1.318/kendo.default.min.css',rel='stylesheet')
+    link(type='text/css',href='./Quality/web/css/DefectiveReportPreview.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-1.10.2.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/media/js/jquery-ui-1.10.1.custom.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/kendo/2014.3.1119/kendo.web.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/kendo/2014.1.318/cultures/kendo.culture.zh-CN.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/LanguageService.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Bandex.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Angular/angular.min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/moment.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/underscore-min.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    //- script(type='text/javascript',src='./Quality/web/controller/DefectiveReportPreviewController.js')
+block content
+    form(id='', style='width:768px;margin:0 auto;')
+        table#po.control-group(style='margin-left:0px;')
+            tr
+                td#first_td(colspan='5', style='text-align: center;font-weight: bold;font-size: 20px;position:relative;')
+                    #image(style='position:absolute;top:1px;left:1px;width:164px;height:73px;')
+                        img(src='./images/Quality/CCBGD_logo.png', alt='spirax sarco')
+                    span NON-CONFORMITY REPORT
+                    br
+                    span 不合格品处置单
+            tr
+                td#GD_BH(colspan='3', style='text-align: left;') PD2-QA-025-R01
+                td#MEMO(colspan='2', style='text-align: right;')
+            tr
+                td#MAC_NO(colspan='5', style='text-align:left;') 设备编号：
+            tr
+                td(style='text-align: left;', colspan='1')
+                    span Part Code
+                    br
+                    span 零件编号
+                td#PROD_NO(colspan='1', style='text-align:center;')
+                td(style='text-align: left;', colspan='1')
+                    span Part Description
+                    br
+                    span 零件名称
+                td#PROD_NAME(colspan='1', style='text-align:center;')
+                td#LJBHTM(colspan='1', style='text-align: center;min-width: 100px; height: 40px; ')
+                    .LJBHTM(style='margin: auto;')
+            tr
+                td(style='text-align: left;', colspan='1')
+                    span Defect Qty
+                    br
+                    span 不合格数量
+                td#INFERIOR_NUM(colspan='1', style='text-align:center;')
+                td(style='text-align: left;', colspan='1')
+                    span Work Order
+                    br
+                    span 工单号
+                td#TASK_NO(colspan='2', style='text-align:center;')
+            tr
+                td(style='text-align: left;', colspan='1')
+                    span Date
+                    br
+                    span 日期
+                td#REPORT_DATE(colspan='1', style='text-align:center;')
+                td(style='text-align: left;', colspan='1')
+                    span Supplier
+                    br
+                    span 供应商
+                td#SUPPLIER(colspan='1', style='text-align:center;')
+                td#DR_SUPPLIER(colspan='1', style='text-align:center;')
+            tr
+                td(style='text-align: left;', colspan='1')
+                    span Casting Code
+                    br
+                    span 料号
+                td#CAST_CODE(colspan='1', style='text-align:center;')
+                td(style='text-align: left;', colspan='1')
+                    span Casting Description
+                    br
+                    span 铸件名称
+                td#CAST_NAME(colspan='1', style='text-align:center;')
+                td#ZJBHTM(colspan='1', style='text-align:center;')
+                    .ZJBHTM(style='margin: auto;')
+            tr
+                td(colspan='5')
+                    | Description of the nonconformity/不合格描述:
+            tr
+                td#bhgms(colspan='5', style='min-height: 80px;height:100px;border-bottom:none;border-top:none;')
+            tr
+                td#REPORT_PERSON(colspan='3', style='text-align: left;') Report by/报告人:
+                td#INSPECTOR(colspan='2', style='text-align: left;') Inspector/检验员:
+            tr
+                td(colspan='5', style='text-align: left;', id='') Cause Analysis/原因分析:
+            tr
+                td(colspan='5', style='min-height: 40px;height:50px;border-bottom:none;border-top:none;')
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='工艺问题')
+                        label(for='', style='display:inline-block') 工艺问题
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='刀具问题')
+                        label(for='', style='display:inline-block') 刀具问题
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='夹具问题')
+                        label(for='', style='display:inline-block') 夹具问题
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='装夹问题')
+                        label(for='', style='display:inline-block') 装夹问题
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='操作不良')
+                        label(for='', style='display:inline-block') 操作不良
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='设备故障')
+                        label(for='', style='display:inline-block') 设备故障
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='首件调试')
+                        label(for='', style='display:inline-block') 首件调试
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='破坏检测')
+                        label(for='', style='display:inline-block') 破坏检测
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='原材料')
+                        label(for='', style='display:inline-block') 原材料
+                    div
+                        input.reasonfx(type='checkbox', onclick='return false', value='其它')
+                        label(for='', style='display:inline-block') 其它
+            tr
+                td#XXSM(colspan='5', style='text-align: left;border-top:none;')
+                    | 详细说明(如必要):
+            tr
+                td#DISPOSITION_CONCLUSION(colspan='5', style='text-align: left;') Disposition Conclusio/处置结论:
+            tr
+                td(colspan='5', style='text-align: left;', id='') Return To Vendor 退货
+            tr
+                td#SCRAP_NUM(colspan='5', style='text-align: left;') Scrap 报废:
+            tr
+                td#REWORK_NUM(colspan='5', style='text-align: left;') Rework 返工:
+            tr
+                td(colspan='3', style='text-align: left;') Rework Proposal/返工方案（如需返工）:
+                td(colspan='2', style='text-align: left;') MBR移入IT单号:
+            tr
+                td#REWORK_PROPOSAL(colspan='3', style='min-height: 60px;height: 60px;position:relative;border-top:none;')
+                td#MBR_IN_IT(colspan='2', style='min-height: 60px;height: 60px;position:relative;border-top:none;')
+            tr
+                td#REWORK_MACHINE(colspan='3', style='text-align: left;') Rework machine/返工机床:
+                td#PE_ENGINNER2(colspan='2', style='text-align: left;') PE/生产工程师:
+            tr
+                td(colspan='3', style='text-align: left;') Rework Inspection/返工后重新检验:
+                td(colspan='1', style='text-align: left;') MBR移出IT单号:
+                td(colspan='1', style='text-align: left;') 物料签收:
+            tr
+                td#REWORK_INSPECTION(colspan='3', style='position:relative;border-top:none;')
+                td#MBR_OUT_IT(colspan='1', style='position:relative;border-top:none;')
+                td(colspan='1', style='position:relative;border-top:none;', id='')
+            tr
+                td#INSPECTOR2(colspan='5', style='text-align: left;') Inspector/检验员:
+            tr
+                td#SCRAP_APPROVE(colspan='5', style='text-align: left;') Scrap Approve/报废批准:
+    script(type='text/javascript').
+        var baseUrl = '/DefectiveReport/';
+        var url = window.location.search;
+        var str1 = url.substring(url.lastIndexOf('?') + 1, url.length);
+        var str2 = str1.split('&');
+        var qian = [];//保存属性
+        var hou = [];//保存属性值
+        for (var i = 0; i < str2.length; i++) {
+        qian.push(str2[i].split('=')[0]);
+        hou.push(str2[i].split('=')[1]);
+        }
+        //数据回显
+        var value = { code: unescape(hou[1]), rect: true };
+        var settings = {
+        output: "css",
+        bgColor: "white",
+        color: "#000000",
+        barWidth: 1,
+        barHeight: 40
+        };
+        $(".LJBHTM").html("").show().barcode(value, "code128", settings);
+        var value_memo = { code: unescape(hou[7]), rect: true };
+        var settings_memo = {
+        output: "css",
+        bgColor: "white",
+        color: "#000000",
+        barWidth: 1,
+        barHeight: 40
+        };
+        $(".ZJBHTM").html("").show().barcode(value_memo, "code128", settings_memo);
+        $('#GD_BH').html(unescape(hou[4]).bold().fontsize(2));
+        $("#MAC_NO").html($("#MAC_NO").html() + unescape(hou[0]).bold().fontsize(2));
+        //$('#PROD_NO').html(unescape(hou[1]).bold().fontsize(2));
+        $('#PROD_NO').html(unescape(hou[1]).bold().fontsize(2));
+        unescape(hou[2]) == 'null' ?"":$('#PROD_NAME').html(unescape(hou[2]).bold().fontsize(2));
+        $('#INFERIOR_NUM').html(unescape(hou[3]).toString().bold().fontsize(2));
+        $('#TASK_NO').html(unescape(hou[4]).bold().fontsize(2));
+        $('#REPORT_DATE').html(unescape(hou[5]).bold().fontsize(2));
+        //$('#SUPPLIER').html(unescape(hou[6]).bold().fontsize(2));
+        unescape(hou[6]) == 'null' ? $('#SUPPLIER').html('') : $('#SUPPLIER').html(unescape(hou[6]).bold().fontsize(2));
+        unescape(hou[7]) == 'null'?"":$('#CAST_CODE').html(unescape(hou[7]).bold().fontsize(2));
+        //$('#CAST_NAME').html(unescape(hou[8]).bold().fontsize(2));
+        unescape(hou[8]) == 'null' ? $('#CAST_NAME').html('') : $('#CAST_NAME').html(unescape(hou[8]).bold().fontsize(2));
+        //$('#DESCRIBE').html($('#DESCRIBE').html() + unescape(hou[9]).bold().fontsize(2));
+        $('#REPORT_PERSON').html($('#REPORT_PERSON').html() + unescape(hou[10]).bold().fontsize(2));
+        $('#INSPECTOR').html($('#INSPECTOR').html() + unescape(hou[11]).bold().fontsize(2));
+        $('#PE_ENGINEER').html($('#PE_ENGINEER').html() + unescape(hou[12]).bold().fontsize(2));
+        $('#DISPOSITION_CONCLUSION').html($('#DISPOSITION_CONCLUSION').html() + unescape(hou[13]).bold().fontsize(2));
+        //$('#SCRAP_NUM').html($('#SCRAP_NUM').html() + unescape(hou[14]).toString().bold().fontsize(2));
+        unescape(hou[14]) == 'null' ? $('#SCRAP_NUM').html($('#SCRAP_NUM').html()) : $('#SCRAP_NUM').html($('#SCRAP_NUM').html() + unescape(hou[14]).toString().bold().fontsize(2));
+        //$('#REWORK_NUM').html($('#REWORK_NUM').html() + unescape(hou[15]).toString().bold().fontsize(2));
+        unescape(hou[15]) == 'null' ? $('#REWORK_NUM').html($('#REWORK_NUM').html()) : $('#REWORK_NUM').html($('#REWORK_NUM').html() + unescape(hou[15]).toString().bold().fontsize(2));
+        $('#QE_NEGINEER').html($('#QE_NEGINEER').html() + unescape(hou[16]).bold().fontsize(2));
+        //$('#REWORK_PROPOSAL').html($('#REWORK_PROPOSAL').html() + unescape(hou[17]).bold().fontsize(2));
+        unescape(hou[17]) == 'null' ? $('#REWORK_PROPOSAL').html($('#REWORK_PROPOSAL').html()) : $('#REWORK_PROPOSAL').html($('#REWORK_PROPOSAL').html() + unescape(hou[17]).bold().fontsize(2));
+        $('#MBR_IN_IT').html($('#MBR_IN_IT').html() + unescape(hou[18]).bold().fontsize(2));
+        //$('#REWORK_MACHINE').html($('#REWORK_MACHINE').html() + unescape(hou[19]).bold().fontsize(2));
+        unescape(hou[19]) == 'null' ? $('#REWORK_MACHINE').html($('#REWORK_MACHINE').html()) : $('#REWORK_MACHINE').html($('#REWORK_MACHINE').html() + unescape(hou[19]).bold().fontsize(2));
+        $('#PE_ENGINNER2').html($('#PE_ENGINNER2').html() + unescape(hou[12]).bold().fontsize(2));
+        //$('#REWORK_INSPECTION').html($('#REWORK_INSPECTION').html() + unescape(hou[20]).bold().fontsize(2));
+        unescape(hou[20]) == 'null' ? $('#REWORK_INSPECTION').html($('#REWORK_INSPECTION').html()) : $('#REWORK_INSPECTION').html($('#REWORK_INSPECTION').html() + unescape(hou[20]).bold().fontsize(2));
+        $('#MBR_OUT_IT').html($('#MBR_OUT_IT').html() + unescape(hou[21]).bold().fontsize(2));
+        $('#INSPECTOR2').html($('#INSPECTOR2').html() + unescape(hou[11]).bold().fontsize(2));
+        unescape(hou[22]) == 'null' ? $('#SCRAP_APPROVE').html($('#SCRAP_APPROVE').html()) : $('#SCRAP_APPROVE').html($('#SCRAP_APPROVE').html() + unescape(hou[22]).bold().fontsize(2));
+        unescape(hou[24]) == 'null' ? $('#MEMO').html($('#MEMO').html()) : $('#MEMO').html($('#MEMO').html() + unescape(hou[24]).bold().fontsize(2));
+        unescape(hou[25]) == 'null' ? $('#DR_SUPPLIER').html("") : $('#DR_SUPPLIER').html(unescape(hou[25]).bold().fontsize(2));
+        //回显次品原因
+        var selectedList = [];
+        $.post(baseUrl + "GetReportlogList", { reportnbr: parseInt((unescape(hou[hou.length-3]))) }, function (datas) {
+        if (datas.Status == 0) {
+        for (var i = 0; i < datas.Data.length; i++) {
+        selectedList.push(datas.Data[i].INFERIOR_NBR);
+        }
+        //获取次品原因
+        $.get("/DefectiveReason/getReason", function (data) {
+        if (data.Status == 0) {
+        var html = '';
+        for (var i = 0; i < data.Data.length; i++) {
+        html += '<div><input class="reason" type="checkbox" onclick="return false" value="' + data.Data[i].INFERIOR_NBR + '"><label for="" style="display:inline-block">' + data.Data[i].INFERIOR_NAME + '</label></div>';
+        }
+        $("#bhgms").append(html);
+        }
+        $('.reason').each(function () {
+        for (var i = 0; i < selectedList.length; i++) {
+        if ($(this).val() == selectedList[i]) {
+        $(this).attr('checked', true);
+        }
+        }
+        })
+        })
+        }
+        })
+        //获取描述并转换成数组回显 htc:20170815
+        var yyfxArr = unescape(hou[9]).split(",");
+        $('.reasonfx').each(function () {
+        for (var i = 0; i < yyfxArr.length; i++) {
+        if ($(this).val() == yyfxArr[i]) {
+        $(this).attr('checked', true);
+        }
+        }
+        })
+
+

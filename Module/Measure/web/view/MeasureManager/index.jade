@@ -1,0 +1,217 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Measure/web/css/MeasureManager.css',rel='stylesheet')
+    link(type='text/css',href='./Measure/web/css/jcallout.css',rel='stylesheet')
+    link(type='text/css',href='./javascripts/UI/Scripts/media/css/inbox.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/moment.js')
+    script(type='text/javascript',src='./Measure/web/controller/MeasureManagerController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='MeasureManager')
+                | #{lang.Measure.Measure}
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.Measure.Measure}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='MeasureManager ') #{lang.Measure.MeasureManager}
+    .toolbar
+        .control-group(style='display:inline-block; height: 34px;')
+            .controls(style='background-color: white;height:34px;')
+                .input-icon.left(style='width: 250px; display: inline;')
+                    i.icon-search
+                    input#filter.m-wrap(type='text', placeholder='量具名称')
+                .input-icon.left(style='width: 250px; display: inline;margin-left:30px;')
+                    label.m-wrap(style='display:inline-block;') 类型
+                    input#MEASURE_TYPE.m-wrap(name='MEASURE_TYPE', type='text', style='width: 190px; margin-left: 0px; ')
+                .input-icon.left(style='width: 250px; display: inline;margin-left:30px;')
+                    label.m-wrap(style='display:inline-block;') 状态
+                    input#MEASURE_STATES.m-wrap(name='MEASURE_STATES', type='text', style='width: 170px; margin-left: 0px; ')
+                button#output.btn.green(style='margin-left:50px;')
+                    | 查询
+                    i.icon-search
+        button#error_a.btn.btn-sm.blue(style='display:inline-block')
+            | 新增
+            i.icon-plus-sign
+        button#importHtml.btn.green(style='margin-left: 20px;')
+            | 导出html
+            i.icon-share-alt
+    #grid
+    script#scarp(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal">
+        <div class="row-fluid" style="position: relative;left:-10px;">
+        <div class="span" style="float: left;margin-left:0px;width:663px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="">报废原因&nbsp;</label>
+        <div class="BZcontrols">
+        <textarea cols="3" id="SCRAP_MEMO" style=""></textarea>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#add(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal">
+        <div class="row-fluid" style="position: relative;left: -10px;">
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">编号&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="MEASURE_NO" name="MEASURE_NO" class="m-wrap" />
+        </div>
+        </div>
+        </div>
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">量具名称&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="MEASURE_NAME" name="MEASURE_NAME" class="m-wrap" style="width:187px;" />
+        </div>
+        </div>
+        </div>
+        </div><br />
+        <div class="row-fluid" style="position: relative;left: -10px;">
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">制造商&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="MANUFACTURER" name="MANUFACTURER" class="m-wrap" />
+        </div>
+        </div>
+        </div>
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">购买日期&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="BUY_DATE" name="BUY_DATE" class="m-wrap" style="width:200px;"/>
+        </div>
+        </div>
+        </div>
+        </div><br />
+        <div class="row-fluid" style="position: relative;left: -10px;">
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">测量范围&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="MEASURE_RANG" name="MEASURE_RANG" class="m-wrap" />
+        </div>
+        </div>
+        </div>
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">发放位置&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="RELEASE_POSITION" name="RELEASE_POSITION" class="m-wrap" style="width:187px;" />
+        </div>
+        </div>
+        </div>
+        </div><br />
+        <div class="row-fluid" style="position: relative;left: -10px;">
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">上次校验日期&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="LAST_CALIBRATION_DATE" name="LAST_CALIBRATION_DATE" class="m-wrap" style="width:220px;" />
+        </div>
+        </div>
+        </div>
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">校准周期&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="number" id="CALIBRATION_CYCLE" name="CALIBRATION_CYCLE" placeholder="" class="m-wrap" style="width:187px;" />
+        </div>
+        </div>
+        </div>
+        </div><br />
+        <div class="row-fluid" style="position: relative;left: -10px;">
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">下次校验日期&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="NEXT_CALIBRATION_DATE" name="NEXT_CALIBRATION_DATE" class="m-wrap" style="width:220px;" disabled="disabled"/>
+        </div>
+        </div>
+        </div>
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">类型&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="text" id="MEASURE_TYPE2" name="MEASURE_TYPE2" class="m-wrap" style="width:200px;" />
+        </div>
+        </div>
+        </div>
+        </div><br />
+        <div class="row-fluid" style="position: relative;left: -10px;">
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="Common.PASSWORD">校准方式&nbsp;</label>
+        <div class="BZcontrols">
+        <input type="number" id="CALIBRATION_TYPEs" name="CALIBRATION_TYPEs" class="m-wrap" />
+        </div>
+        </div>
+        </div>
+        <div class="span" style="float: left; margin-left: 0px; width: 330px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <span data-lang="Common.PASSWORD" style="color:red;display:inline-block;width:150px;margin-left:20px;margin-top:8px;">（0：外校&nbsp;&nbsp;&nbsp;&nbsp;1：自校）</span>
+        </div>
+        </div>
+        </div><br />
+        <div class="row-fluid" style="position: relative;left:-10px;">
+        <div class="span" style="float: left;margin-left:0px;width:663px !important;">
+        <div class="control-group" style="margin-bottom: 5px;">
+        <label class="control-label" data-lang="">备注&nbsp;</label>
+        <div class="BZcontrols">
+        <textarea cols="3" id="MEMO" style=""></textarea>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">#{lang.EmployeePerformance.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.EmployeePerformance.Cancel}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+    script#MEASURE_STATE(type='x-kendo-template').
+        # if ( data.MEASURE_STATE == 1) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: rgb(141, 180, 226); float: left; margin-top: 2px"></div>
+        <div style="float: left;margin-left:4px">封存</div>
+        </div>
+        # } else if(data.MEASURE_STATE == 2) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: rgb(0, 176, 80); float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">完好</div>
+        </div>
+        # } else if(data.MEASURE_STATE == 4) { #
+        <div>
+        <div style="width: 16px; height: 16px; border-radius: 8px !important; background-color: rgb(218, 150, 148); float: left; margin-top: 2px; "></div>
+        <div style="float: left;margin-left:4px">到期</div>
+        </div>
+        # } #
+    script#CALIBRATION_TYPE(type='x-kendo-template').
+        # if ( data.CALIBRATION_TYPE == 0) { #
+        <div>
+        <div style="float: left;margin-left:4px">外校</div>
+        </div>
+        # } else if(data.CALIBRATION_TYPE == 1) { #
+        <div>
+        <div style="float: left;margin-left:4px">自校</div>
+        </div>
+        # } #
+
+
+

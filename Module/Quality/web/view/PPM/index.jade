@@ -1,0 +1,85 @@
+extends ../../../../../views/layout
+//- block append headcss
+//-     link(type='text/css',href='./Quality/web/css/DefectiveReport.css',rel='stylesheet')
+//-     link(type='text/css',href='./Quality/web/css/jcallout.css',rel='stylesheet')
+block append headjavascript
+    script(type='text/javascript',src='./Quality/web/javascripts/Bandex.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/Raphael-2.1.2.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/BandexHighCharts.js')
+    script(type='text/javascript',src='./javascripts/UI/Scripts/jquery-barcode.js')
+    script(type='text/javascript',src='./Quality/web/controller/PPMController.js')
+block content
+    .row-fluid
+        .span12
+            h3.page-title(data-lang='AccountManage')
+                | #{lang.Quality.PPM}
+            ul.breadcrumb
+                li
+                    i.icon-home
+                    a(href='/') #{lang.EmployeePerformance.Home}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='System') #{lang.Quality.Quality}
+                    i.icon-angle-right
+                li
+                    a(href='javascript:;', data-lang='AccountManage') #{lang.Quality.PPM}
+    form.form-horizontal(style='padding: 5px 2px 0px; border: 1px solid rgb(238, 238, 238);')
+        .row-fluid
+            div(style='float: left;margin-left:0px;width:300px;')
+                .control-group(style='margin-bottom: 5px;')
+                    .input-icon.left(style='width: 250px; display: inline;')
+                        i.icon-search
+                        input#filter.m-wrap(type='text', placeholder='类型')
+            div(style='float: left;margin-left:-30px;width:100px;')
+                .control-group(style='margin-bottom: 5px;')
+                    #output.btn.green
+                        | 查询
+                        i.icon-search
+            div(style='float: left;margin-left:-20px;width:100px;')
+                .control-group(style='margin-bottom: 5px;')
+                    #error_a.btn.btn-sm.blue
+                        | 新增
+                        i.icon-plus-sign
+    #grid
+    script#add(type='text/x-kendo-template', style='margin-top:-200px;').
+        <form class="form-horizontal" id="machineviewmodel" style="width:750px;">
+        <table class="control-group" style="margin-left:-20px;">
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">目标数：</label>
+        <div class="controls" id="span">
+        <input type="number" min="0" id="PPM_TARGET" name="PPM_TARGET" class="span6 m-wrap"/>
+        </div>
+        </td>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">实际数：</label>
+        <div class="controls" id="span">
+        <input type="number" min="0" id="PPM_ACTUAL" name="PPM_ACTUAL" class="span6 m-wrap"/>
+        </div>
+        </td>
+        </tr>
+        <tr>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">类型：</label>
+        <div class="controls" id="span">
+        <select id="PPM_TYPE" style="width:200px;height:24px;">
+        <option value="PPM">PPM</option>
+        <option value="报废金额">报废金额</option>
+        </select>
+        </div>
+        </td>
+        <td class="" style="padding-left:10px;">
+        <label class="control-label" data-lang="">日期：</label>
+        <div class="controls" id="span">
+        <input type="text" id="PPM_DATE" name="PPM_DATE" class="m-wrap" style="width:214px;" />
+        </div>
+        </td>
+        </tr>
+        </table>
+        <div class="form-actions" style="border:0;">
+        <div id="Save" class="btn green">#{lang.Common.OK}<i class="icon-ok"></i></div>
+        <div id="Win_Cancel" class="btn">#{lang.Common.CANCEL}<i class="icon-remove"></i></div>
+        </div>
+        </form>
+
+

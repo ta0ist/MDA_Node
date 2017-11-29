@@ -1,0 +1,24 @@
+  body {
+      font-family: Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif !important;
+      padding: 20px !important;
+  }
+  
+  .k-widget.k-dropdown.k-header {
+      padding: 1px;
+  }
+  
+  .k-icon.k-i-seek-w,
+  .k-icon.k-i-arrow-w,
+  .k-icon.k-i-arrow-e,
+  .k-icon.k-i-seek-e {
+      margin-top: 6px;
+  }
+  
+  .k-icon.k-i-arrow-s {
+      margin-top: 8px;
+  }
+  
+  .k-filter-row th {
+      text-align: left;
+      border-left: 1px solid #cdcdcd;
+  }

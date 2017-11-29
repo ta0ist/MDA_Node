@@ -1,0 +1,16 @@
+#cpyy {
+    width: 570px;
+    position: relative;
+}
+
+#miaoshu>#cpyy>div {
+    float: left;
+    margin-right: 40px;
+    margin-top: 10px;
+}
+
+#miaoshu>#cpyy>div>input {
+    width: 15px;
+    height: 15px;
+    margin-bottom: 7px;
+}

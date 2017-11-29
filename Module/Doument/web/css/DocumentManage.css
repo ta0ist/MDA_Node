@@ -1,0 +1,51 @@
+.list th,
+.list td {
+    border-left: 0px solid #ddd;
+}
+
+.list td {
+    border-top: 0px solid #ddd;
+}
+
+.list tbody tr:nth-child(2n+1) {
+    background-color: #F4F4F4;
+}
+
+.list tbody tr:hover {
+    background-color: #BCB4B0;
+    /*#F35800;;*/
+    color: #FFFFFF;
+}
+
+.image li {
+    float: left;
+    list-style: outside none none;
+    /*min-width: 200px;*/
+    margin: 10px 50px 10px 0px;
+}
+
+.dropdown-menu {
+    font-family: Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif !important;
+}
+
+.fileinput-button {
+    float: none;
+    margin-right: 0px;
+}
+
+.k-delete {
+    color: rgb(206, 206, 206);
+    display: none;
+    margin-left: 0;
+    position: absolute;
+}
+
+div.checker input,
+input[type="search"],
+input[type="search"]:active {
+    -webkit-appearance: checkbox;
+}
+
+div.checker input {
+    opacity: 1;
+}

@@ -1,0 +1,160 @@
+.span {
+    float: left !important;
+    margin-left: 0px !important;
+    width: 300px !important;
+}
+
+.BZcontrols {
+    margin-left: 130px;
+}
+
+.BZcontrols>.radio,
+.BZcontrols>.checkbox {
+    display: inline-block;
+    margin: 8px 15px 0 0 !important;
+    padding: 0 !important;
+}
+
+.statustable {
+    border-color: #000 !important;
+}
+
+.statustable th,
+.statustable td {
+    border-left: 1px solid #000 !important;
+}
+
+.statustable td {
+    border-top: 1px solid #000 !important;
+    width: 35px;
+}
+
+.callout-control-label {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0 !important;
+    width: 70px !important;
+    color: #000;
+    font-size: 12px;
+}
+
+.controls-control-label {
+    margin-left: 70px !important;
+    text-align: left;
+    color: #000;
+    font-size: 12px;
+}
+
+.badge {
+    padding: 5px;
+    border-radius: 3px !important;
+}
+
+.callout {
+    border: 1px solid #CECECE !important;
+    background-color: #CECECE !important;
+}
+
+.notch_right {
+    border-right-color: #CECECE !important;
+}
+
+.order-detail {
+    margin: 0px;
+    list-style: none;
+}
+
+.order-detail .item {
+    display: inline-block;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    border-left: 1px dashed #cdcdcd;
+    padding: 0px 10px;
+}
+
+.order-detail-ui {
+    margin: 0px;
+    list-style: none;
+}
+
+.order-detail-li-group {
+    display: inline-block;
+}
+
+.control-label {
+    width: 80px !important;
+}
+
+.BZcontrols {
+    margin-left: 90px !important;
+}
+
+#po tr {
+    height: 20px;
+}
+
+#item_CRAFT_NAME {
+    width: 80px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#checkbox {
+    width: 20px;
+    height: 20px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+}
+
+.checkbox-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+#po {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#po td {
+    width: 20%;
+    height: 40px;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+}
+
+#po tr:nth-child(12)>td>div {
+    float: left;
+    margin-right: 90px;
+    margin-top: 10px;
+}
+
+#po tr:nth-child(12)>td>div>input {
+    margin-bottom: 7px;
+}
+
+#po tr:nth-child(9)>td>div {
+    float: left;
+    margin-right: 90px;
+    margin-top: 10px;
+}
+
+#po tr:nth-child(9)>td>div>input {
+    margin-bottom: 7px;
+}
+
+#po tr:last-child td {
+    border-bottom: 1px solid black;
+}
+
+#po input {
+    font-size: 14px;
+}
+
+#po #first_td {
+    height: 73px;
+}

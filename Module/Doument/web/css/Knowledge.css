@@ -1,0 +1,46 @@
+.tag_arrow {
+    border-style: solid;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-color: rgb(255, 255, 255) #3cc051 rgb(255, 255, 255) rgb(255, 255, 255);
+    float: left;
+    border-width: 12px;
+    margin: 0px 0px 0px 15px;
+}
+
+.tag {
+    height: 24px;
+    background-color: #3cc051;
+    color: rgb(255, 255, 255);
+    line-height: 24px;
+    display: inline-block;
+    font-weight: 300;
+    padding-left: 0px;
+    padding-right: 5px;
+}
+
+.tag_node {
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+    border-radius: 5px !important;
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+}
+
+.tagul li {
+    display: inline-block;
+    margin-bottom: 10px;
+    width: 136px;
+}
+
+.knows {
+    background-color: #e8e8e8;
+    border-left: 3px solid green;
+    margin-bottom: 10px;
+    min-height: 50px;
+    padding-left: 10px;
+}

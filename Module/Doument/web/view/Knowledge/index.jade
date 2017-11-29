@@ -1,0 +1,60 @@
+extends ../../../../../views/layout
+block append headcss
+    link(type='text/css',href='./Doument/web/css/Knowledge.css',rel='stylesheet')
+block append headjavascript
+    script(src='./Doument/web/js/angular.js')
+    script(type='text/javascript',src='./Doument/web/controller/Knowledge.js')
+block content
+    div(ng-controller="myCtrl")
+        .row-fluid
+            .span12
+                h3.page-title(data-lang='AccountManage')
+                    | 知识库搜索
+                ul.breadcrumb
+                    li
+                        i.icon-home
+                        a(href='/') 主页
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='System') 知识库管理
+                        i.icon-angle-right
+                    li
+                        a(href='javascript:;', data-lang='AccountManage') 知识库搜索
+                       
+        .container(style='width:600px;margin-top: 150px;',ng-show="flag")
+                .row-fluid                
+                    .span12
+                        .input-append
+                            input#appendedInputButtons(placeholder='标签名称', ng-keydown='searchEnter($event)', type='text', style='height: 30px; width: 450px;', ng-model='searchFilter')
+                            button.btn.green(style='border-radius: 0px ! important; height: 40px; min-width: 80px; font-size: 20px;', ng-click='search()')
+                                | 搜索
+                .row-fluid
+                    ul.tagul(style='list-style: outside none none; margin-left: 0px;')
+                        li(ng-repeat="x in pagesData")
+                            span(style='cursor:pointer;', ng-click='searchByTag(x)')
+                                span.tag_arrow
+                                span.tag
+                                    span.tag_node
+                                    span {{x.NAME}}
+                
+        div(ng-show="!flag")
+            .row-fluid
+                .span12
+                    .input-append
+                        input#appendedInputButtons(ng-keydown='searchEnter($event)', type='text', style='height: 30px; width: 350px;', ng-model='filter')
+                        button.btn.green(style='border-radius: 0px ! important; height: 40px; min-width: 80px; font-size: 20px;', ng-click='getTagData(filter)')
+                            | 搜索
+            .row-fluid
+                ul(style='list-style: outside none none; margin-left: 0px;')
+                    li.knows(ng-repeat='item in pagesData2')
+                        p(style='margin-bottom: 2px;padding-top: 3px;') 标签:{{item.NAME}}
+                        p(style='margin-bottom: 2px;padding-top: 2px;')
+                            | 内容:
+                            a(href='{{item | aa}}')
+                                span {{item.TILTE}}
+
+    //-script(src='./Doument/web/js/angular.js')
+    //-script(src='/javascripts/Angular/angular-route.js')
+    //- script(src='./Doument/web/js/app.js')
+    //- script(src='./Doument/web/js/SearchController.js')
+    
