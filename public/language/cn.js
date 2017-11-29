@@ -179,7 +179,10 @@ module.exports = {
         NewShift: '新增班次',
         StartTimeCannotBeEmpty: '开始时间不能为空',
         ValidTimeNotGreater: '有效时间不能大于24个小时！',
-        Divisions: '班次不可有重叠！'
+        Divisions: '班次不可有重叠！',
+
+        OK: "确认",
+        CANCEL: "取消"
     },
     EmployeePerformance: {
         RunningStateAnalysis: '运行状态分析',
@@ -433,5 +436,28 @@ module.exports = {
         ReleaseMem: '发布人员',
         IsUse: '是否启用',
         Operation: '操作'
+    },
+    Measure: {
+        Measure: '量具管理',
+        MeasureManager: '量具管理',
+        ScarpManager: '报废查询',
+        Edit: "编辑",
+        Scrap: "报废",
+        Operator: "操作"
+    },
+    Quality: {
+        Quality: '质量管理',
+        DefectiveReport: '次品报告单',
+        DefectiveOutOfTask: '工单外次品',
+        MaterialInfo: '物料信息',
+        PPM: 'PPM',
+        Add: '新增',
+        Edit: '编辑',
+        Confirm: "确认",
+        Preview: "预览",
+        Delete: "删除",
+        ConfirmRework: "确认返工",
+        ReworkDone: "返工完成",
+        Operator: "操作",
     }
 }

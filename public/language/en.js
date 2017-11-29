@@ -450,9 +450,28 @@ module.exports = {
         "P_STR1": "Optimum Feedrate",
         "P_STR2": "Automatic Return",
         "P_STR3": "M01 Dimisson"
+    },
+    Measure: {
+        Measure: 'Measure',
+        MeasureManager: 'Measure Manager',
+        ScarpManager: 'Scarp Manager',
+        Edit: "Edit",
+        Scrap: "Scrap",
+        Operator: "Operator"
+    },
+    Quality: {
+        Quality: 'Quality',
+        DefectiveReport: 'Defective Report',
+        DefectiveOutOfTask: 'DefectiveOutOfTask',
+        MaterialInfo: 'MaterialInfo',
+        PPM: 'PPM',
+        Add: 'Add',
+        Edit: 'Edit',
+        Confirm: "Confirm",
+        Preview: "Preview",
+        Delete: "Delete",
+        ConfirmRework: "ConfirmRework",
+        ReworkDone: "ReworkDone",
+        Operator: "Operator",
     }
-
-
-
-
 }

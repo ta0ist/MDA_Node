@@ -412,5 +412,28 @@ module.exports = {
     },
     DNC: {
         DNC: 'プログラム転送'
+    },
+    Measure: {
+        Measure: '量管理',
+        MeasureManager: '量管理',
+        ScarpManager: '廃棄の問い合わせ',
+        Edit: "編集",
+        Scrap: "廃車",
+        Operator: "操作"
+    },
+    Quality: {
+        Quality: '品質管理',
+        DefectiveReport: '不良品報告書',
+        DefectiveOutOfTask: 'アルバイトの不良品',
+        MaterialInfo: '物質情報',
+        PPM: 'ppm',
+        Add: '新たに',
+        Edit: '编辑',
+        Confirm: "編集",
+        Preview: "プレビュー",
+        Delete: "削除",
+        ConfirmRework: "帰工を確認する",
+        ReworkDone: "再労働して完成する",
+        Operator: "操作",
     }
 }
