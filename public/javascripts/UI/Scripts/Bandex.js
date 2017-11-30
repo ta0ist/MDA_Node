@@ -6,17 +6,17 @@ $.ajaxSetup({
     type: "POST",
     dataType: "json",
     //contentType: 'application/json',
-    beforeSend: function (xhr, data) {
+    beforeSend: function(xhr, data) {
 
         if (data && data.type == "POST" && $("#ajaxLoading").length == 0) {
             //if (data  && $("#ajaxLoading").length == 0) {
             $("body").append("<div id='ajaxLoading' style='top:45px;right:0;padding:5px;background-color:red;position:fixed;z-index:999999;width:120px;text-align:center;'><span style='color:#fff;' class='font16'><i class='fa fa-refresh fa-spin'></i> _ " + "读取中" + "</span></div>");
         }
     },
-    complete: function () {
+    complete: function() {
         $("#ajaxLoading").remove();
     },
-    error: function (o) {
+    error: function(o) {
         //if (o.responseText != null) {
         //    alert("错误:" + o.responseText);
         //}
@@ -24,11 +24,12 @@ $.ajaxSetup({
         return false;
     }
 });
-(function ($) {
-    $.getparam = function (name) {
+(function($) {
+    $.getparam = function(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+        if (r != null) return unescape(r[2]);
+        return null;
     }
 })(jQuery);
 //guid
@@ -43,7 +44,7 @@ function newGuid() {
     return guid;
 }
 /*cookie*/
-jQuery.cookie = function (name, subName, value, options) {
+jQuery.cookie = function(name, subName, value, options) {
     if (typeof value != 'undefined') { // name and value given, set cookie
         options = options || {};
         if (value === null) {
@@ -80,8 +81,7 @@ jQuery.cookie = function (name, subName, value, options) {
                 k++;
             }
             value = tempResult;
-        }
-        else {
+        } else {
             value = encodeURIComponent(value);
         }
 
@@ -117,7 +117,7 @@ jQuery.cookie = function (name, subName, value, options) {
     }
 };
 /*字符串处理*/
-String.format = function (text) {
+String.format = function(text) {
     //check if there are two arguments in the arguments list
     if (arguments.length <= 1) {
         return text;
@@ -133,210 +133,231 @@ String.format = function (text) {
 };
 var UT = {};
 //MD5加密
-UT.MD5 = function (string) {
+UT.MD5 = function(string) {
 
-    function RotateLeft(lValue, iShiftBits) {
-        return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
-    }
-
-    function AddUnsigned(lX, lY) {
-        var lX4, lY4, lX8, lY8, lResult;
-        lX8 = (lX & 0x80000000);
-        lY8 = (lY & 0x80000000);
-        lX4 = (lX & 0x40000000);
-        lY4 = (lY & 0x40000000);
-        lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
-        if (lX4 & lY4) {
-            return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
+        function RotateLeft(lValue, iShiftBits) {
+            return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
         }
-        if (lX4 | lY4) {
-            if (lResult & 0x40000000) {
-                return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
-            } else {
-                return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
+
+        function AddUnsigned(lX, lY) {
+            var lX4, lY4, lX8, lY8, lResult;
+            lX8 = (lX & 0x80000000);
+            lY8 = (lY & 0x80000000);
+            lX4 = (lX & 0x40000000);
+            lY4 = (lY & 0x40000000);
+            lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+            if (lX4 & lY4) {
+                return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
             }
-        } else {
-            return (lResult ^ lX8 ^ lY8);
+            if (lX4 | lY4) {
+                if (lResult & 0x40000000) {
+                    return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
+                } else {
+                    return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
+                }
+            } else {
+                return (lResult ^ lX8 ^ lY8);
+            }
         }
-    }
 
-    function F(x, y, z) { return (x & y) | ((~x) & z); }
-    function G(x, y, z) { return (x & z) | (y & (~z)); }
-    function H(x, y, z) { return (x ^ y ^ z); }
-    function I(x, y, z) { return (y ^ (x | (~z))); }
+        function F(x, y, z) { return (x & y) | ((~x) & z); }
 
-    function FF(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
+        function G(x, y, z) { return (x & z) | (y & (~z)); }
 
-    function GG(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
+        function H(x, y, z) { return (x ^ y ^ z); }
 
-    function HH(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
+        function I(x, y, z) { return (y ^ (x | (~z))); }
 
-    function II(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
+        function FF(a, b, c, d, x, s, ac) {
+            a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
+            return AddUnsigned(RotateLeft(a, s), b);
+        };
 
-    function ConvertToWordArray(string) {
-        var lWordCount;
-        var lMessageLength = string.length;
-        var lNumberOfWords_temp1 = lMessageLength + 8;
-        var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
-        var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
-        var lWordArray = Array(lNumberOfWords - 1);
-        var lBytePosition = 0;
-        var lByteCount = 0;
-        while (lByteCount < lMessageLength) {
+        function GG(a, b, c, d, x, s, ac) {
+            a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
+            return AddUnsigned(RotateLeft(a, s), b);
+        };
+
+        function HH(a, b, c, d, x, s, ac) {
+            a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
+            return AddUnsigned(RotateLeft(a, s), b);
+        };
+
+        function II(a, b, c, d, x, s, ac) {
+            a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
+            return AddUnsigned(RotateLeft(a, s), b);
+        };
+
+        function ConvertToWordArray(string) {
+            var lWordCount;
+            var lMessageLength = string.length;
+            var lNumberOfWords_temp1 = lMessageLength + 8;
+            var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
+            var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
+            var lWordArray = Array(lNumberOfWords - 1);
+            var lBytePosition = 0;
+            var lByteCount = 0;
+            while (lByteCount < lMessageLength) {
+                lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+                lBytePosition = (lByteCount % 4) * 8;
+                lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
+                lByteCount++;
+            }
             lWordCount = (lByteCount - (lByteCount % 4)) / 4;
             lBytePosition = (lByteCount % 4) * 8;
-            lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
-            lByteCount++;
-        }
-        lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-        lBytePosition = (lByteCount % 4) * 8;
-        lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
-        lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
-        lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
-        return lWordArray;
-    };
+            lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
+            lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
+            lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
+            return lWordArray;
+        };
 
-    function WordToHex(lValue) {
-        var WordToHexValue = "", WordToHexValue_temp = "", lByte, lCount;
-        for (lCount = 0; lCount <= 3; lCount++) {
-            lByte = (lValue >>> (lCount * 8)) & 255;
-            WordToHexValue_temp = "0" + lByte.toString(16);
-            WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
-        }
-        return WordToHexValue;
-    };
-
-    function Utf8Encode(string) {
-        string = string.replace(/\r\n/g, "\n");
-        var utftext = "";
-
-        for (var n = 0; n < string.length; n++) {
-
-            var c = string.charCodeAt(n);
-
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
+        function WordToHex(lValue) {
+            var WordToHexValue = "",
+                WordToHexValue_temp = "",
+                lByte, lCount;
+            for (lCount = 0; lCount <= 3; lCount++) {
+                lByte = (lValue >>> (lCount * 8)) & 255;
+                WordToHexValue_temp = "0" + lByte.toString(16);
+                WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
             }
-            else if ((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
+            return WordToHexValue;
+        };
+
+        function Utf8Encode(string) {
+            string = string.replace(/\r\n/g, "\n");
+            var utftext = "";
+
+            for (var n = 0; n < string.length; n++) {
+
+                var c = string.charCodeAt(n);
+
+                if (c < 128) {
+                    utftext += String.fromCharCode(c);
+                } else if ((c > 127) && (c < 2048)) {
+                    utftext += String.fromCharCode((c >> 6) | 192);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                } else {
+                    utftext += String.fromCharCode((c >> 12) | 224);
+                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                }
+
             }
 
+            return utftext;
+        };
+
+        var x = Array();
+        var k, AA, BB, CC, DD, a, b, c, d;
+        var S11 = 7,
+            S12 = 12,
+            S13 = 17,
+            S14 = 22;
+        var S21 = 5,
+            S22 = 9,
+            S23 = 14,
+            S24 = 20;
+        var S31 = 4,
+            S32 = 11,
+            S33 = 16,
+            S34 = 23;
+        var S41 = 6,
+            S42 = 10,
+            S43 = 15,
+            S44 = 21;
+
+        string = Utf8Encode(string);
+
+        x = ConvertToWordArray(string);
+
+        a = 0x67452301;
+        b = 0xEFCDAB89;
+        c = 0x98BADCFE;
+        d = 0x10325476;
+
+        for (k = 0; k < x.length; k += 16) {
+            AA = a;
+            BB = b;
+            CC = c;
+            DD = d;
+            a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
+            d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
+            c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
+            b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
+            a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
+            d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
+            c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
+            b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
+            a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
+            d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
+            c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
+            b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
+            a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
+            d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
+            c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
+            b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
+            a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
+            d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
+            c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
+            b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
+            a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
+            d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
+            c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
+            b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
+            a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
+            d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
+            c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
+            b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
+            a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
+            d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
+            c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
+            b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
+            a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
+            d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
+            c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
+            b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
+            a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
+            d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
+            c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
+            b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
+            a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
+            d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
+            c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
+            b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
+            a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
+            d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
+            c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
+            b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
+            a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
+            d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
+            c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
+            b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
+            a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
+            d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
+            c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
+            b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
+            a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
+            d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
+            c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
+            b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
+            a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
+            d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
+            c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
+            b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
+            a = AddUnsigned(a, AA);
+            b = AddUnsigned(b, BB);
+            c = AddUnsigned(c, CC);
+            d = AddUnsigned(d, DD);
         }
 
-        return utftext;
-    };
+        var temp = WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);
 
-    var x = Array();
-    var k, AA, BB, CC, DD, a, b, c, d;
-    var S11 = 7, S12 = 12, S13 = 17, S14 = 22;
-    var S21 = 5, S22 = 9, S23 = 14, S24 = 20;
-    var S31 = 4, S32 = 11, S33 = 16, S34 = 23;
-    var S41 = 6, S42 = 10, S43 = 15, S44 = 21;
-
-    string = Utf8Encode(string);
-
-    x = ConvertToWordArray(string);
-
-    a = 0x67452301; b = 0xEFCDAB89; c = 0x98BADCFE; d = 0x10325476;
-
-    for (k = 0; k < x.length; k += 16) {
-        AA = a; BB = b; CC = c; DD = d;
-        a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
-        d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
-        c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
-        b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
-        a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
-        d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
-        c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
-        b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
-        a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
-        d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
-        c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
-        b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
-        a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
-        d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
-        c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
-        b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
-        a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
-        d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
-        c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
-        b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
-        a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
-        d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
-        c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
-        b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
-        a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
-        d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
-        c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
-        b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
-        a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
-        d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
-        c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
-        b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
-        a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
-        d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
-        c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
-        b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
-        a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
-        d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
-        c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
-        b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
-        a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
-        d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
-        c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
-        b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
-        a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
-        d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
-        c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
-        b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
-        a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
-        d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
-        c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
-        b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
-        a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
-        d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
-        c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
-        b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
-        a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
-        d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
-        c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
-        b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
-        a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
-        d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
-        c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
-        b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
-        a = AddUnsigned(a, AA);
-        b = AddUnsigned(b, BB);
-        c = AddUnsigned(c, CC);
-        d = AddUnsigned(d, DD);
+        return temp.toLowerCase();
     }
-
-    var temp = WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);
-
-    return temp.toLowerCase();
-}
-//加载多语言
+    //加载多语言
 $.extend({
     includePath: '',
-    include: function (file) {
+    include: function(file) {
         var files = typeof file == "string" ? [file] : file;
         for (var i = 0; i < files.length; i++) {
             var name = files[i].replace(/^\s|\s$/g, "");
@@ -352,10 +373,10 @@ $.extend({
     }
 });
 
-if (typeof (kendo) != "undefined") {
+if (typeof(kendo) != "undefined") {
 
     /*KendoUI Extend 获取选择的行数据*/
-    kendo.ui.Grid.prototype.selectedDataRows = function () {
+    kendo.ui.Grid.prototype.selectedDataRows = function() {
         var rows = this.select();
         var data = [];
         for (var i = 0; i < rows.length; i++) {
@@ -364,7 +385,7 @@ if (typeof (kendo) != "undefined") {
         return data;
     };
     /*删除选择行的数据*/
-    kendo.ui.Grid.prototype.deleteDataRows = function (ds) {
+    kendo.ui.Grid.prototype.deleteDataRows = function(ds) {
         var rows = this.select();
         var data = [];
         for (var i = 0; i < rows.length; i++) {
@@ -380,7 +401,7 @@ if (typeof (kendo) != "undefined") {
         return true;
     };
     /*grid 调整大小*/
-    kendo.ui.Grid.prototype.resizeGrid = function (height) {
+    kendo.ui.Grid.prototype.resizeGrid = function(height) {
         var gridElement = $(this);
         var dataArea = gridElement[0].content;
 
@@ -507,8 +528,8 @@ $.widget("bz.grid", {
         allDetailExpand: true,
         group: false,
         groupfield: null,
-        dataSource: true,//使用dataSource数据源
-        customsearch: false,//自定义查询，分页model不一样需要配置
+        dataSource: true, //使用dataSource数据源
+        customsearch: false, //自定义查询，分页model不一样需要配置
         custom: {
             PrimaryKey: "",
             fields: {},
@@ -520,11 +541,11 @@ $.widget("bz.grid", {
     ds: null,
     selectall: false,
     //initlize 
-    _init: function () {
+    _init: function() {
 
     },
     // the constructor
-    _create: function () {
+    _create: function() {
         var $opts = this.options;
         var $this = this;
         if ($opts.grid_no == "") {
@@ -538,7 +559,7 @@ $.widget("bz.grid", {
             var g = $opts.custom;
             $this._buildGrid(g);
         } else {
-            $.getJSON($.gridurl, { grid_no: $opts.grid_no }, function (g) {
+            $.getJSON($.gridurl, { grid_no: $opts.grid_no }, function(g) {
                 if (g.result.ResultNo == 0) {
                     x5alert(String.format("没有找到 {0} 格式", $opts.grid_no));
                     return;
@@ -552,11 +573,11 @@ $.widget("bz.grid", {
         }
     },
     // called when created, and later when changing options
-    _refresh: function () {
+    _refresh: function() {
         //this._trigger("change");
     },
     //创建Grid
-    _buildGrid: function (g) {
+    _buildGrid: function(g) {
         var $opts = this.options;
         var $this = this;
         $this.ds = new kendo.data.DataSource({
@@ -581,76 +602,35 @@ $.widget("bz.grid", {
                     contentType: 'application/json', //提交类型为json
                     type: "POST"
                 },
-                parameterMap: function (options, operation) {
+                parameterMap: function(options, operation) {
                     if (operation !== "read" && options.models) {
                         return JSON.stringify({ models: options.models });
                     } else {
                         //查找是否有条件函数
-                        if (typeof ($opts.filter) === "function") {
+                        if (typeof($opts.filter) === "function") {
                             //如果已经有filter
                             if (options.filter === undefined || options.filter == null) {
                                 if ($opts.customsearch) {
-
-                                    if ($opts.filter() == undefined) {
-                                        return JSON.stringify(options);
-                                    }
-
                                     if ($opts.filter().length == 0) {
                                         return JSON.stringify(options);
                                     }
-                                    if ($opts.filter().length == 1) {
-
-                                        // if ($opts.filter()[0].flag == "false")
-                                        // {
-                                        //     options.Keywords = $opts.filter()[0].value;
-                                        //     return JSON.stringify($opts.filter()[0]);
-                                        // }
-                                        //else if ($opts.filter()[0].flag == "true")
-                                        // {
-                                        //     options.Keywords = $opts.filter()[0].value;
-                                        //     return JSON.stringify(options);
-
-                                        //}
-                                        // else
-                                        //{
-
-                                        options.Keywords = $opts.filter()[0].Keywords;
-                                        options.PageIndex = options.page;
-                                        options.date_begin = $opts.filter()[0].date_begin;
-                                        options.end_dt = $opts.filter()[0].end_dt;
-
-                                        return JSON.stringify(options);
-                                        // }
-                                    }
-
                                     $.extend(options, { filter: { filters: $opts.filter(), logic: ($opts.logic != null) ? $opts.logic : "and" } });
                                     return JSON.stringify(options);
-                                }
-                                else {
-
+                                } else {
                                     var fs = {
                                         PageIndex: options.page,
                                         PageSize: options.pageSize
-                                        //keyword : $opts.filter().value
+                                            //keyword : $opts.filter().value
                                     }
                                     var ft = $opts.filter();
-                                    if (ft == undefined) {
-                                        return JSON.stringify(options);
-                                    }
                                     var tempjson = {};
                                     for (var i = 0; i < ft.length; i++) {
                                         tempjson[ft[i].field] = ft[i].value;
-                                        if ($opts.filter()[0].flag == "false") {
-                                            options.Keywords = $opts.filter()[0].Keywords;
-                                            options.PageIndex = options.page;
-                                            return JSON.stringify(options);
-                                        }
                                     }
                                     $.extend(fs, tempjson);
                                     return JSON.stringify(fs);
                                 }
-                            }
-                            else {
+                            } else {
                                 var fs = $opts.filter().filters;
                                 options.filter.filters = options.filter.filters.concat(fs);
                             };
@@ -674,25 +654,23 @@ $.widget("bz.grid", {
                     id: g.PrimaryKey, //ID如果不存在于fields,新增和更改无法识别。
                     fields: g.fields
                 },
-                data: function (response) {
+                data: function(response) {
                     if ($opts.isPage) {
-                        if (response.Data.List == undefined) {//前端分页
+                        if (response.Data.List == undefined) { //前端分页
                             return response.Data;
-                        }
-                        else {
+                        } else {
                             return response.Data.List;
                         }
                     } else {
                         return response.Data;
                     }
                 },
-                total: function (response) {
+                total: function(response) {
                     if ($opts.isPage) {
                         //return response.row_count;
-                        if (response.Data.PageInfo == undefined) {//前端分页
+                        if (response.Data.PageInfo == undefined) { //前端分页
                             return response.Data.length;
-                        }
-                        else {
+                        } else {
                             return response.Data.PageInfo.RecordCount;
                         }
                     } else {
@@ -702,12 +680,11 @@ $.widget("bz.grid", {
             },
             group: $opts.group ? $opts.groupfield : [],
             aggregate: g.aggrs,
-            change: function (e) {
-            },
-            error: function (e) {
+            change: function(e) {},
+            error: function(e) {
                 alert("远程操作错误；" + e.xhr.responseText);
             },
-            requestEnd: function (e) {
+            requestEnd: function(e) {
                 if (e.type == "update" || e.type == "destroy" || e.type == "create") {
                     if (e.response.IsSuccess) {
                         //Dialog.Notify("操作成功" + e.type);
@@ -745,12 +722,12 @@ $.widget("bz.grid", {
             width: $opts.width,
             reorderable: true,
             pageable: $opts.isPage ? {
-                input: typeof ($opts.pageable) === "object" ? $opts.pageable.input : true,
-                refresh: typeof ($opts.pageable) === "object" ? $opts.pageable.refresh : true,
-                pageSizes: typeof ($opts.pageable) === "object" ? $opts.pageable.pageSizes : true,
-                numeric: typeof ($opts.pageable) === "object" ? $opts.pageable.numeric : true,
-                previousNext: typeof ($opts.pageable) === "object" ? $opts.pageable.previousNext : true,
-                info: typeof ($opts.pageable) === "object" ? $opts.pageable.info : true
+                input: typeof($opts.pageable) === "object" ? $opts.pageable.input : true,
+                refresh: typeof($opts.pageable) === "object" ? $opts.pageable.refresh : true,
+                pageSizes: typeof($opts.pageable) === "object" ? $opts.pageable.pageSizes : true,
+                numeric: typeof($opts.pageable) === "object" ? $opts.pageable.numeric : true,
+                previousNext: typeof($opts.pageable) === "object" ? $opts.pageable.previousNext : true,
+                info: typeof($opts.pageable) === "object" ? $opts.pageable.info : true
             } : false,
             sortable: {
                 mode: "single"
@@ -764,7 +741,7 @@ $.widget("bz.grid", {
             detailTemplate: $opts.detailTemplate,
 
             detailExpand: $opts.detailExpand,
-            dataBound: function (e) {
+            dataBound: function(e) {
                 for (var i = 0; i < $(".k-grid-aa").length; i++) {
                     $($(".k-grid-aa")[i]).removeClass("k-button");
                 }
@@ -780,20 +757,19 @@ $.widget("bz.grid", {
             detailInit: $opts.detailInit,
             selectable: $opts.selectable,
             columns: g.cols,
-            change: function (e) {
-                if (typeof ($opts.rowClick) != "function") { return; }
+            change: function(e) {
+                if (typeof($opts.rowClick) != "function") { return; }
                 var data = $this.grid.selectedDataRows();
                 $opts.rowClick.call(this, data);
             }
         }).data("kendoGrid");
-        $("#check-all").click(function (e) {
+        $("#check-all").click(function(e) {
             var checkboxs = $(".check-single");
             if (this.checked) {
                 for (var i = 0; i < checkboxs.length; i++) {
                     checkboxs[i].checked = true;
                 }
-            }
-            else {
+            } else {
                 for (var i = 0; i < checkboxs.length; i++) {
                     checkboxs[i].checked = false;
                 }
@@ -803,9 +779,9 @@ $.widget("bz.grid", {
         //插入展开按钮
         if ($opts.detailTemplate != null && $opts.allDetailExpand) {
             $(".k-hierarchy-cell").append('<i id="grid_expand" class="icon-sitemap" style=" cursor: pointer;"></i>');
-            $("#grid_expand").toggle(function () {
+            $("#grid_expand").toggle(function() {
                 $("#grid").data("kendoGrid").expandRow(".k-master-row");
-            }, function () {
+            }, function() {
                 $("#grid").data("kendoGrid").collapseRow(".k-master-row");
             });
         }
@@ -821,7 +797,7 @@ $.widget("bz.grid", {
         }
     },
     // 公共方法; 刷新数据源 $().singleDept("refresh");
-    refresh: function (func, logic) {
+    refresh: function(func, logic) {
         var $opts = this.options;
         if (func === undefined) {
             this.ds.query();
@@ -834,7 +810,7 @@ $.widget("bz.grid", {
         }
     },
     //获取选择的数据
-    selectedDataRows: function () {
+    selectedDataRows: function() {
         if (this.grid) {
             var data = this.grid.selectedDataRows();
             return data;
@@ -843,7 +819,7 @@ $.widget("bz.grid", {
         }
     },
     //选择框选择的行
-    checkedDataRows: function () {
+    checkedDataRows: function() {
         var checkboxs = $(".check-single");
         var dataSource = this.ds;
         var dataItemAarry = [];
@@ -855,7 +831,7 @@ $.widget("bz.grid", {
         return dataItemAarry;
     },
     //选择所有行
-    selectAll: function () {
+    selectAll: function() {
         if (this.selectall) {
             this.grid.clearSelection();
         } else {
@@ -864,11 +840,11 @@ $.widget("bz.grid", {
         this.selectall = !this.selectall;
     },
     //删除行
-    deleteRows: function () {
+    deleteRows: function() {
         this.grid.deleteDataRows(this.ds);
     },
     //新增行
-    addNew: function (row) {
+    addNew: function(row) {
         if (row === undefined) {
             this.ds.add();
         } else {
@@ -876,36 +852,36 @@ $.widget("bz.grid", {
         }
     },
     //保存行
-    save: function () {
+    save: function() {
         this.ds.sync();
     },
     //调整GRID 高度
-    resizeGrid: function (height) {
+    resizeGrid: function(height) {
         this.grid.resizeGrid(height);
     },
     //调整GRID 宽度,防止无限拉伸
-    resizeGridWidth: function () {
-        $(this.element).width($("#contextPage").width() - this.options.dwidth == undefined ? 245 : this.options.dwidth);//lkj
+    resizeGridWidth: function() {
+        $(this.element).width($("#contextPage").width() - this.options.dwidth == undefined ? 245 : this.options.dwidth); //lkj
     },
     // 销毁对象
-    _destroy: function () {
+    _destroy: function() {
         // remove generated elements
         this.element.remove();
     },
     // _setOptions is called with a hash of all options that are changing always refresh when changing options
-    _setOptions: function () {
+    _setOptions: function() {
         // _super and _superApply handle keeping the right this-context
         this._superApply(arguments);
         this._refresh();
     },
     // _setOption is called for each individual option that is changing
-    _setOption: function (key, value) {
+    _setOption: function(key, value) {
         this._super(key, value);
     }
 });
 
 //editer
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.editer", {
         options: {
             url: "",
@@ -923,10 +899,10 @@ $.widget("bz.grid", {
             template: null,
             grouptype: 1 //针对组的类别 //分类别,1:设备组;2:设备组+设备;3:人员组;4:人员组+人员;
         },
-        _init: function () {
+        _init: function() {
 
         },
-        _create: function () {
+        _create: function() {
             var pt = this._position();
             if ($(".editable-container").length > 0) {
                 $(".editable-container").remove();
@@ -939,26 +915,26 @@ $.widget("bz.grid", {
                     '</div></div></div></div>');
                 //获取值
                 //$("#BzEditerText").val(this.element.html());
-                $("#BzEditerOk").bind("click", { obj: this }, function (event) {
+                $("#BzEditerOk").bind("click", { obj: this }, function(event) {
                     event.data.obj.options.Ok.caller(event.data.obj);
 
                 });
                 //关闭编辑框
-                $("#BzEditerCancel").bind("click", { obj: this }, function (event) {
+                $("#BzEditerCancel").bind("click", { obj: this }, function(event) {
                     event.data.obj.options.Cancel.caller(event.data.obj);
                 });
-            }
-            else {
+            } else {
                 switch (this.options.type) {
-                    case "comboxtree": $("body").append('<div class="popover fade in editable-container editable-popup right" style="display:block;z-index:9999;">' +
-                        '<div class="arrow" style="left: -10px;"></div>' +
-                        '<h3 class="popover-title">' + this.options.title + '</h3>' +
-                        '<div class="popover-content"> <div><div class="editableform-loading" style="display: none;"></div>' +
-                        '<div class="form-inline editableform" style=""><div class="control-group"><div>' +
-                        '<div class="editable-input" style="position: relative;">' +
-                        '<input type="text" id="BzEditerComboxTree" class="input-medium" style="padding-right: 24px;"></div><div class="editable-buttons">' +
-                        '<button id="BzEditerOk" class="btn btn-primary" style="padding-bottom: 6px; padding-top: 6px; margin-top: 0px; height: 34px; border-width: 1px;"><i class="icon-ok icon-white"></i></button>' +
-                        '<button id="BzEditerCancel" class="btn editable-cancel" style="width: 44px; padding-bottom: 6px; padding-top: 6px; margin-top: 0px; height: 34px; border-width: 1px;"><i class="icon-remove"></i></button></div></div><div class="editable-error-block help-block" style="display: none;"></div></div></div></div></div></div>');
+                    case "comboxtree":
+                        $("body").append('<div class="popover fade in editable-container editable-popup right" style="display:block;z-index:9999;">' +
+                            '<div class="arrow" style="left: -10px;"></div>' +
+                            '<h3 class="popover-title">' + this.options.title + '</h3>' +
+                            '<div class="popover-content"> <div><div class="editableform-loading" style="display: none;"></div>' +
+                            '<div class="form-inline editableform" style=""><div class="control-group"><div>' +
+                            '<div class="editable-input" style="position: relative;">' +
+                            '<input type="text" id="BzEditerComboxTree" class="input-medium" style="padding-right: 24px;"></div><div class="editable-buttons">' +
+                            '<button id="BzEditerOk" class="btn btn-primary" style="padding-bottom: 6px; padding-top: 6px; margin-top: 0px; height: 34px; border-width: 1px;"><i class="icon-ok icon-white"></i></button>' +
+                            '<button id="BzEditerCancel" class="btn editable-cancel" style="width: 44px; padding-bottom: 6px; padding-top: 6px; margin-top: 0px; height: 34px; border-width: 1px;"><i class="icon-remove"></i></button></div></div><div class="editable-error-block help-block" style="display: none;"></div></div></div></div></div></div>');
                         this.comboxtree = $("#BzEditerComboxTree").comboxTree({
                             url: this.options.comboxTree.url,
                             url2: this.options.comboxTree.url2,
@@ -968,17 +944,17 @@ $.widget("bz.grid", {
                             remote: true,
                             diffwidth: 36
                         }).data("BZ-comboxTree");
-                        $("#BzEditerOk").bind("click", { obj: this }, function (event) {
+                        $("#BzEditerOk").bind("click", { obj: this }, function(event) {
                             event.data.obj.options.Ok.call(event.data.obj, event.data.obj.comboxtree);
 
                         });
-                        $(document).unbind("mouseup").bind("mouseup", { obj: this }, function (event) {
+                        $(document).unbind("mouseup").bind("mouseup", { obj: this }, function(event) {
                             if ($(event.target).parents(".editable-container").length == 0 && $(event.target).parents("#Combox_orgnizetree_BzEditerComboxTree").length == 0 && $(event.target).parents("#bz_Search_obj").length == 0) {
                                 event.data.obj.close();
                             }
                         });
                         break;
-                    default://默认编辑框
+                    default: //默认编辑框
                         $("body").append('<div class="popover fade in editable-container editable-popup right" style="display:block;z-index:9999;">' +
                             '<div class="arrow" style="left: -10px;"></div>' +
                             '<h3 class="popover-title">' + this.options.title + '</h3>' +
@@ -991,14 +967,14 @@ $.widget("bz.grid", {
                         //获取值
 
                         $("#BzEditerText").val(this.element.html());
-                        $("#BzEditerOk").bind("click", { obj: this }, function (event) {
+                        $("#BzEditerOk").bind("click", { obj: this }, function(event) {
                             event.data.obj.options.Ok.call(event.data.obj, $("#BzEditerText").val());
 
                         });
-                        $(".editable-clear-x").bind("click", function () {
+                        $(".editable-clear-x").bind("click", function() {
                             $("#BzEditerText").val("");
                         });
-                        $(document).unbind("mouseup").bind("mouseup", { obj: this }, function (event) {
+                        $(document).unbind("mouseup").bind("mouseup", { obj: this }, function(event) {
                             if ($(event.target).parents(".editable-container").length == 0) {
                                 event.data.obj.close();
                             }
@@ -1006,8 +982,8 @@ $.widget("bz.grid", {
                         break;
                 }
                 //关闭编辑框
-                $("#BzEditerCancel").bind("click", { obj: this }, function (event) {
-                    if (typeof (event.data.obj.options.Close) == "function") {
+                $("#BzEditerCancel").bind("click", { obj: this }, function(event) {
+                    if (typeof(event.data.obj.options.Close) == "function") {
                         event.data.obj.options.Close.call(event.data.obj, $("#BzEditerText").val());
                     }
                     event.data.obj.close();
@@ -1019,7 +995,7 @@ $.widget("bz.grid", {
             });
 
         },
-        show: function () {
+        show: function() {
             var pt = this._position();
             $(".editable-container").css({
                 top: pt.top + pt.height / 2 - $(".editable-container").height() / 2 + "px",
@@ -1029,7 +1005,7 @@ $.widget("bz.grid", {
             $("#BzEditerText").val(this.element.html());
             $(".editable-container").show();
         },
-        close: function () {
+        close: function() {
             this.destroy();
             $(".editable-container").remove();
             if (this.comboxtree != undefined) {
@@ -1037,10 +1013,10 @@ $.widget("bz.grid", {
                 $("#Combox_orgnizetree").remove();
             }
         },
-        hide: function () {
+        hide: function() {
             $(".editable-container").hide();
         },
-        _position: function () {
+        _position: function() {
             var position = this.element.offset();
             return tjson = {
                 top: position.top,
@@ -1053,13 +1029,12 @@ $.widget("bz.grid", {
 })(jQuery);
 
 //对话框
-(function ($) {
-    $.x5window = function (title, content, callback, par) {
+(function($) {
+    $.x5window = function(title, content, callback, par) {
         function _callback(data) {
             if (par != undefined) {
                 callback(data, par);
-            }
-            else {
+            } else {
                 callback(data);
             }
         }
@@ -1071,16 +1046,16 @@ $.widget("bz.grid", {
             draggable: true,
             resizable: false,
             title: title,
-            close: function (e) {
-                if (typeof (callback) != "undefined") {
+            close: function(e) {
+                if (typeof(callback) != "undefined") {
                     //if (this.ok) {
-                    _callback(this.data);//回调关闭窗口事件
+                    _callback(this.data); //回调关闭窗口事件
                     //}
                 }
                 this.destroy();
             }
         }).data("kendoWindow").content(content).center();
-        $("#Win_Cancel").click(function () {
+        $("#Win_Cancel").click(function() {
             $("#x5window").data("kendoWindow").close();
         });
     }
@@ -1090,7 +1065,7 @@ $.widget("bz.grid", {
     标题，数据，字段，是否单选，确定回传事件
     fields like {field:{title:"1"},field2:{title:"2",type:"string"}}
     */
-    $.x5selectWindow = function (title, jsonData, fields, callback, isSingle) {
+    $.x5selectWindow = function(title, jsonData, fields, callback, isSingle) {
         if (isSingle == undefined) {
             isSingle = true;
         }
@@ -1130,8 +1105,8 @@ $.widget("bz.grid", {
             resizable: true,
             width: 520,
             title: title,
-            close: function (e) {
-                if (typeof (callback) != "undefined") {
+            close: function(e) {
+                if (typeof(callback) != "undefined") {
                     if (this.ok) {
                         callback(this.data);
                     }
@@ -1142,8 +1117,8 @@ $.widget("bz.grid", {
 
         var buttons = parent.$("#x5selectwindow").find("button");
 
-        $(buttons[0]).click(function (e) {
-            if (typeof (callback) != "undefined") {
+        $(buttons[0]).click(function(e) {
+            if (typeof(callback) != "undefined") {
                 //判断是否选择了行
                 var selectedRows = grid.select();
                 if (selectedRows.length == 0) {
@@ -1161,7 +1136,7 @@ $.widget("bz.grid", {
             }
         });
 
-        $(buttons[1]).click(function (e) {
+        $(buttons[1]).click(function(e) {
             wind.close();
         });
     }
@@ -1178,10 +1153,12 @@ function reset() {
         buttonFocus: "none"
     });
 }
+
 function BzSuccess(message) {
     reset();
     parent.alertify.success(message);
 }
+
 function BzAlert(message) {
     reset();
     parent.alertify.alert(message);
@@ -1190,15 +1167,15 @@ function BzAlert(message) {
 
 function BzConfirm(message, callback, par) {
     reset();
+
     function _callback(e) {
         if (par != undefined) {
             callback(e, par);
-        }
-        else {
+        } else {
             callback(e);
         }
     };
-    parent.alertify.confirm(message, function (e) {
+    parent.alertify.confirm(message, function(e) {
         _callback(e);
         //if (e) {
         //    //if()
@@ -1213,7 +1190,7 @@ function BzConfirm(message, callback, par) {
 
 function BzPrompt(message, callback, value) {
     reset();
-    parent.alertify.prompt(message, function (e, str) {
+    parent.alertify.prompt(message, function(e, str) {
         if (e) {
             callback.call(this, str);
         } else {
@@ -1224,15 +1201,15 @@ function BzPrompt(message, callback, value) {
 
 //*获取账号组
 function FindSubGroupByParentIdRecycle(id, chtml) {
-    $.get("/Common/PeopleManageGroup/FindSubGroupByParentIdRecycle", { GroupId: id }, function (data) {
+    $.get("/Common/PeopleManageGroup/FindSubGroupByParentIdRecycle", { GroupId: id }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: fomattree(gettree(data.Data, "icon-group"))
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    grid.grid("refresh", function () {
+                select: function(e) {
+                    grid.grid("refresh", function() {
                         return [
                             { field: "keyword", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) },
                             { field: "userType", Operator: "eq", value: parseInt($('.nav-tabs li[class="active"]').attr("value")) }
@@ -1246,8 +1223,7 @@ function FindSubGroupByParentIdRecycle(id, chtml) {
                 $("#tree_addRootNode").show();
                 refreshGrid();
             }
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -1257,16 +1233,16 @@ function FindSubUserGroupByParentIdRecycle(id, chtml, callback) {
     function _callback(data) {
         callback(data);
     }
-    $.get("/Common/PeopleManageGroup/FindSubUserGroupByParentIdRecycle", { GroupId: id }, function (data) {
+    $.get("/Common/PeopleManageGroup/FindSubUserGroupByParentIdRecycle", { GroupId: id }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: accountToGroup(fomattree(gettree(data.Data.GroupInfo, "icon-group")), data.Data.UserInfo, "icon-user")
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    if (typeof (callback) != "undefined") {
-                        _callback(e.node);//协助诊断用
+                select: function(e) {
+                    if (typeof(callback) != "undefined") {
+                        _callback(e.node); //协助诊断用
                     }
                     //var accuntid = parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")),
                     //    type = parseInt($(e.node).find('[attr="treenode"]').attr("flag")),
@@ -1332,31 +1308,29 @@ function FindSubUserGroupByParentIdRecycle(id, chtml, callback) {
                     //}
                 }
             }).data("kendoTreeView").collapse(".k-item");
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
 }
 //*获取设备组
 //*获取设备组
-function GetGrouplist(id, url, chtml, icon,callback) {
+function GetGrouplist(id, url, chtml, icon, callback) {
     function _callback(data) {
         callback(data);
     }
-    $.post(url, { groupID: id }, function (data) {
-       // data = JSON.parse(data);
+    $.post(url, { groupID: id }, function(data) {
+        // data = JSON.parse(data);
         $("#orgnizetree").kendoTreeView({
             dataSource: {
                 data: fomattree(gettree(data.Data, icon))
             },
             template: kendo.template(chtml),
-            select: function (e) {
-                if (typeof (callback) != "undefined") {
-                    _callback(e.node);//协助诊断用
-                }
-                else {
-                    grid.grid("refresh", function () {
+            select: function(e) {
+                if (typeof(callback) != "undefined") {
+                    _callback(e.node); //协助诊断用
+                } else {
+                    grid.grid("refresh", function() {
                         var type = $('.nav-tabs li[class="active"]').attr("value");
                         if (type == undefined) {
                             return [
@@ -1365,7 +1339,8 @@ function GetGrouplist(id, url, chtml, icon,callback) {
                         } else {
                             return [
                                 { field: "keyword", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) },
-                                { field: "userType", Operator: "eq", value: parseInt($('.nav-tabs li[class="active"]').attr("value")) }]
+                                { field: "userType", Operator: "eq", value: parseInt($('.nav-tabs li[class="active"]').attr("value")) }
+                            ]
                         }
 
                     });
@@ -1378,10 +1353,9 @@ function GetGrouplist(id, url, chtml, icon,callback) {
             var treeview = $("#orgnizetree").data("kendoTreeView")
             treeview.select($(".k-item:first"));
             $("#tree_addRootNode").show();
-            if (typeof (callback) != "undefined") {
+            if (typeof(callback) != "undefined") {
                 _callback(treeview.select());
-            }
-            else {
+            } else {
                 refreshGrid();
             }
         }
@@ -1392,21 +1366,20 @@ function GetAllMachineAndMachineGroup(id, chtml, callback) {
     function _callback(data) {
         callback(data);
     }
-    $.get("/Common/MachineManage/GetAllMachineAndMachineGroup", { GroupId: id }, function (data) {
+    $.get("/Common/MachineManage/GetAllMachineAndMachineGroup", { GroupId: id }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: machineToGroup(fomattree(gettree(data.Data.GetAllMachineGroupList, "icon-cogs")), data.Data.GetAllMachineList, "icon-cog")
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    if (typeof (callback) != "undefined") {
+                select: function(e) {
+                    if (typeof(callback) != "undefined") {
                         _callback(e);
                     }
                 }
             }).data("kendoTreeView").collapse(".k-item");
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -1416,19 +1389,19 @@ function GetMemberGrouplist(id, chtml, callback) {
     function _callback(data) {
         callback(data);
     }
-    $.post("/member/GetGrouplist", JSON.stringify({ groupId: id }), function (data) {
+    $.post("/member/GetGrouplist", JSON.stringify({ groupId: id }), function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: fomattree(gettree(data.Data, "icon-group"))
                 },
                 template: null,
-                select: function (e) {
+                select: function(e) {
                     //if (typeof (callback) != "undefined") {
                     //    _callback(e.node);
                     //}
                     // else {
-                    grid.grid("refresh", function () {
+                    grid.grid("refresh", function() {
                         return [
                             { field: "keyword", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) },
                             { field: "userType", Operator: "eq", value: parseInt($('.nav-tabs li[class="active"]').attr("value")) }
@@ -1449,23 +1422,22 @@ function GetMemberGrouplist(id, chtml, callback) {
                 //    refreshGrid();
                 //}
             }
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
 }
 //*获取产品组
 function GetProductionGrouplist(id, chtml) {
-    $.get("/ProductionTask/BasicData/getProGroup", { GroupId: id }, function (data) {
+    $.get("/ProductionTask/BasicData/getProGroup", { GroupId: id }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: fomattree(gettree(data.Data, "icon-group"))
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    grid.grid("refresh", function () {
+                select: function(e) {
+                    grid.grid("refresh", function() {
                         return [
                             { field: "GP_NBR", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) }
                             //{ field: "userType", Operator: "eq", value: parseInt($('.nav-tabs li[class="active"]').attr("value")) }
@@ -1480,8 +1452,7 @@ function GetProductionGrouplist(id, chtml) {
                 refreshGrid();
             }
             $("#tree_addRootNode").show();
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -1489,15 +1460,15 @@ function GetProductionGrouplist(id, chtml) {
 
 //*工单模块-获取产品组
 function GetProductionGroups(id, chtml) {
-    $.get("/Order/ProductMaintenance/getProductGroup", { gp_nbr: id }, function (data) {
+    $.get("/Order/ProductMaintenance/getProductGroup", { gp_nbr: id }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: fomattree(gettree(data.Data, "icon-group"))
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    grid.grid("refresh", function () {
+                select: function(e) {
+                    grid.grid("refresh", function() {
                         return [
                             { field: "keyword", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) }
                         ];
@@ -1511,8 +1482,7 @@ function GetProductionGroups(id, chtml) {
                 refreshGrid();
             }
             $("#tree_addRootNode").show();
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -1520,24 +1490,24 @@ function GetProductionGroups(id, chtml) {
 
 //*工单模块-获取产品组
 function GetProductionGroupsf(id, chtml) {
-    $.get("/Order/ProductMaintenance/getProductGroup", { gp_nbr: id }, function (data) {
+    $.get("/Order/ProductMaintenance/getProductGroup", { gp_nbr: id }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: fomattree(gettree(data.Data, "icon-group"))
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    grid.grid("refresh", function () {
+                select: function(e) {
+                    grid.grid("refresh", function() {
                         return [
                             { field: "keyword", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) }
                         ];
                     });
                     $("#slide").text("折叠");
-                    $("#slide").toggle(function () {
+                    $("#slide").toggle(function() {
                         $("#slide").text("展开");
                         $("#grid").data("kendoGrid").collapseRow(".k-grouping-row");
-                    }, function () {
+                    }, function() {
                         $("#slide").text("折叠");
                         $("#grid").data("kendoGrid").expandRow(".k-grouping-row");
                     });
@@ -1552,8 +1522,7 @@ function GetProductionGroupsf(id, chtml) {
             }
             $("#tree_addRootNode").show();
 
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
@@ -1564,38 +1533,38 @@ function GetDocumentList(chtml, callback) {
     function _callback(data) {
         callback(data);
     }
-    $.get("/Document/DocumentManage/GetAllFiles", { pid: 0 }, function (data) {
+    $.get("/Document/DocumentManage/GetAllFiles", { pid: 0 }, function(data) {
         if (data.Status == 0) {
             $("#orgnizetree").kendoTreeView({
                 dataSource: {
                     data: fomattree(gettree_document(data.Data, "icon-folder-close-alt"))
                 },
                 template: kendo.template(chtml),
-                select: function (e) {
-                    if (typeof (callback) != "undefined") {
-                        _callback(e.node);//
+                select: function(e) {
+                    if (typeof(callback) != "undefined") {
+                        _callback(e.node); //
                     }
                 }
             }).data("kendoTreeView");
             $("#tree_addRootNode").show();
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
 }
+
 function gettree_document(nodes, icon) {
-    var gc = function (pid, icon) {
+    var gc = function(pid, icon) {
         var cn = [];
         for (var i = 0; i < nodes.length; i++) {
             var n = nodes[i];
             if (n.ParentId === pid) {
                 n.id = n.DirectoryId
                 n.text = n.DirectoryName;
-                n.icon = icon;//"icon-group";
+                n.icon = icon; //"icon-group";
                 n.expanded = false;
                 n.PID = n.ParentId;
-                n.flag = n.IsFolder;//文件夹标志
+                n.flag = n.IsFolder; //文件夹标志
                 n.items = gc(n.id, icon);
                 cn.push(n);
             }
@@ -1604,17 +1573,18 @@ function gettree_document(nodes, icon) {
     }
     return gc(0, icon);
 }
-function gettree(nodes, icon) {//遍历组
-    var gc = function (pid, icon) {
+
+function gettree(nodes, icon) { //遍历组
+    var gc = function(pid, icon) {
         var cn = [];
         for (var i = 0; i < nodes.length; i++) {
             var n = nodes[i];
             if (n.PID === pid) {
                 n.id = n.GP_NBR
                 n.text = n.GP_NAME;
-                n.icon = icon;//"icon-group";
+                n.icon = icon; //"icon-group";
                 n.expanded = true;
-                n.flag = 0;//账号组标志
+                n.flag = 0; //账号组标志
                 n.items = gc(n.id, icon);
                 cn.push(n);
             }
@@ -1623,6 +1593,7 @@ function gettree(nodes, icon) {//遍历组
     }
     return gc(0, icon);
 }
+
 function accountToGroup(data1, data2, icon) { //账号组中添加账号
     for (var i = 0; i < data1.length; i++) {
         for (var j = 0; j < data2.length; j++) {
@@ -1634,9 +1605,9 @@ function accountToGroup(data1, data2, icon) { //账号组中添加账号
                     var dd = {};
                     dd.id = data2[j].USER_NBR;
                     dd.text = data2[j].USER_NAME;
-                    dd.icon = icon//"icon-user";
+                    dd.icon = icon //"icon-user";
                     dd.expanded = true;
-                    dd.flag = 1;//账号标志
+                    dd.flag = 1; //账号标志
                     data1[i].items.push(dd);
                 }
             }
@@ -1647,6 +1618,7 @@ function accountToGroup(data1, data2, icon) { //账号组中添加账号
     }
     return data1;
 }
+
 function memberToGroup(data1, data2, icon) { //账号组中添加账号
     for (var i = 0; i < data1.length; i++) {
         for (var j = 0; j < data2.length; j++) {
@@ -1658,9 +1630,9 @@ function memberToGroup(data1, data2, icon) { //账号组中添加账号
                     var dd = {};
                     dd.id = data2[j].MEM_NBR;
                     dd.text = data2[j].MEM_NAME;
-                    dd.icon = icon//"icon-user";
+                    dd.icon = icon //"icon-user";
                     dd.expanded = true;
-                    dd.flag = 1;//账号标志
+                    dd.flag = 1; //账号标志
                     data1[i].items.push(dd);
                 }
             }
@@ -1683,9 +1655,9 @@ function machineToGroup(data1, data2, icon) {
                     var dd = {};
                     dd.id = data2[j].MAC_NBR;
                     dd.text = data2[j].MAC_NAME;
-                    dd.icon = icon//"icon-user";
+                    dd.icon = icon //"icon-user";
                     dd.expanded = true;
-                    dd.flag = 1;//账号标志
+                    dd.flag = 1; //账号标志
                     data1[i].items.push(dd);
                 }
             }
@@ -1709,9 +1681,9 @@ function productToGroup(data1, data2, icon) {
                     dd.id = data2[j].PROD_NBR;
                     dd.pname = data2[j].PROD_NAME;
                     dd.text = data2[j].PROD_NO;
-                    dd.icon = icon//"icon-user";
+                    dd.icon = icon //"icon-user";
                     dd.expanded = true;
-                    dd.flag = 1;//账号标志
+                    dd.flag = 1; //账号标志
                     data1[i].items.push(dd);
                 }
             }
@@ -1727,26 +1699,25 @@ function fomattree(data) {
     for (var i = 0; i < data.length; i++) {
         if (data[i].items.length == 0) {
             delete data[i].items;
-        }
-        else {
+        } else {
             fomattree(data[i].items);
         }
     }
     return data;
 }
 //combox插件(树形列表+自动搜索)
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.comboxTree", {
         options: {
             value: "",
             difH: 0, //宽度补差
             difW: 0, //高度补差
             width: 174,
-            height: 80,//筛选结果区域高度
+            height: 80, //筛选结果区域高度
             cheight: 240,
             diffwidth: 39,
-            size: 10,//单页请求条数
-            tag: 1,//页码
+            size: 10, //单页请求条数
+            tag: 1, //页码
             url: "",
             url2: "",
             checkbox: false,
@@ -1756,7 +1727,7 @@ function fomattree(data) {
             keyup: true,
             type: 1 //分类别,1:设备组;2:设备组+设备;3:人员组;4:人员组+人员;5:菜单
         },
-        _create: function () {
+        _create: function() {
             var eleid = this.element.attr("id");
             if ($("#Combox_orgnizetree_" + eleid).length != 0) {
                 $("#Combox_orgnizetree_" + eleid).remove();
@@ -1765,7 +1736,7 @@ function fomattree(data) {
                 $("#bz_Search_obj_" + eleid).remove();
             }
         },
-        _init: function () {
+        _init: function() {
             var self = this;
             self.rData = null;
             var eleid = self.element.attr("id");
@@ -1779,10 +1750,10 @@ function fomattree(data) {
             this.element.hide();
             $(strhtml).insertAfter(this.element);
             $("body").append(contextstrhtml);
-            $("#input_" + eleid).focus(function () {
+            $("#input_" + eleid).focus(function() {
                 $(this).addClass("inputtree_focus");
                 $(this).next().addClass("inputtree_focus_add");
-            }).blur(function () {
+            }).blur(function() {
                 if ($('#Combox_orgnizetree_' + eleid).is(":hidden")) {
                     $(this).removeClass("inputtree_focus");
                     $(this).next().removeClass("inputtree_focus_add");
@@ -1798,20 +1769,21 @@ function fomattree(data) {
                     template: this.options.treetemplate == null ? null : kendo.template(this.options.treetemplate)
                 }).data("kendoTreeView");
 
-            }
-            else {
+            } else {
                 self.TreeData = $("#Combox_orgnizetree_context_" + eleid).kendoTreeView({
                     obj: self,
                     template: this.options.treetemplate == null ? null : kendo.template(this.options.treetemplate),
-                    select: function (e) {
+                    select: function(e) {
                         //var comboxtree = self.options.obj;
                         switch (self.options.type) {
-                            case 1: case 3://组
+                            case 1:
+                            case 3: //组
                                 var eleid = self.element.attr("id");
                                 $("#input_" + eleid).val(this.text(e.node));
                                 self.rData = parseInt($(e.node).find('[attr="treenode"]').attr("nodeid"));
                                 break;
-                            case 2: case 4://组+人员或设备
+                            case 2:
+                            case 4: //组+人员或设备
                                 if ($(e.node).find('[attr="treenode"]').attr("flag") == 1) {
                                     var eleid = self.element.attr("id");
                                     //$("#input_" + eleid).val(this.text(e.node));
@@ -1837,7 +1809,7 @@ function fomattree(data) {
                 }).data("kendoTreeView");
             }
 
-            $("#input_" + eleid).next().bind("click", { obj: self }, function (e, obj) {
+            $("#input_" + eleid).next().bind("click", { obj: self }, function(e, obj) {
                 //加载组织结构，基于kendo tree
                 var x5Combox = e.data.obj;
                 var _top = ($(this).prev().offset().top + $(this).prev().parent().height() + x5Combox.options.difH) + "px";
@@ -1845,7 +1817,7 @@ function fomattree(data) {
                 $("#Combox_orgnizetree_" + eleid).css({ "position": "absolute", "top": _top, "left": _left }).slideDown("slow");
                 $(this).addClass("inputtree_focus_add");
                 $(this).prev().addClass("inputtree_focus");
-                $(document).mouseup(function (event) {
+                $(document).mouseup(function(event) {
                     if ($(event.target).parents("#Combox_orgnizetree_" + eleid).length == 0) {
                         $("#Combox_orgnizetree_" + eleid).hide();
                         $("#input_" + eleid).removeClass("inputtree_focus")
@@ -1859,7 +1831,7 @@ function fomattree(data) {
                 e.data.obj._ajaxRequest();
             });
             if (self.options.keyup) {
-                $("#input_" + eleid).bind("keyup", { obj: self }, function (e) {
+                $("#input_" + eleid).bind("keyup", { obj: self }, function(e) {
                     self.rData = null;
                     $("#Combox_orgnizetree_" + eleid).hide();
                     var x5Combox = e.data.obj;
@@ -1874,7 +1846,7 @@ function fomattree(data) {
                             var _top = ($(this).offset().top + $(this).parent().height() + x5Combox.options.difH) + "px";
                             var _left = ($(this).offset().left + x5Combox.options.difW) + "px";
                             $("#bz_Search_obj_" + eleid).css({ "position": "absolute", "top": _top, "left": _left }).slideDown("slow");
-                            $(document).mouseup(function (event) {
+                            $(document).mouseup(function(event) {
                                 if ($(event.target).parents("#bz_Search_obj_" + eleid).length == 0 && $(event.target).parents("#X5Combox_selecttable").length == 0) {
                                     $("#bz_Search_obj_" + eleid).hide();
 
@@ -1883,8 +1855,7 @@ function fomattree(data) {
                                 }
                             });
                             x5Combox._keyups();
-                        }
-                        else {
+                        } else {
                             $("#bz_Search_obj_loading_" + eleid).show();
                             var _top = ($(this).offset().top + $(this).parent().height() + x5Combox.options.difH) + "px";
                             var _left = ($(this).offset().left + x5Combox.options.difW) + "px";
@@ -1892,15 +1863,14 @@ function fomattree(data) {
                             $("#bz_Search_obj_context_" + eleid).empty();
                             x5Combox._keyups();
                         }
-                    }
-                    else {
+                    } else {
                         $("#bz_Search_obj_" + eleid).hide();
                     }
                 });
             }
             self.dataAarry = {}; //初始化
         },
-        _ajaxRequest: function () {
+        _ajaxRequest: function() {
             var self = this;
             $.ajax({
                 type: "post",
@@ -1908,14 +1878,14 @@ function fomattree(data) {
                 data: JSON.stringify(self.options.data),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     switch (self.options.type) {
                         case 1:
                             var data = fomattree(gettree(data.Data, "icon-cogs"));
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     // e.data.obj._gettreenodebindchecked();
                                     self._gettreenodebindchecked();
                                 });
@@ -1926,7 +1896,7 @@ function fomattree(data) {
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                 });
                             }
@@ -1936,7 +1906,7 @@ function fomattree(data) {
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                 });
                             }
@@ -1946,7 +1916,7 @@ function fomattree(data) {
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                 });
                             }
@@ -1959,7 +1929,7 @@ function fomattree(data) {
                 }
             });
         },
-        _gettreenodebindchecked: function () {
+        _gettreenodebindchecked: function() {
             var self = this;
             var checkedNodes = [];
             var treeView = self.TreeData;
@@ -1974,7 +1944,7 @@ function fomattree(data) {
             //自动滚动到底部
             //$("#" + targetele).scrollTop(document.getElementById(targetele).scrollHeight);
             $("#X5Combox_select" + self.element.attr("id")).scrollTop(document.getElementById("X5Combox_select" + self.element.attr("id")).scrollHeight);
-            $(".bz_delete").click(function () {
+            $(".bz_delete").click(function() {
                 for (var m in self.dataAarry) {
                     if (m == $(this).attr("id")) {
                         delete self.dataAarry[m];
@@ -1983,29 +1953,28 @@ function fomattree(data) {
                 }
             });
         },
-        value: function () {
+        value: function() {
             return this.dataAarry;
         },
-        validate: function () {
+        validate: function() {
             var eleid = this.element.attr("id");
             if (this.rData == null) {
                 $("#input_" + eleid).addClass("error");
                 $("#input_" + eleid).next().addClass("error");
                 $('label[for="' + eleid + '"]').show();
                 return false;
-            }
-            else {
+            } else {
                 $("#input_" + eleid).removeClass("error");
                 $("#input_" + eleid).next().removeClass("error");
                 $('label[for="' + eleid + '"]').hide();
                 return true;
             }
         },
-        _checkedNodeIds: function (nodes, checkedNodes) {
+        _checkedNodeIds: function(nodes, checkedNodes) {
             var self = this;
             for (var i = 0; i < nodes.length; i++) {
                 if (nodes[i].checked) {
-                    if (typeof (nodes[i].ID) != "undefined") {
+                    if (typeof(nodes[i].ID) != "undefined") {
                         var tempitem = {};
                         tempitem.ID = nodes[i].ID;
                         tempitem.text = nodes[i].text;
@@ -2017,7 +1986,7 @@ function fomattree(data) {
                 }
             }
         },
-        _keyups: function () {
+        _keyups: function() {
             var self = this;
             var eleid = self.element.attr("id");
             var data = {
@@ -2031,27 +2000,24 @@ function fomattree(data) {
                 contentType: "application/json;charset=utf-8",
                 data: JSON.stringify(data),
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     var result = data.Data.List;
                     if (result.length > 0) {
                         $("#bz_Search_obj_loading_" + eleid).hide();
-                        if (self.options.tag == 1) {//页数
+                        if (self.options.tag == 1) { //页数
                             var html = '<ul style="list-style: none outside none; margin-left: 0px; margin-bottom: 0px;width:' + (self.options.width + 22) + 'px">';
-                        }
-                        else {
+                        } else {
                             var html = '';
                         }
                         if (self.options.type == 1 || self.options.type == 3) {
                             for (var i = 0; i < result.length; i++) {
                                 html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].GP_NBR + '" style="line-height:20px;padding:1px 5px;">' + result[i].GP_NAME + '</li>';
                             }
-                        }
-                        else if (self.options.type == 2) {
+                        } else if (self.options.type == 2) {
                             for (var i = 0; i < result.length; i++) {
                                 html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].MAC_NBR + '" style="line-height:20px;padding:1px 5px;">' + result[i].MAC_NAME + '</li>';
                             }
-                        }
-                        else if (self.options.type == 4) {
+                        } else if (self.options.type == 4) {
                             for (var i = 0; i < result.length; i++) {
                                 html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].MEM_NBR + '" style="line-height:20px;padding:1px 5px;">' + result[i].MEM_NAME + '</li>';
                             }
@@ -2059,33 +2025,31 @@ function fomattree(data) {
                         if (result.length == self.options.size && self.options.tag == 1) {
                             html = html + '<li id="dataload" style="line-height:20px;padding:1px 5px;"><span class="icon-spinner icon-spin"></span></li>';
                         }
-                        if (self.options.tag == 1) {//页数
+                        if (self.options.tag == 1) { //页数
                             html = html + "</ul";
                             $("#bz_Search_obj_context_" + eleid).append(html);
                             if (self.options.remote) {
-                                $("#dataload").bind("click", { obj: self }, function (e) {
+                                $("#dataload").bind("click", { obj: self }, function(e) {
                                     e.data.obj._keyups();
                                 });
-                            }
-                            else {
+                            } else {
                                 $("#dataload").remove();
                             }
-                        }
-                        else {
+                        } else {
                             $(html).insertBefore("#dataload");
                         }
                         self.options.tag++;
                         $("#bz_Search_obj_context_" + eleid + " > ul > li").hover(
-                            function () {
+                            function() {
                                 $(this).css("background-color", "#7DD3F6");
                             },
-                            function () {
+                            function() {
                                 $(this).css("background-color", "#FFFFFF");
                             }
                         );
                         //单击
                         $(".li_bz_Search_obj_context").unbind("click");
-                        $(".li_bz_Search_obj_context").bind("click", { obj: self }, function (event) {
+                        $(".li_bz_Search_obj_context").bind("click", { obj: self }, function(event) {
 
                             var eleid = event.data.obj.element.attr("id")
                             $("#input_" + eleid).val($(this).text());
@@ -2099,12 +2063,10 @@ function fomattree(data) {
                         if (result.length < 10) {
                             $("#dataload").remove();
                         }
-                    }
-                    else {
+                    } else {
                         if (self.options.tag == 1) {
                             $("#bz_Search_obj_" + eleid).hide();
-                        }
-                        else {
+                        } else {
                             $("#dataload").remove();
                         }
                     }
@@ -2113,29 +2075,29 @@ function fomattree(data) {
         }
     });
 })(jQuery);
+
 function menuFomattree(data) {
     for (var i = 0; i < data.length; i++) {
         data[i].urls = data[i].url;
         delete data[i].url;
         if (data[i].items.length == 0) {
             delete data[i].items;
-        }
-        else {
+        } else {
             menuFomattree(data[i].items);
         }
     }
     return data;
 }
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.Tree", {
         options: {
             url: "",
             checkbox: false,
             treetemplate: null,
             data: null,
-            type: 1   //分类别,1:设备组;2:设备组+设备;3:人员组;4:人员组+人员;
+            type: 1 //分类别,1:设备组;2:设备组+设备;3:人员组;4:人员组+人员;
         },
-        _init: function () {
+        _init: function() {
             this.TreeData = null;
             if (this.options.checkbox) {
                 this.TreeData = this.element.kendoTreeView({
@@ -2144,18 +2106,17 @@ function menuFomattree(data) {
                     },
                     template: this.options.treetemplate == null ? null : kendo.template(this.options.treetemplate)
                 }).data("kendoTreeView");
-            }
-            else {
+            } else {
                 this.TreeData = this.element.kendoTreeView({
                     template: this.options.treetemplate == null ? null : kendo.template(this.options.treetemplate)
                 }).data("kendoTreeView");
             }
             this._ajaxRequest();
         },
-        _create: function () {
+        _create: function() {
 
         },
-        _ajaxRequest: function () {
+        _ajaxRequest: function() {
             var self = this;
             $.ajax({
                 type: "get",
@@ -2163,7 +2124,7 @@ function menuFomattree(data) {
                 data: self.options.data,
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     switch (self.options.type) {
                         case 2:
                             var data = machineToGroup(fomattree(gettree(data.Data.GetAllMachineGroupList, "icon-cogs")), data.Data.GetAllMachineList, "icon-cog")
@@ -2171,7 +2132,7 @@ function menuFomattree(data) {
                             self.TreeData.collapse(".k-item");
                             //App.initUniform('#machineTree input[type="checkbox"]');
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self.dataAarry = {};
                                     self._gettreenodebindchecked();
                                     //App.initUniform('#machineTree input[type="checkbox"]');
@@ -2182,7 +2143,7 @@ function menuFomattree(data) {
                             var data = fomattree(gettree(data.Data, "icon-group"));
                             self.TreeData.setDataSource(data);
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     // e.data.obj._gettreenodebindchecked();
                                     self._gettreenodebindchecked();
                                 });
@@ -2192,10 +2153,10 @@ function menuFomattree(data) {
                 }
             });
         },
-        value: function () {
+        value: function() {
             return this.dataAarry;
         },
-        _gettreenodebindchecked: function () {
+        _gettreenodebindchecked: function() {
             var self = this;
             var checkedNodes = [];
             var treeView = self.TreeData;
@@ -2204,7 +2165,7 @@ function menuFomattree(data) {
                 self.dataAarry[checkedNodes[i].ID] = checkedNodes[i].text;
             }
         },
-        _checkedNodeIds: function (nodes, checkedNodes) {
+        _checkedNodeIds: function(nodes, checkedNodes) {
             var self = this;
             for (var i = 0; i < nodes.length; i++) {
                 if (nodes[i].checked) {
@@ -2223,37 +2184,36 @@ function menuFomattree(data) {
     });
 })(jQuery);
 //MultipleCombox插件(树形列表+自动搜索)
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.multipleComboxTree", {
         options: {
-            value: "",//关键字
+            value: "", //关键字
             difH: 0, //高度补差
             difW: 0, //宽度补差
             width: 174,
-            height: 80,//筛选结果区域高度
+            height: 80, //筛选结果区域高度
             cheight: 260,
-            size: 10,//单页请求条数
-            tag: 1,//页码
+            size: 10, //单页请求条数
+            tag: 1, //页码
             url: "",
             url2: "",
             checkbox: false,
             inputheight: 34,
             diffwidth: 24,
             diffinputwidth: 0,
-            remote: true,//ajax远程获取数据
+            remote: true, //ajax远程获取数据
             data: null,
             tree: true,
             checkChildren: true,
-            multiple: true,//是否多选
+            multiple: true, //是否多选
             validate: true,
             validateMessage: "",
-            plans: true,//计划帅选标志，true=计划根据产品过滤；false=不根据产品过滤
+            plans: true, //计划帅选标志，true=计划根据产品过滤；false=不根据产品过滤
             type: 1, //分类别,1:设备组;2:设备组+设备;3:人员组;4:人员组+人员;5:产品;6:计划;7:参数列表;8:班次;9:保养报表单号;10:维修申请单号;11:零件名称;12:产品(太荣);13:程序号
             select: null
         },
-        _init: function () {
-        },
-        _create: function () {
+        _init: function() {},
+        _create: function() {
             var self = this;
             //self.dataAarry = null;
             var eleid = self.element.attr("id");
@@ -2276,16 +2236,15 @@ function menuFomattree(data) {
             $("body").append(contextstrhtml);
 
             //清除搜索框内容
-            $(".delete_" + eleid).bind("click", function () {
+            $(".delete_" + eleid).bind("click", function() {
                 $(this).prev().val("");
             });
             if (!this.options.multiple) {
                 $("#allcheck_" + eleid).attr("disabled", "disabled");
-            }
-            else {
-                $("#allcheck_" + eleid).bind("click", function () {
+            } else {
+                $("#allcheck_" + eleid).bind("click", function() {
                     self.dataAarry = [];
-                    if ($(this).prop("checked")) {//全选
+                    if ($(this).prop("checked")) { //全选
                         var eleobj = $("#Combox_context_" + eleid + " ul li");
                         for (var i = 0; i < eleobj.length; i++) {
                             if ($(eleobj[i]).attr("id") != "dataload") {
@@ -2294,8 +2253,7 @@ function menuFomattree(data) {
                                 $(eleobj[i]).addClass("k-state-selected").addClass("k-state-focused");
                             }
                         }
-                    }
-                    else {
+                    } else {
                         var eleobj = $("#Combox_context_" + eleid + " ul li");
                         for (var i = 0; i < eleobj.length; i++) {
                             if ($(eleobj[i]).attr("id") != "dataload") {
@@ -2307,10 +2265,10 @@ function menuFomattree(data) {
                     }
                 });
             }
-            $("#input_" + eleid).focus(function () {
+            $("#input_" + eleid).focus(function() {
                 $(this).addClass("inputtree_focus");
                 $(this).next().addClass("inputtree_focus_add");
-            }).blur(function () {
+            }).blur(function() {
                 if ($('#Combox_orgnizetree_' + eleid).is(":hidden")) {
                     $(this).removeClass("inputtree_focus")
                     $(this).next().removeClass("inputtree_focus_add");
@@ -2327,21 +2285,22 @@ function menuFomattree(data) {
                         template: kendo.template('<i class="#:item.icon#"></i>' +
                             '<span type="1" nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" flag="#:item.flag#" pname="#:item.pname#" attr="treenode">#:item.text#</span>')
                     }).data("kendoTreeView");
-                }
-                else {
+                } else {
                     self.TreeData = $('#Combox_orgnizetree_context_' + eleid).kendoTreeView({
                         obj: self,
                         template: kendo.template('<i class="#:item.icon#"></i>' +
                             '<span type="1" nodeid="#:item.id#" pid="#:item.PID#" level_nbr="#:item.LEVEL_NBR#" flag="#:item.flag#" pname="#:item.pname#" attr="treenode">#:item.text#</span>'),
-                        select: function (e) {
+                        select: function(e) {
                             //var comboxtree = self.options.obj;
                             switch (self.options.type) {
-                                case 1: case 3://组
+                                case 1:
+                                case 3: //组
                                     var eleid = self.element.attr("id");
                                     $("#input_" + eleid).val(this.text(e.node));
                                     self.rData = parseInt($(e.node).find('[attr="treenode"]').attr("nodeid"));
                                     break;
-                                case 2: case 4://组+人员或设备
+                                case 2:
+                                case 4: //组+人员或设备
                                     if ($(e.node).find('[attr="treenode"]').attr("flag") == 1) {
                                         var eleid = self.element.attr("id");
                                         //$("#input_" + eleid).val(this.text(e.node));
@@ -2373,8 +2332,8 @@ function menuFomattree(data) {
                 }
             }
             if (this.options.multiple) {
-                $("#input_" + eleid).bind("click", { obj: self }, function (event) {
-                    if (typeof (self.options.select) == "function") {
+                $("#input_" + eleid).bind("click", { obj: self }, function(event) {
+                    if (typeof(self.options.select) == "function") {
                         return;
                     }
                     $("#Combox_detailcontext ul").empty();
@@ -2394,14 +2353,14 @@ function menuFomattree(data) {
                         //$("#Combox_detail").unbind("mouseout").bind("mouseout", { obj: self }, function (event) {
                         //    $("#Combox_detail").hide();
                         //});
-                        $(document).mouseup(function (event) {
+                        $(document).mouseup(function(event) {
                             if ($(event.target).parents("#Combox_detail").length == 0) {
                                 $("#Combox_detail").hide();
                                 $("#input_" + eleid).removeClass("inputtree_focus")
                                 $("#input_" + eleid).next().removeClass("inputtree_focus_add");
                             }
                         });
-                        $(".bz_delete").bind("click", { obj: event.data.obj, ele: this }, function (event) {
+                        $(".bz_delete").bind("click", { obj: event.data.obj, ele: this }, function(event) {
                             $(this).parent().remove();
                             delete event.data.obj.dataAarry[isNaN(parseInt($(this).attr("id"))) ? $(this).attr("id") : parseInt($(this).attr("id"))];
                             event.data.obj._updateSelect();
@@ -2417,7 +2376,7 @@ function menuFomattree(data) {
                     }
                 });
             }
-            $("#down_" + eleid).bind("click", { obj: self }, function (e, obj) {
+            $("#down_" + eleid).bind("click", { obj: self }, function(e, obj) {
                 $(".li_bz_Search_obj_context").removeClass("k-state-selected").removeClass("k-state-focused");
                 //加载组织结构，基于kendo tree
                 var x5Combox = e.data.obj;
@@ -2426,7 +2385,7 @@ function menuFomattree(data) {
                 $('#Combox_orgnizetree_' + eleid).css({ "position": "absolute", "top": _top, "left": _left }).slideDown("slow");
                 $(this).addClass("inputtree_focus_add");
                 $(this).prev().addClass("inputtree_focus");
-                $(document).off("mouseup").on("mouseup", function (event) {
+                $(document).off("mouseup").on("mouseup", function(event) {
                     if ($(event.target).parents("#Combox_orgnizetree_" + eleid).length == 0) {
                         $("#Combox_orgnizetree_" + eleid).hide();
                         $("#input_" + eleid).removeClass("inputtree_focus")
@@ -2438,8 +2397,7 @@ function menuFomattree(data) {
                 $("#Combox_orgnizetree_context_" + eleid + " ul").empty();
                 if (self.options.type != 6 && self.options.type != 7 && self.options.type != 8 && self.options.type != 9 && self.options.type != 10 && self.options.type != 11 && self.options.type != 12 && self.options.type != 13) {
                     e.data.obj._ajaxRequest();
-                }
-                else {
+                } else {
                     //产品与计划使用的时候。返回的数据加载到Combox_context内
                     //初始化页数
                     self.options.tag = 1;
@@ -2449,7 +2407,7 @@ function menuFomattree(data) {
                 }
 
             });
-            $("#multipleKeyText_" + eleid).bind("keyup", { obj: self }, function (e) {
+            $("#multipleKeyText_" + eleid).bind("keyup", { obj: self }, function(e) {
                 self.dataAarry = {};
                 $("#Combox_orgnizetree_context_" + eleid).hide();
                 var x5Combox = e.data.obj;
@@ -2459,15 +2417,14 @@ function menuFomattree(data) {
                     $("#Combox_orgnizetree_context_" + eleid).hide();
                     $("#Combox_context_" + eleid).empty().parent().show();
                     x5Combox._keyups();
-                }
-                else {
+                } else {
                     $("#Combox_orgnizetree_context_" + eleid).show();
                     $("#Combox_context_" + eleid).parent().hide();
                 }
             });
             self.dataAarry = {}; //初始化
         },
-        _ajaxRequest: function () {
+        _ajaxRequest: function() {
             var self = this;
             $.ajax({
                 type: "get",
@@ -2475,14 +2432,14 @@ function menuFomattree(data) {
                 data: self.options.data,
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     switch (self.options.type) {
                         case 1:
                             var data = fomattree(gettree(data.Data, "icon-cogs"));
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                 });
                             }
@@ -2492,7 +2449,7 @@ function menuFomattree(data) {
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                     if (self.options.validate) {
                                         self.validate();
@@ -2504,7 +2461,7 @@ function menuFomattree(data) {
                             var data = fomattree(gettree(data.Data, "icon-group"));
                             self.TreeData.setDataSource(data);
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                 });
                             }
@@ -2514,7 +2471,7 @@ function menuFomattree(data) {
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                     if (self.options.validate) {
                                         self.validate();
@@ -2522,12 +2479,12 @@ function menuFomattree(data) {
                                 });
                             }
                             break;
-                        case 5://产品
+                        case 5: //产品
                             var data = productToGroup(fomattree(gettree(data.Data.ProGroupList, "icon-group")), data.Data.ProdList, "icon-user");
                             self.TreeData.setDataSource(data);
                             self.TreeData.collapse(".k-item");
                             if (self.options.checkbox) {
-                                self.TreeData.dataSource.bind("change", function () {
+                                self.TreeData.dataSource.bind("change", function() {
                                     self._gettreenodebindchecked();
                                     if (self.options.validate) {
                                         self.validate();
@@ -2539,7 +2496,7 @@ function menuFomattree(data) {
                 }
             });
         },
-        _gettreenodebindchecked: function () {
+        _gettreenodebindchecked: function() {
             var self = this;
             var checkedNodes = [];
             var treeView = self.TreeData;
@@ -2550,13 +2507,12 @@ function menuFomattree(data) {
             }
             self._updateSelect();
         },
-        _checkedNodeIds: function (nodes, checkedNodes) {
+        _checkedNodeIds: function(nodes, checkedNodes) {
             var self = this;
             var flag;
-            if (self.options.type == 1 || self.options.type == 3) {//设备组
+            if (self.options.type == 1 || self.options.type == 3) { //设备组
                 flag = 0;
-            }
-            else if (self.options.type == 2 || self.options.type == 4) {//设备
+            } else if (self.options.type == 2 || self.options.type == 4) { //设备
                 flag = 1;
             }
             for (var i = 0; i < nodes.length; i++) {
@@ -2574,14 +2530,13 @@ function menuFomattree(data) {
                 }
             }
         },
-        _updateSelect: function () {
+        _updateSelect: function() {
             var self = this;
-            if (typeof (self.options.select) == "function") {
+            if (typeof(self.options.select) == "function") {
                 var eleid = self.element.attr("id");
                 //$("#Combox_orgnizetree_" + eleid).hide();
                 self.options.select.call(self, self.dataAarry);
-            }
-            else {
+            } else {
                 if (this.options.multiple) {
                     var k = 0;
                     for (var m in self.dataAarry) {
@@ -2589,8 +2544,7 @@ function menuFomattree(data) {
                     }
                     var id = self.element.attr("id");
                     $("#input_" + id).attr("placeholder", k);
-                }
-                else {
+                } else {
                     var id = self.element.attr("id");
                     for (var m in self.dataAarry) {
                         $("#input_" + id).attr("placeholder", self.dataAarry[m]);
@@ -2598,99 +2552,85 @@ function menuFomattree(data) {
                 }
             }
         },
-        validate: function () {
+        validate: function() {
             var eleid = this.element.attr("id");
             if ($.isEmptyObject(this.dataAarry)) {
                 $("#input_" + eleid).addClass("error");
                 $("#input_" + eleid).next().addClass("error");
                 $('label[for="' + eleid + '"]').show();
                 return false;
-            }
-            else {
+            } else {
                 $("#input_" + eleid).removeClass("error");
                 $("#input_" + eleid).next().removeClass("error");
                 $('label[for="' + eleid + '"]').hide();
                 return true;
             }
         },
-        clear: function () {
+        clear: function() {
             this.dataAarry = {}; //清空
             var eleid = this.element.attr("id");
             $("#input_" + eleid).attr("placeholder", 0);
         },
-        _keyupsdata: function (data) {
+        _keyupsdata: function(data) {
             var self = this;
             var eleid = self.element.attr("id");
             var result = data;
             if (result.length > 0) {
                 // $("#bz_Search_obj_loading").hide();
-                if (self.options.tag == 1) {//页数
+                if (self.options.tag == 1) { //页数
                     var html = '<ul style="list-style: none outside none; margin-left: 0px; margin-bottom: 0px;">';
-                }
-                else {
+                } else {
                     var html = '';
                 }
-                if (self.options.type == 1 || self.options.type == 3) {//设备组或人员组
+                if (self.options.type == 1 || self.options.type == 3) { //设备组或人员组
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].GP_NBR + '" name="' + result[i].GP_NAME + '" style="line-height:20px;padding:1px 5px;">' + result[i].GP_NAME + '</li>';
                     }
-                }
-                else if (self.options.type == 2) {//设备
+                } else if (self.options.type == 2) { //设备
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].MAC_NBR + '" name="' + result[i].MAC_NAME + '" style="line-height:20px;padding:1px 5px;"><i class="icon-cog"></i>' + result[i].MAC_NAME + "(" + result[i].MAC_NO + ")" + '</li>';
                     }
-                }
-                else if (self.options.type == 4) {//人员
+                } else if (self.options.type == 4) { //人员
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].MEM_NBR + '" name="' + result[i].MEM_NAME + '" style="line-height:20px;padding:1px 5px;"><i class="icon-user"></i>' + result[i].MEM_NAME + '</li>';
                     }
-                }
-                else if (self.options.type == 5) {//产品
+                } else if (self.options.type == 5) { //产品
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i] + '" name="' + result[i] + '" style="line-height:20px;padding:1px 5px;">' + result[i] + '</li>';
                     }
-                }
-                else if (self.options.type == 6) {//计划
+                } else if (self.options.type == 6) { //计划
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].MANUFACTURE_NO + '" name="' + result[i].MANUFACTURE_NO + '" style="line-height:20px;padding:1px 5px;">' + result[i].MANUFACTURE_NO + '</li>';
                     }
-                }
-                else if (self.options.type == 7) {//参数
+                } else if (self.options.type == 7) { //参数
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].VALUE + '" name="' + result[i].NAME + '" style="line-height:20px;padding:1px 5px;">' + result[i].NAME + '</li>';
                     }
-                }
-                else if (self.options.type == 8) {//班次
+                } else if (self.options.type == 8) { //班次
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].SHIFT_NBR + '" name="' + result[i].SOLUTION_NAME + '(' + result[i].SHIFT_NAME + ')' + '" style="line-height:20px;padding:1px 5px;">' + result[i].SOLUTION_NAME + '(' + result[i].SHIFT_NAME + ')' + '</li>';
                     }
-                }
-                else if (self.options.type == 9) {//保养报表单号
+                } else if (self.options.type == 9) { //保养报表单号
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].MAINTAIN_NBR + '" name="' + result[i].MAINTAIN_NO + '" style="line-height:20px;padding:1px 5px;">' + result[i].MAINTAIN_NO + '</li>';
                     }
-                }
-                else if (self.options.type == 10) {//维修申请单号
+                } else if (self.options.type == 10) { //维修申请单号
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].APPLAY_NBR + '" name="' + result[i].APPLAY_NO + '" style="line-height:20px;padding:1px 5px;">' + result[i].APPLAY_NO + '</li>';
                     }
-                }
-                else if (self.options.type == 11) {//配件名称
+                } else if (self.options.type == 11) { //配件名称
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].PART_NO == undefined) {
                             html = html + '<li class="li_bz_Search_obj_context" id="' + result[i] + '" name="' + result[i] + '" style="line-height:20px;padding:1px 5px;">' + result[i] + "(" + result[i] + ")" + '</li>';
-                        }
-                        else {
+                        } else {
                             html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].PART_NO + '" name="' + result[i].PART_NAME + '" style="line-height:20px;padding:1px 5px;">' + result[i].PART_NAME + "(" + result[i].PART_NO + ")" + '</li>';
                         }
                     }
-                }
-                else if (self.options.type == 12) {//产品(太荣)
+                } else if (self.options.type == 12) { //产品(太荣)
                     for (var i = 0; i < result.length; i++) {
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i].PROD_NBR + '" name="' + result[i].PROD_NAME + '" style="line-height:20px;padding:1px 5px;">' + result[i].PROD_NAME + "(" + result[i].PROD_NO + ")" + '</li>';
                     }
-                }
-                else if (self.options.type == 13) {//程序号
+                } else if (self.options.type == 13) { //程序号
                     for (var i = 0; i < result.length; i++) {
 
                         html = html + '<li class="li_bz_Search_obj_context" id="' + result[i] + '" name="' + result[i] + '" style="line-height:20px;padding:1px 5px;">' + result[i] + '</li>';
@@ -2705,7 +2645,7 @@ function menuFomattree(data) {
                 if (result.length == self.options.size && self.options.tag == 1) {
                     html = html + '<li id="dataload" style="line-height:20px;padding:1px 5px;"><span class="icon-spinner icon-spin"></span></li>';
                 }
-                if (self.options.tag == 1) {//页数
+                if (self.options.tag == 1) { //页数
                     html = html + "</ul";
                     $("#Combox_context_" + eleid).append(html);
                     //if (self.options.remote) {
@@ -2716,37 +2656,34 @@ function menuFomattree(data) {
                     //else {
                     //    $("#dataload").remove();
                     //}
-                }
-                else {
+                } else {
                     $(html).insertBefore("#dataload");
                 }
                 self.options.tag++;
                 $("#Combox_context_" + eleid + " > ul > li").hover(
-                    function () {
+                    function() {
                         $(this).addClass("k-state-hover");
                     },
-                    function () {
+                    function() {
                         $(this).removeClass("k-state-hover");
                     }
                 );
                 //单击
                 $(".li_bz_Search_obj_context").unbind("click");
-                $(".li_bz_Search_obj_context").bind("click", { obj: self }, function (event) {
+                $(".li_bz_Search_obj_context").bind("click", { obj: self }, function(event) {
                     if (event.data.obj.options.multiple) {
-                        if ($(this).hasClass("k-state-selected")) {//被选中
+                        if ($(this).hasClass("k-state-selected")) { //被选中
                             $(this).removeClass("k-state-selected").removeClass("k-state-focused");
                             var eleid = event.data.obj.element.attr("id")
                             delete event.data.obj.dataAarry[isNaN(parseInt($(this).attr("id"))) ? $(this).attr("id") : parseInt($(this).attr("id"))];
                             self._updateSelect();
-                        }
-                        else {
+                        } else {
                             var eleid = event.data.obj.element.attr("id")
                             event.data.obj.dataAarry[isNaN(parseInt($(this).attr("id"))) ? $(this).attr("id") : parseInt($(this).attr("id"))] = $(this).attr("name");
                             self._updateSelect();
                             $(this).addClass("k-state-selected").addClass("k-state-focused");
                         }
-                    }
-                    else {
+                    } else {
                         $(".k-state-selected").removeClass("k-state-selected");
                         event.data.obj.dataAarry = {};
                         event.data.obj.dataAarry[isNaN(parseInt($(this).attr("id"))) ? $(this).attr("id") : parseInt($(this).attr("id"))] = $(this).attr("name");
@@ -2754,38 +2691,35 @@ function menuFomattree(data) {
                         $(this).addClass("k-state-selected").addClass("k-state-focused");
                     }
                 });
-                if (result.length < 10) {//已经到最后一条了
+                if (result.length < 10) { //已经到最后一条了
                     $("#dataload").remove();
                     $("#Combox_context_" + eleid).unbind("scroll");
-                }
-                else {
+                } else {
                     //注册Combox_context_滚动事件
-                    $("#Combox_context_" + eleid).bind("scroll", function (e) {
+                    $("#Combox_context_" + eleid).bind("scroll", function(e) {
                         var distanceScrollCount = $(this)[0].scrollHeight;
                         var distanceScroll = $(this)[0].scrollTop;
                         var offsetHeight = $(this)[0].offsetHeight;
                         if (distanceScroll > 0) {
                             if (distanceScroll + offsetHeight >= distanceScrollCount) {
                                 $("#Combox_context_" + eleid).unbind("scroll");
-                                if (self.options.type != 7) {//参数不需要滚动触发事件
+                                if (self.options.type != 7) { //参数不需要滚动触发事件
                                     self._keyups();
                                 }
                             }
                         }
                     });
                 }
-            }
-            else {
+            } else {
                 if (self.options.tag == 1) {
                     $("#bz_Search_obj").hide();
-                }
-                else {
+                } else {
                     $("#dataload").remove();
                 }
                 $("#Combox_context_" + eleid).empty()
             }
         },
-        _keyups: function () {
+        _keyups: function() {
             var self = this;
             var data = {
                 PageIndex: self.options.tag,
@@ -2794,7 +2728,7 @@ function menuFomattree(data) {
             }
             if (self.options.type == 6) {
                 var array = [];
-                if (self.options.plans) {//筛选
+                if (self.options.plans) { //筛选
                     for (var m in self.options.data.dataAarry) {
                         array.push(self.options.data.dataAarry[m]);
                     }
@@ -2809,27 +2743,25 @@ function menuFomattree(data) {
                     contentType: "application/json;charset=utf-8",
                     data: JSON.stringify(data),
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (self.options.type == 8 || self.options.type == 11) { //班次或者配件
                             self._keyupsdata(data.Data);
-                        }
-                        else {
+                        } else {
                             self._keyupsdata(data.Data.List);
                         }
                     }
                 });
-            }
-            else {
-                if (self.options.data.rData != undefined) {//判断有没有选择设备
+            } else {
+                if (self.options.data.rData != undefined) { //判断有没有选择设备
                     $.ajax({
                         type: "POST",
                         url: self.options.url2,
                         contentType: "application/json;charset=utf-8",
                         data: JSON.stringify({ MachineId: self.options.data.rData }),
                         dataType: "json",
-                        success: function (data) {
+                        success: function(data) {
                             var ndata = [];
-                            $.each(parameter[data.Data[0].CATEGORY == null ? "DEFAULT" : data.Data[0].CATEGORY], function (item, k) {
+                            $.each(parameter[data.Data[0].CATEGORY == null ? "DEFAULT" : data.Data[0].CATEGORY], function(item, k) {
                                 if (k.EN_ABLE && k.HIS) {
                                     var tjson = {
                                         VALUE: item,
@@ -2844,7 +2776,7 @@ function menuFomattree(data) {
                 }
             }
         },
-        _destroy: function () {
+        _destroy: function() {
             var eleid = this.element.attr("id");
             $("#Combox_orgnizetree_" + eleid).remove();
             $("#Combox_detail").remove();
@@ -2855,7 +2787,7 @@ function menuFomattree(data) {
 })(jQuery);
 //获取任务列表
 function getProductionPlan(chtml) {
-    $.get("/YieldAnalysis/ProductionTask/getProductionPlan", function (data) {
+    $.get("/YieldAnalysis/ProductionTask/getProductionPlan", function(data) {
         if (data.Status == 0) {
             var tdata = [];
             for (var i = 0; i < data.Data.length; i++) {
@@ -2879,8 +2811,8 @@ function getProductionPlan(chtml) {
                     }
                 }),
                 template: kendo.template(chtml),
-                select: function (e) {
-                    grid.grid("refresh", function () {
+                select: function(e) {
+                    grid.grid("refresh", function() {
                         return [
                             { field: "productionplanNo", Operator: "eq", value: $(e.node).find('[attr="treenode"]').text() }
                             //{ field: "keyword", Operator: "eq", value: parseInt($(e.node).find('[attr="treenode"]').attr("nodeid")) },
@@ -2894,18 +2826,17 @@ function getProductionPlan(chtml) {
                 treeview.select($(".k-item:first"));
                 refreshGrid();
             }
-        }
-        else {
+        } else {
             BzAlert(data.Message);
         }
     });
 }
 //报表生成+自定义合并单元格
-(function ($, undefined) {
+(function($, undefined) {
     $.widget("BZ.tableGrid", {
         options: {
             columns: [
-                { name: 'kpi_type', title: "", hidGrid: true },//idMerge:"是否合并";hidGrid:'true'是否隐藏
+                { name: 'kpi_type', title: "", hidGrid: true }, //idMerge:"是否合并";hidGrid:'true'是否隐藏
                 { name: 'kpi_type_name', title: "", idMerge: true },
                 { name: 'kpi_seq', title: "" },
                 { name: 'kpi_name', title: "" },
@@ -2915,10 +2846,10 @@ function getProductionPlan(chtml) {
             ],
             dataSource: []
         },
-        _init: function () {
+        _init: function() {
 
         },
-        _create: function () {
+        _create: function() {
             var eleid = this.element.attr("id");
             var shtml = '<table class="table table-striped1 table-bordered table-advance table-hover1"><thead>';
             //标题
@@ -2926,8 +2857,7 @@ function getProductionPlan(chtml) {
                 if (!this.options.columns[i].hidGrid) {
                     if (this.options.columns[i].width != undefined) {
                         shtml = shtml + '<th width="' + this.options.columns[i].width + '">' + this.options.columns[i].title + "</th>";
-                    }
-                    else {
+                    } else {
                         shtml = shtml + "<th>" + this.options.columns[i].title + "</th>";
                     }
                 }
@@ -2937,7 +2867,7 @@ function getProductionPlan(chtml) {
             this._merageTable();
 
         },
-        _merageTable: function () {
+        _merageTable: function() {
             var self = this;
             //        var list = [
             //{ kpi_type: '1', kpi_type_name: '积分客户数', kpi_seq: '1', kpi_name: '积分客户总数', kpi_unit: '户', kpi_value: '3824934', kpi_desc: '截止到统计期末有回馈积分且积分余额大于0的客户总数量' },
@@ -2973,7 +2903,7 @@ function getProductionPlan(chtml) {
                                 //cell.style = "background-color:" + col['bgcolor'];
                                 cell.className = "tableselect";
                                 cell.setAttribute('col', colIdx);
-                                cell.onclick = function (e) {
+                                cell.onclick = function(e) {
                                     //获取控件的Id
                                     var eid = $(e.currentTarget).parent().parent().attr("id").split("_")[1];
                                     var obj = $("#" + eid).data("BZ-tableGrid");
@@ -2983,7 +2913,7 @@ function getProductionPlan(chtml) {
                                 }
                             }
                             cell.innerHTML = list[i][col['name']];
-                            if (typeof (col['par']) != undefined) {
+                            if (typeof(col['par']) != undefined) {
                                 cell.setAttribute('gpname', list[i][col['par']])
                             }
                             var mergeTd = {};
@@ -2995,7 +2925,7 @@ function getProductionPlan(chtml) {
                         }
                     } else {
                         var cell = document.createElement("TD");
-                        if (typeof (col['par']) != undefined) {
+                        if (typeof(col['par']) != undefined) {
                             cell.setAttribute('gpname', list[i][col['par']])
                         }
                         cell.innerHTML = list[i][col['name']];
@@ -3007,41 +2937,41 @@ function getProductionPlan(chtml) {
                 //document.body.appendChild(_table);
             }
         },
-        destroy: function () {
+        destroy: function() {
             this.element.empty();
             $.Widget.prototype.destroy.call(this);
         }
     });
 })(jQuery);
 //获取工单多、单选
-(function ($, underfined) {
+(function($, underfined) {
     $.widget("BZ.comboxList", {
         options: {
-            value: "",//关键字
+            value: "", //关键字
             difH: 0, //高度补差
             difW: 0, //宽度补差
             width: 174,
-            height: 80,//筛选结果区域高度
+            height: 80, //筛选结果区域高度
             cheight: 260,
-            size: 10,//单页请求条数
-            tag: 1,//页码
+            size: 10, //单页请求条数
+            tag: 1, //页码
             url: "",
             checkbox: false,
             inputheight: 34,
             diffwidth: 24,
             diffinputwidth: 0,
-            remote: true,//ajax远程获取数据
+            remote: true, //ajax远程获取数据
             data: null,
             tree: true,
             checkChildren: true,
-            multiple: true,//是否多选
+            multiple: true, //是否多选
             validate: true,
             validateMessage: "",
-            plans: true,//计划帅选标志，true=计划根据产品过滤；false=不根据产品过滤
+            plans: true, //计划帅选标志，true=计划根据产品过滤；false=不根据产品过滤
             type: 1,
             select: null
         },
-        _create: function () {
+        _create: function() {
             var self = this,
                 eleid = self.element.attr("id");
             strhtml = '<div class="input-append">' +
@@ -3094,37 +3024,34 @@ function getProductionPlan(chtml) {
             //初始化日期
             $("#Combox_orgnizetree_" + eleid).find(".startdate").kendoDatePicker({
                 format: "yyyy/MM/dd",
-                change: function (e) {
+                change: function(e) {
                     self._keyups();
                 }
             });
             $("#Combox_orgnizetree_" + eleid).find(".enddate").kendoDatePicker({
                 format: "yyyy/MM/dd",
-                change: function (e) {
+                change: function(e) {
                     self._keyups();
                 }
             });
             self.orderStatus = 3;
-            $(".menu-nav li a.btn").on("click", function () {
+            $(".menu-nav li a.btn").on("click", function() {
                 $(".menu-nav li.active").removeClass("active");
                 $(this).parent().addClass("active");
                 if ($(this).parent().hasClass("all")) {
                     self.orderStatus = 0;
-                }
-                else if ($(this).parent().hasClass("ending")) {
+                } else if ($(this).parent().hasClass("ending")) {
                     self.orderStatus = 3;
-                }
-                else if ($(this).parent().hasClass("working")) {
+                } else if ($(this).parent().hasClass("working")) {
                     self.orderStatus = 2;
-                }
-                else if ($(this).parent().hasClass("nostart")) {
+                } else if ($(this).parent().hasClass("nostart")) {
                     self.orderStatus = 1;
                 }
                 self.options.tag = 1;
                 self._keyups();
             })
 
-            $("#down_" + eleid).bind("click", { obj: self }, function (e, obj) {
+            $("#down_" + eleid).bind("click", { obj: self }, function(e, obj) {
                 $(".li_bz_Search_obj_context").removeClass("k-state-selected").removeClass("k-state-focused");
                 //加载组织结构，基于kendo tree
                 var x5Combox = e.data.obj;
@@ -3133,7 +3060,7 @@ function getProductionPlan(chtml) {
                 $('#Combox_orgnizetree_' + eleid).css({ "position": "absolute", "top": _top, "left": _left }).slideDown("slow");
                 $(this).addClass("inputtree_focus_add");
                 $(this).prev().addClass("inputtree_focus");
-                $("body").off("mouseup").on("mouseup", function (event) {
+                $("body").off("mouseup").on("mouseup", function(event) {
                     if ($(event.target).parents("[data-role='calendar']").length > 0) {
                         return;
                     }
@@ -3163,7 +3090,7 @@ function getProductionPlan(chtml) {
                 //}
                 self.dataAarry = {}; //初始化
             });
-            $("#multipleKeyText_" + eleid).bind("keyup", { obj: self }, function (e) {
+            $("#multipleKeyText_" + eleid).bind("keyup", { obj: self }, function(e) {
                 self.dataAarry = {};
                 self.options.tag = 1;
                 self.options.value = $(this).val();
@@ -3172,14 +3099,13 @@ function getProductionPlan(chtml) {
             });
 
         },
-        _updateSelect: function () {
+        _updateSelect: function() {
             var self = this;
-            if (typeof (self.options.select) == "function") {
+            if (typeof(self.options.select) == "function") {
                 var eleid = self.element.attr("id");
                 //$("#Combox_orgnizetree_" + eleid).hide();
                 self.options.select.call(self, self.dataAarry);
-            }
-            else {
+            } else {
                 if (this.options.multiple) {
                     var v = "";
                     for (var m in self.dataAarry) {
@@ -3188,8 +3114,7 @@ function getProductionPlan(chtml) {
 
                     var id = self.element.attr("id");
                     $("#input_" + id).attr("placeholder", v);
-                }
-                else {
+                } else {
                     var id = self.element.attr("id");
                     for (var m in self.dataAarry) {
                         $("#input_" + id).attr("placeholder", self.dataAarry[m]);
@@ -3197,15 +3122,14 @@ function getProductionPlan(chtml) {
                 }
             }
         },
-        _keyupsdata: function (data) {
+        _keyupsdata: function(data) {
             var self = this
             eleid = self.element.attr("id");
             if (data.Status == 0) {
-                if (self.options.tag == 1) {//页数
+                if (self.options.tag == 1) { //页数
                     $("#Combox_context_" + eleid).empty();
                     var html = '<ul style="list-style: none outside none; margin-left: 0px; margin-bottom: 0px;">';
-                }
-                else {
+                } else {
                     var html = '';
                 }
                 for (var i = 0; i < data.Data.List.length; i++) {
@@ -3214,7 +3138,7 @@ function getProductionPlan(chtml) {
                 if (data.Data.List.length == self.options.size && self.options.tag == 1) {
                     html = html + '<li id="dataload" style="line-height:20px;padding:1px 5px;"><span class="icon-spinner icon-spin"></span></li>';
                 }
-                if (self.options.tag == 1) {//页数
+                if (self.options.tag == 1) { //页数
                     html = html + "</ul";
                     $("#Combox_context_" + eleid).append(html);
                     //if (self.options.remote) {
@@ -3225,37 +3149,34 @@ function getProductionPlan(chtml) {
                     //else {
                     //    $("#dataload").remove();
                     //}
-                }
-                else {
+                } else {
                     $(html).insertBefore("#dataload");
                 }
                 self.options.tag++;
                 $("#Combox_context_" + eleid + " > ul > li").hover(
-                    function () {
+                    function() {
                         $(this).addClass("k-state-hover");
                     },
-                    function () {
+                    function() {
                         $(this).removeClass("k-state-hover");
                     }
                 );
                 //单击
                 $(".li_bz_Search_obj_context").unbind("click");
-                $(".li_bz_Search_obj_context").bind("click", { obj: self }, function (event) {
+                $(".li_bz_Search_obj_context").bind("click", { obj: self }, function(event) {
                     if (event.data.obj.options.multiple) {
-                        if ($(this).hasClass("k-state-selected")) {//被选中
+                        if ($(this).hasClass("k-state-selected")) { //被选中
                             $(this).removeClass("k-state-selected").removeClass("k-state-focused");
                             var eleid = event.data.obj.element.attr("id")
                             delete event.data.obj.dataAarry[isNaN(parseInt($(this).attr("id"))) ? $(this).attr("id") : parseInt($(this).attr("id"))];
                             self._updateSelect();
-                        }
-                        else {
+                        } else {
                             var eleid = event.data.obj.element.attr("id")
                             event.data.obj.dataAarry[isNaN(parseInt($(this).attr("id"))) ? $(this).attr("id") : parseInt($(this).attr("id"))] = $(this).attr("name");
                             self._updateSelect();
                             $(this).addClass("k-state-selected").addClass("k-state-focused");
                         }
-                    }
-                    else {
+                    } else {
                         $(".k-state-selected").removeClass("k-state-selected");
                         event.data.obj.dataAarry = {};
                         event.data.obj.dataAarry[isNaN(parseInt($(this).attr("id"))) ? $(this).attr("id") : parseInt($(this).attr("id"))] = $(this).attr("name");
@@ -3263,20 +3184,19 @@ function getProductionPlan(chtml) {
                         $(this).addClass("k-state-selected").addClass("k-state-focused");
                     }
                 });
-                if (data.Data.List.length < 10) {//已经到最后一条了
+                if (data.Data.List.length < 10) { //已经到最后一条了
                     $("#dataload").remove();
                     $("#Combox_context_" + eleid).unbind("scroll");
-                }
-                else {
+                } else {
                     //注册Combox_context_滚动事件
-                    $("#Combox_context_" + eleid).bind("scroll", function (e) {
+                    $("#Combox_context_" + eleid).bind("scroll", function(e) {
                         var distanceScrollCount = $(this)[0].scrollHeight;
                         var distanceScroll = $(this)[0].scrollTop;
                         var offsetHeight = $(this)[0].offsetHeight;
                         if (distanceScroll > 0) {
                             if (distanceScroll + offsetHeight >= distanceScrollCount) {
                                 $("#Combox_context_" + eleid).unbind("scroll");
-                                if (self.options.type != 7) {//参数不需要滚动触发事件
+                                if (self.options.type != 7) { //参数不需要滚动触发事件
                                     self._keyups();
                                 }
                             }
@@ -3285,7 +3205,7 @@ function getProductionPlan(chtml) {
                 }
             }
         },
-        _keyups: function () {
+        _keyups: function() {
             var self = this,
                 eleid = self.element.attr("id");
             //根据条件判断参数
@@ -3309,8 +3229,7 @@ function getProductionPlan(chtml) {
                     if (self.options.value != "") {
                         pdata.filter.filters.push({ field: "TASK_NO", operator: "contains", value: self.options.value });
                     }
-                }
-                else {
+                } else {
                     pdata = {
                         filter: {
                             filters: [
@@ -3330,8 +3249,7 @@ function getProductionPlan(chtml) {
                         pdata.filter.filters.push({ field: "TASK_NO", operator: "contains", value: self.options.value });
                     }
                 }
-            }
-            else {
+            } else {
                 if (self.orderStatus != 0) { //
                     pdata = {
                         filter: {
@@ -3349,8 +3267,7 @@ function getProductionPlan(chtml) {
                         pdata.filter.filters.push({ field: "TASK_NO", operator: "contains", value: self.options.value });
                         pdata.filter["logic"] = "and";
                     }
-                }
-                else {
+                } else {
                     pdata = {
                         page: self.options.tag,
                         pageSize: self.options.size,
@@ -3366,7 +3283,7 @@ function getProductionPlan(chtml) {
                 }
             }
 
-            $.post(self.options.url, JSON.stringify(pdata), function (data) {
+            $.post(self.options.url, JSON.stringify(pdata), function(data) {
                 self._keyupsdata(data);
 
             })
@@ -3375,12 +3292,67 @@ function getProductionPlan(chtml) {
 })(jQuery);
 
 /*元素resize*/
-(function ($, h, c) { var a = $([]), e = $.resize = $.extend($.resize, {}), i, k = "setTimeout", j = "resize", d = j + "-special-event", b = "delay", f = "throttleWindow"; e[b] = 250; e[f] = true; $.event.special[j] = { setup: function () { if (!e[f] && this[k]) { return false } var l = $(this); a = a.add(l); $.data(this, d, { w: l.width(), h: l.height() }); if (a.length === 1) { g() } }, teardown: function () { if (!e[f] && this[k]) { return false } var l = $(this); a = a.not(l); l.removeData(d); if (!a.length) { clearTimeout(i) } }, add: function (l) { if (!e[f] && this[k]) { return false } var n; function m(s, o, p) { var q = $(this), r = $.data(this, d); r.w = o !== c ? o : q.width(); r.h = p !== c ? p : q.height(); n.apply(this, arguments) } if ($.isFunction(l)) { n = l; return m } else { n = l.handler; l.handler = m } } }; function g() { i = h[k](function () { a.each(function () { var n = $(this), m = n.width(), l = n.height(), o = $.data(this, d); if (m !== o.w || l !== o.h) { n.trigger(j, [o.w = m, o.h = l]) } }); g() }, e[b]) } })(jQuery, this);
+(function($, h, c) {
+    var a = $([]),
+        e = $.resize = $.extend($.resize, {}),
+        i, k = "setTimeout",
+        j = "resize",
+        d = j + "-special-event",
+        b = "delay",
+        f = "throttleWindow";
+    e[b] = 250;
+    e[f] = true;
+    $.event.special[j] = {
+        setup: function() {
+            if (!e[f] && this[k]) { return false }
+            var l = $(this);
+            a = a.add(l);
+            $.data(this, d, { w: l.width(), h: l.height() });
+            if (a.length === 1) { g() }
+        },
+        teardown: function() {
+            if (!e[f] && this[k]) { return false }
+            var l = $(this);
+            a = a.not(l);
+            l.removeData(d);
+            if (!a.length) { clearTimeout(i) }
+        },
+        add: function(l) {
+            if (!e[f] && this[k]) { return false }
+            var n;
+
+            function m(s, o, p) {
+                var q = $(this),
+                    r = $.data(this, d);
+                r.w = o !== c ? o : q.width();
+                r.h = p !== c ? p : q.height();
+                n.apply(this, arguments)
+            }
+            if ($.isFunction(l)) { n = l; return m } else {
+                n = l.handler;
+                l.handler = m
+            }
+        }
+    };
+
+    function g() {
+        i = h[k](function() {
+            a.each(function() {
+                var n = $(this),
+                    m = n.width(),
+                    l = n.height(),
+                    o = $.data(this, d);
+                if (m !== o.w || l !== o.h) { n.trigger(j, [o.w = m, o.h = l]) }
+            });
+            g()
+        }, e[b])
+    }
+})(jQuery, this);
 /**************************************************************/
-var format = function (time, format) {
+var format = function(time, format) {
     var t = new Date(time);
-    var tf = function (i) { return (i < 10 ? '0' : "") + i };
-    return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+    var tf = function(i) { return (i < 10 ? '0' : "") + i };
+    return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
         switch (a) {
             case 'yyyy':
                 return tf(t.getFullYear());

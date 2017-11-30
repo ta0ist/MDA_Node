@@ -359,7 +359,7 @@ function upload_file(e) {
     $("#up_file").click(function(repairmodel) {
         $.ajaxFileUpload({
             url: baseUrl + "UploadFile", //用于文件上传的服务器端请求地址
-            type: "post",
+            type: "get",
             data: { RepairNbr: repairInfo.REPAIR_NBR }, //post 参数 {id:"1"} 不能传对象
             secureuri: false, //一般设置为false
             fileElementId: "files_name", //文件上传空间的id属性

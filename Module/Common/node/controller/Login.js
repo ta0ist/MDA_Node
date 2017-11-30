@@ -11,6 +11,7 @@ var post_argu = require('../../../../routes/post_argu.js');
 
 
 
+
 exports.loginpage = function(req, res) {
 
     res.render(path.resolve(__dirname, '../../web/view/login/index'), { lang: post_argu.getLanguage() });
@@ -65,6 +66,7 @@ exports.checkuser = function(req, res) {
     var md5 = crypto.createHash('md5'),
         pwd = 1;
     var pwd = md5.update(req.body.Pwd).digest('hex');
+    let storage = JSON.parse(req.body.storage);
     request.post({ url: post_argu.getpath(__filename, 'AccountLogin'), form: { name: req.body.Name, pwd: pwd } }, function(error, response, body) {
         if (body == 'null') {
             res.json({
@@ -79,14 +81,27 @@ exports.checkuser = function(req, res) {
                 })
             } else {
                 req.session.user = JSON.parse(body);
-                checkIP(IP, req.session.user.UserId);
-                global.Client.push({
-                    IP: IP,
-                    UserID: req.session.user.UserId,
-                    ClientId: []
-                })
+                let guid = (storage.UserId == req.session.user.UserId && storage != '' ? storage.guid : require('uuid/v1')());
+                if (!guid) {
+                    guid = require('uuid/v1')();
+                }
+                //checkIP(IP, req.session.user.UserId);
+                // global.Client.push({
+                //     IP: IP,
+                //     UserID: req.session.user.UserId,
+                //     ClientId: []
+                // })
+                global.ws.clients.forEach(
+                    client => {
+                        client.send(JSON.stringify({
+                            guid: guid,
+                            UserId: req.session.user.UserId
+                        }))
+                    }
+                )
                 res.json({
                     Status: 0,
+                    Data: { UserId: req.session.user.UserId, guid: guid },
                     Message: "登录成功！"
                 })
             }

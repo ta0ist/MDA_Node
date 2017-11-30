@@ -4,7 +4,13 @@ app.controller('layoutctrl', ['$scope', '$http', function($scope, $http) {
     var wsServer = new WebSocket('ws://192.168.0.153:8883');
 
     wsServer.onmessage = (e) => {
-        window.location = '/logout';
+        let data = JSON.parse(e.data);
+        let storage = JSON.parse(localStorage.UserInfo);
+        if (data.UserId == storage.UserId && data.guid != storage.guid) {
+            BzAlert('您的账号已经在别的地方登陆！');
+            window.location = '/logout';
+        }
+
     }
     $http.get('/loadmenu').success(function(data) {
         if (data.Status == 0) {

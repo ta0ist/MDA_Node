@@ -89,7 +89,7 @@
          self.MACS = ko.observableArray([]);
          self.order_edit = function() {
              //单号维护
-             $.get("/TpmPart/StockManage/GetRules", function(data) {
+             $.get("/MaintenanceRecord/GetRules", function(data) {
                  $.x5window('单号规则', kendo.template($("#order-template").html()));
                  previewModel = ko.mapping.fromJS({
                      PREFIX1: ko.observable(data.Data[3].PREFIX),

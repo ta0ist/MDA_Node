@@ -2,7 +2,8 @@
     .controller('loginctrl', ['$scope', '$http', function($scope, $http) {
         $scope.User = {
             Name: '',
-            Pwd: ''
+            Pwd: '',
+            storage: ''
         }
         $scope.error;
 
@@ -31,9 +32,10 @@
                     $.cookie('name', null);
                     $.cookie('password', null);
                 }
+                $scope.User.storage = localStorage.UserInfo ? localStorage.UserInfo : '{}';
                 $http.post('/checkuser', JSON.stringify($scope.User)).success(function(data) {
                     if (data.Status == 0) {
-
+                        window.localStorage.setItem('UserInfo', JSON.stringify(data.Data));
                         location.href = '/';
                     } else {
                         $scope.error = data.Message;
