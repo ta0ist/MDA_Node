@@ -679,8 +679,8 @@
 
 
      APPLAY_NO = $("#APPLAY_NO").multipleComboxTree({
-         url: "/Service/Service/GetApplay_NO",
-         url2: "/Service/Service/GetApplay_NO",
+         url: "/MaintenanceWrite/GetApplay_NO",
+         url2: "/MaintenanceWrite/GetApplay_NO",
          type: 10,
          inputheight: 20,
          width: 171,
@@ -691,8 +691,8 @@
      }).data("BZ-multipleComboxTree");
 
      MAINTAIN_NO = $("#MAINTAIN_NO").multipleComboxTree({
-         url: "/Maintain/Maintain/GetAllNoMaintainList",
-         url2: "/Maintain/Maintain/GetAllNoMaintainList",
+         url: "/MaintenancePlan/GetAllNoMaintainList",
+         url2: "/MaintenancePlan/GetAllNoMaintainList",
          type: 9,
          inputheight: 20,
          width: 171,

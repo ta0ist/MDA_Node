@@ -79,3 +79,8 @@ function GetJiliMaintencePlanList(res, method, args) {
     var url = 'http://' + config.webIP + ':' + config.webPort + '/Modules/Maintain/Maintain.asmx/GetJiliMaintencePlanList';
     post_argu.post_argu(res, url, args);
 }
+
+function GetAllNoMaintainList(res, method, args) {
+    var url = 'http://' + config.webIP + ':' + config.webPort + '/Modules/Maintain/Maintain.asmx/GetAllNoMaintainList';
+    post_argu.post_argu(res, url, args);
+}

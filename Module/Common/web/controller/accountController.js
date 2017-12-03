@@ -278,6 +278,34 @@ app.controller('accountctrl', ['$scope', '$http', function($scope, $http) {
         });
     }
 
+    //新增树节点
+    $scope.tree_addRootNode = function() {
+        var treeobj = $("#orgnizetree").data("kendoTreeView");
+        var GroupInfo = {
+            PID: 0,
+            LEVEL_NBR: 1,
+            GP_NAME: '新节点',
+            RANK_NUM: 0
+        }
+        $.post("/account/AddGroup", GroupInfo, function(data) {
+            if (data.Status == 0) {
+                var obj = treeobj.append({
+                    text: GroupInfo.GP_NAME,
+                    id: data.Data,
+                    icon: "icon-group",
+                    PID: 0,
+                    LEVEL_NBR: 1
+                }, null);
+                BzSuccess(data.Message);
+                //进入编辑
+                treeobj.select(obj);
+                $("#tree_edit").trigger('click');
+            } else {
+                BzAlert(data.Message);
+            }
+        });
+    }
+
 
 }])
 

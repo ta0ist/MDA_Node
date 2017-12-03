@@ -36,3 +36,8 @@ function UpdRepair(res, method, args, req) {
     args.MEM_NBR = req.session.user.UserId;
     post_argu.post_argu(res, url, { repairInfo: args });
 }
+
+function GetApplay_NO(res, method, args) {
+    var url = 'http://' + config.webIP + ':' + config.webPort + '/Modules/Service/Service.asmx/GetApplay_NO';
+    post_argu.post_argu(res, url, args);
+}
